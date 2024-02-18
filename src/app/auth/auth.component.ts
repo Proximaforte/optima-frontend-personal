@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AuthComponent {
 
+  optima:string = "/assets/images/optima.svg";
+  kwaraStateLogo: string = "/assets/images/kwara.svg";
+  poweredByOptima: string = "/assets/images/powered.svg";
+  constructor(){
+
+  }
+
 }

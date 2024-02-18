@@ -3,7 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
 
+const materialModule = [
+  MatFormFieldModule, MatIconModule, MatInputModule
+]
 
 @NgModule({
   declarations: [
@@ -11,7 +17,8 @@ import { AuthComponent } from './auth.component';
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    materialModule
   ]
 })
 export class AuthModule { }
