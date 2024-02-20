@@ -1,0 +1,22 @@
+<section class="bg-optimaBlue w-[94px] ml-3 self-center rounded-full h-[96%] mt-3 flex flex-col items-center">
+  <div class="my-3">
+    <img [src]="bankLogo" height="42" width="42" alt="Logo" />
+  </div>
+
+<mat-nav-list class="nav-list">
+  <ng-container *ngFor="let item of menuItems">
+    <mat-list-item
+      [routerLink]="['/' + item.route]"
+      routerLinkActive="list-item-active"
+      [routerLinkActiveOptions]="{ exact: false }"
+      class="hovered"
+    >
+      <div class="icon-container">
+        <mat-icon  mat-list-icon [svgIcon]="item.name"></mat-icon>
+      </div>
+    </mat-list-item>
+  </ng-container>
+</mat-nav-list>
+
+
+</section>
