@@ -21,8 +21,8 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'beneficiary',
-        data: { title: 'Add Beneficiary' },
+        path: '',
+        data: { title: 'Add Beneficiaries' },
         loadChildren: () =>
           import('../beneficiary/beneficiary.module').then(
             (m) => m.BeneficiaryModule
@@ -30,14 +30,14 @@ const routes: Routes = [
       },
 
       {
-        path: 'profile',
+        path: '',
         loadChildren: () =>
           import('../profile/profile.module').then((m) => m.ProfileModule),
       },
 
       {
         path: 'onboarding',
-        data: { title: 'Onboarding Beneficiary' },
+        data: { title: 'Onboarded Beneficiaries' },
         loadChildren: () =>
           import('../onboarding/onboarding.module').then(
             (m) => m.OnboardingModule

@@ -8,7 +8,7 @@ const routes: Routes = [
     redirectTo: 'beneficiary',
     pathMatch: 'full',
   },
-  { path: '', component: BeneficiaryComponent },
+  { path: 'beneficiary', component: BeneficiaryComponent },
 ];
 
 @NgModule({

@@ -1,19 +1,13 @@
 <section class="bg-optimaBlue w-16 ml-3 self-center rounded-full h-full mt-3 flex flex-col items-center overflow-hidden">
-  <div class="mt-3">
-    <img [src]="bankLogo" height="42" width="42" alt="Logo" />
-  </div>
+    <div class="mt-3">
+        <img [src]="bankLogo" height="42" width="42" alt="Logo" />
+    </div>
 
-  <div class="flex-grow mt-3">
-    <mat-nav-list>
-      <mat-list-item
-        *ngFor="let item of menuItems"
-        [routerLink]="['/' + item.route]"
-        routerLinkActive="list-item-active"
-        [routerLinkActiveOptions]="{ exact: false }"
-        class="mb-6"
-      >
-        <mat-icon mat-list-icon [svgIcon]="item.name" [ngClass]="{ 'stroke-green-500': isActive(item.route) }"></mat-icon>
-      </mat-list-item>
-    </mat-nav-list>
-  </div>
+    <div class="flex-grow" id="move-items">
+        <mat-nav-list>
+            <mat-list-item *ngFor="let item of menuItems" [routerLink]="['/' + item.route]" routerLinkActive="list-item-active" [routerLinkActiveOptions]="{ exact: false }" class="mb-6">
+                <mat-icon (click)="onLogout(item)" mat-list-icon [svgIcon]="item.name" [ngClass]="{ 'stroke-green-500': isActive(item.route) }"></mat-icon>
+            </mat-list-item>
+        </mat-nav-list>
+    </div>
 </section>

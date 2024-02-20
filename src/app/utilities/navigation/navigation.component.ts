@@ -3,6 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MenuItem } from '../interface/u.i';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -16,27 +17,27 @@ export class NavigationComponent {
     {
       icon: 'assets/images/dashboard.svg',
       name: 'dashboard',
-      route: 'dashboard',
+      route: '/home/dashboard',
     },
     {
       icon: 'assets/images/onboarding.svg',
-      name: 'onboard',
-      route: 'onboarding',
+      name: 'beneficiary',
+      route: '/home/beneficiary',
     },
     {
       icon: 'assets/images/beneficiaries.svg',
-      name: 'benefeciary',
-      route: 'beneficiary',
+      name: 'onboarding',
+      route: '/home/onboarding',
     },
     {
       icon: 'assets/images/profile.svg',
       name: 'profile',
-      route: 'profile',
+      route: '/home/profile',
     },
     {
       icon: 'assets/images/logout.svg',
       name: 'logout',
-      route: 'logout',
+      route: '/auth/login',
     },
   ];
 
@@ -45,8 +46,8 @@ export class NavigationComponent {
   constructor(
     private sanitizer: DomSanitizer,
     private iconRegistry: MatIconRegistry,
-
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.bankLogo = this.sanitizer.bypassSecurityTrustUrl(
       `assets/images/info.svg`
@@ -66,7 +67,12 @@ export class NavigationComponent {
     return !!route && this.router.isActive(route, false);
   }
 
-  onLogout() {}
+  onLogout(item: any) {
+    if(item?.name === "logout"){
+      // this.router.navigate([item?.route]);
+      this.authService.agentLogout()
+    }
+  }
 
   //  // Define a boolean array to track active states of items
   //  isActive: boolean[] = new Array(this.menuItems.length).fill(false);
@@ -76,7 +82,7 @@ export class NavigationComponent {
   //   this.isActive[index] = !this.isActive[index];
   //   console.log('isActive:', this.isActive);
   // }
-  
+
 
   // https://chat.openai.com/c/140447e6-5ce5-416a-a70f-675c8380df52
 }

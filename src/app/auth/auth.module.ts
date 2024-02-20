@@ -14,6 +14,7 @@ import {MatCardModule} from '@angular/material/card';
 import { NgxOtpInputModule } from 'ngx-otp-input';
 import { InputOTPComponent } from './input-otp/input-otp.component';
 import { NewPasswordsComponent } from './new-passwords/new-passwords.component';
+import { authGuard } from '../securities/auth/auth.guard';
 
 
 const materialModule = [
@@ -35,6 +36,7 @@ const materialModule = [
     FormsModule,
     ReactiveFormsModule,
     NgxOtpInputModule
-  ]
+  ],
+  providers:[authGuard]
 })
 export class AuthModule { }
