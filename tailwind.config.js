@@ -10,9 +10,9 @@ module.exports = {
         optimaGray: "#98A2B3",
       },
       fontFamily: {
-        mont: ["Montserrat", "sans-serif"],
+        'euclid': ['Euclid Circular A'],
         inter: ["Inter", "Montserrat", "sans-serif"],
-        sora: ["Sora", "sans-serif"],
+        'sora': ["Sora", "sans-serif"],
       },
     },
   },

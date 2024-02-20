@@ -11,9 +11,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-
+import { SuccesfulPasswordsComponent } from './modals/succesful-passwords/succesful-passwords.component';
+import { ChangePasswordComponent } from './modals/change-password/change-password.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+const materialModules = [
+  MatDialogModule
+]
 @NgModule({
-  declarations: [UtilitiesComponent, NavigationComponent, HeaderComponent],
+  declarations: [
+    UtilitiesComponent,
+    NavigationComponent,
+    HeaderComponent,
+    SuccesfulPasswordsComponent,
+    ChangePasswordComponent,
+  ],
   imports: [
     CommonModule,
     UtilitiesRoutingModule,
@@ -24,7 +37,12 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatListModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    CommonModule,
+    UtilitiesRoutingModule,
+    materialModules,
+    RouterModule,
+    MatCardModule,
   ],
   exports: [
     CommonModule,
@@ -38,7 +56,8 @@ import { MatSelectModule } from '@angular/material/select';
     NavigationComponent,
     HeaderComponent,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
   ],
 })
 export class UtilitiesModule {}

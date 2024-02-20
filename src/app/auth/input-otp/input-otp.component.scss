@@ -1,0 +1,45 @@
+.bg-cover {
+    background-image: url('/assets/images/bg-image.svg');
+    background-size: cover;
+}
+
+.icon {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+}
+
+#mat-card{
+    background-color: rgb(243, 250, 243);
+    border-width: 0;
+    width: 240px;
+}
+
+#second-mat-card{
+    background-color: #fff;
+    border-width: 0;  
+    width: 240px; 
+}
+
+.large-otp-input {
+    font-size: 20px;
+    width: 300px;
+    height: 500;
+  }
+
+  
+
+
+
+// ngx-otp-input{
+//     color: black;
+//     width: 100px;
+//     height: 200px;
+//     font-weight: bolder;
+//     // height: 35px;
+//     text-align: center;
+//     font-size: 1.25rem;
+//     border-radius: 4px;
+
+// }
+
