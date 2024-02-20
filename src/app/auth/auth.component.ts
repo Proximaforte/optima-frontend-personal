@@ -67,7 +67,7 @@ export class AuthComponent implements OnInit{
   signIn(){
     if(this.loginForm.valid){
       if(window?.location?.search === "?route=user-login"){
-        this.router.navigate(['/dashboard/dashboard'], {relativeTo: this.route});
+        this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
       }else if(window?.location?.search === ""){
         this.router.navigate(['/auth/change-passwords'], {relativeTo: this.route});
       }

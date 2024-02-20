@@ -40,6 +40,8 @@ export class NavigationComponent {
     },
   ];
 
+
+
   constructor(
     private sanitizer: DomSanitizer,
     private iconRegistry: MatIconRegistry,
@@ -57,10 +59,24 @@ export class NavigationComponent {
     });
   }
 
+
+
   ngOnInit(): void {}
   isActive(route: string | undefined): boolean {
     return !!route && this.router.isActive(route, false);
   }
 
   onLogout() {}
+
+  //  // Define a boolean array to track active states of items
+  //  isActive: boolean[] = new Array(this.menuItems.length).fill(false);
+
+  //  // Method to toggle the active state of an item
+  //  toggleActive(index: number): void {
+  //   this.isActive[index] = !this.isActive[index];
+  //   console.log('isActive:', this.isActive);
+  // }
+  
+
+  // https://chat.openai.com/c/140447e6-5ce5-416a-a70f-675c8380df52
 }
