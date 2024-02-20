@@ -1,22 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-forgot-passwords',
   templateUrl: './forgot-passwords.component.html',
   styleUrls: ['./forgot-passwords.component.scss']
 })
-export class ForgotPasswordsComponent {
+export class ForgotPasswordsComponent implements OnInit {
 
   poweredByOptima: string = "/assets/images/powered.svg";
   phone: string = "/assets/images/phone.svg";
   disabledBtn: boolean = true;
   showOtp: boolean = false;
-  
-  constructor(){}
+
+  constructor(
+    private router:Router,
+    private route: ActivatedRoute
+  ){}
+
+
+ngOnInit(): void {
+}
 
 
 
-  mapOtpInterface(){
+  mapOtpInterface(param: string, value: string){
     this.showOtp = true;
+    this.router.navigate(["/auth/input-otp"],{
+      relativeTo: this.route,
+      queryParams: {
+        platformType: param,
+        value: value
+      }
+    })
   }
 }

@@ -25,6 +25,7 @@ export class AuthComponent implements OnInit{
     private router: Router,
     private route: ActivatedRoute,
   ) { 
+    console.log("window>>>", window?.location?.search);
   }
 
   togglePasswordVisibility(): void {
@@ -49,7 +50,6 @@ export class AuthComponent implements OnInit{
   }
   onInputBlur() {
     this.emailPlaceHolder = '';
-    // Add your logic here to handle the input field losing focus
   }
 
   detectClicked_(){
@@ -57,7 +57,6 @@ export class AuthComponent implements OnInit{
   }
   onInputBlur_() {
     this.passwordPlaceHolder = '';
-    // Add your logic here to handle the input field losing focus
   }
 
 
@@ -67,9 +66,11 @@ export class AuthComponent implements OnInit{
 
   signIn(){
     if(this.loginForm.valid){
-      // // this.emailPlaceHolder = "";
-      // console.log("details>>>", this.loginForm.value);
-      this.router.navigate(['/auth/change-passwords'], {relativeTo: this.route});
+      if(window?.location?.search === "?route=user-login"){
+        this.router.navigate(['/dashboard/dashboard'], {relativeTo: this.route});
+      }else if(window?.location?.search === ""){
+        this.router.navigate(['/auth/change-passwords'], {relativeTo: this.route});
+      }
     }
   }
 

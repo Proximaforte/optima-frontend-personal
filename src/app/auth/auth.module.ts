@@ -11,6 +11,9 @@ import { ChangePasswordsComponent } from './change-passwords/change-passwords.co
 import {MatDialogModule} from '@angular/material/dialog';
 import { ForgotPasswordsComponent } from './forgot-passwords/forgot-passwords.component';
 import {MatCardModule} from '@angular/material/card';
+import { NgxOtpInputModule } from 'ngx-otp-input';
+import { InputOTPComponent } from './input-otp/input-otp.component';
+import { NewPasswordsComponent } from './new-passwords/new-passwords.component';
 
 
 const materialModule = [
@@ -21,14 +24,17 @@ const materialModule = [
   declarations: [
     AuthComponent,
     ChangePasswordsComponent,
-    ForgotPasswordsComponent
+    ForgotPasswordsComponent,
+    InputOTPComponent,
+    NewPasswordsComponent
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     materialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxOtpInputModule
   ]
 })
 export class AuthModule { }

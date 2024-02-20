@@ -1,0 +1,34 @@
+<body class="bg-cover h-screen flex justify-center items-center">
+    <div class="bg-white p-8 rounded-lg  max-w-md">
+        <h2 class="text-2xl font-semibold mb-4">
+            Forgot Password
+        </h2>
+
+        <div>
+            <p>A 4-digit pin has been sent to {{routeParams?.value}}</p>
+            <br>
+            <form [formGroup]="otpForm">
+                <div class="mb-4">
+                    <div class="otp-div">
+                        <ngx-otp-input  #otpInput [config]="otpInputConfig" (otpChange)="handleOtpChange($event)" (fill)="handleFillEvent($event)" [(ngModel)]="otpValue" formControlName="Otp">
+                        </ngx-otp-input>
+                    </div>
+
+                </div>
+                <div class="mb-4">
+                    <span class="text-xs">Didn't recieve a code? <b>Resend OTP</b> in <b>{{ countdown }}s</b></span>
+                </div>
+                <br>
+
+                <button type="submit" [disabled]="disabledBtn" (click)="routeToNewPasswords()"
+                    [ngStyle]="{ 'background-color': disabledBtn ? '#B8B7C8' : '#109856' }"
+                    class="w-full bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600">
+                    Proceed
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="icon">
+        <img [src]="poweredByOptima" alt="powered-by-optima" width="150" height="240" class="ml-3">
+    </div>
+</body>
