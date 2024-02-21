@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, startWith, switchMap } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,14 +11,19 @@ import { filter, startWith, switchMap } from 'rxjs/operators';
 export class HeaderComponent implements OnInit {
   title: string = '';
   name: string = '';
-
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  userName: string = '';
+  subPath: string = '';
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService) {
+    const userData: any = this.authService.getAgentData();
+    const parseData = JSON.parse(userData);
+    this.userName = parseData?.name
+  }
 
   ngOnInit(): void {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        startWith(null), 
+        startWith(null),
         switchMap(() => this.activatedRoute.url)
       )
       .subscribe(() => {
@@ -32,10 +38,15 @@ export class HeaderComponent implements OnInit {
         }
         if (routePath === 'profile' || routePath === 'dashboard') {
           this.title = 'Good ' + this.getTimeOfDay();
-          this.name = 'shadrack';
-        } else {
+          this.name = this.userName;
+        } else if(routePath === 'beneficiary') {
           this.title = route.snapshot.data['title'];
-          this.name = '(State Disbursement Palliative)';
+          this.name = '(State Palliative Disbursement)';
+          this.subPath = 'Add beneficiaries'
+        }else if(routePath === 'onboarding') {
+          this.title = route.snapshot.data['title'];
+          this.name = '';
+          this.subPath = 'onboarded beneficiaries'
         }
       });
   }

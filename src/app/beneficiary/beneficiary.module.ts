@@ -3,6 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { BeneficiaryRoutingModule } from './beneficiary-routing.module';
 import { BeneficiaryComponent } from './beneficiary.component';
+import {MatStepperModule} from '@angular/material/stepper';
+
+
+const materialModules = [
+  MatStepperModule
+]
 
 
 @NgModule({
@@ -11,7 +17,8 @@ import { BeneficiaryComponent } from './beneficiary.component';
   ],
   imports: [
     CommonModule,
-    BeneficiaryRoutingModule
+    BeneficiaryRoutingModule,
+    materialModules
   ]
 })
 export class BeneficiaryModule { }
