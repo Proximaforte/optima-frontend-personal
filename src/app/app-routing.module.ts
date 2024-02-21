@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./utilities/utilities.module').then((m) => m.UtilitiesModule),
   },
-  { path: '**', redirectTo: '/home' },
+  { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({

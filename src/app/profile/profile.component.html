@@ -1,1 +1,55 @@
-<p>profile works!</p>
+<div class="ml-4">
+  <div class="bg-[#FF8262] h-12 rounded-t-xl w-11/12">
+    <div class="ml-8 pt-8 h-4 w-24 bg-white rounded-full"></div>
+  </div>
+  <div class="flex flex-row items-center">
+    <div>
+      <img
+        src="assets/images/profilepic.svg"
+        height="96"
+        width="96"
+        alt=""
+        class="rounded-full"
+      />
+    </div>
+    <div class="ml-3">
+      <p>Kemisola Olusanya</p>
+      <small>Agent Profile</small>
+    </div>
+  </div>
+
+  <div class="w-[80%] mt-8 border-2 rounded-2xl px-6 py-4">
+    <p class="mb-8 text-optimaGray text-lg font-medium">Center Information</p>
+
+    <div class="flex justify-between">
+      <div class="flex flex-col justify-between" *ngFor="let agent of agents">
+        <div class="border-none">
+          <div class="flex flex-row">
+            <div>
+              <img [src]="agent.icon" alt="image" class="w-10 h-10" />
+            </div>
+            <div class="flex flex-col ml-4 -mt-1">
+              <span class="text-[10px] text-optimaGray m-0">{{
+                agent.text
+              }}</span>
+              <span class="text-lg -mt-1">{{ agent.data }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-8/12 mt-6 ml-8">
+    <div class="border-b">
+      <p class="font-semibold text-2xl pl-6 text-optimaGray">
+        Agent Personal Information
+      </p>
+    </div>
+    <div>
+      <div class="flex justify-between">
+        <div class="bg-grey h-8 w-52 rounded"></div>
+      </div>
+    </div>
+  </div>
+</div>
