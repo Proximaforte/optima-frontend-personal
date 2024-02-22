@@ -13,10 +13,14 @@ export class HeaderComponent implements OnInit {
   name: string = '';
   userName: string = '';
   subPath: string = '';
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private authService: AuthService) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
+  ) {
     const userData: any = this.authService.getAgentData();
     const parseData = JSON.parse(userData);
-    this.userName = parseData?.name
+    this.userName = parseData?.name;
   }
 
   ngOnInit(): void {
@@ -39,14 +43,19 @@ export class HeaderComponent implements OnInit {
         if (routePath === 'profile' || routePath === 'dashboard') {
           this.title = 'Good ' + this.getTimeOfDay();
           this.name = this.userName;
-        } else if(routePath === 'beneficiary') {
+        } else if (routePath === 'beneficiary') {
           this.title = route.snapshot.data['title'];
           this.name = '(State Palliative Disbursement)';
-          this.subPath = 'Add beneficiaries'
-        }else if(routePath === 'all-beneficiary') {
+          this.subPath = 'Add beneficiaries';
+        } else if (routePath === 'all-beneficiary') {
           this.title = route.snapshot.data['title'];
           this.name = '';
-          this.subPath = 'onboarded beneficiaries'
+          this.subPath = 'onboarded beneficiaries';
+        } else if (routePath === 'beneficiary-details') {
+          this.title = 'Beneficiary Information';
+        
+          this.name = '';
+          this.subPath = 'onboarded beneficiaries';
         }
       });
   }

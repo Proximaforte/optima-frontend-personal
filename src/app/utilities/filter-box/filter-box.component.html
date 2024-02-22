@@ -1,0 +1,33 @@
+<div class="h-full">
+  <img
+    mat-dialog-close
+    src="assets/images/Close.svg"
+    alt="close"
+    height="32"
+    weight="32"
+    class="m-1 cursor-pointer"
+  />
+
+  <div class="flex justify-between">
+    <p mat-dialog-title class="text-2xl font-bold">Filters</p>
+    <button class="text-red-600 mr-4 font-bold">Clear Filter</button>
+  </div>
+  <div mat-dialog-content></div>
+  <div mat-dialog-actions class="flex justify-between">
+    <button
+      mat-button
+      class="text-red-600 font-bold py-2 px-4 w-48 h-10 rounded-md border mx-4 border-red-600"
+      (click)="close()"
+    >
+      Clear Filters
+    </button>
+
+    <button
+      mat-button
+      class="text-white bg-optimaGreen font-bold py-2 px-4 h-10 w-48 rounded-md -ml-2"
+      (click)="close()"
+    >
+      Apply
+    </button>
+  </div>
+</div>

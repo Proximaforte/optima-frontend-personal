@@ -36,7 +36,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'all-beneficiary',
+        path: '',
         data: { title: 'All Beneficiaries' },
         loadChildren: () =>
           import('../all-beneficiary/all-beneficiary.module').then(

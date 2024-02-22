@@ -8,7 +8,9 @@ module.exports = {
         optimaGreen: "#109856",
         optimaBlack: "#101828",
         optimaGray: "#98A2B3",
-        grey:"#F7F9FC"
+        grey:"#F7F9FC",
+        label: '#717E95',
+        tableGray:'#EAECF0'
       },
       fontFamily: {
         'euclid': ['Euclid Circular A'],

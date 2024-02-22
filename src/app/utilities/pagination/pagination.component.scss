@@ -1,0 +1,14 @@
+.my-pagination ::ng-deep .ngx-pagination .current {
+  color: #ffffff !important;
+  border: black!important;
+  border-radius: 4px;
+  background-color: var(--primary);
+  background: var(--primary) !important;
+}
+
+.my-pagination ::ng-deep .ngx-pagination .current:hover {
+  border-radius: 8px !important;
+}
+.table-control {
+  padding-left: 20px !important;
+}

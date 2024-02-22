@@ -1,21 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-beneficiary-detailspage',
+  templateUrl: './beneficiary-detailspage.component.html',
+  styleUrls: ['./beneficiary-detailspage.component.scss'],
 })
-export class DashboardComponent {
-
-
-  total: number = 945;
-  options: string[] = ['Today', 'Last 7days', 'This Month', 'Last 6 Months'];
-  selectedValue: string = '';
-isOpen: any;
-
-  constructor (){
-
-  }
+export class BeneficiaryDetailspageComponent {
   agents: any = [
     { text: 'Agent code', data: 'AG1023', icon: 'assets/images/agentcode.svg' },
     {
@@ -30,6 +20,4 @@ isOpen: any;
     },
     { text: 'LGA', data: 'ILLorin South', icon: 'assets/images/lga.svg' },
   ];
- 
-  
 }

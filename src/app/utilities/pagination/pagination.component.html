@@ -1,0 +1,12 @@
+<div class="flex justify-between items-center">
+    
+    <div class="flex justify-between">
+        <ng-container *ngIf="!id; else withId">
+            <pagination-controls [maxSize]="10" (pageChange)="paged($event)" class="my-pagination"></pagination-controls>
+        </ng-container>
+        <ng-template #withId>
+            <pagination-controls [maxSize]="10" [id]="id" (pageChange)="paged($event)" class="my-pagination"></pagination-controls>
+        </ng-template>
+    </div>
+</div>
+

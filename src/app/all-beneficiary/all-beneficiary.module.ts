@@ -3,15 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { AllBeneficiaryRoutingModule } from './all-beneficiary-routing.module';
 import { AllBeneficiaryComponent } from './all-beneficiary.component';
+import { UtilitiesModule } from '../utilities/utilities.module';
+
+import { BeneficiaryDetailspageComponent } from './beneficiary-detailspage/beneficiary-detailspage.component';
 
 
 @NgModule({
   declarations: [
-    AllBeneficiaryComponent
+    AllBeneficiaryComponent,
+    BeneficiaryDetailspageComponent
   ],
   imports: [
     CommonModule,
-    AllBeneficiaryRoutingModule
+    AllBeneficiaryRoutingModule,
+    UtilitiesModule
   ]
 })
 export class AllBeneficiaryModule { }

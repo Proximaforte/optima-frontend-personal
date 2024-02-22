@@ -16,6 +16,10 @@ import { ChangePasswordComponent } from './modals/change-password/change-passwor
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PaginationComponent } from './pagination/pagination.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FilterBoxComponent } from './filter-box/filter-box.component';
 const materialModules = [
   MatDialogModule
 ]
@@ -26,6 +30,8 @@ const materialModules = [
     HeaderComponent,
     SuccesfulPasswordsComponent,
     ChangePasswordComponent,
+    PaginationComponent,
+    FilterBoxComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +49,8 @@ const materialModules = [
     materialModules,
     RouterModule,
     MatCardModule,
+    MatCheckboxModule,
+    NgxPaginationModule
   ],
   exports: [
     CommonModule,
@@ -58,6 +66,10 @@ const materialModules = [
     MatFormFieldModule,
     MatSelectModule,
     MatCardModule,
+    MatCheckboxModule,
+    NgxPaginationModule,
+    PaginationComponent,
+    FilterBoxComponent
   ],
 })
 export class UtilitiesModule {}
