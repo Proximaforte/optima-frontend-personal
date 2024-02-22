@@ -1,26 +1,35 @@
 <div class="grid grid-cols-5 gap-4">
     <div class="col-span-1 bg-gray-50 h-full">
         <div class="mt-4 ml-4">
-            <span class="text-gray-400 font-medium">Registration Progress</span>
+            <span class="text-xs text-gray-400 font-medium">Registration Progress</span>
             <br><br>
             <div class="cursor-pointer">
-                <ol class="relative text-gray-500 border-l-4 border-dotted border-gray-200 dark:border-gray-700 dark:text-gray-400">
-                    <li class="mb-10 ms-6" *ngFor="let item of beneficiaryItems; let i = index" (click)="itemClicked(i)">
+                <ol class="relative text-xs text-gray-500 border-l-4 border-dotted border-gray-200 dark:border-gray-700 dark:text-gray-400">
+                    <li class="mb-10 ms-6" *ngFor="let item of beneficiaryItems; let i = index" (click)="itemClicked(i, item)">
                         <span class="absolute flex items-center justify-center w-7 h-7 rounded-full -start-4  ring-2" [ngClass]="{'ring-slate-400': !isSelectedIndex(i), ' ring-lemonish': isSelectedIndex(i)}">
-                      <a [ngClass]="{'lemonish-text': selectedItemIndex === i}" *ngIf="i+1 !== 10"> 0{{i + 1}}</a>
-                      <a [ngClass]="{'lemonish-text': selectedItemIndex === i}" *ngIf="i+1 === 10"> {{i + 1}}</a>
-                  </span>
-                        <p class="text-sm " [ngClass]="{'lemonish-text': selectedItemIndex === i }">{{item | uppercase}}</p>
+                            <a [ngClass]="{'lemonish-text': selectedItemIndex === i}" *ngIf="i+1 !== 10"> 0{{i + 1}}</a>
+                            <a [ngClass]="{'lemonish-text': selectedItemIndex === i}" *ngIf="i+1 === 10"> {{i + 1}}</a>
+                        </span>
+                        <p class="text-xs" [ngClass]="{'lemonish-text': selectedItemIndex === i }">{{item | uppercase}}</p>
                     </li>
                 </ol>
-
-
             </div>
         </div>
+        
+        
     </div>
     <div class="col-span-4  h-full">
-        <div id="second-column-items">
-            ssdsdsd
+        <div id="second-column-items" *ngIf="selectedItemName">
+         <div *ngIf=" selectedItemName === 'verify beneficiary nin'">  <app-verify-nin></app-verify-nin> </div>
+         <div *ngIf="selectedItemName === 'personal details'">  <app-personal-details></app-personal-details> </div>
+         <div  *ngIf="selectedItemName === 'residential details'">  <app-residential-details></app-residential-details> </div>
+         <div  *ngIf="selectedItemName === 'marital info'">  <app-marital-info></app-marital-info> </div>
+         <div  *ngIf="selectedItemName === 'education'">  <app-education></app-education> </div>
+         <div  *ngIf="selectedItemName === 'health'">  <app-health></app-health> </div>
+         <div  *ngIf="selectedItemName === 'financial'">  <app-financial></app-financial> </div>
+         <div  *ngIf="selectedItemName === 'next of kin'">  <app-next-of-kin></app-next-of-kin> </div>
+         <div  *ngIf="selectedItemName === 'employment'">  <app-employment></app-employment> </div>
+         <div  *ngIf="selectedItemName === 'other details'">  <app-other-details></app-other-details> </div>
         </div>
     </div>
 </div>
