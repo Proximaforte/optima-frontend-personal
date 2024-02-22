@@ -15,21 +15,41 @@
                 </ol>
             </div>
         </div>
-        
-        
+
+
     </div>
     <div class="col-span-4  h-full">
-        <div id="second-column-items" *ngIf="selectedItemName">
-         <div *ngIf=" selectedItemName === 'verify beneficiary nin'">  <app-verify-nin></app-verify-nin> </div>
-         <div *ngIf="selectedItemName === 'personal details'">  <app-personal-details></app-personal-details> </div>
-         <div  *ngIf="selectedItemName === 'residential details'">  <app-residential-details></app-residential-details> </div>
-         <div  *ngIf="selectedItemName === 'marital info'">  <app-marital-info></app-marital-info> </div>
-         <div  *ngIf="selectedItemName === 'education'">  <app-education></app-education> </div>
-         <div  *ngIf="selectedItemName === 'health'">  <app-health></app-health> </div>
-         <div  *ngIf="selectedItemName === 'financial'">  <app-financial></app-financial> </div>
-         <div  *ngIf="selectedItemName === 'next of kin'">  <app-next-of-kin></app-next-of-kin> </div>
-         <div  *ngIf="selectedItemName === 'employment'">  <app-employment></app-employment> </div>
-         <div  *ngIf="selectedItemName === 'other details'">  <app-other-details></app-other-details> </div>
+        <div *ngIf="selectedItemName">
+            <div id="first-column-items" *ngIf=" selectedItemName === 'verify beneficiary nin'">
+                <app-verify-nin></app-verify-nin>
+            </div>
+            <div *ngIf="selectedItemName === 'personal details'">
+                <app-personal-details></app-personal-details>
+            </div>
+            <div *ngIf="selectedItemName === 'residential details'">
+                <app-residential-details></app-residential-details>
+            </div>
+            <div *ngIf="selectedItemName === 'marital info'">
+                <app-marital-info></app-marital-info>
+            </div>
+            <div *ngIf="selectedItemName === 'education'">
+                <app-education></app-education>
+            </div>
+            <div *ngIf="selectedItemName === 'health'">
+                <app-health></app-health>
+            </div>
+            <div *ngIf="selectedItemName === 'financial'">
+                <app-financial></app-financial>
+            </div>
+            <div *ngIf="selectedItemName === 'next of kin'">
+                <app-next-of-kin></app-next-of-kin>
+            </div>
+            <div *ngIf="selectedItemName === 'employment'">
+                <app-employment></app-employment>
+            </div>
+            <div *ngIf="selectedItemName === 'other details'">
+                <app-other-details></app-other-details>
+            </div>
         </div>
     </div>
 </div>
