@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
           this.title = route.snapshot.data['title'];
           this.name = '(State Palliative Disbursement)';
           this.subPath = 'Add beneficiaries'
-        }else if(routePath === 'onboarding') {
+        }else if(routePath === 'all-beneficiary') {
           this.title = route.snapshot.data['title'];
           this.name = '';
           this.subPath = 'onboarded beneficiaries'

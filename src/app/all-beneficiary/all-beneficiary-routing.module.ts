@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OnboardingComponent } from './onboarding.component';
+import { AllBeneficiaryComponent } from './all-beneficiary.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'onboarding',
+    redirectTo: 'all-beneficiary',
     pathMatch: 'full',
   },
-  { path: '', component: OnboardingComponent },
+  { path: 'all-beneficiary', component: AllBeneficiaryComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class OnboardingRoutingModule { }
+export class AllBeneficiaryRoutingModule { }

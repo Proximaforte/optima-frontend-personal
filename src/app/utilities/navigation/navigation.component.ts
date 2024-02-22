@@ -26,8 +26,8 @@ export class NavigationComponent {
     },
     {
       icon: 'assets/images/beneficiaries.svg',
-      name: 'onboarding',
-      route: '/home/onboarding',
+      name: 'all-beneficiary',
+      route: '/home/all-beneficiary',
     },
     {
       icon: 'assets/images/profile.svg',

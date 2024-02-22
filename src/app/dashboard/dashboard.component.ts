@@ -6,10 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
+
+
   total: number = 945;
   options: string[] = ['Today', 'Last 7days', 'This Month', 'Last 6 Months'];
   selectedValue: string = '';
 
+  constructor (){
+
+  }
   agents: any = [
     { text: 'Agent code', data: 'AG1023', icon: 'assets/images/agentcode.svg' },
     {
@@ -24,4 +29,5 @@ export class DashboardComponent {
     },
     { text: 'LGA', data: 'ILLorin South', icon: 'assets/images/lga.svg' },
   ];
+ 
 }

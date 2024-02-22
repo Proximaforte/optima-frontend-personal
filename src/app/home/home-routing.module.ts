@@ -36,11 +36,11 @@ const routes: Routes = [
       },
 
       {
-        path: 'onboarding',
-        data: { title: 'Onboarded Beneficiaries' },
+        path: 'all-beneficiary',
+        data: { title: 'All Beneficiaries' },
         loadChildren: () =>
-          import('../onboarding/onboarding.module').then(
-            (m) => m.OnboardingModule
+          import('../all-beneficiary/all-beneficiary.module').then(
+            (m) => m.AllBeneficiaryModule
           ),
       },
     ],
