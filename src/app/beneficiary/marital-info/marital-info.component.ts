@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./marital-info.component.scss']
 })
 export class MaritalInfoComponent {
-
+  panelOpenState = false;
+  constructor(){}
 }

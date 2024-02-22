@@ -15,10 +15,11 @@ import { NextOfKinComponent } from './next-of-kin/next-of-kin.component';
 import { EmploymentComponent } from './employment/employment.component';
 import { OtherDetailsComponent } from './other-details/other-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 const materialModules = [
-  MatStepperModule
+  MatStepperModule, MatExpansionModule
 ]
 
 
