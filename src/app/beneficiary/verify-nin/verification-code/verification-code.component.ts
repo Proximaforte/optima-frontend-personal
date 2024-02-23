@@ -1,28 +1,23 @@
 import { Component, OnInit , ElementRef, ViewChild, AfterViewInit, OnDestroy} from '@angular/core';
 import {  NgxOtpInputConfig } from 'ngx-otp-input/public-api';
-import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 
-
 @Component({
-  selector: 'app-input-otp',
-  templateUrl: './input-otp.component.html',
-  styleUrls: ['./input-otp.component.scss']
+  selector: 'app-verification-code',
+  templateUrl: './verification-code.component.html',
+  styleUrls: ['./verification-code.component.scss']
 })
-export class InputOTPComponent implements OnInit, AfterViewInit, OnDestroy{
-  poweredByOptima: string = "/assets/images/powered.svg";
-  phone: string = "/assets/images/phone.svg";
-  disabledBtn: boolean = true;
-  showOtp: boolean = false;
-  otpForm!: FormGroup;
-  otpValue: any;
-  routeParams: any = {};
-  @ViewChild('otpInput') otpInput!: ElementRef | any;
+export class VerificationCodeComponent implements OnInit,AfterViewInit, OnDestroy {
 
+  ninPlaceHolder: string = '';
+  otpValue1: any ;
+  otpValue2: any ;
+  disabledBtn: boolean = true;
+  @ViewChild('otpInput') otpInput!: ElementRef | any;
   otpInputConfig: NgxOtpInputConfig = {
-    otpLength: 4,
+    otpLength: 3,
     autofocus: false,
     classList: {
       inputBox: 'my-super-box-class',
@@ -36,26 +31,19 @@ export class InputOTPComponent implements OnInit, AfterViewInit, OnDestroy{
 
   countdown: number = 60;
   timerSubscription$!: Subscription;
-  
   constructor(
     private router: Router,
     private route: ActivatedRoute
-  ){
-    const getParams = this.route.queryParams.subscribe({
-      next: (param:any) => {
-        // console.log("param>>>", param);
-        this.routeParams = param;
-      }
-    })
-  
+  ){}
+
+  detectClicked(){
+    this.ninPlaceHolder = 'Input National Identity Number';
+  }
+  onInputBlur() {
+    this.ninPlaceHolder = '';
   }
 
-otpFormInput(){
-  this.otpForm = new FormGroup({
-    Otp: new FormControl('')
-  })
-}
-
+  
 startTimer() {
   this.timerSubscription$ = interval(1000)
     .pipe(
@@ -64,18 +52,18 @@ startTimer() {
     .subscribe(() => {
       this.countdown--;
       if (this.countdown === 0) {
-        this.router.navigateByUrl("/auth/forgot-paswords");
+        this.router.navigateByUrl("/home/beneficiary");
+        this.router.navigate(["/home/beneficiary"],{relativeTo: this.route, queryParams:{progress: "verify_NIN"}});
         this.timerSubscription$.unsubscribe(); // Stop the timer
       }
     });
 }
 
-ngOnInit(): void {
-  this.otpFormInput();
-  this.startTimer();
-}
+  ngOnInit(): void {
+    this.startTimer();
+  }
 
-
+  
 ngAfterViewInit(): void {
   this.otpInput.nativeElement.classList.add('large-otp-input');
 }
@@ -91,15 +79,26 @@ handleOtpChange(value: string[]): void {
 }
 
 handleFillEvent(value: any): void {
-  if(value?.length === 4){
-    this.disabledBtn = false;
+  if(value?.length === 3){
+    this.otpValue1 = value;
   }
 }
 
-routeToNewPasswords(){
-  this.router.navigate(["/auth/input-new-password"], {relativeTo: this.route});
+handleOtpChange2(value: string[]): void {
+  // console.log("onChange>>>", value);
+ }
+ 
+ handleFillEvent2(value: any): void {
+   if(value?.length === 3){
+    this.otpValue2 = value;
+      this.disabledBtn = false;
+   }
+ }
+
+ submit(){
+  const merged = this.otpValue1.concat(this.otpValue2);
+  console.log("merged>>>", Number(merged));
+   this.router.navigate(["/home/setup-biometrics"],{relativeTo: this.route, queryParams:{progress: "setup_biometrics"}});
 }
-
-
 
 }

@@ -1,86 +1,97 @@
-<div>
-  <div class="h-12 w-56 mb-6 px-4">
-    <!-- <mat-form-field class="flex flex-col-reverse">
-      <mat-label>{{ options[0] }} </mat-label>
-      <mat-select>
-        <mat-option *ngFor="let option of options" [value]="option">{{
-          option
-        }}</mat-option>
-      </mat-select>
-      <mat-icon matSuffix>date_range</mat-icon>
-    </mat-form-field> -->
-    <select name="" id="">
-      <option value="">
-        <i class="fe fe"></i>
-        {{ options[2] }}
-      </option>
-      <option value="" *ngFor="let option of options" class="bg-white">
-        {{ option }}
-      </option>
-    </select>
-  </div>
+<body>
+  <div>
+    <div class="h-12 w-56 mb-6 px-4">
+      <!-- <mat-form-field class="flex flex-col-reverse">
+        <mat-label>{{ options[0] }} </mat-label>
+        <mat-select>
+          <mat-option *ngFor="let option of options" [value]="option">{{
+            option
+          }}</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>date_range</mat-icon>
+      </mat-form-field>
 
-  <div class="flex flex-row px-6">
-    <div class="py-5 min-h-full">
-      <div class="flex flex-row mb-12 items-center justify-center">
-        <img src="assets/images/check.svg" alt="" height="24" width="24" />
-        <small class="text-xl font-euclid font-normal ml-2 text-optimaGray"
-          >Successfully Onboarded</small
-        >
-      </div>
-      <p class="text-[104px] text-[#344054]">{{ total }}</p>
+                <i class="fe fe"></i> -->
+          <!-- <mat-icon>calendar_today</mat-icon> 
+     -->
+      <!-- <select name="" id="">
+        <option value="">
+
+          <img [src]="calendar" alt="date-picker-select">
+          {{ options[2] }}
+        </option>
+        <option value="" *ngFor="let option of options" class="bg-white">
+          {{ option }}
+        </option>
+      </select> -->
+
+      <mat-form-field>
+        <mat-label><mat-icon>calendar_today</mat-icon> 
+          <!-- Select an option -->
+          {{ options[2] }}
+        </mat-label>
+        <mat-select disableRipple>
+          <mat-option value="" *ngFor="let option of options" class="bg-white">
+            {{ option }}
+          </mat-option >
+          <!-- <mat-option value="1">Option 1</mat-option>
+          <mat-option value="2">Option 2</mat-option>
+          <mat-option value="3">Option 3</mat-option> -->
+
+        </mat-select>
+      </mat-form-field>
+      
+
+
     </div>
-    <div class="border-r h-28 mt-6 mx-12"></div>
-    <div class="py-5 min-h-full">
-      <div class="flex flex-row mb-12 items-center justify-center">
-        <img src="assets/images/Pause.svg" alt="" height="24" width="24" />
-        <small class="text-xl font-euclid font-normal ml-2 text-optimaGray"
-          >Incomplete Onboarding</small
-        >
+  
+    <div class="flex flex-row px-6">
+      <div class="py-5 min-h-full">
+        <div class="flex flex-row mb-12 items-center justify-center">
+          <img src="assets/images/check.svg" alt="" height="24" width="24" />
+          <small class="text-xl font-euclid font-normal ml-2 text-optimaGray"
+            >Successfully Onboarded</small
+          >
+        </div>
+        <p class="text-[104px] text-[#344054]">{{ total }}</p>
       </div>
-      <p class="text-[104px] text-[#344054]">{{ total }}</p>
+      <div class="border-r h-28 mt-6 mx-12"></div>
+      <div class="py-5 min-h-full">
+        <div class="flex flex-row mb-12 items-center justify-center">
+          <img src="assets/images/Pause.svg" alt="" height="24" width="24" />
+          <small class="text-xl font-euclid font-normal ml-2 text-optimaGray"
+            >Incomplete Onboarding</small
+          >
+        </div>
+        <p class="text-[104px] text-[#344054]">{{ total }}</p>
+      </div>
     </div>
-  </div>
-
-  <div class="w-[80%] mt-12 border-2 rounded-2xl px-6 py-4">
-    <p class="mb-4 text-optimaGray text-lg font-medium">Center Information</p>
-
-    <div class="flex justify-between">
-      <div class="flex flex-col justify-between" *ngFor="let agent of agents">
-        <div class="border-none">
-          <div class="flex flex-row">
-            <div>
-              <img [src]="agent.icon" alt="image" class="w-10 h-10" />
-            </div>
-            <div class="flex flex-col ml-4 -mt-1">
-              <span class="text-[10px] text-optimaGray m-0">{{
-                agent.text
-              }}</span>
-              <span class="text-lg -mt-1">{{ agent.data }}</span>
+  
+    <div class="w-[80%] mt-12 border-2 rounded-2xl px-6 py-4">
+      <p class="mb-4 text-optimaGray text-lg font-medium">Center Information</p>
+  
+      <div class="flex justify-between">
+        <div class="flex flex-col justify-between" *ngFor="let agent of agents">
+          <div class="border-none">
+            <div class="flex flex-row">
+              <div>
+                <img [src]="agent.icon" alt="image" class="w-10 h-10" />
+              </div>
+              <div class="flex flex-col ml-4 -mt-1">
+                <span class="text-[10px] text-optimaGray m-0">{{
+                  agent.text
+                }}</span>
+                <span class="text-lg -mt-1">{{ agent.data }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="flex flex-col items-center mt-24">
-    <div><img src="assets/images/noData.svg" alt="" /></div>
-    <div class="flex flex-col items-center mt-8">
-      <p class="text-xl font-bold">Oops, No Beneficiary Yet</p>
-      <small class="text-optimaGray text-sm">
-        Your onboarded Beneficiaries would
-      </small>
-      <small class="text-optimaGray text-sm">appear here once done</small>
-    </div>
-    <div class="flex items-center w-2/12 h-20">
-      <button
-        type="submit"
-        routerLink="/home/onboarding"
-        class="text-white bg-optimaGreen font-bold py-2 px-4 h-10 rounded-md focus:outline-none focus:shadow-outline w-full"
-      >
-        Onboard New Beneficiary
-      </button>
+  
+    <div id="empty-data">
+      <app-beneficiary-table></app-beneficiary-table>
     </div>
   </div>
-</div>
+  
+</body>

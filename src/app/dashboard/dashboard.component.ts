@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class DashboardComponent {
 
 
+  calendar: string = "/assets/images/calendar.svg";
   total: number = 945;
   options: string[] = ['Today', 'Last 7days', 'This Month', 'Last 6 Months'];
   selectedValue: string = '';
