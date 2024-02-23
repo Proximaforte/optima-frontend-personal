@@ -1,19 +1,17 @@
 <div class="ml-4">
   <div class="h-12 w-56 mb-6 px-4">
-   <mat-form-field appearance="outline" >
-            <mat-select
-              formControlName="businessSize"
-              name="businessSize"
-              placeholder=""
-            >
-              <mat-option
-                *ngFor="let item of options"
-                [value]="item"
-              >
-                {{ item }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-select
+        formControlName="businessSize"
+        name="businessSize"
+        placeholder=""
+        class="outline-hidden outline-none border placeholder-zestPlaceholder border-solid border-[#c1c7d0]"
+      >
+        <mat-option *ngFor="let item of options" [value]="item" class="text-sm">
+          {{ item }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <!-- <select class="bg-white w-full h-[56px] outline-hidden rounded border-[1px] placeholder-zestPlaceholder border-solid border-[#c1c7d0] px-4 py-3 focus:border-zestGreen focus:ring-zestGreen">
       <option class="">
         <i class="fe fe"></i>
@@ -68,16 +66,14 @@
       </div>
     </div>
   </div>
-<div class="rounded-xl border border-tableGray  mt-10 py-4">
-  <div class="flex justify-between items-center mb-2 px-4">
-  
-<p class="text-sm relative rounded-xl px-6 py-3 bg-white shadow-lg">
-  Recent Onboarding
- 
-</p>
+  <div class="rounded-xl border border-tableGray mt-10 py-4">
+    <div class="flex justify-between items-center px-4">
+      <p class="text-sm relative rounded-xl px-6 py-3 shadow-lg">
+        Recent Onboarding
+      </p>
 
       <button
-        class="flex  bg-optimaGreen hover:bg-optimaGreen text-white font-bold py-2 px-4 rounded-md w-[200px]"
+        class="flex bg-optimaGreen hover:bg-optimaGreen text-white font-bold py-2 px-4 rounded-md w-[200px]"
         routerLink="../beneficiary"
       >
         <img
@@ -89,41 +85,84 @@
         />
         Add New Beneficiary
       </button>
-    
- 
+    </div>
+    <div>
+      <table class="w-full">
+        <thead class="bg-grey">
+          <tr>
+            <th
+              scope="col"
+              class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+            >
+              Name
+            </th>
+            <th
+              scope="col"
+              class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              Date of Birth
+            </th>
+            <th
+              scope="col"
+              class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              Email
+            </th>
+            <th
+              scope="col"
+              class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              NIN
+            </th>
+            <th
+              scope="col"
+              class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              Phone Number
+            </th>
+            <th
+              scope="col"
+              class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+            >
+              Gender
+            </th>
+            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+              <span class="sr-only">Edit</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          <tr class="text-left">
+            <td
+              class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
+            >
+              Olukoya Damilare
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              Oct 23, 2009
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <!-- TODO: Remember to track the quantity sold and represent it here as order remaining/qty -->
+             Olukoyadamilare@gmail.com
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              222266535
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            09067989484
+            </td>
+            <td
+              class="relative flex justify-between whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 overflow-visible"
+            >
+             Female
+            </td>
+          </tr>
+         
+          <!-- More people... -->
+        </tbody>
+      </table>
+    </div>
   </div>
-  <table class="w-full">
-    <thead class="bg-grey">
-      <tr>
-        <th class="flex items-center">
-          <mat-checkbox class="rounded p-0 ps-2"></mat-checkbox>
-          <span class="d-inline-block p-0 ps-3">Name ID</span>
-        </th>
-        <th>Date of Birth</th>
-        <th>Email</th>
-        <th>NIN</th>
-        <th>Phone Number</th>
-        <th>Gender</th>
-      </tr>
-    </thead>
-    <tbody class="pl-5">
-      <tr role="button" [routerLink]="['../beneficiary-details']">
-        <td class="flex items-center">
-          <mat-checkbox class="rounded p-0 ps-2"></mat-checkbox>
-          <span class="d-inline-block p-0 ps-3">Name ID</span>
-        </td>
-        <td>1990-01-01</td>
-        <td>john.doe@example.com</td>
-        <td>222289098543</td>
-        <td>123456789</td>
-        <td>Male</td>
-      </tr>
-      <!-- Add more rows as needed -->
-    </tbody>
-  </table>
-  
-</div>
-
   <div class="flex flex-col items-center mt-24">
     <div><img src="assets/images/noData.svg" alt="" /></div>
     <div class="flex flex-col items-center mt-8">

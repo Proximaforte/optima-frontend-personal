@@ -17,6 +17,7 @@ import { NewPasswordsComponent } from './new-passwords/new-passwords.component';
 import { authGuard } from '../securities/auth/auth.guard';
 
 
+
 const materialModule = [
   MatFormFieldModule, MatIconModule, MatInputModule, MatDialogModule,MatCardModule
 ]
@@ -27,7 +28,8 @@ const materialModule = [
     ChangePasswordsComponent,
     ForgotPasswordsComponent,
     InputOTPComponent,
-    NewPasswordsComponent
+    NewPasswordsComponent,
+
   ],
   imports: [
     CommonModule,

@@ -7,13 +7,15 @@ import { FilterBoxComponent } from '../utilities/filter-box/filter-box.component
   styleUrls: ['./all-beneficiary.component.scss'],
 })
 export class AllBeneficiaryComponent {
-  public page = 0;
-  public pageSize = 15;
-  public paginator: any;
-  public start!: number;
-  public end!: number;
-  public total: number = 0;
-  public element!: number;
+  // public page = 0;
+  // public pageSize = 15;
+  // public paginator: any;
+  // public start!: number;
+  // public end!: number;
+  // public total: number = 0;
+  // public element!: number;
+  lastpage!: number;
+  currentPage: number = 1;
   constructor(public dialog: MatDialog) {}
 
   openModal(): void {
@@ -30,9 +32,9 @@ export class AllBeneficiaryComponent {
     });
   }
 
-  public pageChanged(pageInfo: number) {
-    this.page = pageInfo - 1;
-    this.paginator.currentPage = pageInfo;
-    // this.loadData();
-  }
+  // public pageChanged(pageInfo: number) {
+  //   this.page = pageInfo - 1;
+  //   this.paginator.currentPage = pageInfo;
+  //   // this.loadData();
+  // }
 }
