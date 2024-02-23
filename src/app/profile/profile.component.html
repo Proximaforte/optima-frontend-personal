@@ -1,128 +1,130 @@
-<div class="ml-4">
-  <div class="bg-[#ff816246] h-12 rounded-t-2xl w-11/12"></div>
-  <div class="flex flex-row items-center ml-6 -mt-6">
-    <div>
-      <img
-        src="assets/images/profilepic.svg"
-        height="96"
-        width="96"
-        alt=""
-        class="rounded-full"
-      />
+<body>
+  <div class="ml-4">
+    <div class="bg-[#ff816246] h-12 rounded-t-2xl w-11/12"></div>
+    <div class="flex flex-row items-center ml-6 -mt-6">
+      <div>
+        <img
+          src="assets/images/profilepic.svg"
+          height="96"
+          width="96"
+          alt=""
+        />
+      </div>
+      <div class="ml-3 mt-8">
+        <div class="text-2xl font-bold">Kemisola Olusanya</div>
+        <div class="text-optimaGray">Agent Profile</div>
+      </div>
     </div>
-    <div class="ml-3 mt-8 font-sora">
-      <div class="text-2xl font-bold ">Kemisola Olusanya</div>
-      <div class="text-optimaGray">Agent Profile</div>
-    </div>
-  </div>
-
-  <div class="w-[70%] mt-16 border-2 rounded-2xl px-6 py-4">
-    <p class="text-optimaGray text-lg font-medium">Center Information</p>
-
-    <div class="flex justify-between">
-      <div class="flex flex-col justify-between" *ngFor="let agent of agents">
-        <div class="border-none">
-          <div class="flex flex-row">
-            <div>
-              <img [src]="agent.icon" alt="image" class="w-10 h-10" />
-            </div>
-            <div class="flex flex-col ml-4 -mt-1">
-              <span class="text-[10px] text-optimaGray m-0">{{
-                agent.text
-              }}</span>
-              <span class="text-lg -mt-1">{{ agent.data }}</span>
+  
+    <div class="w-[70%] mt-12 border-2 rounded-2xl px-6 py-4">
+      <p class="text-optimaGray text-lg font-medium">Center Information</p>
+  
+      <div class="flex justify-between">
+        <div class="flex flex-col justify-between" *ngFor="let agent of agents">
+          <div class="border-none">
+            <div class="flex flex-row">
+              <div>
+                <img [src]="agent.icon" alt="image" class="w-10 h-10" />
+              </div>
+              <div class="flex flex-col ml-4 -mt-1">
+                <span class="text-[10px] text-optimaGray m-0">{{
+                  agent.text
+                }}</span>
+                <span class="text-lg -mt-1">{{ agent.data }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Agent Personal Information
-      </p>
+  
+    <div class="w-[702px] mt-12 ml-8">
+      <div class="border-b">
+        <p class="font-semibold text-2xl pl-6 text-optimaGray">
+          Agent Personal Information
+        </p>
+      </div>
+  
+      <div>
+        <!-- first line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs"
+              >First name</label
+            >
+            <p class="text-center text-sm font-medium pt-2">Kemisola</p>
+          </div>
+          <div
+            class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs"
+              >Last name</label
+            >
+            <p class="text-center text-sm font-medium pt-2">Olusanya</p>
+          </div>
+          <div
+            class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs"
+              >Middle name</label
+            >
+            <p class="text-center text-sm font-medium pt-2">Damilola</p>
+          </div>
+        </div>
+  
+        <!-- Second line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs">NIN</label>
+            <p class="text-sm font-medium pt-2">11144400028</p>
+          </div>
+        </div>
+        <!-- Third Line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs"
+              >Phone Number</label
+            >
+            <p class="text-center text-sm font-medium pt-2">0708983203</p>
+          </div>
+  
+          <div
+            class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs">Email</label>
+            <p class="text-center text-sm font-medium pt-2">
+              olukoyadamilare_78@gmail.com
+            </p>
+          </div>
+        </div>
+        <!-- fourth -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs">Gender</label>
+            <p class="text-sm font-medium pt-2">Male</p>
+          </div>
+        </div>
+        <!-- Fift Line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs">Address</label>
+            <p class="text-sm font-medium pt-2">
+              No $ Colorado Street, Gbaga, Illorin
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div>
-      <!-- first line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >First name</label
-          >
-          <p class="text-center text-sm font-medium pt-2">Kemisola</p>
-        </div>
-        <div
-          class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Last name</label
-          >
-          <p class="text-center text-sm font-medium pt-2">Olusanya</p>
-        </div>
-        <div
-          class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Middle name</label
-          >
-          <p class="text-center text-sm font-medium pt-2">Damilola</p>
-        </div>
-      </div>
-
-      <!-- Second line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label">NIN</label>
-          <p class="text-sm font-medium pt-2">11144400028</p>
-        </div>
-      </div>
-      <!-- Third Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Phone Number</label
-          >
-          <p class="text-center text-sm font-medium pt-2">0708983203</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label">Email</label>
-          <p class="text-center text-sm font-medium pt-2">
-            olukoyadamilare_78@gmail.com
-          </p>
-        </div>
-      </div>
-      <!-- fourth -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label">Gender</label>
-          <p class="text-sm font-medium pt-2">Male</p>
-        </div>
-      </div>
-      <!-- Fift Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label">Address</label>
-          <p class="text-sm font-medium pt-2">
-            No $ Colorado Street, Gbaga, Illorin
-          </p>
-        </div>
-      </div>
-    </div>
   </div>
-</div>
+  
+</body>

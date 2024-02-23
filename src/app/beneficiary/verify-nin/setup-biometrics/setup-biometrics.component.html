@@ -1,0 +1,69 @@
+<body>
+    <div class="grid grid-cols-5 gap-4">
+       <div class="hidden sm:block">
+        <app-sidebar-helper></app-sidebar-helper>
+       </div>
+
+        <div class="col-span-4 h-full max-w-md mx-auto" id="first-column-items ">
+            <div class="bg-white p-8 rounded-lg  max-w-md">
+                <p class="text-2xl font-bold mb-4">
+                    Setup Biometrics
+                </p>
+                <div>
+                    <!-- <p>Select either of the options below to recieve</p>
+                    <p class="mt-[-12]">A 4-digit OTP pin</p> -->
+                    <br>
+                    <form>
+                        <div class="mb-4">
+                            <mat-card id="mat-card" class="cursor-pointer" (click)="procedureInterface('face_capturing', '/home/face-capturing')">
+                                <mat-card-content>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <img [src]="face" alt="phone" class="w-6 h-6 mr-2">
+                                            <div class="flex flex-col">
+                                                <span class="m-0 text-xs" id="theme">Face Capture</span>
+                                                <span class="m-0 text-xs">
+                                                    Select to capture customers face
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <span>
+                                            <mat-icon class="text-green-500">keyboard_arrow_right</mat-icon>
+                                        </span>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+        
+                        </div>
+                        <div class="mb-4">
+                            <mat-card id="second-mat-card" class="cursor-pointer" (click)="procedureInterface('finger_capturing', '/home/finger-capturing')">
+                                <mat-card-content>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <img [src]="finger" alt="phone" class="w-6 h-6 mr-2">
+                                            <div class="flex flex-col">
+                                                <span class="m-0 text-xs"  id="theme">Fingerprints</span>
+                                                <span class="m-0 text-xs">Setup beneficiary fingerprints to</span>
+                                                <span class="m-0 text-xs">complete biometrics</span>
+                                            </div>
+                                        </div>
+                                        <span>
+                                            <mat-icon>keyboard_arrow_right</mat-icon>
+                                        </span>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+        
+                         <!-- <button type="submit" [disabled]="disabledBtn"
+                            [ngStyle]="{ 'background-color': disabledBtn ? '#B8B7C8' : '#109856' }"
+                            class="w-full bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600">
+                            Proceed
+                        </button>  -->
+                    </form>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+</body>

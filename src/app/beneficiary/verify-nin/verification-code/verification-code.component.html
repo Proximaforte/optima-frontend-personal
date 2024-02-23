@@ -1,0 +1,50 @@
+<body>
+    <div class="grid grid-cols-5 gap-4">
+        <div class="hidden sm:block">
+            <app-sidebar-helper></app-sidebar-helper>
+           </div>
+    
+    
+        <div class="col-span-4 h-full" id="first-column-items">
+                <div class="grid grid-rows-3 gap-4 justify-items-start">
+        <div class="row-span-1">
+            <p class="text-lg font-semibold" id="align-header">
+                Enter Verification Code
+            </p>
+            <p class="text-xs text-gray-700"> we just sent a one-time secure code to **** *** **63</p>
+        </div>
+        
+        <div class="relative w-96 h-11">
+            <form>
+                <div class="mb-4 flex">
+                    <div class="otp-div mr-4">
+                        <ngx-otp-input #otpInput1 [config]="otpInputConfig" (otpChange)="handleOtpChange($event)" (fill)="handleFillEvent($event)" [(ngModel)]="otpValue1" name="otpValue1" class="w-16 h-16"></ngx-otp-input>
+                    </div>
+                    <span class="flex items-center text-4xl font-bold mt-[-8px]">‒</span> <!-- Divider -->
+                    <div class="otp-div ml-4">
+                        <ngx-otp-input #otpInput2 [config]="otpInputConfig" (otpChange)="handleOtpChange2($event)" (fill)="handleFillEvent2($event)" [(ngModel)]="otpValue2" name="otpValue2" class="w-16 h-16"></ngx-otp-input>
+                    </div>
+                </div>
+                
+                
+                <div class="mb-4">
+                    <span class="text-xs">Didn't recieve a code? <b>Resend OTP</b> in <b>{{ countdown }}s</b></span>
+                </div>
+                <br>
+
+                <button type="submit" [disabled]="disabledBtn" (click)="submit()"
+                    [ngStyle]="{ 'background-color': disabledBtn ? '#B8B7C8' : '#109856' }"
+                    class="bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600" id="btn-width">
+                    Proceed
+                </button>
+            </form>
+        </div>
+        
+        <!-- <div class="row-span-1 w-96 mt-2">
+            <button (click)="submit()" type="submit" [disabled]="disabledBtn" [ngStyle]="{ 'background-color': disabledBtn ? '#B8B7C8' : '#109856' }" class="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                Submit</button>
+        </div>  -->
+    </div>
+        </div>
+    </div>
+</body>

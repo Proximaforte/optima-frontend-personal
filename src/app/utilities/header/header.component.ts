@@ -43,7 +43,13 @@ export class HeaderComponent implements OnInit {
         if (routePath === 'profile' || routePath === 'dashboard') {
           this.title = 'Good ' + this.getTimeOfDay();
           this.name = this.userName;
-        } else if (routePath === 'beneficiary') {
+        } else if(
+          routePath === 'beneficiary' || 
+          routePath === 'verification-code' ||
+          routePath === 'setup-biometrics' ||
+          routePath === 'face-capturing' ||
+          routePath === 'finger-capturing'
+          ) {
           this.title = route.snapshot.data['title'];
           this.name = '(State Palliative Disbursement)';
           this.subPath = 'Add beneficiaries';

@@ -1,42 +1,46 @@
 <body class=" p-4">
     <div class="grid grid-rows-11 gap-4 max-w-md mx-auto">
-        <!-- Row 1: Heading "Personal Data" -->
         <div class="row-span-1 text-xl font-bold">Personal Data</div>
-
-        <!-- Row 2: Placeholder row -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-
-        <!-- Row 3: Two-column grid -->
-        <div class="row-span-2 grid grid-cols-2 gap-4">
-            <div class="bg-gray-200 p-4">Column 1</div>
-            <div class="bg-gray-200 p-4">Column 2</div>
-        </div>
-
-        <!-- Row 4: Placeholder row -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-
-        <!-- Row 5: Placeholder row -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-
-        <!-- Row 6: Placeholder row -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-
-        <!-- Row 7: Two-column grid -->
-        <div class="row-span-2 grid grid-cols-2 gap-4">
-            <div class="bg-gray-200 p-4">Column 1</div>
-            <div class="bg-gray-200 p-4">Column 2</div>
-        </div>
-
-        <!-- Row 8: Placeholder row -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-
-        <!-- Row 9: Placeholder row -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-
-        <!-- Row 10: Placeholder row -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-
-        <!-- Row 11: Placeholder row -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
+        <form id="form-values">
+            <div class="row-span-1 p-4">
+                  <div style="position: relative; width: 100%;">
+                    <label for="custom-input" style="position: absolute; top: -10px; left: 10px; background-color: white; padding: 0 5px; color: #888;">
+                        First Name
+                    </label>
+                    <input id="custom-input" placeholder=" " style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                  </div>
+                  
+                  
+                  
+                <!-- <input id="emailInput" [placeholder]="emailPlaceHolder" (blur)="onInputBlur()" (click)="detectClicked()"
+                    class="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700 outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 border-t-transparent focus:border-t-transparent border-blue-gray-200 focus:border-gray-900" />
+                <label for="emailInput"
+                    class=" flex w-full h-full text-black select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[4.1] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">
+                    Email
+                </label> -->
+            </div>
+            <div class="row-span-2 grid grid-cols-2 gap-4">
+                <div class=" p-4">
+                    <input id="emailInput" [placeholder]="emailPlaceHolder" (blur)="onInputBlur()" (click)="detectClicked()"
+                    class="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700 outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 border-t-transparent focus:border-t-transparent border-blue-gray-200 focus:border-gray-900" />
+                <label for="emailInput"
+                    class=" flex w-full h-full text-black select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[4.1] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">
+                    Email
+                </label>
+                </div>
+                <div class="bg-gray-200 p-4">Column 2</div>
+            </div>
+            <div class="row-span-1  p-4">Placeholder Row</div>
+            <div class="row-span-1 p-4">Placeholder Row</div>
+            <div class="row-span-1 p-4">Placeholder Row</div>
+            <div class="row-span-2 grid grid-cols-2 gap-4">
+                <div class=" p-4">Column 1</div>
+                <div class=" p-4">Column 2</div>
+            </div>
+            <div class="row-span-1  p-4">Placeholder Row</div>
+            <div class="row-span-1  p-4">Placeholder Row</div>
+            <div class="row-span-1  p-4">Placeholder Row</div>
+            <div class="row-span-1  p-4">Placeholder Row</div>
+        </form>
     </div>
 </body>

@@ -1,0 +1,52 @@
+<body>
+  <div class="grid grid-cols-5 gap-4">
+    <div class="hidden sm:block">
+      <app-sidebar-helper></app-sidebar-helper>
+    </div>
+
+    <div class="col-span-4 ">
+      <div class="grid grid-rows-11 gap-4 max-w-md mx-auto">
+        <div style="display: flex; align-items: center;">
+          <img [src]="routeBack" alt="routeBack" height="25" width="25" style="margin-right: 10px;">
+          <p class="text-xl font-bold" style="margin: 0;">Face Capturing</p>
+        </div>
+
+        <div class="flex items-start">
+          <img [src]="icon1" alt="routeBack" class="h-5 w-5 mr-2 mt-1">
+          <p class="inline">Ensure your face is fully visible, with both eyes, the nose, and the mouth clearly seen.</p>
+        </div>
+
+        <div class="flex items-start">
+          <img [src]="icon2" alt="routeBack" class="h-5 w-5 mr-2 mt-1">
+          <p class="inline">Ensure your face is fully visible, with both eyes, the nose, and the mouth clearly seen.</p>
+        </div>
+
+        <div class="flex items-start">
+          <img [src]="icon3" alt="routeBack" class="h-5 w-5 mr-2 mt-1">
+          <p class="inline">Ensure your face is fully visible, with both eyes, the nose, and the mouth clearly seen.</p>
+        </div>
+
+        <div class="flex items-start">
+          <img [src]="icon4" alt="routeBack" class="h-5 w-5 mr-2 mt-1">
+          <p class="inline">Ensure your face is fully visible, with both eyes, the nose, and the mouth clearly seen.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-gray-200 p-4">image 1</div>
+          <div class="bg-gray-200 p-4">image 2</div>
+      </div>
+
+
+        <!-- <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div> -->
+        <div class="row-span-1 p-4">
+          <button type="submit" [disabled]="disabledBtn" (click)="submit()"
+          [ngStyle]="{ 'background-color': disabledBtn ? '#B8B7C8' : '#109856' }"
+          class="bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600 w-full" >
+          Proceed
+      </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>

@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class PersonalDetailsComponent {
 
+  emailPlaceHolder: string = '';
+  email: string = 'Email';
+  constructor(){}
+
+  
+  detectClicked(){
+    this.emailPlaceHolder = 'Input email';
+  }
+  onInputBlur() {
+    this.emailPlaceHolder = '';
+  }
+
 }
