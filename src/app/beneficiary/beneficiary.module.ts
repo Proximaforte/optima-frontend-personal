@@ -30,6 +30,7 @@ import { BiometricsSuccessfulModalComponent } from './verify-nin/biometrics-succ
 import { SidebarHelperComponent } from './verify-nin/sidebar-helper/sidebar-helper.component';
 import { NgxOtpInputModule } from 'ngx-otp-input';
 import { MatCardModule } from '@angular/material/card';
+import { WebcamModule } from 'ngx-webcam';
 
 const materialModules = [
   MatStepperModule, MatExpansionModule, MatFormFieldModule, MatInputModule,MatIconModule, MatCardModule
@@ -65,7 +66,8 @@ const materialModules = [
     materialModules,
     FormsModule,
     ReactiveFormsModule,
-    NgxOtpInputModule
+    NgxOtpInputModule,
+    WebcamModule
   ],
   providers:[
     {
