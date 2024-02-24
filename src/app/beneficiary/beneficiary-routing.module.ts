@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'verification-code', component: VerificationCodeComponent},
   {path: 'setup-biometrics', component: SetupBiometricsComponent},
   {path: 'face-capturing', component: FaceCapturingComponent},
-  {path: 'finger-capturing', component: FingerCapturingComponent},
+  {path: 'finger-capturing', component: FingerCapturingComponent}
 ];
 
 @NgModule({

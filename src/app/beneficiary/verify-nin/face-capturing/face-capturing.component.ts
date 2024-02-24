@@ -1,6 +1,11 @@
-import { Component, ViewChild, OnInit, HostListener, ElementRef } from '@angular/core';
-import { WebcamComponent , WebcamInitError} from 'ngx-webcam';
-import { Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { WebcamImage} from 'ngx-webcam';
+import { Subject, Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { CaptureCompleteComponent } from '../capture-complete/capture-complete.component';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { Subscription } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-face-capturing',
@@ -16,104 +21,74 @@ export class FaceCapturingComponent implements OnInit {
   icon4: string =  "/assets/images/icon4.svg";
   upload: string =  "/assets/images/iconplus.svg";
   passport: string = "/assets/images/passport.svg";
+  photograph: string = "";
+  capture: string = "/assets/images/capture.svg";
   disabledBtn: boolean = true;
+  acceptImage$!: Subscription;
 
-  // webcam property: https://chat.openai.com/c/cb11f9f6-fa58-4a6c-b756-81a38ae881cd
-  @ViewChild('webcam') webcam!: WebcamComponent | any;
+ // @ViewChild('webcam') webcam!: WebcamComponent | any;
+  webcam: WebcamImage | any = null;
   showWebcam: boolean = false;
-  screenHeight: number = 0;
-  screenWidth: number = 0;
-  triggerObservable: Subject<void> = new Subject<void>();
+  capturedImage: string | any = null;
+  trigger: Subject<void> = new Subject<void>();
+  triggerObservable: Observable<void> = this.trigger.asObservable();
+  webcamHeight: number = 0;
+  webcamWidth: number = 0;
+  showLatest:boolean = false; //original === true
 
 
-// window browser getUserMedia property https://chat.openai.com/c/c402703b-b935-433f-a90a-9731375a972b
-  @ViewChild('videoElement') videoElement!: ElementRef;
-  cameraActive: boolean = false;
-  stream: MediaStream | null | any = null;
-  constructor(){}
 
-  async toggleCamera() {
-    // window browser getUserMedia property https://chat.openai.com/c/c402703b-b935-433f-a90a-9731375a972b
-    if (!this.cameraActive) {
-      try {
-        this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        const video = this.videoElement.nativeElement;
-        if ('srcObject' in video) {
-          video.srcObject = this.stream;
-        } else {
-          // For older browsers without srcObject support
-          video.src = window.URL.createObjectURL(this.stream);
-        }
-        video.play();
-        this.cameraActive = true;
-      } catch (error) {
-        console.error('Error accessing webcam:', error);
-      }
-    } else {
-      if (this.stream) {
-        this.stream.getTracks().forEach((track: any) => track.stop());
-        this.cameraActive = false;
-      }
-    }
+  constructor(
+    private dialog: MatDialog,
+    private service: BeneficiaryService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.webcamHeight = window?.innerHeight;
+    this.webcamWidth = window?.innerWidth;
   }
 
+  handleImageCapture(webcamImage: WebcamImage) {
+    this.webcam = webcamImage;
+  }
 
+  captureImage() {
+    this.trigger.next();
+    this.service.setImageUrl(this.webcam.imageAsDataUrl);
+  this.dialog.open(CaptureCompleteComponent,{
+    width: `${window.innerWidth}px`
+  });
+  this.showWebcam = false;
+  }
 
-
-    // Method to capture snapshot
-  toggleWebcam( options?: any | { imageFormat?: 'jpeg' | 'png', imageQuality?: number }) {
+  public toggleWebcam(): void {
     this.showWebcam = !this.showWebcam;
-    if (this.showWebcam) {
-      this.startWebcam();
-      this.triggerObservable.next(options);
-    } else {
-      this.stopWebcam();
-    }
   }
 
   ngOnInit(): void {
-    this.screenHeight = window.innerHeight;
-    this.screenWidth = window.innerWidth;
-
-     // Add event listener to update dimensions when the window is resized
-     window.addEventListener('resize', this.onResize.bind(this));
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: UIEvent): void {
-    this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight;
-
-    console.log("my screen's height>>", this.screenHeight);
-    console.log("my screen's width>>", this.screenWidth);
-  }
-
-  startWebcam() {
-    this.webcam.start()
-    .then((result: any) => {
-      console.log('Webcam started');
+    this.showLatest = this.service.getShowOriginal();
+    const   acceptImage$ = this.service.acceptImageUrl().subscribe({
+      next: (item:any) => {
+        this.photograph  = item?.image;
+        this.showLatest = item?.showLatest;
+        if(this.showLatest === true){
+          this.disabledBtn = false;
+        }
+      }
     })
-    .catch((error: WebcamInitError) => {
-      console.error(error);
-    });
   }
 
-  stopWebcam() {
-    this.webcam.stop();
-    console.log('Webcam stopped');
+  retake(){
+    this.showLatest = false;
+    this.disabledBtn = true;
   }
-
-  // Set dimensions of the webcam based on screen size
-  get webcamHeight(): number {
-    return this.screenHeight;
-  }
-
-  get webcamWidth(): number {
-    return this.screenWidth;
-  }
-
 
   submit(){
-
+  this.router.navigate(['/home/setup-biometrics'],{
+    relativeTo: this.route,
+    queryParams: {
+      progress: 'setup_biometrics'
+    }
+  })
   }
 }
