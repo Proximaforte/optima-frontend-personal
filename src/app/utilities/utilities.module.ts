@@ -20,6 +20,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PaginationComponent } from './pagination/pagination.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterBoxComponent } from './filter-box/filter-box.component';
+import { SkipCapturingComponent } from './modals/skip-capturing/skip-capturing.component';
+import { SuccesfulBiometricsComponent } from './modals/succesful-biometrics/succesful-biometrics.component';
 const materialModules = [
   MatDialogModule
 ]
@@ -32,6 +34,8 @@ const materialModules = [
     ChangePasswordComponent,
     PaginationComponent,
     FilterBoxComponent,
+    SkipCapturingComponent,
+    SuccesfulBiometricsComponent,
   ],
   imports: [
     CommonModule,

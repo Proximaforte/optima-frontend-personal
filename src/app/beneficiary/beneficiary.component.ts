@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, ViewChild, OnInit  } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-beneficiary',
   templateUrl: './beneficiary.component.html',
   styleUrls: ['./beneficiary.component.scss']
 })
-export class BeneficiaryComponent {
+export class BeneficiaryComponent implements OnInit {
+
+  @ViewChild('personal-details') sectionToScrollTo!: ElementRef;
 
   beneficiaryItems: String[] | any = [
     "verify beneficiary nin",
@@ -29,6 +31,25 @@ constructor(
 ){
   if(this.selectedItemName === null){
     this.selectedItemName = 'verify beneficiary nin';
+  }
+}
+
+ngOnInit(): void {
+  this.route.queryParams.subscribe({
+    next: (params: Params) => {
+      const sectionToScrollTo = params['progress'];
+      console.log('params>>', sectionToScrollTo);
+      if (sectionToScrollTo === 'personal_details') {
+        this.scrollToSection(sectionToScrollTo);
+      }
+    }
+  });
+}
+
+scrollToSection(sectionId: string) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 }
 

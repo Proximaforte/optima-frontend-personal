@@ -6,8 +6,8 @@
 
     <div class="grid grid-rows-11 gap-8 max-w-md max-h-screen mx-auto overflow-hidden col-span-4 ">
       <!-- Increased gap to 8 -->
-      <div style="display: flex; align-items: center;">
-        <img [src]="routeBack" alt="routeBack" height="25" width="25" style="margin-right: 10px;">
+      <div style="display: flex; align-items: center; margin-top: 2px;">
+        <img (click)="routeToPrevious()" [src]="routeBack" alt="routeBack" height="25" width="25" style="margin-right: 10px;  cursor: pointer;">
         <p class="text-xl font-bold" style="margin: 0;">Face Capturing</p>
       </div>
       <div class="flex items-start">

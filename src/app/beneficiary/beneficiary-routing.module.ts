@@ -5,6 +5,7 @@ import { VerificationCodeComponent } from './verify-nin/verification-code/verifi
 import { SetupBiometricsComponent } from './verify-nin/setup-biometrics/setup-biometrics.component';
 import { FaceCapturingComponent } from './verify-nin/face-capturing/face-capturing.component';
 import { FingerCapturingComponent } from './verify-nin/finger-capturing/finger-capturing.component';
+import { FingerCapturingProcedureComponent } from './verify-nin/finger-capturing-procedure/finger-capturing-procedure.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'verification-code', component: VerificationCodeComponent},
   {path: 'setup-biometrics', component: SetupBiometricsComponent},
   {path: 'face-capturing', component: FaceCapturingComponent},
-  {path: 'finger-capturing', component: FingerCapturingComponent}
+  {path: 'finger-capturing', component: FingerCapturingComponent},
+  {path: 'finger-capturing-procedure', component: FingerCapturingProcedureComponent},
 ];
 
 @NgModule({

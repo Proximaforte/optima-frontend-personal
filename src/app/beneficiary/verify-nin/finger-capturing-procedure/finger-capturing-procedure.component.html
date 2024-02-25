@@ -1,1 +1,84 @@
-<p>finger-capturing-procedure works!</p>
+<body>
+    <div class="grid grid-cols-5 gap-4">
+        <div class="hidden sm:block">
+            <app-sidebar-helper></app-sidebar-helper>
+        </div>
+
+        <div class="w-full" id="first-column-items">
+            <p class="text-3xl w-max-content whitespace-nowrap font-semibold">Finger Capturing</p>
+            <div class="flex items-start">
+                <img [src]="bullet" alt="routeBack" class="h-5 w-5 mr-2">
+                <p class="inline text-gray-500 w-max-content whitespace-nowrap ">
+                    Place your <a class="font-semibold">LEFT</a> thumb on the machine
+                </p>
+            </div>
+
+            <div class="flex items-start">
+                <img [src]="done" alt="done">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img [src]="active" alt="done">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img [src]="inactive" alt="done">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img [src]="err" alt="done">
+            </div>
+            <br><br><br>
+
+            <div *ngIf="!showOtherProcedure" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="thumb-fingers">
+                <div class="p-4">
+                    <img [src]="leftThumb" alt="done" class="w-full h-full object-cover">
+                    <div id="click-inactive">
+                        <img [src]="active_" alt="done" >
+                    </div>
+                    <div id="click-done">
+                        <img [src]="inactive_" alt="done" >
+                    </div>
+                    <div  id="click-active">
+                        <img [src]="activeText" alt="">
+                    </div>
+                </div>
+                <div class="p-4">
+                  <img [src]="left_thumb" alt="" id="thumb-text">
+                    <img [src]="scan" alt="done" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <img [src]="blurr" alt="done" class="w-full h-full object-cover">
+                    <div id="click-to-activate">
+                        <img (click)="toggleNext()" [src]="click" alt="done" class="cursor-pointer">
+                    </div>
+                </div>
+            </div>     
+
+            <div *ngIf="showOtherProcedure" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="thumb-fingers">
+                <div class="p-4">
+                    <img [src]="leftThumb" alt="done" class="w-full h-full object-cover">
+                    <div id="click-inactive">
+                        <img [src]="active_" alt="done" >
+                    </div>
+                    <div id="click-done">
+                        <img [src]="inactive_" alt="done" >
+                    </div>
+                    <div  id="click-active">
+                        <img [src]="inactiveText" alt="">
+                    </div>
+                </div>
+                <div class="p-4">
+                  <img [src]="rightThumb" alt="" id="thumb-text">
+                    <img [src]="scan" alt="done" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4">
+                    <img [src]="right" alt="done" class="w-full h-full object-cover">
+                    <div id="click-to-activate-right">
+                        <img [src]="inactive_" alt="done" >
+                    </div>
+                    <div  id="click-active-text">
+                        <img [src]="activeText" alt="">
+                    </div>
+                </div>
+            </div> 
+
+            <div class="flex items-start justify-center mt-12">
+                <img (click)="togglePrevious()" [src]="previous" alt="" class="cursor-pointer">
+                <img (click)="routeToPage()" [src]="next" alt="" style="margin-left: 200px;" class="cursor-pointer">
+            </div>
+        </div>
+
+    </div>
+</body>

@@ -23,7 +23,7 @@
             <div id="first-column-items" *ngIf=" selectedItemName === 'verify beneficiary nin'">
                 <app-verify-nin></app-verify-nin>
             </div>
-            <div *ngIf="selectedItemName === 'personal details'">
+            <div *ngIf="selectedItemName === 'personal details'" id="personal-details">
                 <app-personal-details></app-personal-details>
             </div>
             <div *ngIf="selectedItemName === 'residential details'">

@@ -48,6 +48,11 @@ export class FaceCapturingComponent implements OnInit {
     this.webcamWidth = window?.innerWidth;
   }
 
+  routeToPrevious(){
+    window.history.go(-1);
+  }
+
+ 
   handleImageCapture(webcamImage: WebcamImage) {
     this.webcam = webcamImage;
   }
@@ -83,11 +88,13 @@ export class FaceCapturingComponent implements OnInit {
     this.disabledBtn = true;
   }
 
+ 
+
   submit(){
   this.router.navigate(['/home/setup-biometrics'],{
     relativeTo: this.route,
     queryParams: {
-      progress: 'setup_biometrics'
+      progress: 'face_capture_done'
     }
   })
   }

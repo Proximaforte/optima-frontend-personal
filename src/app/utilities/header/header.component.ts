@@ -48,7 +48,8 @@ export class HeaderComponent implements OnInit {
           routePath === 'verification-code' ||
           routePath === 'setup-biometrics' ||
           routePath === 'face-capturing' ||
-          routePath === 'finger-capturing'
+          routePath === 'finger-capturing' ||
+          routePath === 'finger-capturing-procedure'
           ) {
           this.title = route.snapshot.data['title'];
           this.name = '(State Palliative Disbursement)';
