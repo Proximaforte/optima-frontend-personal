@@ -32,10 +32,11 @@ import { NgxOtpInputModule } from 'ngx-otp-input';
 import { MatCardModule } from '@angular/material/card';
 import { WebcamModule } from 'ngx-webcam';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 
 
 const materialModules = [
-  MatStepperModule, MatExpansionModule, MatFormFieldModule, MatInputModule,MatIconModule, MatCardModule, MatDialogModule
+  MatStepperModule, MatExpansionModule, MatFormFieldModule, MatInputModule,MatIconModule, MatCardModule, MatDialogModule,MatSelectModule
 ]
 
 

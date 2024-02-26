@@ -4,7 +4,10 @@ body {
 }
 
 
-#form-values{
-    margin-top: -250px;
-    margin-left: -20px;
+.example-full-width {
+    width: 100%; /* Set width to 100% for full width */
+}
+
+#readonly-input{
+    background-color: #EEF2F8;
 }

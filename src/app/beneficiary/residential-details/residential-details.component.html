@@ -4,11 +4,61 @@
             <p class="text-xl font-bold">Residential Information</p>
             <p>Enter beneficiary resident details below</p>
         </div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-        <!-- <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div> -->
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
+     
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="residentialInfo">
+                <select id="countries" formControlName="placeOfResidence"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <!-- <option></option> -->
+                    <option *ngFor="let option of options; let id=index" >
+                        <span> {{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="showOthers === true">
+            <form class="max-w-sm" [formGroup]="residentialInfo">
+                <input type="text" aria-describedby="helper-text-explanation" formControlName="annualPay"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="How much do you pay annually(NGN)?">
+            </form>
+        </div>
+        <div class="row-span-1">
+
+            <form class="max-w-sm" [formGroup]="residentialInfo">
+                <input type="text" aria-describedby="helper-text-explanation" formControlName="address"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Address*">
+            </form>
+
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm"  [formGroup]="residentialInfo">
+                <select id="countries" formControlName="selectState"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <!-- <option></option> -->
+                    <option *ngFor="let option of states; let id=index" >
+                        <span> {{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm"  [formGroup]="residentialInfo">
+                <select id="countries" formControlName="selectLga"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <!-- <option></option> -->
+                    <option *ngFor="let option of selectedLGA; let id=index" >
+                        <span> {{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="row-span-1 w-full mt-2">
+            <button id="btn" (click)="submitForm()" type="submit" [disabled]="null" [ngStyle]="{ 'background-color': null ? '#B8B7C8' : '#109856' }"
+                class="h-12 px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                Proceed
+            </button>
+        </div>
     </div>
 </body>

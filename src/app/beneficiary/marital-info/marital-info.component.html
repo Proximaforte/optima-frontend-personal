@@ -1,42 +1,110 @@
-<body class=" p-4">
-    <div class="grid grid-rows-11 gap-4 max-w-md mx-auto">
-        <div class="row-span-1">
-            <p class="text-xl font-bold">Marital Information</p>
-            <p>Enter beneficiary resident details below</p>
-        </div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-        <!-- <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div> -->
-        <div class="row-span-1 bg-gray-200 p-4">
-            <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Self aware panel
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            Currently I am {{panelOpenState ? 'open' : 'closed'}}
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <p>I'm visible because I am open</p>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
+<body>
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="w-full max-w-md">
+            <div class="grid grid-rows-4 gap-4">
+                <!-- Third Row: Input Boxes -->
+                <div class="row-span-1 flex flex-col p-4">
+                    <div class="row-span-1">
+                        <p class="text-xl font-bold">Marital Information</p>
+                        <p>Kindly input your marital details below</p>
+                    </div>
+                    <br><br>
+                    <div class="row-span-1" id="row-one">
+                        <form class="max-w-sm" [formGroup]="maritalInfoForm">
+                            <select id="countries" formControlName="maritalStatus"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                                <option value="Marital Status">Marital Status</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Divorced">Divorced</option>
+                                <option value="Widow">Widow</option>
+                                <option value="Widower">Widower</option>
+                                <!-- <option *ngFor="let option of options; let id=index" >
+                                <span> {{ option }}</span>
+                            </option> -->
+                            </select>
+                        </form>
+                    </div>
+                    <br><br>
 
-        <div class="row-span-1 bg-gray-200 p-4">
-            <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Self aware panel
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            Currently I am {{panelOpenState ? 'open' : 'closed'}}
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <p>I'm visible because I am open</p>
-                </mat-expansion-panel>
-            </mat-accordion>
+                    <form class="max-w-sm flex" [formGroup]="maritalInfoForm">
+                        <div class="relative w-full min-w-[200px] h-10">
+                            <div
+                                class="absolute cursor-pointer grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4">
+                                <mat-icon>unfold_more</mat-icon>
+                            </div>
+                            <input #passwordInput type="text" [placeholder]="emailPlaceHolder"
+                                (blur)="onInputBlur()" (click)="detectClicked()" formControlName="numberOfSpouse"
+                                class="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900" />
+                            <label
+                                class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">
+                                Number of Spouse(s)
+                            </label>
+                        </div>
+                    </form>
+                    <br>
+             <form [formGroup]="spouseFormGroup">
+                <div *ngFor="let i of numbersArray(spouse)">
+                    <input type="text" id="child" aria-describedby="helper-text-explanation" [formControlName]="nameOfSpouse" (input)="onInputSpouseChange(nameOfSpouse, $event)"
+                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Name of Spouse">
+                <input type="text" id="child" aria-describedby="helper-text-explanation" [formControlName]="phoneNumberOfSpouse" (input)="onInputSpouseChange(phoneNumberOfSpouse, $event)"
+                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Phone number of spouse">
+                    <br>
+                    <hr class="w-[295px]" id="child"><br>
+                   </div>
+             </form>
+
+                    <!-- sdfgsfdgsdfgsdd i+1 === nArray?.length-->
+<br><br>
+                    <form class="max-w-sm flex" [formGroup]="maritalInfoForm">
+                        <div class="relative w-full min-w-[200px] h-10">
+                            <div
+                                class="absolute cursor-pointer grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4">
+                                <mat-icon>unfold_more</mat-icon>
+                            </div>
+                            <input #passwordInput formControlName="numberOfChildren" [placeholder]="otherPlaceHolder"
+                                (blur)="onInputBlur_()" (click)="detectClicked_()"
+                                class="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900" />
+                            <label
+                                class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">
+                                Number of child/children
+                            </label>
+                        </div>
+                    </form>
+                    <br>
+            <form [formGroup]="childFormGroup">
+                <div *ngFor="let i of numbersArrayNext(children)">
+                    <input type="text" id="child" aria-describedby="helper-text-explanation" [formControlName]="nameOfChild" (input)="onInputChildrenChange(nameOfChild, $event)"
+                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Address*">
+                <input type="text" id="child" aria-describedby="helper-text-explanation" [formControlName]="ageOfChild" (input)="onInputChildrenChange(ageOfChild, $event)"
+                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Address*">
+                <input type="text" id="child" aria-describedby="helper-text-explanation" [formControlName]="childEducationStatus" (input)="onInputChildrenChange(childEducationStatus, $event)"
+                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Address*">
+                <input type="text" id="child" aria-describedby="helper-text-explanation" [formControlName]="nameOfChildsSchool" (input)="onInputChildrenChange(nameOfChildsSchool, $event)"
+                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Address*">
+                <input type="text" id="child" aria-describedby="helper-text-explanation" [formControlName]="phoneNumberOfChild"  (input)="onInputChildrenChange(phoneNumberOfChild, $event)"
+                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Address*">
+                <br>
+                <hr class="w-[295px]" id="child"><br>
+                   </div>
+            </form>
+                 
+                    <br>
+                    <button (click)="submitForm()" type="submit" [disabled]="!maritalInfoForm.valid"
+                        [ngStyle]="{ 'background-color': !maritalInfoForm.valid ? '#B8B7C8' : '#109856' }"
+                        class="w-full h-12 px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-500 focus:outline-none focus:bg-green-600">
+                        Proceed
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
     </div>
+
 </body>

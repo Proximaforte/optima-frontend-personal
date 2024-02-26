@@ -52,5 +52,5 @@ export class FingerCapturingProcedureComponent {
   }
 
 
-  // /home/beneficiary?progress=personal_details
+  // https://chat.openai.com/c/7ba50bd9-6bdd-4ce2-a5aa-3e415fc3eed4
 }
