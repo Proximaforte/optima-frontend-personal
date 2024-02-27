@@ -6,6 +6,8 @@ import { SetupBiometricsComponent } from './verify-nin/setup-biometrics/setup-bi
 import { FaceCapturingComponent } from './verify-nin/face-capturing/face-capturing.component';
 import { FingerCapturingComponent } from './verify-nin/finger-capturing/finger-capturing.component';
 import { FingerCapturingProcedureComponent } from './verify-nin/finger-capturing-procedure/finger-capturing-procedure.component';
+import { DisabilityStatusComponent } from './disability-status/disability-status.component';
+import { FinancialComponent } from './financial/financial.component';
 
 const routes: Routes = [
   {
@@ -19,6 +21,8 @@ const routes: Routes = [
   {path: 'face-capturing', component: FaceCapturingComponent},
   {path: 'finger-capturing', component: FingerCapturingComponent},
   {path: 'finger-capturing-procedure', component: FingerCapturingProcedureComponent},
+  {path: 'disability-status', component: DisabilityStatusComponent},
+  //  {path: 'financial-status', component: FinancialComponent},
 ];
 
 @NgModule({

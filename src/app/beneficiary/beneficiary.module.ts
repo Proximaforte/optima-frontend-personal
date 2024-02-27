@@ -33,6 +33,7 @@ import { MatCardModule } from '@angular/material/card';
 import { WebcamModule } from 'ngx-webcam';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
+import { DisabilityStatusComponent } from './disability-status/disability-status.component';
 
 
 const materialModules = [
@@ -61,7 +62,8 @@ const materialModules = [
     FingerCapturingProcedureComponent,
     SkipCapturingModalComponent,
     BiometricsSuccessfulModalComponent,
-    SidebarHelperComponent
+    SidebarHelperComponent,
+    DisabilityStatusComponent
   ],
   imports: [
     CommonModule,
