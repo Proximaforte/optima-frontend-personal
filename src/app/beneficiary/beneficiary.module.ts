@@ -80,6 +80,7 @@ const materialModules = [
       useExisting: forwardRef(() => NgxOtpInputModule),
       multi: true,
     }
-  ]
+  ],
+  exports: [SidebarHelperComponent]
 })
 export class BeneficiaryModule { }

@@ -1,6 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
+import { PersonalDetailsComponent } from './beneficiaries/personal-details/personal-details.component';
+import { ResidentDetailsComponent } from './beneficiaries/resident-details/resident-details.component';
+import { MaritalInfoComponent } from './beneficiaries/marital-info/marital-info.component';
+import { EducationComponent } from './beneficiaries/education/education.component';
+import { HealthComponent } from './beneficiaries/health/health.component';
+import { FinancialComponent } from './beneficiaries/financial/financial.component';
+import { NextOfKinComponent } from './beneficiaries/next-of-kin/next-of-kin.component';
+import { EmploymentComponent } from './beneficiaries/employment/employment.component';
+import { OtherDetailsComponent } from './beneficiaries/other-details/other-details.component';
 
 const routes: Routes = [
   {
@@ -45,6 +54,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: 'beneficiary/personal-details', component: PersonalDetailsComponent }, //  /home/beneficiary/personal-details
 ];
 
 @NgModule({
