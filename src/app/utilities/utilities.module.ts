@@ -22,6 +22,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FilterBoxComponent } from './filter-box/filter-box.component';
 import { SkipCapturingComponent } from './modals/skip-capturing/skip-capturing.component';
 import { SuccesfulBiometricsComponent } from './modals/succesful-biometrics/succesful-biometrics.component';
+import { SuccessfulBeneficiaryOnboardingComponent } from './modals/successful-beneficiary-onboarding/successful-beneficiary-onboarding.component';
 const materialModules = [
   MatDialogModule
 ]
@@ -36,6 +37,7 @@ const materialModules = [
     FilterBoxComponent,
     SkipCapturingComponent,
     SuccesfulBiometricsComponent,
+    SuccessfulBeneficiaryOnboardingComponent,
   ],
   imports: [
     CommonModule,

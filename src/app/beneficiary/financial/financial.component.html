@@ -6,7 +6,7 @@
         </div>
         <div class="row-span-1">
             <form class="max-w-sm" [formGroup]="financialInfoForm">
-                <select formControlName="breadWinner" id="funding_options" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                <select formControlName="breadWinner" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of options; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -15,7 +15,7 @@
         </div>
         <div class="row-span-1">
             <form class="max-w-sm"  [formGroup]="financialInfoForm">
-                <select formControlName="houseHoldIncome" id="funding_options" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                <select formControlName="houseHoldIncome" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option2; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -24,7 +24,7 @@
         </div>
         <div class="row-span-1">
             <form class="max-w-sm"  [formGroup]="financialInfoForm">
-                <select formControlName="averageAmtSpent" id="funding_options" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                <select formControlName="averageAmtSpent" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option4; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -33,7 +33,7 @@
         </div>
         <div class="row-span-1">
             <form  class="max-w-sm"  [formGroup]="financialInfoForm">
-                <select formControlName="financialAid" id="funding_options" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                <select formControlName="financialAid" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option3; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -42,7 +42,7 @@
         </div>
         <div class="row-span-1" *ngIf="showOthers === true">
             <form class="max-w-sm"  [formGroup]="financialInfoForm">
-                <select formControlName="ifYes" id="funding_options" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                <select formControlName="ifYes" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option5; let id=index">
                         <span>{{ option }}</span>
                     </option>

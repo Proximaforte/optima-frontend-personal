@@ -2,14 +2,75 @@
     <div class="grid grid-rows-11 gap-4 max-w-md mx-auto">
         <div class="row-span-1">
             <p class="text-xl font-bold">Employment Information</p>
-            <!-- <p>Almost thereenter your next of kin information</p> -->
+            <!-- <p>Almost there enter your next of kin information.</p> -->
         </div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
-        <div class="row-span-1 bg-gray-200 p-4">Placeholder Row</div>
+       
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <select formControlName="employmentStatus" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of options; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="showEmployed === true">
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <input type="text"  formControlName="nameOfEmployer" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="if Employed, What is the name of your Employer?*">
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="showEmployed === true">
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <input type="text"  formControlName="employerOfficeAddress" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Employer Office Address*">
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="showEmployed === true">
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <select  formControlName="otherSourcesOfIncome" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option2; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="showSelfEmployed === true">
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <input type="text"  formControlName="nameOfBusiness" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="What is the name of your business?*">
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="showSelfEmployed === true" >
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <input type="text" formControlName="natureOfBusiness" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="What is the nature of your business?*">
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="showRetired === true" >
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <select formControlName="pensionAccount" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option3; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="showRetired === true" >
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <select formControlName="pensionPaymentQuestion" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option4; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="row-span-1 w-full mt-2">
+            <!-- [disabled]="null" -->
+            <button (click)="submitForm()"  id="btn" type="submit" [disabled]="null"  [ngStyle]="{ 'background-color': null ? '#B8B7C8' : '#109856' }"
+                class="h-12 w-[400px] px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                Proceed
+            </button>
+        </div>
 
     </div>
 </body>
+
+
+
