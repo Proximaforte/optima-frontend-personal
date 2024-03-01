@@ -77,9 +77,6 @@ export class SkipCapturingComponent implements OnInit {
 
   public toggleWebcam(): void {
     this.showWebcam = !this.showWebcam;
-    setTimeout(() =>{
-      this.showCloseBtn = true;
-    }, 2000)
   }
 
   ngOnInit(): void {
