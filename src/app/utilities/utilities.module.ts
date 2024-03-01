@@ -24,9 +24,11 @@ import { SkipCapturingComponent } from './modals/skip-capturing/skip-capturing.c
 import { SuccesfulBiometricsComponent } from './modals/succesful-biometrics/succesful-biometrics.component';
 import { SuccessfulBeneficiaryOnboardingComponent } from './modals/successful-beneficiary-onboarding/successful-beneficiary-onboarding.component';
 import { WebcamModule } from 'ngx-webcam';
+import {MatButtonModule} from '@angular/material/button';
+
 
 const materialModules = [
-  MatDialogModule
+  MatDialogModule,MatButtonModule
 ]
 @NgModule({
   declarations: [

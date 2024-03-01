@@ -6,7 +6,11 @@
     <div class="flex-grow" id="move-items">
         <mat-nav-list>
             <mat-list-item *ngFor="let item of menuItems" [routerLink]="['/' + item.route]" routerLinkActive="list-item-active" [routerLinkActiveOptions]="{ exact: false }" class="mb-6">
-                <mat-icon (click)="onLogout(item)" mat-list-icon [svgIcon]="item.name" [ngClass]="{ 'stroke-green-500': isActive(item.route) }"></mat-icon>
+                <button mat-button>
+                    <mat-icon
+                    class="custom-icon" (click)="onLogout(item)" mat-list-icon [svgIcon]="item.name" [ngClass]="{ 'stroke-green-500': isActive(item.route) }">
+                   </mat-icon>
+                </button>
             </mat-list-item>
         </mat-nav-list>
     </div>

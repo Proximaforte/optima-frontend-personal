@@ -39,7 +39,6 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     if (this.selectedItemName === null) {
       this.selectedItemName = 'verify beneficiary nin';
     }
-   // console.log("status>>", this.stepper);
   }
 
   goToStep(stepIndex: number) {
