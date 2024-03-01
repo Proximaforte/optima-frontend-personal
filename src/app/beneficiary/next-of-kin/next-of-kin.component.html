@@ -72,7 +72,7 @@
             </form>
         </div>
         <div class="row-span-1 w-full mt-2">
-            <button  id="btn" type="submit" [disabled]="null" [ngStyle]="{ 'background-color': null ? '#B8B7C8' : '#109856' }"
+            <button (click)="submit()" id="btn" type="submit" [disabled]="null" [ngStyle]="{ 'background-color': null ? '#B8B7C8' : '#109856' }"
                 class="h-12 w-[400px] px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                 Proceed
             </button>

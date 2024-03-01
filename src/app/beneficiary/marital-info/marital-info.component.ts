@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 
 @Component({
   selector: 'app-marital-info',
@@ -34,8 +36,15 @@ export class MaritalInfoComponent implements OnInit {
   childEducationStatus: string = 'childEducationStatus';
   nameOfChildsSchool: string = 'nameOfChildsSchool';
   phoneNumberOfChild: string = 'phoneNumberOfChild'
+
+  showOthers:boolean = false;
+  nameOfSpousePlaceHolder: string = "";
+  phoneNumberOfSpousePlaceHolder: string = "";
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private routeService: BeneficiaryService
   ) {
     this.options = [
       "Marital Status",
@@ -59,6 +68,16 @@ export class MaritalInfoComponent implements OnInit {
       numberOfSpouse: new FormControl('', [Validators.required]),
       numberOfChildren: new FormControl('', [Validators.required]),
     });
+
+    this.maritalInfoForm.get('maritalStatus')?.valueChanges?.subscribe({
+      next: (value: string) => {
+        if(value === "Married"){
+          this.showOthers = true;
+        }else{
+          this.showOthers = false;
+        }
+      }
+    })
 
     this.maritalInfoForm?.get('numberOfSpouse')?.valueChanges.subscribe({
       next: (value: any) => {
@@ -111,7 +130,14 @@ export class MaritalInfoComponent implements OnInit {
       spouseForm: this.spouseFormGroup.value,
       childrenForm: this.childFormGroup.value
     }
-    console.log('Form values totals>>', formValues);
+  //  console.log('Form values totals>>', formValues);
+    this.routeService.setRouteToDisplay("education");
+    this.router.navigate(['/home/beneficiary'],{
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'education'
+      }
+    })
   }
 
 
@@ -120,14 +146,14 @@ export class MaritalInfoComponent implements OnInit {
 
 
   detectClicked() {
-    this.emailPlaceHolder = 'Input email';
+    this.emailPlaceHolder = 'Input number of spouse(s)';
   }
   onInputBlur() {
     this.emailPlaceHolder = '';
   }
 
   detectClicked_() {
-    this.otherPlaceHolder = 'Input email';
+    this.otherPlaceHolder = 'Input number of children';
   }
   onInputBlur_() {
     this.otherPlaceHolder = '';

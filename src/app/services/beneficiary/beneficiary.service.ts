@@ -11,6 +11,7 @@ export class BeneficiaryService {
   showOriginal: boolean = false;
 //  public emitImage$: EventEmitter<any> = new EventEmitter<any>();
  imageObservable$: ReplaySubject<any> = new ReplaySubject<any>();
+ routeObservable$: ReplaySubject<any> = new ReplaySubject<any>();
 
   constructor() { }
 
@@ -37,6 +38,14 @@ export class BeneficiaryService {
 
   public acceptImageUrl(): Observable<any>{
     return this.imageObservable$.asObservable();
+  }
+
+  public setRouteToDisplay(route: string){
+  return this.routeObservable$.next(route);
+  }
+
+  public getRouteToDisplay():Observable<any>{
+    return this.routeObservable$.asObservable();
   }
 
 }

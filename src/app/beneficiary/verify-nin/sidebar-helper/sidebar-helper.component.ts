@@ -21,6 +21,7 @@ export class SidebarHelperComponent {
     "other details"
   ]
   selectedItemIndex: number | null = null;
+  isLinear = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+
 
 @Component({
   selector: 'app-disability-status',
@@ -23,6 +25,7 @@ export class DisabilityStatusComponent implements OnInit{
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private routeService: BeneficiaryService
   ){}
 
   showYes(){
@@ -30,7 +33,11 @@ export class DisabilityStatusComponent implements OnInit{
   }
 
   showNull(){
+   if(this.showActive === true){
     this.showActive = false;
+   }else{
+    this.submit();
+   }
   }
 
   ngOnInit(): void {
@@ -57,8 +64,8 @@ export class DisabilityStatusComponent implements OnInit{
   
 
   submit(){
-   // console.log("values>>>>", this.disabilityForm.value);
-    this.router.navigate(['/home/beneficiary'], { ///home/financial-status
+    this.routeService.setRouteToDisplay("financial");
+    this.router.navigate(['/home/beneficiary'], { 
       relativeTo: this.route,
       queryParams: {
         progress: "financial"

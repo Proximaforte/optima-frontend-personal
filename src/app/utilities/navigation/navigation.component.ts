@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MenuItem } from '../interface/u.i';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -47,7 +48,9 @@ export class NavigationComponent {
     private sanitizer: DomSanitizer,
     private iconRegistry: MatIconRegistry,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private routeService: BeneficiaryService
   ) {
     this.bankLogo = this.sanitizer.bypassSecurityTrustUrl(
       `assets/images/info.svg`
@@ -71,6 +74,14 @@ export class NavigationComponent {
     if(item?.name === "logout"){
       // this.router.navigate([item?.route]);
       this.authService.agentLogout()
+    }else if(item?.name === "beneficiary"){
+      this.routeService.setRouteToDisplay("verify beneficiary nin");
+      this.router.navigate(['/home/beneficiary'],{
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'verify_NIN'
+        }
+      })
     }
   }
 

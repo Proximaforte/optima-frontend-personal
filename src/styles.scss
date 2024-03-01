@@ -40,3 +40,24 @@ body {
 .mat-mdc-form-field-focus-overlay {
   background-color: transparent;
 }
+
+.mat-step-icon-selected {
+  background-color: #109856;
+  color: #109856;
+}
+
+
+$success:  #35A255 !default;
+$primary:   #007CBB !default;
+.mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+  background-color: $success !important;
+  // color: $success;
+  +.mat-step-label{
+    color: $success !important;
+  }
+}
+
+.mat-stepper-icon.ng-untouched {
+  background-color: white;
+  /* Your styles for the mat-stepper icon when it's not touched */
+}

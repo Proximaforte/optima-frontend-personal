@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-capture-complete',
-  templateUrl: './capture-complete.component.html',
-  styleUrls: ['./capture-complete.component.scss']
+  selector: 'app-finger-capture-complete',
+  templateUrl: './finger-capture-complete.component.html',
+  styleUrls: ['./finger-capture-complete.component.scss']
 })
-export class CaptureCompleteComponent {
+export class FingerCaptureCompleteComponent implements OnInit{
 
+  
   disabledBtn: boolean = true;
   passport: string = "/assets/images/passport.svg";
   capture: string = "/assets/images/capture.svg";
@@ -29,6 +30,9 @@ export class CaptureCompleteComponent {
   //   }
   // })
 
+  ngOnInit(): void {
+     }
+
   retakePicture(){
     this.service.returnImageUrl({
       image: '/assets/images/passport.svg',
@@ -42,13 +46,20 @@ export class CaptureCompleteComponent {
       image: this.passport,
       showLatest: true
     });
-    // this.service.setShowOriginal(true);
-    this.router.navigate(['/home/face-capturing'], {
+    this.router.navigate(['/home/setup-biometrics'], {
       relativeTo: this.route,
       queryParams: {
-        progress: 'face_capturing'
+        progress: 'finger_capture_done'
       }
-    })
+    }).then(() => location.reload());
+    // this.service.setShowOriginal(true);
+    // this.router.navigate(['/home/setup-biometrics'], {
+    //    relativeTo: this.route,
+    //   queryParams: {
+    //     progress: 'finger_capture_done'
+    //   }
+    // });
+    //this.ngOnInit();
   }
 
 

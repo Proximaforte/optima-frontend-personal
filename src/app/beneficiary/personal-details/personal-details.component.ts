@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-personal-details',
@@ -19,7 +21,11 @@ export class PersonalDetailsComponent implements OnInit {
   personalDetailsForm!:FormGroup;
   showOthers: boolean = false;
 
-  constructor(){}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private routeService: BeneficiaryService
+  ){}
 
   
   detectClicked(){
@@ -62,6 +68,13 @@ export class PersonalDetailsComponent implements OnInit {
   submitForm(){
    if(this.personalDetailsForm?.valid){
     console.log("form values>>", this.personalDetailsForm.value);
+    this.routeService.setRouteToDisplay("residential details");
+    this.router.navigate(['/home/beneficiary'],{
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'residential_details'
+      }
+    })
    }
   }
 

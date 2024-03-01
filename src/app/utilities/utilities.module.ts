@@ -23,6 +23,8 @@ import { FilterBoxComponent } from './filter-box/filter-box.component';
 import { SkipCapturingComponent } from './modals/skip-capturing/skip-capturing.component';
 import { SuccesfulBiometricsComponent } from './modals/succesful-biometrics/succesful-biometrics.component';
 import { SuccessfulBeneficiaryOnboardingComponent } from './modals/successful-beneficiary-onboarding/successful-beneficiary-onboarding.component';
+import { WebcamModule } from 'ngx-webcam';
+
 const materialModules = [
   MatDialogModule
 ]
@@ -56,7 +58,8 @@ const materialModules = [
     RouterModule,
     MatCardModule,
     MatCheckboxModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    WebcamModule
   ],
   exports: [
     CommonModule,

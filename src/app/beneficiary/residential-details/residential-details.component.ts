@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NigerianStates, localGovt } from 'src/app/models/beneficiary/beneficiary';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 
 @Component({
   selector: 'app-residential-details',
@@ -21,7 +23,11 @@ export class ResidentialDetailsComponent implements OnInit {
   residentialInfo!: FormGroup;
   selectedLGA: string[] = ["Select LGA*"];
   showOthers: boolean = false;
-  constructor(){}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private routeService: BeneficiaryService
+  ){}
 
   selectState(value: any){
     console.log("selected state>>", this.selectedState);
@@ -65,5 +71,12 @@ export class ResidentialDetailsComponent implements OnInit {
 
   submitForm(){
     console.log("data>>>", this.residentialInfo.value);
+    this.routeService.setRouteToDisplay("marital info");
+    this.router.navigate(['/home/beneficiary'],{
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'marital_info'
+      }
+    })
   }
 }

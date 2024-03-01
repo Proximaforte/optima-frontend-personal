@@ -26,11 +26,12 @@
         </div>
         <div class="row-span-1" *ngIf="showEmployed === true">
             <form class="max-w-sm" [formGroup]="employmentForm">
-                <select  formControlName="otherSourcesOfIncome" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                <!-- <select  formControlName="otherSourcesOfIncome" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option2; let id=index">
                         <span>{{ option }}</span>
                     </option>
-                </select>
+                </select> -->
+                <input type="text"  formControlName="otherSourcesOfIncome" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Other Sources of Income e.g farming business etc*">
             </form>
         </div>
         <div class="row-span-1" *ngIf="showSelfEmployed === true">

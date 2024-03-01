@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+
 
 @Component({
   selector: 'app-financial',
@@ -13,6 +15,7 @@ export class FinancialComponent implements OnInit{
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private routeService: BeneficiaryService
   ){}
 
    
@@ -64,7 +67,7 @@ export class FinancialComponent implements OnInit{
   }
 
   submit(){
-   // console.log("values>>>", this.financialInfoForm.value);
+    this.routeService.setRouteToDisplay("next of kin");
     this.router.navigate(['/home/beneficiary'], {
       relativeTo: this.route,
       queryParams: {

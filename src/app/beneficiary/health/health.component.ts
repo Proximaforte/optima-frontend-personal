@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-health',
   templateUrl: './health.component.html',
@@ -9,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class HealthComponent {
 
   constructor(
-    private router: Router, private route: ActivatedRoute
+    private router: Router, private route: ActivatedRoute,
   ){}
   
   options: string[] = [

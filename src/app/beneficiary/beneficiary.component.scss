@@ -10,14 +10,39 @@ body {
 
 .lemonish-text {
     color: #109856;
-    font-weight: bold;
     /* You can adjust the color as per your preference */
 }
+
+.step-label{
+    color: grey;
+ }
 
 .ring-lemonish {
     border-color: lemonchiffon;
     color: #109856;
     /* You can adjust the color as per your preference */
 }
+
+
+//sidebar
+
+.mat-stepper-vertical {
+    margin-top: 8px;
+  }
+  
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: #109856; 
+ }
+
+
+ mat-stepper{
+ background-color: #F9FAFB;
+ }
+
+ ::ng-deep .mat-stepper-vertical-line::before {
+    border-style: dotted;
+    // border-width: 1px;
+  }
 
 

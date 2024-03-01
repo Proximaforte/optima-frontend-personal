@@ -10,11 +10,19 @@
                 <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{item}}</label>
             </div>
+            <div  *ngIf="!showLatest" (click)="captureImage()">
+                <webcam *ngIf="showWebcam"  [height]="webcamHeight" [width]="webcamWidth" [trigger]="triggerObservable" (imageCapture)="handleImageCapture($event)" class="fullscreen"></webcam>
+            
+            </div>
         </div>
         <br>
         <div class="text-center">
-            <button (click)="proceed()" style="background-color: #109856;" mat-dialog-close class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <!-- *ngIf="showCloseBtn === false"  -->
+            <button (click)="toggleWebcam()" style="background-color: #109856;"  class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Continue to capture finger image
+            </button>
+            <button *ngIf="showCloseBtn === true" (click)=" closeModal()" style="background-color: #109856; margin-top: 2px;"  class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"  mat-dialog-close>
+                Close Modal
             </button>
         </div>
     </div>

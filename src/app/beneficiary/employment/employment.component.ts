@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-employment',
@@ -25,7 +27,11 @@ export class EmploymentComponent implements OnInit {
   showSelfEmployed: boolean = false;
   showEmployed: boolean = false;
   employmentForm!: FormGroup;
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private routeService: BeneficiaryService
+  ) { }
 
 
   ngOnInit(): void {
@@ -69,7 +75,14 @@ export class EmploymentComponent implements OnInit {
 
 
   submitForm(){
-    console.log("values>>", this.employmentForm.value);
+   // console.log("values>>", this.employmentForm.value);
+    this.routeService.setRouteToDisplay("other details");
+    this.router.navigate(['/home/beneficiary'],{
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'other_details'
+      }
+    })
   }
 
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router , ActivatedRoute} from '@angular/router';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 
 @Component({
   selector: 'app-beneficiary-table',
@@ -25,12 +26,20 @@ export class BeneficiaryTableComponent {
   ];
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private routeService: BeneficiaryService
   ){}
 
 
   addBeneficiary(){
-    this.router.navigate(["/home/beneficiary"],{relativeTo: this.route});
+    this.routeService.setRouteToDisplay("verify beneficiary nin");
+    this.router.navigate(['/home/beneficiary'],{
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'verify_NIN'
+      }
+    })
+   // this.router.navigate(["/home/beneficiary"],{relativeTo: this.route});
   }
 
 

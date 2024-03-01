@@ -1,4 +1,4 @@
-<div class="col-span-1 bg-gray-50 h-full">
+<!-- <div class="col-span-1 bg-gray-50 h-full">
     <div class="mt-4 ml-4">
         <span class="text-xs text-gray-400 font-medium">Registration Progress</span>
         <br><br>
@@ -14,4 +14,18 @@
             </ol>
         </div>
     </div>
+</div> -->
+
+<div class="col-span-1 h-full hidden sm:block">
+    <mat-stepper orientation="vertical" [linear]="isLinear" #stepper >
+      <mat-step *ngFor="let item of beneficiaryItems; let i = index">
+          <ng-template matStepperIcon="edit">
+              <mat-icon>done</mat-icon>
+          </ng-template>
+          <ng-template matStepLabel>
+              <span id="step-label" [ngClass]="{'lemonish-text': selectedItemIndex === i, 'step-label': selectedItemIndex !== i}">{{item}}</span>
+          </ng-template>
+      </mat-step>
+    </mat-stepper>
+    <button >hjhjh</button>
 </div>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-education',
@@ -14,5 +16,19 @@ export class EducationComponent {
   fundingOptions: string[] = [
     "Parents", "Self-Funded", "Scholarships", "Free Government Support/Subsidized Education"
   ]
-  constructor(){}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private routeService: BeneficiaryService
+  ){}
+
+  submit(){
+    this.routeService.setRouteToDisplay("health");
+    this.router.navigate(['/home/beneficiary'],{
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'health'
+      }
+    })
+  }
 }
