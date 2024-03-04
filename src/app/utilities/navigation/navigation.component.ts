@@ -72,7 +72,6 @@ export class NavigationComponent {
 
   onLogout(item: any) {
     if(item?.name === "logout"){
-      // this.router.navigate([item?.route]);
       this.authService.agentLogout()
     }else if(item?.name === "beneficiary"){
       this.routeService.setRouteToDisplay("verify beneficiary nin");

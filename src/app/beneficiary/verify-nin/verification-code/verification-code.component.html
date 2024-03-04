@@ -17,10 +17,11 @@
         <div class="relative w-96 h-11">
             <form>
                 <div class="mb-4 flex">
+                    <!-- <ngx-otp-input #otpInput1 [config]="otpInputConfig" (otpChange)="handleOtpChange($event)" (fill)="handleFillEvent($event)" [(ngModel)]="otpValue1" name="otpValue1" class="w-16 h-16"></ngx-otp-input> -->
                     <div class="otp-div mr-4">
                         <ngx-otp-input #otpInput1 [config]="otpInputConfig" (otpChange)="handleOtpChange($event)" (fill)="handleFillEvent($event)" [(ngModel)]="otpValue1" name="otpValue1" class="w-16 h-16"></ngx-otp-input>
                     </div>
-                    <span class="flex items-center text-4xl font-bold mt-[-8px]">‒</span> <!-- Divider -->
+                    <span class="flex items-center text-4xl font-bold mt-[-8px]">‒</span>
                     <div class="otp-div ml-4">
                         <ngx-otp-input #otpInput2 [config]="otpInputConfig" (otpChange)="handleOtpChange2($event)" (fill)="handleFillEvent2($event)" [(ngModel)]="otpValue2" name="otpValue2" class="w-16 h-16"></ngx-otp-input>
                     </div>

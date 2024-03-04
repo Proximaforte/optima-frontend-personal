@@ -16,13 +16,26 @@ export class EducationComponent {
   fundingOptions: string[] = [
     "Parents", "Self-Funded", "Scholarships", "Free Government Support/Subsidized Education"
   ]
+
+  checked:boolean |any = false;
+  showOthers:boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private routeService: BeneficiaryService
   ){}
 
+ 
+
+  toggleChecked(event:any){
+    console.log("event>>", event);
+    if(event === true){
+      this.showOthers = true;
+    }
+  }
+
   submit(){
+    console.log("zzz")
     this.routeService.setRouteToDisplay("health");
     this.router.navigate(['/home/beneficiary'],{
       relativeTo: this.route,
