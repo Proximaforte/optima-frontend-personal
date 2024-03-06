@@ -85,7 +85,7 @@ export class AuthComponent implements OnInit{
         this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
         this.authService.setAgentLoginDetails(this.loginForm.value).subscribe({
           next: (details:any) => {
-            console.log("details>>>", details);
+         //   console.log("details>>>", details);
             this.authService.setAgentToken(details);
           },
           error: (err: any) => {

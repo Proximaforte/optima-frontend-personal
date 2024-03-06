@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MenuItem } from '../interface/u.i';
@@ -14,7 +14,7 @@ export class NavigationComponent {
   bankLogo: any;
   hovered?: boolean;
   client: string = 'zest';
-  menuItems: MenuItem[] = [
+  menuItems: MenuItem[] | any = [
     {
       icon: 'assets/images/dashboard.svg',
       name: 'dashboard',
@@ -55,7 +55,7 @@ export class NavigationComponent {
     this.bankLogo = this.sanitizer.bypassSecurityTrustUrl(
       `assets/images/info.svg`
     );
-    this.menuItems.forEach((item) => {
+    this.menuItems.forEach((item: any) => {
       this.iconRegistry.addSvgIcon(
         item.name,
         sanitizer.bypassSecurityTrustResourceUrl(item.icon as string)
