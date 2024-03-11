@@ -5,13 +5,12 @@
         </h2>
 
         <div>
-            <p>A 4-digit pin has been sent to {{routeParams?.value}}</p>
+            <p>A 4-digit pin has been sent to <br> <a class="font-medium">{{routeParams?.value}}</a></p>
             <br>
             <form [formGroup]="otpForm">
                 <div class="mb-4">
                     <div class="otp-div">
-                        <ngx-otp-input  #otpInput [config]="otpInputConfig" (otpChange)="handleOtpChange($event)" (fill)="handleFillEvent($event)" [(ngModel)]="otpValue" formControlName="Otp">
-                        </ngx-otp-input>
+                        <app-otp-input (otpChange)="handleOtpChange($event)"></app-otp-input>
                     </div>
 
                 </div>

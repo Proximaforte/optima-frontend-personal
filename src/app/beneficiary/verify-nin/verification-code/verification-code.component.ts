@@ -1,5 +1,4 @@
-import { Component, OnInit , ElementRef, ViewChild, AfterViewInit, OnDestroy} from '@angular/core';
-import {  NgxOtpInputConfig } from 'ngx-otp-input/public-api';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -9,26 +8,11 @@ import { takeWhile } from 'rxjs/operators';
   templateUrl: './verification-code.component.html',
   styleUrls: ['./verification-code.component.scss']
 })
-export class VerificationCodeComponent implements OnInit,AfterViewInit, OnDestroy {
-
+export class VerificationCodeComponent implements OnInit, OnDestroy {
+//app-verify-bvn-otp
   ninPlaceHolder: string = '';
-  otpValue1: any ;
-  otpValue2: any ;
+  otpValue: string = '' ;
   disabledBtn: boolean = true;
-  @ViewChild('otpInput') otpInput!: ElementRef | any;
-  otpInputConfig: NgxOtpInputConfig = {
-    otpLength: 3,
-    autofocus: false,
-    classList: {
-      inputBox: 'my-super-box-class',
-      input: 'my-super-class',
-      inputFilled: 'my-super-filled-class',
-      inputDisabled: 'my-super-disable-class',
-      inputSuccess: 'my-super-success-class',
-      inputError: 'my-super-error-class',
-    }
-  }
-
   countdown: number = 60;
   timerSubscription$!: Subscription;
   constructor(
@@ -63,10 +47,6 @@ startTimer() {
     this.startTimer();
   }
 
-  
-ngAfterViewInit(): void {
-  this.otpInput.nativeElement.classList.add('large-otp-input');
-}
 
 ngOnDestroy(): void {
   if (this.timerSubscription$) {
@@ -74,30 +54,19 @@ ngOnDestroy(): void {
   }
 }
 
-handleOtpChange(value: string[]): void {
- // console.log("onChange>>>", value);
-}
-
-handleFillEvent(value: any): void {
-  if(value?.length === 3){
-    this.otpValue1 = value;
+handleOtpChange(value: string): void {
+  console.log('otp value>>>', value);
+  if(value?.length === 6){
+    this.otpValue = value;
+    this.disabledBtn = false;
+  }else{
+    this.disabledBtn = true;
   }
 }
 
-handleOtpChange2(value: string[]): void {
-  // console.log("onChange>>>", value);
- }
- 
- handleFillEvent2(value: any): void {
-   if(value?.length === 3){
-    this.otpValue2 = value;
-      this.disabledBtn = false;
-   }
- }
 
  submit(){
-  const merged = this.otpValue1.concat(this.otpValue2);
-  console.log("merged>>>", Number(merged));
+  console.log("merged>>>", this.otpValue);
    this.router.navigate(["/home/setup-biometrics"],{relativeTo: this.route, queryParams:{progress: "setup_biometrics"}});
 }
 

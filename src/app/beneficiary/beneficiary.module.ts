@@ -35,11 +35,14 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import { DisabilityStatusComponent } from './disability-status/disability-status.component';
 import { FingerCaptureCompleteComponent } from './verify-nin/finger-capture-complete/finger-capture-complete.component';
-
+import { UtilitiesModule } from '../utilities/utilities.module';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 const materialModules = [
-  MatStepperModule, MatExpansionModule, MatFormFieldModule, MatInputModule,MatIconModule, MatCardModule, MatDialogModule,MatSelectModule
+  MatStepperModule, MatExpansionModule, MatFormFieldModule,
+   MatInputModule,MatIconModule, MatCardModule, MatDialogModule,MatSelectModule,
+   MatSnackBarModule
 ]
 
 
@@ -75,14 +78,16 @@ const materialModules = [
     FormsModule,
     ReactiveFormsModule,
     NgxOtpInputModule,
-    WebcamModule
+    WebcamModule,
+    UtilitiesModule
   ],
   providers:[
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NgxOtpInputModule),
       multi: true,
-    }
+    },
+    MatSnackBarModule, 
   ],
   exports: [SidebarHelperComponent]
 })

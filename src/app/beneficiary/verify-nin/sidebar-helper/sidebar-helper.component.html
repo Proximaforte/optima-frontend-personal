@@ -16,16 +16,16 @@
     </div>
 </div> -->
 
-<div class="col-span-1 h-full hidden sm:block">
+<div class="col-span-1 h-full hidden sm:block w-[300px]">
     <mat-stepper orientation="vertical" [linear]="isLinear" #stepper >
       <mat-step *ngFor="let item of beneficiaryItems; let i = index">
           <ng-template matStepperIcon="edit">
               <mat-icon>done</mat-icon>
           </ng-template>
           <ng-template matStepLabel>
-              <span id="step-label" [ngClass]="{'lemonish-text': selectedItemIndex === i, 'step-label': selectedItemIndex !== i}">{{item}}</span>
+              <span id="step-label" class="text-xs text-black" [ngClass]="{'lemonish-text': selectedItemIndex === i, 'step-label': selectedItemIndex !== i}">{{item | uppercase }}</span>
           </ng-template>
       </mat-step>
     </mat-stepper>
-    <button >hjhjh</button>
+    <!-- <button >hjhjh</button> -->
 </div>

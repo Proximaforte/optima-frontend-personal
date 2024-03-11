@@ -26,6 +26,9 @@ import { SuccessfulBeneficiaryOnboardingComponent } from './modals/successful-be
 import { WebcamModule } from 'ngx-webcam';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { OtpInputComponent } from './otp-input/otp-input.component';
+import { VerifyBvnOtpComponent } from './verify-bvn-otp/verify-bvn-otp.component';
+import { ToastsComponent } from './toasts/toasts.component';
 
 
 const materialModules = [
@@ -43,6 +46,9 @@ const materialModules = [
     SkipCapturingComponent,
     SuccesfulBiometricsComponent,
     SuccessfulBeneficiaryOnboardingComponent,
+    OtpInputComponent,
+    VerifyBvnOtpComponent,
+    ToastsComponent,
   ],
   imports: [
     CommonModule,
@@ -81,7 +87,10 @@ const materialModules = [
     MatCheckboxModule,
     NgxPaginationModule,
     PaginationComponent,
-    FilterBoxComponent
+    FilterBoxComponent,
+    OtpInputComponent,
+    VerifyBvnOtpComponent,
+    ToastsComponent
   ],
 })
 export class UtilitiesModule {}

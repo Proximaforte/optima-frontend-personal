@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators  } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/authentication/auth.service';
 import { authGuard } from '../securities/auth/auth.guard';
-
+import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 
 
 @Component({
@@ -82,16 +82,20 @@ export class AuthComponent implements OnInit{
   signIn(){
     if(this.loginForm.valid){
       if(window?.location?.search === "?route=user-login"){
-        this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
-        this.authService.setAgentLoginDetails(this.loginForm.value).subscribe({
-          next: (details:any) => {
-         //   console.log("details>>>", details);
-            this.authService.setAgentToken(details);
+        // this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
+        this.authService.loginAgendData(this.loginForm.value).subscribe({
+          next: (details:HttpResponse<any>) => {
+           console.log("login respopnse details>>>", details);
+          this.authService.setAgentToken(details);
           },
           error: (err: any) => {
             console.error("error>>>", err);
+            if(err?.status === 401){
+  
+            }
           }
         })
+       
       }else if(window?.location?.search === ""){
         this.router.navigate(['/auth/change-passwords'], {relativeTo: this.route});
       }

@@ -11,25 +11,18 @@
             <p class="text-lg font-semibold" id="align-header">
                 Enter Verification Code
             </p>
-            <p class="text-xs text-gray-700"> we just sent a one-time secure code to **** *** **63</p>
+            <p class="text-xs text-gray-700" id="second-text"> we just sent a one-time secure code to **** *** **63</p>
         </div>
         
         <div class="relative w-96 h-11">
             <form>
                 <div class="mb-4 flex">
-                    <!-- <ngx-otp-input #otpInput1 [config]="otpInputConfig" (otpChange)="handleOtpChange($event)" (fill)="handleFillEvent($event)" [(ngModel)]="otpValue1" name="otpValue1" class="w-16 h-16"></ngx-otp-input> -->
-                    <div class="otp-div mr-4">
-                        <ngx-otp-input #otpInput1 [config]="otpInputConfig" (otpChange)="handleOtpChange($event)" (fill)="handleFillEvent($event)" [(ngModel)]="otpValue1" name="otpValue1" class="w-16 h-16"></ngx-otp-input>
-                    </div>
-                    <span class="flex items-center text-4xl font-bold mt-[-8px]">‒</span>
-                    <div class="otp-div ml-4">
-                        <ngx-otp-input #otpInput2 [config]="otpInputConfig" (otpChange)="handleOtpChange2($event)" (fill)="handleFillEvent2($event)" [(ngModel)]="otpValue2" name="otpValue2" class="w-16 h-16"></ngx-otp-input>
-                    </div>
+                    <app-verify-bvn-otp (otpChange)="handleOtpChange($event)"></app-verify-bvn-otp>
                 </div>
                 
                 
                 <div class="mb-4">
-                    <span class="text-xs">Didn't recieve a code? <b>Resend OTP</b> in <b>{{ countdown }}s</b></span>
+                    <span class="text-xs" id="third-text">Didn't recieve a code? <b>Resend OTP</b> in <b>{{ countdown }}s</b></span>
                 </div>
                 <br>
 
