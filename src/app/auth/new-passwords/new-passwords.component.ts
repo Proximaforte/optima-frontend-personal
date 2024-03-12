@@ -3,6 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SuccesfulPasswordsComponent } from 'src/app/utilities/modals/succesful-passwords/succesful-passwords.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 
 @Component({
   selector: 'app-new-passwords',
@@ -25,13 +29,24 @@ export class NewPasswordsComponent implements OnInit {
   @ViewChild('confirmPasswordInput') confirmPasswordInput!: ElementRef;
   errorMsg: string = '';
   disabledBtn: boolean = true;
+  routeParams: any = {};
 
   passwordForm!: FormGroup;
   constructor(
     private router:Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
-  ){}
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
+  ){
+    const routeParam = this.route.queryParams.subscribe({
+      next: (param: any) => {
+        console.log('params>>', param);
+        this.routeParams = param;
+      }
+    })
+  }
 
 
   mapOtpInterface(param: string, value: string){
@@ -97,11 +112,29 @@ export class NewPasswordsComponent implements OnInit {
   }
 
   submitCorrectData(){
-    this.dialog.open(SuccesfulPasswordsComponent,{
-       width: '450px',
-       height: '310px',
-       panelClass: 'custom-container'
-    });
+    const payload:any = {
+      oldPassword: localStorage.getItem('oldPasswords') === null ? 'N/A' : localStorage.getItem('oldPasswords'),
+      password: this.passwordForm.get('password')?.value,
+      confirmPassword: this.passwordForm.get('conFirmPassword')?.value
+    }
+   this.authService.changePasswords(payload).subscribe({
+    next: (res:any) => {
+      console.log('response>>>', res);
+      this.dialog.open(SuccesfulPasswordsComponent,{
+        width: '450px',
+        height: '310px',
+        panelClass: 'custom-container'
+     });
+    },
+    error: (err: any) => {
+      console.error('err>>>', err);
+      this.toast.setErrorMessage(err?.error?.failureReason);
+      this.snackbar.openFromComponent(ToastsComponent,{
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+    }
+   })
   }
 
 }

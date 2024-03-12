@@ -4,6 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/authentication/auth.service';
 import { authGuard } from '../securities/auth/auth.guard';
 import { HttpResponse, HttpStatusCode } from '@angular/common/http';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -17,6 +20,7 @@ export class AuthComponent implements OnInit{
   kwaraStateLogo: string = "/assets/images/kwara.svg";
   poweredByOptima: string = "/assets/images/powered.svg";
   showEye: boolean = true;
+  showSpinner: boolean = false;
 
   passwordValue: string | any = '';
   @ViewChild('passwordInput') passwordInput!: ElementRef;
@@ -27,7 +31,9 @@ export class AuthComponent implements OnInit{
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private authGuard: authGuard
+    private authGuard: authGuard,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService
   ) {
   //  console.log("window>>>", window?.location?.search);
   }
@@ -80,19 +86,29 @@ export class AuthComponent implements OnInit{
   }
 
   signIn(){
+    this.showSpinner = true;
     if(this.loginForm.valid){
       if(window?.location?.search === "?route=user-login"){
         // this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
         this.authService.loginAgendData(this.loginForm.value).subscribe({
           next: (details:HttpResponse<any>) => {
-           console.log("login respopnse details>>>", details);
+          // console.log("login response details>>>", details);
+          this.showSpinner = false;
           this.authService.setAgentToken(details);
+          this.toast.setErrorMessage('input success message here');
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
           },
           error: (err: any) => {
             console.error("error>>>", err);
-            if(err?.status === 401){
-  
-            }
+            this.showSpinner = false;
+            this.toast.setErrorMessage(err?.error?.failureReason || err?.statusText);
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
           }
         })
        

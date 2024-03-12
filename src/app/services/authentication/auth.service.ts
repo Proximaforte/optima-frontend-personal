@@ -3,9 +3,10 @@ import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpClient, HttpResponse } from '@angular/common/http';
 import { JwtInterceptorService } from './interceptor/jwt-interceptor.service';
-import { AgentCredentials, forgotPasswords } from 'src/app/models/login/auth';
+import { AgentCredentials, changePassword, forgotPasswords } from 'src/app/models/login/auth';
 import { environment } from 'src/app/environments/environment.prod';
 import { endpoints } from 'src/app/models/APIs/endpoints';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,16 @@ export class AuthService {
 
   public forgotPasswords(path: forgotPasswords): Observable<any>{
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.forgetPassword}/${path.identifier}`, { headers: this.interceptor?.customNoAuthHttpHeaders});
+  }
+
+  public validateOTP(path: forgotPasswords | any): Observable<any>{
+   // const params = new HttpParams().set('token', path?.token).set('identifier', path?.identifier);
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.validateForgetPasswordToken}?token=${path.token}&identifier=${path.identifier}`, { headers: this.interceptor?.customNoAuthHttpHeaders});
+  }
+
+  public changePasswords(path: changePassword): Observable<any>{
+    const body = JSON.stringify(path);
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.changePassword}`, body , { headers: this.interceptor?.customHttpHeaders});
   }
 
   

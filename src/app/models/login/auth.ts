@@ -1,10 +1,17 @@
-export class Auth {}
+export class Auth { }
 
-export interface AgentCredentials{
+export interface AgentCredentials {
     email: string,
     password: string
-} 
+}
 
-export interface forgotPasswords{
-    identifier: string
+export interface forgotPasswords {
+    identifier: string,
+    token?: string
+}
+
+export interface changePassword {
+    oldPassword: string,
+    password: string,
+    confirmPassword: string
 }

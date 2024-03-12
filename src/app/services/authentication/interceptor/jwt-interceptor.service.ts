@@ -18,7 +18,7 @@ export class JwtInterceptorService implements HttpInterceptor {
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('req>>>', req.headers);
+    //console.log('req>>>', req.headers);
     if (req.headers.get('Skip-Interceptor') === 'true') {
       return next.handle(req);
     }
@@ -32,9 +32,12 @@ export class JwtInterceptorService implements HttpInterceptor {
   }
 
   public customNoAuthHttpHeaders:any = new HttpHeaders({
-    'accept': '*/*',
+    'Content-Type': 'application/json',
+    'method': 'POST'
+    // 'accept': '*/*',
     // 'no-auth': 'true',
     // 'Skip-Interceptor': 'true',
+    // 'Referrer-Policy': 'strict-origin-when-cross-origin'
   })
 
 

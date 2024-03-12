@@ -28,6 +28,7 @@ export class ToastsComponent implements OnInit{
     this.errorSubscription$ = this.toast.getErrorMessage().subscribe({
       next: (message:any) => {
         this.showErrorMessage = true;
+        this.showSucessMessage = false;
         this.errorMessage = message;
       }
     });
@@ -38,6 +39,7 @@ export class ToastsComponent implements OnInit{
   this.successSubscription$ = this.toast.getSuccessMessage().subscribe({
     next: (message: any) => {
       this.showSucessMessage = true;
+      this.showErrorMessage = false;
       this.successMessage = message;
     }
   })

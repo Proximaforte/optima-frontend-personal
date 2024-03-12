@@ -25,13 +25,14 @@ export class OtpIdentifierComponent {
   emailValue: string = '';
   phoneNumberValue: string = '';
   param: any = {};
+  showSpinner: boolean = false;
 
   constructor(
     private router:Router,
     private route: ActivatedRoute,
     private service: AuthService,
     private snackbar: MatSnackBar,
-    private toast: ToastsService
+    private toast: ToastsService,
   ){
     const getParams = this.route.queryParams.subscribe({
       next: (param:any) => {
@@ -87,23 +88,25 @@ export class OtpIdentifierComponent {
   }
 
   submitData(){
+    this.showSpinner = true;
     if(this.phoneNumberValue?.length === 0){
       // console.log('email>>', this.emailValue);
-      
       this.service.forgotPasswords({identifier: this.emailValue}).subscribe({
         next: (res: any) => {
+          this.showSpinner = false;
           console.log('phone number identifier response>>>>', res);
           this.router.navigate(["/auth/input-otp"],{
             relativeTo: this.route,
             queryParams: {
               platformType: this.param.platformType,
-              value: this.param.value
+              value: this.emailValue
             }
           })
         },
         error: (err:any) => {
+          this.showSpinner = false;
           console.error(' email Http Error>>', err);
-          this.toast.setErrorMessage(err?.error?.failureReason);
+          this.toast.setErrorMessage(err?.error?.responseMessage);
           this.snackbar.openFromComponent(ToastsComponent,{
             duration: 4000,
             verticalPosition: 'bottom',
@@ -112,22 +115,28 @@ export class OtpIdentifierComponent {
       })
     }else if(this.emailValue?.length === 0){
       // console.log('phone number>>', this.phoneNumberValue);
-    
       this.service.forgotPasswords({identifier: this.phoneNumberValue}).subscribe({
         next: (res: any) => {
+          this.showSpinner = false;
           console.log('phone number identifier response>>>>', res);
+          this.toast.setSuccessMessage(`${res?.data} implemented!`);
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
           this.router.navigate(["/auth/input-otp"],{
             relativeTo: this.route,
             queryParams: {
               platformType: this.param.platformType,
-              value: this.param.value
+              value: this.phoneNumberValue
             }
           })
     
         },
         error: (err:any) => {
+          this.showSpinner = false;
           console.error('phone number Http Error>>', err);
-          this.toast.setErrorMessage(err?.error?.failureReason);
+          this.toast.setErrorMessage(err?.error?.responseMessage);
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
             verticalPosition: 'bottom',

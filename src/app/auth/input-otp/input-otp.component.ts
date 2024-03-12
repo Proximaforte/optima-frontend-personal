@@ -1,8 +1,13 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit , ElementRef, ViewChild, OnDestroy, Renderer2} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 
 
 @Component({
@@ -18,6 +23,7 @@ export class InputOTPComponent implements OnInit, OnDestroy{
   otpForm!: FormGroup;
   otpValue: string = '';
   routeParams: any = {};
+  showSpinner: boolean = false;
 
 
   countdown: number = 60;
@@ -26,10 +32,13 @@ export class InputOTPComponent implements OnInit, OnDestroy{
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private authService: AuthService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
   ){
     const getParams = this.route.queryParams.subscribe({
       next: (param:any) => {
-        // console.log("param>>>", param);
+        console.log("param123>>>", param);
         this.routeParams = param;
       }
     })
@@ -80,8 +89,38 @@ handleOtpChange(value: string): void {
 
 
 routeToNewPasswords(){
-  console.log("otp value>>>",  this.otpValue);
-  this.router.navigate(["/auth/input-new-password"], {relativeTo: this.route});
+  //console.log("otp value>>>",  this.otpValue);
+  this.showSpinner = true;
+  this.authService.validateOTP({token: this.otpValue, identifier: this.routeParams?.value}).subscribe({
+    next: (res: any) => {
+      this.showSpinner = false;
+      console.log('res>>>', res);
+      this.router.navigate(["/auth/input-new-password"], 
+      {
+        relativeTo: this.route,
+        queryParams: {
+          identifier: this.routeParams?.value
+        }
+      });
+    },
+    error: (err: any) => {
+      this.showSpinner = false;
+      console.error('err>>>', err?.error?.responseMessage);
+      this.toast.setErrorMessage(err?.error?.responseMessage);
+      this.snackbar.openFromComponent(ToastsComponent,{
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+      // this.router.navigate(["/auth/input-new-password"], 
+      // {
+      //   relativeTo: this.route,
+      //   queryParams: {
+      //     identifier: this.routeParams?.value
+      //   }
+      // });
+    }
+  })
+  //this.router.navigate(["/auth/input-new-password"], {relativeTo: this.route});
 }
 
 

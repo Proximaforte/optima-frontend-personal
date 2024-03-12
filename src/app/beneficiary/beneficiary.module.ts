@@ -28,7 +28,6 @@ import { FingerCapturingProcedureComponent } from './verify-nin/finger-capturing
 import { SkipCapturingModalComponent } from './verify-nin/skip-capturing-modal/skip-capturing-modal.component';
 import { BiometricsSuccessfulModalComponent } from './verify-nin/biometrics-successful-modal/biometrics-successful-modal.component';
 import { SidebarHelperComponent } from './verify-nin/sidebar-helper/sidebar-helper.component';
-import { NgxOtpInputModule } from 'ngx-otp-input';
 import { MatCardModule } from '@angular/material/card';
 import { WebcamModule } from 'ngx-webcam';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -37,6 +36,8 @@ import { DisabilityStatusComponent } from './disability-status/disability-status
 import { FingerCaptureCompleteComponent } from './verify-nin/finger-capture-complete/finger-capture-complete.component';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptorService } from '../services/authentication/interceptor/jwt-interceptor.service';
 
 
 const materialModules = [
@@ -77,17 +78,17 @@ const materialModules = [
     materialModules,
     FormsModule,
     ReactiveFormsModule,
-    NgxOtpInputModule,
     WebcamModule,
     UtilitiesModule
   ],
   providers:[
     {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NgxOtpInputModule),
-      multi: true,
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true
     },
     MatSnackBarModule, 
+    
   ],
   exports: [SidebarHelperComponent]
 })

@@ -2,6 +2,7 @@ import { Component, ElementRef,ViewChild,OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChangePasswordComponent } from 'src/app/utilities/modals/change-password/change-password.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-change-passwords',
@@ -25,9 +26,9 @@ export class ChangePasswordsComponent implements OnInit {
 
   passwordForm!: FormGroup;
   constructor(
-    private dialog: MatDialog
-  ){
-  }
+    private dialog: MatDialog,
+    private route: ActivatedRoute
+  ){}
 
   passwordInputForm(){
     this.passwordForm = new FormGroup({

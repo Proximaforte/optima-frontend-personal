@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 
 
 @Component({
