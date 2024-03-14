@@ -87,3 +87,6 @@ export class AuthService {
   // Password: password
 
 }
+
+
+//https://chat.openai.com/c/31cf2fe8-7291-46f2-8c6b-99339276419f for users current location

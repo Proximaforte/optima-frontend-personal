@@ -1,5 +1,5 @@
-import { Component, ElementRef,ViewChild, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators  } from '@angular/forms';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/authentication/auth.service';
 import { authGuard } from '../securities/auth/auth.guard';
@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit{
+export class AuthComponent implements OnInit {
 
   optima: string = "/assets/images/optima.svg";
   kwaraStateLogo: string = "/assets/images/kwara.svg";
@@ -35,34 +35,34 @@ export class AuthComponent implements OnInit{
     private snackbar: MatSnackBar,
     private toast: ToastsService
   ) {
-  //  console.log("window>>>", window?.location?.search);
+    //  console.log("window>>>", window?.location?.search);
   }
 
   togglePasswordVisibility(): void {
     this.showEye = !this.showEye;
-    const inputElementVal:HTMLInputElement = this.passwordInput.nativeElement as HTMLInputElement;
+    const inputElementVal: HTMLInputElement = this.passwordInput.nativeElement as HTMLInputElement;
     inputElementVal.type = this.showEye ? 'text' : 'password';
   }
 
-  formInput(){
+  formInput() {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
-          // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$'),
+        // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$'),
         // Validators.minLength(8)
       ])
     });
   }
 
-  detectClicked(){
+  detectClicked() {
     this.emailPlaceHolder = 'Input email';
   }
   onInputBlur() {
     this.emailPlaceHolder = '';
   }
 
-  detectClicked_(){
+  detectClicked_() {
     this.passwordPlaceHolder = 'Input Password';
   }
   onInputBlur_() {
@@ -73,7 +73,7 @@ export class AuthComponent implements OnInit{
     if (
       this.authService.agentIsLoggedIn() && !this.authGuard.canActivate == false
     ) {
-      this.router.navigate(['/home/dashboard'], {relativeTo: this.route}); //current route supposed normally
+      this.router.navigate(['/home/dashboard'], { relativeTo: this.route }); //current route supposed normally
 
     }
   }
@@ -85,21 +85,22 @@ export class AuthComponent implements OnInit{
     this.agentLogoutBeforeLeaving();
   }
 
-  signIn(){
+
+  signIn() {
     this.showSpinner = true;
-    if(this.loginForm.valid){
-      if(window?.location?.search === "?route=user-login"){
+    if (this.loginForm.valid) {
+      if (window?.location?.search === "?route=user-login") {
         // this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
         this.authService.loginAgendData(this.loginForm.value).subscribe({
-          next: (details:HttpResponse<any>) => {
-          // console.log("login response details>>>", details);
-          this.showSpinner = false;
-          this.authService.setAgentToken(details);
-          this.toast.setErrorMessage('input success message here');
-          this.snackbar.openFromComponent(ToastsComponent, {
-            duration: 4000,
-            verticalPosition: 'bottom',
-          });
+          next: (details: HttpResponse<any>) => {
+            // console.log("login response details>>>", details);
+            this.showSpinner = false;
+            this.authService.setAgentToken(details);
+            this.toast.setErrorMessage('input success message here');
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
           },
           error: (err: any) => {
             console.error("error>>>", err);
@@ -111,9 +112,9 @@ export class AuthComponent implements OnInit{
             });
           }
         })
-       
-      }else if(window?.location?.search === ""){
-        this.router.navigate(['/auth/change-passwords'], {relativeTo: this.route});
+
+      } else if (window?.location?.search === "") {
+        this.router.navigate(['/auth/change-passwords'], { relativeTo: this.route });
       }
     }
   }
