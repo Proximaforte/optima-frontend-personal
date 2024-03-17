@@ -37,7 +37,7 @@ export class MaritalInfoComponent implements OnInit {
   nameOfChildsSchool: string = 'nameOfChildsSchool';
   phoneNumberOfChild: string = 'phoneNumberOfChild'
 
-  showOthers:boolean = false;
+  showOthers: boolean = false;
   nameOfSpousePlaceHolder: string = "";
   phoneNumberOfSpousePlaceHolder: string = "";
   constructor(
@@ -58,8 +58,6 @@ export class MaritalInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMaritalForm();
-    this.getSpouseForm();
-    this.getChildrenForm();
   }
 
   getMaritalForm() {
@@ -71,9 +69,9 @@ export class MaritalInfoComponent implements OnInit {
 
     this.maritalInfoForm.get('maritalStatus')?.valueChanges?.subscribe({
       next: (value: string) => {
-        if(value === "Married"){
+        if (value === "Married") {
           this.showOthers = true;
-        }else{
+        } else {
           this.showOthers = false;
         }
       }
@@ -92,59 +90,6 @@ export class MaritalInfoComponent implements OnInit {
     })
   }
 
-
-  getSpouseForm() {
-    this.spouseFormGroup = this.fb.group({});
-    for (let i = 1; i <= this.spouse; i++) {
-      this.spouseFormGroup.addControl(this.nameOfSpouse, new FormControl(''));
-      this.spouseFormGroup.addControl(this.phoneNumberOfSpouse, new FormControl(''));
-    }
-  }
-
-  onInputSpouseChange(inputName: string, event: any) {
-    console.log(`souse Input ${inputName} changed to: ${event?.target?.value}`);
-  }
-
-
-
-
-  getChildrenForm() {
-    this.childFormGroup = this.fb.group({});
-    for (let i = 1; i <= this.children; i++) {
-      this.childFormGroup.addControl(this.nameOfChild, new FormControl(''));
-      this.childFormGroup.addControl(this.ageOfChild, new FormControl(''));
-      this.childFormGroup.addControl(this.childEducationStatus, new FormControl(''));
-      this.childFormGroup.addControl(this.nameOfChildsSchool, new FormControl(''));
-      this.childFormGroup.addControl(this.phoneNumberOfChild, new FormControl(''));
-    }
-  }
-
-  onInputChildrenChange(inputName: string, event: any) {
-    console.log(`child Input ${inputName} changed to: ${event?.target?.value}`);
-  }
-
-
-  submitForm(){
-    const formValues = {
-      parentForm: this.maritalInfoForm.value,
-      spouseForm: this.spouseFormGroup.value,
-      childrenForm: this.childFormGroup.value
-    }
-  //  console.log('Form values totals>>', formValues);
-    this.routeService.setRouteToDisplay("education");
-    this.router.navigate(['/home/beneficiary'],{
-      relativeTo: this.route,
-      queryParams: {
-        progress: 'education'
-      }
-    })
-  }
-
-
-
-
-
-
   detectClicked() {
     this.emailPlaceHolder = 'Input number of spouse(s)';
   }
@@ -159,6 +104,19 @@ export class MaritalInfoComponent implements OnInit {
     this.otherPlaceHolder = '';
   }
 
+  nameOfSpouses: any = [];
+  phoneNumberOfSpouses: any = [];
+
+  pushNameOfSpouses(event: any) {
+    this.nameOfSpouses.push(event?.target?.value);
+  //  console.log("Name Array>>", this.nameOfSpouses);
+  }
+
+  pushPhoneNumberOfSpouses(event: any) {
+    this.phoneNumberOfSpouses.push(event?.target?.value);
+   // console.log("Phone Number Array>>", this.phoneNumberOfSpouses);
+  }
+
   numbersArray(spouse: number): number[] {
     this.spouseArray = Array(spouse);
     return Array(spouse).fill(0).map((x, i) => i + 1);
@@ -169,5 +127,23 @@ export class MaritalInfoComponent implements OnInit {
     return Array(children).fill(0).map((x, i) => i + 1);
   }
 
+  submitForm() {
+    const spousalArray: any[] = [];
+    for (let i = 0; i < Math.min(this.nameOfSpouses?.length, this.phoneNumberOfSpouses?.length); i++) {
+      const spousalObj = {
+        name: this.nameOfSpouses[i],
+        phoneNumber: this.phoneNumberOfSpouses[i]
+      }
+      spousalArray.push(spousalObj);
+    }
+    console.log("spousal form>>>", spousalArray)
+    // this.routeService.setRouteToDisplay("education");
+    // this.router.navigate(['/home/beneficiary'],{
+    //   relativeTo: this.route,
+    //   queryParams: {
+    //     progress: 'education'
+    //   }
+    // })
+  }
 
 }

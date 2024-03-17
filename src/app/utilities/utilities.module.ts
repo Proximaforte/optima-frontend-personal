@@ -29,12 +29,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { OtpInputComponent } from './otp-input/otp-input.component';
 import { VerifyBvnOtpComponent } from './verify-bvn-otp/verify-bvn-otp.component';
 import { ToastsComponent } from './toasts/toasts.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptorService } from '../services/authentication/interceptor/jwt-interceptor.service';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const materialModules = [
-  MatDialogModule,MatButtonModule,MatTooltipModule
+  MatDialogModule,MatButtonModule,MatTooltipModule,MatSnackBarModule
 ]
 @NgModule({
   declarations: [
@@ -95,11 +93,7 @@ const materialModules = [
     ToastsComponent
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptorService,
-      multi: true
-    },
+    MatSnackBarModule
   ]
 })
 export class UtilitiesModule {}

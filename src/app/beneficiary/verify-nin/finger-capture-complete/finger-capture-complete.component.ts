@@ -13,6 +13,9 @@ export class FingerCaptureCompleteComponent implements OnInit{
   disabledBtn: boolean = true;
   passport: string = "/assets/images/passport.svg";
   capture: string = "/assets/images/capture.svg";
+  nin: any = {};
+  userDetails: any = {};
+
   constructor(
     private service: BeneficiaryService,
     private router: Router,
@@ -20,6 +23,11 @@ export class FingerCaptureCompleteComponent implements OnInit{
   ){
     this.passport = this.service.getImageUrl();
    // console.log("imageUrl>>>", this.service.getImageUrl());
+   const getUserData:any = localStorage.getItem('userDetails');
+   this.userDetails = JSON.parse(getUserData);
+
+   const getNin:any = sessionStorage.getItem('nin');
+   this.nin = JSON.parse(getNin);
 
   }
 
@@ -46,12 +54,23 @@ export class FingerCaptureCompleteComponent implements OnInit{
       image: this.passport,
       showLatest: true
     });
+
+    const payload = {
+      nin: this.nin?.nin,
+      type: 'face_id', //PHONE_NUMBER
+      phoneNumber: this.userDetails?.phoneNumber,
+      image: this.passport?.split(',')[1]
+    }
+  //  console.log("payload>>", payload);
+    sessionStorage.setItem('faceCapture_skipThumbPrints', JSON.stringify(payload));
+    
     this.router.navigate(['/home/setup-biometrics'], {
       relativeTo: this.route,
       queryParams: {
         progress: 'finger_capture_done'
       }
     }).then(() => location.reload());
+
     // this.service.setShowOriginal(true);
     // this.router.navigate(['/home/setup-biometrics'], {
     //    relativeTo: this.route,

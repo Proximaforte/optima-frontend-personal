@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/authentication/auth.service';
 import { authGuard } from '../securities/auth/auth.guard';
-import { HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -85,37 +84,47 @@ export class AuthComponent implements OnInit {
     this.agentLogoutBeforeLeaving();
   }
 
+  //email: judeomosehin@gmail.com,  passwords: Password123@
+
 
   signIn() {
     this.showSpinner = true;
     if (this.loginForm.valid) {
-      if (window?.location?.search === "?route=user-login") {
-        // this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
-        this.authService.loginAgendData(this.loginForm.value).subscribe({
-          next: (details: HttpResponse<any>) => {
-            // console.log("login response details>>>", details);
-            this.showSpinner = false;
-            this.authService.setAgentToken(details);
-            this.toast.setErrorMessage('input success message here');
+      this.authService.loginAgendData(this.loginForm.value).subscribe({
+        next: (details: any) => {
+         // console.log("login response details>>>", details);
+          this.showSpinner = false;
+          if (details?.token) {
+           try{
+            this.authService.setAgentToken(details?.token);
+            this.router.navigate(['/home/dashboard'], { relativeTo: this.route }).then(() => location?.reload());
+            this.toast.setSuccessMessage('User is logged In Succesfully');
             this.snackbar.openFromComponent(ToastsComponent, {
               duration: 4000,
               verticalPosition: 'bottom',
             });
-          },
-          error: (err: any) => {
-            console.error("error>>>", err);
-            this.showSpinner = false;
-            this.toast.setErrorMessage(err?.error?.failureReason || err?.statusText);
-            this.snackbar.openFromComponent(ToastsComponent, {
-              duration: 4000,
-              verticalPosition: 'bottom',
-            });
+           }catch(err:any){
+            console.error('err>>>', err);
+           }
+          } else {
+            this.router.navigate(['/auth/change-passwords'], { relativeTo: this.route });
           }
-        })
-
-      } else if (window?.location?.search === "") {
-        this.router.navigate(['/auth/change-passwords'], { relativeTo: this.route });
-      }
+        },
+        error: (err: any) => {
+          console.error("error>>>", err);
+          this.showSpinner = false;
+          this.toast.setErrorMessage(err?.error?.failureReason || err?.statusText);
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+        }
+      })
+      // if (window?.location?.search === "?route=user-login") {
+      //   // this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
+      // } else if (window?.location?.search === "") {
+      //   this.router.navigate(['/auth/change-passwords'], { relativeTo: this.route });
+      // }
     }
   }
 

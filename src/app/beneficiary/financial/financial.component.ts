@@ -2,6 +2,10 @@ import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -12,15 +16,8 @@ import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.ser
 export class FinancialComponent implements OnInit{
 
   financialInfoForm!: FormGroup;
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private routeService: BeneficiaryService
-  ){}
-
-   
   options: string[] = [
-    "Are you the bread winner of the household?*",  "Yes",  "No"
+    "Are you the bread winner of the household?*",  "yes",  "no"
   ]
 
   option2: string[] = [
@@ -32,13 +29,29 @@ export class FinancialComponent implements OnInit{
   ]
 
   option3: string[] = [
-    "Have you received financial aid before*",  "Yes",  "No"
+    "Have you received financial aid before*",  "yes",  "no"
   ]
 
   option5: string[] = [
     "If yes, please specify*",  "Education",  "Medicals",  "Financial",  "Transportation", "None of the above"
   ]
   showOthers: boolean = false;
+  userDetails:any = {};
+  showSpinner:boolean = false;
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private beneficiaryService: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
+    private auth:AuthService
+  ){
+    const getUserData:any = localStorage.getItem('userDetails');
+     this.userDetails = JSON.parse(getUserData);
+  }
+
+   
+
 
   ngOnInit(): void {
     this.getFinancialForm();
@@ -56,7 +69,7 @@ export class FinancialComponent implements OnInit{
     this.financialInfoForm.get('financialAid')?.valueChanges.subscribe({
       next: (value: string) => {
       //  console.log("item>>>", value);
-        if(value === "Yes"){
+        if(value === "yes"){
           this.showOthers = true;
         }else{
           this.showOthers = false;
@@ -67,12 +80,48 @@ export class FinancialComponent implements OnInit{
   }
 
   submit(){
-    this.routeService.setRouteToDisplay("next of kin");
-    this.router.navigate(['/home/beneficiary'], {
-      relativeTo: this.route,
-      queryParams: {
-        progress: 'next_of_kin'
+   this.showSpinner = true;
+    const payload:any = {
+      phoneNumber: this.userDetails?.phoneNumber,
+      breadwinner: this.financialInfoForm.value?.breadWinner === 'yes' ? true : this.financialInfoForm.value?.breadWinner === 'no' ? false : null,
+      monthlyIncome: this.financialInfoForm.value?.houseHoldIncome,
+      monthlyExpenses: this.financialInfoForm.value?.averageAmtSpent,
+      receivedAid: this.financialInfoForm.value?.financialAid === 'yes' ? true : this.financialInfoForm.value?.financialAid === 'no' ? false : null,
+      specifyAid: this.financialInfoForm.value?.ifYes
+    }
+
+  //  console.log('data>>', payload);
+    this.beneficiaryService.financialDetails(payload).subscribe({
+      next: (item: any) => {
+      //  console.log('item>>>', item);
+        this.showSpinner = false;
+        this.toast.setSuccessMessage('Beneficiary Financial data onboarded succesfully!');
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        this.beneficiaryService.setRouteToDisplay("next of kin");
+        this.router.navigate(['/home/beneficiary'], {
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'next_of_kin'
+          }
+        });
+      },
+      error: (err: any) => {
+        console.error('err from financial details onbording>>', err);
+        this.showSpinner = false;
+        this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+
+          // if(err?.status === 401){
+        //   this.auth.agentLogout();
+        //   }
       }
-    });
+    })
+ 
   }
 }

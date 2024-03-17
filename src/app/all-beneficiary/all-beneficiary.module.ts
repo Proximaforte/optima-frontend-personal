@@ -5,8 +5,6 @@ import { AllBeneficiaryRoutingModule } from './all-beneficiary-routing.module';
 import { AllBeneficiaryComponent } from './all-beneficiary.component';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import { BeneficiaryDetailspageComponent } from './beneficiary-detailspage/beneficiary-detailspage.component';
-import {  HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptorService } from '../services/authentication/interceptor/jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -19,11 +17,6 @@ import { JwtInterceptorService } from '../services/authentication/interceptor/jw
     UtilitiesModule
   ],
    providers: [
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptorService,
-    multi: true
-  }  
   ],
 })
 export class AllBeneficiaryModule { }

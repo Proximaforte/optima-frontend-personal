@@ -33,7 +33,7 @@
                                 class="absolute cursor-pointer grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4">
                                 <mat-icon>unfold_more</mat-icon>
                             </div> -->
-                            <input #passwordInput type="number" [placeholder]="emailPlaceHolder" (blur)="onInputBlur()"
+                            <input #passwordInput type="text" [placeholder]="emailPlaceHolder" (blur)="onInputBlur()"
                                 (click)="detectClicked()" formControlName="numberOfSpouse"
                                 class="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900" />
                             <label
@@ -43,15 +43,14 @@
                         </div>
                     </form>
                     <br>
-                    <form  *ngIf="showOthers === true"  [formGroup]="spouseFormGroup">
+                    <form  *ngIf="showOthers === true" >
                         <div *ngFor="let i of numbersArray(spouse)">
                             <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                [formControlName]="nameOfSpouse" (input)="onInputSpouseChange(nameOfSpouse, $event)"
+                               [(ngModel)]="nameOfSpouses[i]" [name]="nameOfSpouses[i]" [value]="nameOfSpouses[i] === undefined ? '': nameOfSpouses[i]" (change)="pushNameOfSpouses($event)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Name of Spouse">
                             <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                [formControlName]="phoneNumberOfSpouse"
-                                (input)="onInputSpouseChange(phoneNumberOfSpouse, $event)"
+                            [(ngModel)]="phoneNumberOfSpouses[i]" [name]="phoneNumberOfSpouses[i]" [value]="phoneNumberOfSpouses[i] === undefined ? '' : phoneNumberOfSpouses[i]" (change)="pushPhoneNumberOfSpouses($event)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Phone number of spouse" >
                             <br>
@@ -77,29 +76,21 @@
                         </div>
                     </form>
                     <br>
-                    <form  *ngIf="showOthers === true"  [formGroup]="childFormGroup">
+                    <form  *ngIf="showOthers === true"  >
                         <div *ngFor="let i of numbersArrayNext(children)">
                             <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                [formControlName]="nameOfChild" (input)="onInputChildrenChange(nameOfChild, $event)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Name of child*">
                             <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                [formControlName]="ageOfChild" (input)="onInputChildrenChange(ageOfChild, $event)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Age of Child*">
                             <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                [formControlName]="childEducationStatus"
-                                (input)="onInputChildrenChange(childEducationStatus, $event)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Child's education status*">
                             <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                [formControlName]="nameOfChildsSchool"
-                                (input)="onInputChildrenChange(nameOfChildsSchool, $event)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="If in school, name of child's school*">
                             <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                [formControlName]="phoneNumberOfChild"
-                                (input)="onInputChildrenChange(phoneNumberOfChild, $event)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Phone number of child*">
                             <br>

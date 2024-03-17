@@ -8,8 +8,6 @@ import { BeneficiaryTableComponent } from './beneficiary-table/beneficiary-table
 import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptorService } from '../services/authentication/interceptor/jwt-interceptor.service';
 
 const materialModules = [MatIconModule, MatSelectModule]
 
@@ -26,11 +24,6 @@ const materialModules = [MatIconModule, MatSelectModule]
     materialModules
   ],
   providers:[
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptorService,
-      multi: true
-    },
   ]
 })
 export class DashboardModule { }

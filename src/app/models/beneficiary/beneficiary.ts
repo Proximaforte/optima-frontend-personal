@@ -1143,4 +1143,103 @@ export const localGovt = [
         ]
     },
 ]
-  
+
+export interface PersonalDetails {
+    firstname: string;
+    lastname: string;
+    middleName: string;
+    phoneNumber: string;
+    bvn: string;
+    email: string;
+    gender: string;
+    dateOfBirth: string;
+    placeOfBirth: string;
+    religion: string;
+}
+
+export interface ResidentialDetails {
+    phoneNumber: string;
+    houseOwner: boolean;
+    annualRent: number;
+    address: string;
+    state: string;
+    lga: string;
+}
+
+export interface EducationDetails{
+    phoneNumber: string;
+    level: string;
+    certification: string;
+    primarySchool: string;
+    primarySchoolAddress: string;
+    secondarySchool: string;
+    secondarySchoolAddress: string;
+    tertiarySchool: string;
+    tertiarySchoolAddress: string;
+    inSchool: boolean;
+    currentLevel: string;
+    funding: string;
+}
+
+export interface HealthDetails{
+    phoneNumber: string;
+    healthCondition: string;
+    healthAilment: string;
+    specifyAilment: string;
+    hasHMO: boolean;
+    hmoName: string;
+    hospitalEnrolled: string;
+    disabled: boolean;
+    disableType: string;
+    specifyDisabled: string;
+    receivingTreatment: boolean
+}
+
+export interface FinancialDetails{
+    phoneNumber: string;
+    breadwinner: boolean;
+    monthlyIncome: string;
+    monthlyExpenses: string;
+    receivedAid: boolean;
+    specifyAid: string;
+}
+
+export interface NextOfKin{
+    beneficiaryPhoneNumber: string;
+    firstname: string;
+    lastname: string;
+    relationship: string;
+    nin: string;
+    ssid: string;
+    phoneNumber: string;
+    email: string;
+    address: string;
+}
+
+export interface EmploymentDetails{
+    phoneNumber: string;
+    status: string;
+    employer: string;
+    employerAddress: string;
+    otherSourceOfIncome: string;
+    businessName: string;
+    businessNature: string;
+    hasPensionAccount: boolean;
+}
+
+export interface OtherDetails{
+    phoneNumber: string;
+    politicalView: string;
+    convicted: boolean;
+    crimeType: string;
+    crimeDescription: string;
+    transportMeans: string;
+    numberOfCar: number
+}
+
+export interface VerificationDetails{
+    nin: string;
+    type: string;
+    phoneNumber: string;
+    image: string;
+}

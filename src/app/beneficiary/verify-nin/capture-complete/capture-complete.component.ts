@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-capture-complete',
@@ -12,14 +14,16 @@ export class CaptureCompleteComponent {
   disabledBtn: boolean = true;
   passport: string = "/assets/images/passport.svg";
   capture: string = "/assets/images/capture.svg";
+  paramData: any = {};
+ // matData!: MAT_DIALOG_DATA
   constructor(
     private service: BeneficiaryService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ){
     this.passport = this.service.getImageUrl();
-   // console.log("imageUrl>>>", this.service.getImageUrl());
-
+    this.paramData = JSON.parse(this.data);
   }
 
   // this.router.navigate(['/home/setup-biometrics'], {
@@ -46,7 +50,8 @@ export class CaptureCompleteComponent {
     this.router.navigate(['/home/face-capturing'], {
       relativeTo: this.route,
       queryParams: {
-        progress: 'face_capturing'
+        progress: 'face_capturing',
+        data: this.paramData?.nin
       }
     })
   }

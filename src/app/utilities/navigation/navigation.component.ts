@@ -5,6 +5,11 @@ import { MenuItem } from '../interface/u.i';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
@@ -50,7 +55,9 @@ export class NavigationComponent {
     private router: Router,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private routeService: BeneficiaryService
+    private routeService: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService
   ) {
     this.bankLogo = this.sanitizer.bypassSecurityTrustUrl(
       `assets/images/info.svg`
@@ -72,7 +79,20 @@ export class NavigationComponent {
 
   onLogout(item: any) {
     if(item?.name === "logout"){
-      this.authService.agentLogout()
+     this.authService.logoutUser().subscribe({
+      next: (res:any) => {
+      //  console.log("logout res>>>", res);
+        this.toast.setSuccessMessage('User is logged Out Successfully');
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      },
+      error: (err:any) => {
+        console.error("logout error>>>", err);
+      }
+     })
+     this.authService.agentLogout()
     }else if(item?.name === "beneficiary"){
       this.routeService.setRouteToDisplay("verify beneficiary nin");
       this.router.navigate(['/home/beneficiary'],{

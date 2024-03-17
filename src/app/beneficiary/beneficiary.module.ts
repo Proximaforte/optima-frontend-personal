@@ -36,14 +36,14 @@ import { DisabilityStatusComponent } from './disability-status/disability-status
 import { FingerCaptureCompleteComponent } from './verify-nin/finger-capture-complete/finger-capture-complete.component';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptorService } from '../services/authentication/interceptor/jwt-interceptor.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 const materialModules = [
   MatStepperModule, MatExpansionModule, MatFormFieldModule,
    MatInputModule,MatIconModule, MatCardModule, MatDialogModule,MatSelectModule,
-   MatSnackBarModule
+   MatSnackBarModule, MatDatepickerModule
 ]
 
 
@@ -79,16 +79,11 @@ const materialModules = [
     FormsModule,
     ReactiveFormsModule,
     WebcamModule,
-    UtilitiesModule
+    UtilitiesModule,
+    MatNativeDateModule
   ],
   providers:[
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptorService,
-      multi: true
-    },
     MatSnackBarModule, 
-    
   ],
   exports: [SidebarHelperComponent]
 })

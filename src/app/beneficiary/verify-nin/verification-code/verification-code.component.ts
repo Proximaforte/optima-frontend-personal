@@ -66,8 +66,12 @@ handleOtpChange(value: string): void {
 
 
  submit(){
-  console.log("merged>>>", this.otpValue);
-   this.router.navigate(["/home/setup-biometrics"],{relativeTo: this.route, queryParams:{progress: "setup_biometrics"}});
+  //console.log("merged>>>", this.otpValue);
+   this.router.navigate(["/home/setup-biometrics"],{
+    relativeTo: this.route, 
+    queryParams:{
+      progress: "setup_biometrics",
+    }});
 }
 
 }

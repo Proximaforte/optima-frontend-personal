@@ -13,17 +13,31 @@ export class HeaderComponent implements OnInit {
   name: string = '';
   userName: string = '';
   subPath: string = '';
+  pathName:string = '';
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
-    const userData: any = this.authService.getAgentData();
-    const parseData = JSON.parse(userData);
-    this.userName = parseData?.name;
+  // console.log('window>>>', window?.location?.pathname);
+  }
+
+  getUserDetails(){
+    this.authService.getUserDetails().subscribe({
+      next: (res:any) => {
+       // console.log("user details>>", `${res?.data.firstname} ${res?.data.middleName} ${res?.data.lastname}`);
+        this.userName = `${res?.data.firstname} ${res?.data.lastname}`; // ${res?.data.middleName}
+       // this.name = `${res?.data.firstname} ${res?.data.lastname}`; //${res?.data.middleName} 
+      },
+      error: (err:any) => {
+        console.error("err from get user details>>>", err);
+      }
+    })
   }
 
   ngOnInit(): void {
+    this.getUserDetails();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -42,7 +56,7 @@ export class HeaderComponent implements OnInit {
         }
         if (routePath === 'profile' || routePath === 'dashboard') {
           this.title = 'Good ' + this.getTimeOfDay();
-          this.name = this.userName;
+        //  this.userName;
         } else if(
           routePath === 'beneficiary' || 
           routePath === 'verification-code' ||

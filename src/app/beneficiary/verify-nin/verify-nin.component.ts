@@ -34,8 +34,14 @@ export class VerifyNINComponent implements OnInit {
   }
 
   submit(){
-    // console.log("values>>>", this.ninForm.value);
-    this.router.navigate(["/home/verification-code"],{relativeTo: this.route, queryParams:{progress: "enter_verification_code"}});
+    console.log("values>>>", this.ninForm.value);
+    this.router.navigate(["/home/verification-code"],{
+      relativeTo: this.route, 
+      queryParams:{
+        progress: "enter_verification_code",
+      }});
+
+      sessionStorage.setItem('nin', JSON.stringify(this.ninForm.value));
   }
 
 }

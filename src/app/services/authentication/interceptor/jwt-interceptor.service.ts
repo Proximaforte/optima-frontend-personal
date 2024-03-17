@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class JwtInterceptorService implements HttpInterceptor {
+export class JwtInterceptorService implements HttpInterceptor{
 
   constructor() {
     this.getAgentData();
@@ -45,6 +45,12 @@ export class JwtInterceptorService implements HttpInterceptor {
     'Content-Type': 'application/json',
     'accept': '*/*',
     'Authorization': `Bearer ${this.getAgentData()}`
+  })
+
+  public customHttpHeadersNoBearer:any = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'accept': '*/*',
+    'Authorization': `${this.getAgentData()}`
   })
 
   public customFormDataHttpHeaders = new HttpHeaders({

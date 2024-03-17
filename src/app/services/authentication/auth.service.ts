@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpClient, HttpResponse } from '@angular/common/http';
@@ -6,7 +6,8 @@ import { JwtInterceptorService } from './interceptor/jwt-interceptor.service';
 import { AgentCredentials, changePassword, forgotPasswords } from 'src/app/models/login/auth';
 import { environment } from 'src/app/environments/environment.prod';
 import { endpoints } from 'src/app/models/APIs/endpoints';
-import { HttpParams } from '@angular/common/http';
+import { HealthDetails } from 'src/app/models/beneficiary/beneficiary';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,12 @@ export class AuthService {
 
   public loginAgendData(user: AgentCredentials): Observable<any> {
     const body = JSON.stringify(user);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.login}`, body, { headers: this.interceptor?.customHttpHeaders}).pipe(
-      map((res: HttpResponse<any>) => {
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.login}`, body, { headers: this.interceptor?.customNoAuthHttpHeaders}).pipe(
+      map((res: any) => {
         console.log('Login response>>', res);
         return res;
       }),
-      catchError((err: HttpErrorResponse) => {
+      catchError((err: any) => {
         console.error('error from login observable>>', err);
         return throwError(() => err);
       }));
@@ -48,6 +49,22 @@ export class AuthService {
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.changePassword}`, body , { headers: this.interceptor?.customHttpHeaders});
   }
 
+  public getUserDetails():Observable<any>{
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getUserDetails}`, { headers: this.interceptor?.customHttpHeaders}).pipe(
+      map((res:any) => {
+       // console.log('user details response>>', res);
+        localStorage.setItem('userDetails', JSON.stringify(res?.data));
+        return res;
+      }),
+      catchError((err:any) => {
+        return throwError(() => err);
+      })
+    )
+  }
+
+  public logoutUser():Observable<any>{
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.logoutUser}`, {},{ headers: this.interceptor?.customHttpHeaders});
+  }
   
 
   public setAgentLoginDetails({ email, password }: any): Observable<any> {
@@ -60,7 +77,7 @@ export class AuthService {
         }
       )
     }
-    return throwError(new Error('Failed to Login'));
+    return throwError(() => 'Failed to Login'); //throwError(new Error('Failed to Login'));
   }
 
   public setAgentToken(user: any) {
@@ -78,13 +95,15 @@ export class AuthService {
 
   public agentLogout(): void {
     localStorage.clear();
+    sessionStorage.clear();
+    console.clear();
     this.router.navigate(['/auth/login'], { relativeTo: this.route });
   }
 
 
-  //   Super Admin Log in Details:
-  // Username: supersystemuser@optima.com
-  // Password: password
+  // Agent Login Details:
+  // Username: judeomosehin@gmail.com
+  // Password: Password123@
 
 }
 

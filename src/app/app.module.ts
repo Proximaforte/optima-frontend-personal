@@ -20,13 +20,6 @@ import { AddStyleToOtpInputDirective } from './directives/add-style-to-otp-input
     HttpClientModule
 
   ],
-  // providers: [
-  // {
-  //   provide: HTTP_INTERCEPTORS,
-  //   useClass: JwtInterceptorService,
-  //   multi: true
-  // }  
-  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
