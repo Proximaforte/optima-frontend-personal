@@ -12,7 +12,8 @@ import {
    NextOfKin,
    EmploymentDetails,
    OtherDetails,
-   VerificationDetails
+   VerificationDetails,
+   MaritalDetails
   } from 'src/app/models/beneficiary/beneficiary';
 import { HttpClient } from '@angular/common/http';
 
@@ -110,6 +111,13 @@ export class BeneficiaryService {
     const body = JSON.stringify(data);
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.verificationDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
   }
+
+   
+  public maritalDetails(data: MaritalDetails):Observable<any>{
+    const body = JSON.stringify(data);
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.maritalDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+  }
+
 
 
 }

@@ -1243,3 +1243,10 @@ export interface VerificationDetails{
     phoneNumber: string;
     image: string;
 }
+
+export interface MaritalDetails{
+    phoneNumber: string;
+    maritalStatus: string;
+    spouseList: any[];
+    childList: any[];
+}

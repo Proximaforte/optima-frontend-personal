@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 
 @Component({
   selector: 'app-marital-info',
@@ -11,12 +15,9 @@ import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.ser
 export class MaritalInfoComponent implements OnInit {
   panelOpenState = false;
   options: String[] = [
-    "Marital Status",
-    "Single",
-    "Married",
-    "Divorced",
-    "Widow",
-    "Widower"
+    "Is your child in school?*",
+    "yes",
+    "not yet",
   ];
   emailPlaceHolder: string = '';
   otherPlaceHolder: string = '';
@@ -40,20 +41,22 @@ export class MaritalInfoComponent implements OnInit {
   showOthers: boolean = false;
   nameOfSpousePlaceHolder: string = "";
   phoneNumberOfSpousePlaceHolder: string = "";
+  showNameOfChildSch: any = false;
+
+  userDetails: any = {};
+  showSpinner: boolean = false;
+  disableBtn:boolean = true;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private routeService: BeneficiaryService
+    private beneficiarySerice: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
+    private auth: AuthService
   ) {
-    this.options = [
-      "Marital Status",
-      "Single",
-      "Married",
-      "Divorced",
-      "Widow",
-      "Widower"
-    ]
+    const getUserData: any = localStorage.getItem('userDetails');
+    this.userDetails = JSON.parse(getUserData);
   }
 
   ngOnInit(): void {
@@ -71,8 +74,10 @@ export class MaritalInfoComponent implements OnInit {
       next: (value: string) => {
         if (value === "Married") {
           this.showOthers = true;
+          this.disableBtn = false;
         } else {
           this.showOthers = false;
+          this.disableBtn = false;
         }
       }
     })
@@ -107,15 +112,54 @@ export class MaritalInfoComponent implements OnInit {
   nameOfSpouses: any = [];
   phoneNumberOfSpouses: any = [];
 
-  pushNameOfSpouses(event: any) {
-    this.nameOfSpouses.push(event?.target?.value);
-  //  console.log("Name Array>>", this.nameOfSpouses);
+
+
+  async pushNameOfSpouses(event: any, index: any): Promise<any> {
+    await this.nameOfSpouses.splice(index - 1, 0, event?.target?.value);
   }
 
-  pushPhoneNumberOfSpouses(event: any) {
-    this.phoneNumberOfSpouses.push(event?.target?.value);
-   // console.log("Phone Number Array>>", this.phoneNumberOfSpouses);
+  async pushPhoneNumberOfSpouses(event: any, index: any): Promise<any> {
+    await this.phoneNumberOfSpouses.splice(index - 1, 0, event?.target?.value);
   }
+
+  nameOfChildren: any[] = [];
+  ageOfChildren: any[] = [];
+  childrenEduStatus: any[] = [];
+  nameOfChildSchool: any[] = [];
+  childPhoneNumber: any[] = [];
+
+  listen(event: any, position: number): any {
+    if (event?.target?.value === 'yes') {
+      this.showNameOfChildSch = true;
+    } else if (event?.target?.value === 'not yet') {
+      this.showNameOfChildSch = false;
+    } else {
+      this.showNameOfChildSch = null;
+    }
+  }
+
+  pushNameOfChildren(event: any, index: any) {
+    this.nameOfChildren.splice(index - 1, 0, event?.target?.value);
+  }
+
+  pushAgeOfChildren(event: any, index: any) {
+    this.ageOfChildren.splice(index - 1, 0, event?.target?.value);
+  }
+
+  pushIsChildInSchool(event: any, index: any) {
+    this.childrenEduStatus.splice(index - 1, 0, this.showNameOfChildSch);
+  }
+
+  pushChildPhoneNumber(event: any, index: any) {
+    this.childPhoneNumber.splice(index - 1, 0, event?.target?.value);
+  }
+
+  pushNameOfChildSchool(event: any, index: any) {
+    this.nameOfChildSchool.splice(index - 1, 0, event?.target?.value);
+  }
+
+
+
 
   numbersArray(spouse: number): number[] {
     this.spouseArray = Array(spouse);
@@ -128,6 +172,7 @@ export class MaritalInfoComponent implements OnInit {
   }
 
   submitForm() {
+    this.showSpinner = true;
     const spousalArray: any[] = [];
     for (let i = 0; i < Math.min(this.nameOfSpouses?.length, this.phoneNumberOfSpouses?.length); i++) {
       const spousalObj = {
@@ -136,14 +181,64 @@ export class MaritalInfoComponent implements OnInit {
       }
       spousalArray.push(spousalObj);
     }
-    console.log("spousal form>>>", spousalArray)
-    // this.routeService.setRouteToDisplay("education");
-    // this.router.navigate(['/home/beneficiary'],{
-    //   relativeTo: this.route,
-    //   queryParams: {
-    //     progress: 'education'
-    //   }
-    // })
+    //  console.log("spousal form>>>", spousalArray);
+
+
+    const childrenArray: any[] = [];
+    for (let i = 0; i < Math.max(
+      this.nameOfChildren?.length,
+      this.ageOfChildren?.length,
+      this.childrenEduStatus?.length,
+      this.childPhoneNumber?.length,
+      this.nameOfChildSchool?.length
+    ); i++) {
+      const ChildrenObj = {
+        name: this.nameOfChildren[i],
+        age: this.ageOfChildren[i],
+        inSchool: this.childrenEduStatus[i],
+        phoneNumber: this.childPhoneNumber[i],
+        schoolName: this.nameOfChildSchool[i],
+      }
+      childrenArray.push(ChildrenObj);
+      //  console.log("children form>>>", childrenArray);
+    }
+
+    const payload = {
+      phoneNumber: this.userDetails?.phoneNumber,
+      maritalStatus: this.maritalInfoForm.get('maritalStatus')?.value?.toUpperCase(),
+      spouseList: spousalArray,
+      childList: childrenArray
+    }
+
+    console.log("marital payload>>>", payload);
+
+    this.beneficiarySerice.maritalDetails(payload).subscribe({
+      next: (res: any) => {
+        //console.log("res>>", res);
+        this.showSpinner = false;
+        this.toast.setSuccessMessage('Beneficiary Marital Status onboarded succesfully!');
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        this.beneficiarySerice.setRouteToDisplay("education");
+        this.router.navigate(['/home/beneficiary'], {
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'education'
+          }
+        })
+      },
+      error: (err: any) => {
+        console.error("err>>", err);
+        this.showSpinner = false;
+        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      }
+    })
   }
 
 }

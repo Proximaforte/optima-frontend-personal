@@ -16,7 +16,8 @@ export const endpoints = {
     financialDetails: 'api/v1/onboarding/financialDetails',
     nextOfKinDetails: 'api/v1/onboarding/nextOfKinDetails',
     employmentDetails: 'api/v1/onboarding/employmentDetails',
-    otherDetails: 'api/v1/onboarding/otherDetails'
+    otherDetails: 'api/v1/onboarding/otherDetails',
+    maritalDetails: 'api/v1/onboarding/maritalDetails'
 }
 
 export interface ErrorMessage{

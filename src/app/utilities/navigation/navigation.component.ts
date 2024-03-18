@@ -81,7 +81,7 @@ export class NavigationComponent {
     if(item?.name === "logout"){
      this.authService.logoutUser().subscribe({
       next: (res:any) => {
-      //  console.log("logout res>>>", res);
+      //  console.log("logout res>>>", res)
         this.toast.setSuccessMessage('User is logged Out Successfully');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
