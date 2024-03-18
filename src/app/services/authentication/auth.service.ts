@@ -26,7 +26,7 @@ export class AuthService {
     const body = JSON.stringify(user);
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.login}`, body, { headers: this.interceptor?.customNoAuthHttpHeaders}).pipe(
       map((res: any) => {
-        console.log('Login response>>', res);
+        //console.log('Login response>>', res);
         return res;
       }),
       catchError((err: any) => {

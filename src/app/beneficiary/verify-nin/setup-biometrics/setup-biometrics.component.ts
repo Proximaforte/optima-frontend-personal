@@ -66,6 +66,7 @@ export class SetupBiometricsComponent {
   }
 
   proceed(){
+ //   this.dialog.open(SuccesfulBiometricsComponent);
     this.showSpinner = true;
     this.beneficiaryService.Verification( this.imageCapturePayload).subscribe({
       next: (res: any) => {
