@@ -118,7 +118,7 @@ export class ResidentialDetailsComponent implements OnInit {
       error: (err:any) => {
         console.error("err>>", err);
         this.showSpinner = false;
-        this.toast.setErrorMessage(err?.error?.failureReason || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

@@ -101,7 +101,7 @@ export class FaceCapturingComponent implements OnInit {
   submit() {
     const payload = {
       nin: this.nin?.nin,
-      type: 'face_id', //PHONE_NUMBER
+      type: 'FACIAL_ID', //PHONE_NUMBER
       phoneNumber: this.userDetails?.phoneNumber,
       image: this.photograph?.split(',')[1]
     }

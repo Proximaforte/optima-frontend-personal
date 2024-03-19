@@ -20,7 +20,7 @@ export class NextOfKinComponent implements OnInit{
   sameResidence: boolean = false;
   checked:boolean |any = false;
   option5: string[] = [
-    "Relationship*",  "Wife",  "Husband",  "Sibling",  "Cousins", "Others"
+    "Relationship*",  "FATHER",  "MOTHER",  "SPOUSE",  "CHILD", "GRAND_PARENT", "GRAND_SPOUSE", "Others"
   ];
   showOthers: boolean = false;
   userDetails:any = {};
@@ -113,7 +113,7 @@ export class NextOfKinComponent implements OnInit{
       error: (err:any) => {
         console.error("err>>", err);
         this.showSpinner = false;
-        this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

@@ -22,8 +22,11 @@ export class DisabilityStatusComponent implements OnInit{
   showInputBox: boolean = false;
 
   options: string[] = [
-    "Beneficiary Disability type*","Vision impairment", "deaf or hard of hearing", "Dumb or speaking challenges", "Mental health conditions", "Intellectual disability", "Acquired brain injury", "Physical disability", "autism spectrum disorder", "Cerebral palsy","Stroke", "Spinal bifida",
-    "Athritis", "Spinal cord injury", "Others"
+    "Beneficiary Disability type*","Vision impairment", "Deaf or hard of hearing", 
+    "Dumb or speaking challenge", "Mental health conditions", "Intellectual disability", 
+    "Acquired brain injury", "Physical disability", "Autism spectrum disorder",
+     "Cerebral palsy","Stroke", "Spina bifida",
+    "Arthritis", "Spinal cord injury", "Others"
   ]
   previousHealthData: any = {};
   userDetails:any = {};
@@ -127,7 +130,7 @@ export class DisabilityStatusComponent implements OnInit{
       error: (err: any) => {
         console.error("err>>>", err);
         this.showSpinner = false;
-        this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

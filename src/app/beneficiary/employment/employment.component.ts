@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 export class EmploymentComponent implements OnInit {
 
   options: string[] = [
-    "Emploment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-Employed", "Retired"
+    "Emploment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-employed", "Retired"
   ];
   option2: string[] = [
     "Other Sources of Income e.g farming business etc*"
@@ -32,6 +32,7 @@ export class EmploymentComponent implements OnInit {
   showEmployed: boolean = false;
   employmentForm!: FormGroup;
   userDetails: any = {};
+  showSpinner:boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -86,6 +87,7 @@ export class EmploymentComponent implements OnInit {
 
 
   submitForm() {
+    this.showSpinner = true;
     const payload: any = {
       phoneNumber: this.userDetails?.phoneNumber,
       status: this.employmentForm.value?.employmentStatus,
@@ -100,6 +102,7 @@ export class EmploymentComponent implements OnInit {
     // console.log("values>>", payload);
     this.beneficiaryService.employmentDetails(payload).subscribe({
       next: (value: any) => {
+        this.showSpinner = false;
         console.log("res>>", value);
         this.toast.setSuccessMessage('Beneficiary Employment data onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
@@ -115,8 +118,9 @@ export class EmploymentComponent implements OnInit {
         })
       },
       error: (err: any) => {
+        this.showSpinner = false;
         console.error("err from employment details>>", err);
-        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

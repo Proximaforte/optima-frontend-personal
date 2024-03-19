@@ -1,4 +1,32 @@
 export class Beneficiary {
+    constructor(
+        public address: any,
+        public childList: any[],
+        public dateOfBirth: any,
+        public education: any,
+        public email: any,
+        public employment: any,
+        public financial: any,
+        public firstname: any,
+        public formStage: any,
+        public fullName: any,
+        public gender: any,
+        public health: any,
+        public houseOwner: any,
+        public lastname: any,
+        public lga: any,
+        public maritalStatus: any,
+        public middleName: any,
+        public nextOfKin: any,
+        public nin: any,
+        public other: any,
+        public phoneNumber: any,
+        public placeOfBirth: any,
+        public religion: any,
+        public spouseList: any[],
+        public ssid: any,
+        public state: any
+    ) { }
 }
 
 export const NigerianStates = [
@@ -1166,7 +1194,7 @@ export interface ResidentialDetails {
     lga: string;
 }
 
-export interface EducationDetails{
+export interface EducationDetails {
     phoneNumber: string;
     level: string;
     certification: string;
@@ -1181,7 +1209,7 @@ export interface EducationDetails{
     funding: string;
 }
 
-export interface HealthDetails{
+export interface HealthDetails {
     phoneNumber: string;
     healthCondition: string;
     healthAilment: string;
@@ -1195,7 +1223,7 @@ export interface HealthDetails{
     receivingTreatment: boolean
 }
 
-export interface FinancialDetails{
+export interface FinancialDetails {
     phoneNumber: string;
     breadwinner: boolean;
     monthlyIncome: string;
@@ -1204,7 +1232,7 @@ export interface FinancialDetails{
     specifyAid: string;
 }
 
-export interface NextOfKin{
+export interface NextOfKin {
     beneficiaryPhoneNumber: string;
     firstname: string;
     lastname: string;
@@ -1216,7 +1244,7 @@ export interface NextOfKin{
     address: string;
 }
 
-export interface EmploymentDetails{
+export interface EmploymentDetails {
     phoneNumber: string;
     status: string;
     employer: string;
@@ -1227,7 +1255,7 @@ export interface EmploymentDetails{
     hasPensionAccount: boolean;
 }
 
-export interface OtherDetails{
+export interface OtherDetails {
     phoneNumber: string;
     politicalView: string;
     convicted: boolean;
@@ -1237,16 +1265,45 @@ export interface OtherDetails{
     numberOfCar: number
 }
 
-export interface VerificationDetails{
+export interface VerificationDetails {
     nin: string;
     type: string;
     phoneNumber: string;
     image: string;
 }
 
-export interface MaritalDetails{
+export interface MaritalDetails {
     phoneNumber: string;
     maritalStatus: string;
     spouseList: any[];
     childList: any[];
+}
+
+export interface BeneficiaryProfile{
+         address: any,
+         childList: any[],
+         dateOfBirth: any,
+         education: any,
+         email: any,
+         employment: any,
+         financial: any,
+         firstname: any,
+         formStage: any,
+         fullName: any,
+         gender: any,
+         health: any,
+         houseOwner: any,
+         lastname: any,
+         lga: any,
+         maritalStatus: any,
+         middleName: any,
+         nextOfKin: any,
+         nin: any,
+         other: any,
+         phoneNumber: any,
+         placeOfBirth: any,
+         religion: any,
+         spouseList: any[],
+         ssid: any,
+         state: any
 }

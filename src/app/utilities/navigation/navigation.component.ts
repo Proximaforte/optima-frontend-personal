@@ -72,37 +72,48 @@ export class NavigationComponent {
 
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   isActive(route: string | undefined): boolean {
     return !!route && this.router.isActive(route, false);
   }
 
   onLogout(item: any) {
-    if(item?.name === "logout"){
-     this.authService.logoutUser().subscribe({
-      next: (res:any) => {
-      //  console.log("logout res>>>", res)
-        this.toast.setSuccessMessage('User is logged Out Successfully');
-        this.snackbar.openFromComponent(ToastsComponent, {
-          duration: 4000,
-          verticalPosition: 'bottom',
-        });
-      },
-      error: (err:any) => {
-        console.error("logout error>>>", err);
-      }
-     })
-     this.authService.agentLogout()
-    }else if(item?.name === "beneficiary"){
+    if (item?.name === "logout") {
+      this.authService.logoutUser().subscribe({
+        next: (res: any) => {
+          //  console.log("logout res>>>", res)
+          this.toast.setSuccessMessage('User is logged Out Successfully');
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+        },
+        error: (err: any) => {
+          console.error("logout error>>>", err);
+        }
+      })
+      this.authService.agentLogout()
+    } else if (item?.name === "beneficiary") {
       this.routeService.setRouteToDisplay("verify beneficiary nin");
-      this.router.navigate(['/home/beneficiary'],{
+      this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
           progress: 'verify_NIN'
         }
-      })
+      });
+      setTimeout(() => location?.reload(), 1100);
+    } else if (item?.name === "dashboard") {
+      this.router.navigate(["/home/dashboard"], { relativeTo: this.route });
+     setTimeout(() => location?.reload(), 1100);
+    } else if (item?.name === "all-beneficiary") {
+      this.router.navigate(["/home/all-beneficiary"], { relativeTo: this.route });
+     setTimeout(() => location?.reload(), 1100);
+    } else if (item?.name === "profile") {
+      this.router.navigate(["/home/profile"], { relativeTo: this.route });
+      setTimeout(() => location?.reload(), 1100);
     }
   }
+
 
   //  // Define a boolean array to track active states of items
   //  isActive: boolean[] = new Array(this.menuItems.length).fill(false);
@@ -114,7 +125,7 @@ export class NavigationComponent {
   // }
 
 
-  
+
 
 
   // https://chat.openai.com/c/140447e6-5ce5-416a-a70f-675c8380df52

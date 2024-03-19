@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./other-details.component.scss']
 })
 export class OtherDetailsComponent implements OnInit {
-  options: string[] = ["If yes, for what offence?*", "Theft", "Assault", "Drug", "Drug-related Offenses", "Traffic violation", "Others"];
+  options: string[] = ["If yes, for what offence?*", "Theft", "Assault", "Drug", "Fraud", "Drug-related offenses", "Traffic violation", "Others"];
   option2:  string[] = ["what is your regular means of transportation?*", "Own car", "Public transport", "Okada", "Rail"];
   checked1:boolean | any;
   checked2:boolean | any;
@@ -93,7 +93,7 @@ export class OtherDetailsComponent implements OnInit {
     error: (err: any) => {
       console.error("err>>>", err);
       this.showSpinner = false;
-      this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+      this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
       this.snackbar.openFromComponent(ToastsComponent, {
         duration: 4000,
         verticalPosition: 'bottom',

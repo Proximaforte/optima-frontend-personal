@@ -21,11 +21,11 @@ export class FinancialComponent implements OnInit{
   ]
 
   option2: string[] = [
-    "Average amount spent monthly by household*",  "Less than 250k",  "250k - 500k",  "500k - 1M",  "1M and above", "I don't know"
+    "Average amount spent monthly by household*",  "0 - 50K",  "50K - 100K",  "100K - 250K", "250K - 500K",  "500K - 1M",  "1M & above", "I don't know"
   ]
 
   option4: string[] = [
-    "What is your monthly household income*","Less than 250k",  "250k - 500k",  "500k - 1M",  "1M and above", "I don't know"
+    "What is your monthly household income*", "0 - 50K",  "50K - 100K",  "100K - 250K", "250K - 500K",  "500K - 1M",  "1M & above", "I don't know"
   ]
 
   option3: string[] = [
@@ -33,7 +33,7 @@ export class FinancialComponent implements OnInit{
   ]
 
   option5: string[] = [
-    "If yes, please specify*",  "Education",  "Medicals",  "Financial",  "Transportation", "None of the above"
+    "If yes, please specify*",  "Education",  "Medical",  "Financial",  "Transportation", "None of the above, others"
   ]
   showOthers: boolean = false;
   userDetails:any = {};
@@ -111,7 +111,7 @@ export class FinancialComponent implements OnInit{
       error: (err: any) => {
         console.error('err from financial details onbording>>', err);
         this.showSpinner = false;
-        this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

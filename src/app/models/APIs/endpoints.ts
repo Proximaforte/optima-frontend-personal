@@ -17,7 +17,10 @@ export const endpoints = {
     nextOfKinDetails: 'api/v1/onboarding/nextOfKinDetails',
     employmentDetails: 'api/v1/onboarding/employmentDetails',
     otherDetails: 'api/v1/onboarding/otherDetails',
-    maritalDetails: 'api/v1/onboarding/maritalDetails'
+    maritalDetails: 'api/v1/onboarding/maritalDetails',
+
+    //Get All Beneficiaries Onboarded
+    getAllBeneficiaries: 'api/v1/beneficiary/getBeneficiariesByLoggedInAgent'
 }
 
 export interface ErrorMessage{

@@ -20,7 +20,7 @@ export class PersonalDetailsComponent implements OnInit {
     "Religion*",
     "CHRISTIANITY",
     "ISLAM",
-    "Others"
+    "OTHERS"
   ];
   personalDetailsForm!:FormGroup;
   showOthers: boolean = false;
@@ -65,7 +65,7 @@ export class PersonalDetailsComponent implements OnInit {
 
     this.personalDetailsForm.get('religion')?.valueChanges.subscribe({
       next: (value:any) => {
-        if(value === 'Others'){
+        if(value === 'OTHERS'){
           this.showOthers = true;
         }else{
           this.showOthers = false;
@@ -92,11 +92,11 @@ export class PersonalDetailsComponent implements OnInit {
       gender:  this.personalDetailsForm.value?.gender,
       dateOfBirth:  this.personalDetailsForm.value?.dateOfBirth,
       placeOfBirth:  this.personalDetailsForm.value?.placeOfBirth,
-      religion:  this.personalDetailsForm.value.religion === 'Others' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
+      religion:  this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
     }
     this.beneficiaryService.personalDetails(payload).subscribe({
       next: (res: any) => {
-       // console.log("response>>>", res);
+      //  console.log("response>>>", res);
         this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
@@ -113,7 +113,7 @@ export class PersonalDetailsComponent implements OnInit {
       error: (err:any) => {
         this.showSpinner = false;
         console.error("personal details error>>", err);
-        this.toast.setErrorMessage(err?.error?.failureReason || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

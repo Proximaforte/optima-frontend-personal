@@ -16,7 +16,7 @@ export class HealthComponent implements OnInit {
   ]
 
   ailments: string[] = ["Are you currently suffering from any of the following?*",
-    "High Blood Pressure", "Low Blood Pressure", "Diabetes", "Asthma", "Eye Issues", "Ear issues","Others", "None of the above"
+    "High Blood Pressure", "Low Blood Pressure", "Diabetes", "Asthma", "Eye Issues", "Ear Issues","Heart Issues", "Kidney Issues","Others", "None of the above, Others"
   ]
 
   hmo: string[] = ["Do you have an HMO?*","yes", "no"]
@@ -24,7 +24,7 @@ export class HealthComponent implements OnInit {
   optionz: string[] = ["Are you currently receiving treatment?*","yes", "no"]
 
   fundingOptions: string[] = [
-    "Source of Funding*", "Parents", "Self-Funded", "Scholarships", "Free Government Support/Subsidized Education"
+    "Source of Funding*",  "Parents", "Self-Funded", "Scholarship", "Free Government Support / Subsidized Education"
   ]
 
   healthForm!:FormGroup;

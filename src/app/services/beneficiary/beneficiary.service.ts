@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, catchError, map, tap, throwError } from 'rxjs';
 import { endpoints } from 'src/app/models/APIs/endpoints';
 import { environment } from 'src/app/environments/environment.prod';
 import { JwtInterceptorService } from '../authentication/interceptor/jwt-interceptor.service';
@@ -28,7 +28,7 @@ export class BeneficiaryService {
 
  imageObservable$: ReplaySubject<any> = new ReplaySubject<any>();
  routeObservable$: ReplaySubject<any> = new ReplaySubject<any>();
-//  healthDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
+beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
 
   constructor(private http: HttpClient, private interceptor: JwtInterceptorService) { }
 
@@ -63,6 +63,14 @@ export class BeneficiaryService {
 
   public getRouteToDisplay():Observable<any>{
     return this.routeObservable$.asObservable();
+  }
+
+  public setBeneficiaryProfile(beneficiary:any){
+    return this.beneficiaryDataObservable$.next(beneficiary);
+  }
+
+  public getBeneficiaryProfile():Observable<any>{
+    return this.beneficiaryDataObservable$.asObservable();
   }
 
   public personalDetails(data: PersonalDetails): Observable<any>{
@@ -112,10 +120,13 @@ export class BeneficiaryService {
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.verificationDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
   }
 
-   
   public maritalDetails(data: MaritalDetails):Observable<any>{
     const body = JSON.stringify(data);
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.maritalDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+  }
+
+  public getAllBeneficiaries():Observable<any>{
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders});
   }
 
 

@@ -72,7 +72,7 @@ export class MaritalInfoComponent implements OnInit {
 
     this.maritalInfoForm.get('maritalStatus')?.valueChanges?.subscribe({
       next: (value: string) => {
-        if (value === "Married") {
+        if (value === "MARRIED") {
           this.showOthers = true;
           this.disableBtn = false;
         } else {
@@ -205,18 +205,18 @@ export class MaritalInfoComponent implements OnInit {
 
     const payload = {
       phoneNumber: this.userDetails?.phoneNumber,
-      maritalStatus: this.maritalInfoForm.get('maritalStatus')?.value?.toUpperCase(),
+      maritalStatus: this.maritalInfoForm.get('maritalStatus')?.value,
       spouseList: spousalArray,
       childList: childrenArray
     }
 
-    console.log("marital payload>>>", payload);
+  //  console.log("marital payload>>>", payload);
 
     this.beneficiarySerice.maritalDetails(payload).subscribe({
       next: (res: any) => {
         //console.log("res>>", res);
         this.showSpinner = false;
-        this.toast.setSuccessMessage('Beneficiary Marital Status onboarded succesfully!');
+        this.toast.setSuccessMessage('Beneficiary Marital Status is onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
@@ -232,7 +232,7 @@ export class MaritalInfoComponent implements OnInit {
       error: (err: any) => {
         console.error("err>>", err);
         this.showSpinner = false;
-        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

@@ -15,11 +15,11 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 export class EducationComponent implements OnInit {
 
   options: string[] = [
-    "Level of Education*","SSCE", "OND", "HND", "B.SC", "B.Tech", "B.Eng", "M.Sc", "Ph.D", "Doctorate","Others", "None of the above"
+    "Level of Education*","SSCE", "OND", "HND", "B.Sc", "B.Tech", "B.Eng", "MSc", "Phd", "Doctorate","Others", "None of the above, others"
   ]
 
   fundingOptions: string[] = [
-    "Who is your sponsor?*" , "Parents", "Self-Funded", "Scholarships", "Free Government Support/Subsidized Education"
+    "Who is your sponsor?*" , "Parents", "Self-Funded", "Scholarship", "Free Government Support / Subsidized Education"
   ]
 
   checked:boolean |any = false;
@@ -77,6 +77,17 @@ export class EducationComponent implements OnInit {
     })
   }
 
+
+  skip(){
+    this.beneficiaryService.setRouteToDisplay("health");
+    this.router.navigate(['/home/beneficiary'],{
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'health'
+      }
+    })
+  }
+
   submit(){
     this.showSpinner = true;
     const payload = {
@@ -98,7 +109,7 @@ export class EducationComponent implements OnInit {
     this.beneficiaryService.educationDetails(payload).subscribe({
       next: (res:any) => {
         console.log("res>>", res);
-        this.showSpinner = true;
+        this.showSpinner = false;
         this.toast.setSuccessMessage('Beneficiary Education data onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
@@ -114,16 +125,16 @@ export class EducationComponent implements OnInit {
       },
       error: (err:any) => {
         console.error("err>>>", err);
-        this.showSpinner = true;
-        this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.showSpinner = false;
+        this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
 
-        // if(err?.status === 401){
-        //   this.auth.agentLogout();
-        //   }
+        if(err?.status === 401){
+          this.auth.agentLogout();
+          }
       }
     });
   }

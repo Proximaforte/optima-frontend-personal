@@ -57,7 +57,7 @@ export class FingerCaptureCompleteComponent implements OnInit{
 
     const payload = {
       nin: this.nin?.nin,
-      type: 'face_id', //PHONE_NUMBER
+      type: 'FACIAL_ID', //PHONE_NUMBER
       phoneNumber: this.userDetails?.phoneNumber,
       image: this.passport?.split(',')[1]
     }
