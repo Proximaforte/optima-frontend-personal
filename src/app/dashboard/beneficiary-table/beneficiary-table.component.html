@@ -87,29 +87,28 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white">
-        <tr class="text-left">
+        <tr class="text-left" *ngFor="let beneficiary of beneficiary; let i=index">
           <td
             class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
           >
-            Olukoya Damilare
+            {{beneficiary.firstname}} {{beneficiary.lastname}}
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            Oct 23, 2009
+            {{beneficiary.dateOfBirth}}
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <!-- TODO: Remember to track the quantity sold and represent it here as order remaining/qty -->
-           Olukoyadamilare@gmail.com
+           {{beneficiary.email}}
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            222266535
+            {{beneficiary.nin}}
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          09067989484
+          {{beneficiary.phoneNumber}}
           </td>
           <td
             class="relative flex justify-between whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 overflow-visible"
           >
-           Female
+           {{beneficiary.gender}}
           </td>
         </tr>
       

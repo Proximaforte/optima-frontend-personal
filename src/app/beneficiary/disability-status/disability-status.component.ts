@@ -112,7 +112,7 @@ export class DisabilityStatusComponent implements OnInit{
   //  console.log('health payload>>>', newHealthPayload);
     this.beneficiaryService.healthDetails(newHealthPayload).subscribe({
       next: (res: any) => {
-        console.log("res>>", res);
+        //console.log("res>>", res);
         this.showSpinner = false;
         this.toast.setSuccessMessage('Beneficiary Health data onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
@@ -128,9 +128,9 @@ export class DisabilityStatusComponent implements OnInit{
         });
       },
       error: (err: any) => {
-        console.error("err>>>", err);
+        console.error("err123>>>", err);
         this.showSpinner = false;
-        this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.failureReason || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

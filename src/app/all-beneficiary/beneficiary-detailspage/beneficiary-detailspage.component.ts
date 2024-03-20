@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { BeneficiaryProfile } from 'src/app/models/beneficiary/beneficiary';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 
 @Component({
   selector: 'app-beneficiary-detailspage',
@@ -26,17 +31,56 @@ export class BeneficiaryDetailspageComponent implements OnInit{
   
   beneficiaryProfile$!: Subscription;
   beneficiary!: BeneficiaryProfile;
+  ssid: string = ''
 
   constructor(
-    private beneficiaryService: BeneficiaryService
-  ){}
+    private beneficiaryService: BeneficiaryService,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService
+  ){
+  const params = this.route.queryParams.subscribe({
+    next: (param: any) => {
+      this.ssid = param?.data;
+      //console.log('param>>', this.ssid);
+    }
+  })
+  }
 
-  ngOnInit(): void {
+  getBeneficiaryProfileData(){
+    this.beneficiaryService.getAllBeneficiaryProfiles(this.ssid).subscribe({
+      next: (data: any) => {
+       // console.log('data>>', data);    
+        this.toast.setSuccessMessage( "Data retrieved successfully!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      },
+      error: (err: any) => {
+        console.error("Http error from beneficiary profile>>", err);
+        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      }
+    })
+    
+  }
+
+  getDummyData(){
     this.beneficiaryProfile$ = this.beneficiaryService.getBeneficiaryProfile().subscribe({
       next: (profileData: any) => {
-        console.log('profile>>>', profileData);
+        //console.log('profile>>>', profileData);
         this.beneficiary = profileData;
       }
     })
+  }
+
+  ngOnInit(): void {
+   this.getDummyData();
+   this.getBeneficiaryProfileData();
   }
 }

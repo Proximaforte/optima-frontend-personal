@@ -13,9 +13,10 @@ import {
    EmploymentDetails,
    OtherDetails,
    VerificationDetails,
-   MaritalDetails
+   MaritalDetails,
+   PaginationParams
   } from 'src/app/models/beneficiary/beneficiary';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -125,9 +126,15 @@ beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.maritalDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
   }
 
-  public getAllBeneficiaries():Observable<any>{
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders});
+  public getAllBeneficiaries(paginationParams:PaginationParams):Observable<any>{
+    const params = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page));
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders, params: params});
   }
+
+  public getAllBeneficiaryProfiles(ssid:any):Observable<any>{
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getBeneficiaryProfile}/${ssid}`, { headers: this.interceptor?.customHttpHeaders});
+  }
+
 
 
 

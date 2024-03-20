@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FilterBoxComponent } from '../utilities/filter-box/filter-box.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BeneficiaryService } from '../services/beneficiary/beneficiary.service';
-import { Beneficiary } from '../models/beneficiary/beneficiary';
+import { Beneficiary, mocks, PaginationParams, BeneficiaryProfile } from '../models/beneficiary/beneficiary';
 import { AuthService } from '../services/authentication/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from '../services/alert/toasts.service';
@@ -28,7 +28,11 @@ export class AllBeneficiaryComponent implements OnInit{
   showSpinner: boolean = false;
   showNoData: boolean = false
   emptyTable: string = "/assets/images/noDataFound.png";
-
+  paginationParams: PaginationParams = {
+    size: 10,
+    page: 1
+  }
+paginationNumber: any[] = [];
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -65,12 +69,14 @@ export class AllBeneficiaryComponent implements OnInit{
 
   getAllBeneficiaries(){
     this.showSpinner = true;
-    this.beneficiaryService.getAllBeneficiaries().subscribe({
+    this.beneficiaryService.getAllBeneficiaries(this.paginationParams).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
-       console.log('res>>', res?.data);
+     //  console.log('res>>', res?.data);
         this.beneficiaries = res?.data?.beneficiaries;
-        if(res?.data?.beneficiaries?.length === 0){
+        this.beneficiaries = mocks;
+        this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
+        if(this.beneficiaries?.length === 0){  //res?.data?.beneficiaries?.length
           this.showNoData = true;
           this.showSpinner = false;
         }else{
@@ -86,10 +92,10 @@ export class AllBeneficiaryComponent implements OnInit{
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        if(err?.status === 401){
-          this.showSpinner = false;
-         this.authService.agentLogout();
-          }
+        // if(err?.status === 401){
+        //   this.showSpinner = false;
+        //  this.authService.agentLogout();
+        //   }
       }
     })
   }
@@ -98,8 +104,32 @@ export class AllBeneficiaryComponent implements OnInit{
     this.getAllBeneficiaries();
   }
 
-  viewBeneficiaryProfile(beneficiary:any):any{
+  viewBeneficiaryProfile(beneficiary:BeneficiaryProfile | any):any{
    // console.log('beneficiary>>>', beneficiary);
     this.beneficiaryService.setBeneficiaryProfile(beneficiary);
+    this.router.navigate(['/home/beneficiary-details'],{
+      relativeTo: this.route,
+      queryParams:{
+        data:beneficiary?.ssid
+      }
+    })
+  }
+
+  nextPage(){
+    this.paginationParams.size++;
+    this.getAllBeneficiaries();
+  }
+
+  prevPage(){
+    if(this.paginationParams.size > 0){
+      this.paginationParams.size--
+      this.getAllBeneficiaries();
+    }
+  }
+
+  getCurrentPage(pageNoToPull:number){
+   // console.log('current page>>', pageNoToPull);
+    this.paginationParams.page = pageNoToPull;
+    this.getAllBeneficiaries();
   }
 }

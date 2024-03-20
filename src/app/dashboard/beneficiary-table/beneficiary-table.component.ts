@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router , ActivatedRoute} from '@angular/router';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { Beneficiary, PaginationParams, mocks } from 'src/app/models/beneficiary/beneficiary';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 
 @Component({
   selector: 'app-beneficiary-table',
   templateUrl: './beneficiary-table.component.html',
   styleUrls: ['./beneficiary-table.component.scss']
 })
-export class BeneficiaryTableComponent {
+export class BeneficiaryTableComponent implements OnInit {
 
+  beneficiary: Beneficiary[] = [];
   noData: string = "/assets/images/emptydata.svg";
   agents: any = [
     { text: 'Agent code', data: 'AG1023', icon: 'assets/images/agentcode.svg' },
@@ -24,15 +30,22 @@ export class BeneficiaryTableComponent {
     },
     { text: 'LGA', data: 'ILLorin South', icon: 'assets/images/lga.svg' },
   ];
+  paginationParams: PaginationParams = {
+    size: 10,
+    page: 1
+  }
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private routeService: BeneficiaryService
+    private beneficiaryService: BeneficiaryService,
+    private authService: AuthService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService
   ){}
 
 
   addBeneficiary(){
-    this.routeService.setRouteToDisplay("verify beneficiary nin");
+    this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
     this.router.navigate(['/home/beneficiary'],{
       relativeTo: this.route,
       queryParams: {
@@ -40,6 +53,30 @@ export class BeneficiaryTableComponent {
       }
     })
    // this.router.navigate(["/home/beneficiary"],{relativeTo: this.route});
+  }
+
+  getAllBeneficiries(){
+    this.beneficiaryService.getAllBeneficiaries(this.paginationParams).subscribe({
+      next: (res: any) => {
+       // console.log('res>>>', res);
+        this.beneficiary = res?.data?.beneficiaries;
+        if(this.beneficiary?.length === 0){
+          this.beneficiary = mocks;
+        }
+      },
+      error: (err: any) => {
+        console.error("err>>", err);
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      }
+    })
+  }
+
+  ngOnInit(): void {
+    this.getAllBeneficiries();
   }
 
 

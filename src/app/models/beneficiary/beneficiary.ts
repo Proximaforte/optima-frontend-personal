@@ -1298,6 +1298,7 @@ export interface BeneficiaryProfile{
          maritalStatus: any,
          middleName: any,
          nextOfKin: any,
+         bvn?:any
          nin: any,
          other: any,
          phoneNumber: any,
@@ -1306,4 +1307,70 @@ export interface BeneficiaryProfile{
          spouseList: any[],
          ssid: any,
          state: any
+}
+
+export const mocks = [
+    {
+        address: "Address 1",
+        childList: ["Child 1", "Child 2"],
+        dateOfBirth: "DOB 1",
+        education: "Education 1",
+        email: "email1@example.com",
+        employment: "Employment 1",
+        financial: "Financial 1",
+        firstname: "Matthew",
+        formStage: "Form Stage 1",
+        fullName: "Full Name 1",
+        gender: "Gender 1",
+        health: "Health 1",
+        houseOwner: "House Owner 1",
+        lastname: "Popoola",
+        lga: "LGA 1",
+        maritalStatus: "Marital Status 1",
+        middleName: "Middle Name 1",
+        nextOfKin: "Next of Kin 1",
+        nin: "NIN 1",
+        other: "Other 1",
+        phoneNumber: "Phone Number 1",
+        placeOfBirth: "Place of Birth 1",
+        religion: "Religion 1",
+        spouseList: ["Spouse 1", "Spouse 2"],
+        ssid: "SSID_1",
+        state: "State 1"
+    },
+    {
+        address: "Address 2",
+        childList: ["Child 3", "Child 4"],
+        dateOfBirth: "DOB 2",
+        education: "Education 2",
+        email: "email2@example.com",
+        employment: "Employment 2",
+        financial: "Financial 2",
+        firstname: "Ayoola",
+        formStage: "Form Stage 2",
+        fullName: "Full Name 2",
+        gender: "Gender 2",
+        health: "Health 2",
+        houseOwner: "House Owner 2",
+        lastname: "Oluwatosin",
+        lga: "LGA 2",
+        maritalStatus: "Marital Status 2",
+        middleName: "Middle Name 2",
+        nextOfKin: "Next of Kin 2",
+        nin: "NIN 2",
+        other: "Other 2",
+        phoneNumber: "Phone Number 2",
+        placeOfBirth: "Place of Birth 2",
+        religion: "Religion 2",
+        spouseList: ["Spouse 3", "Spouse 4"],
+        ssid: "SSID_2",
+        state: "State 2"
+    },
+
+];
+
+
+export interface PaginationParams{
+    size: number;
+    page: number;
 }

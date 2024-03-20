@@ -12,7 +12,7 @@
     </div>
     <div class="ml-3 mt-8 font-sora">
       <div class="text-2xl font-bold">
-        Kemisola Olusanya
+        {{beneficiary.firstname}} {{beneficiary.lastname}}
         <small class="text-sm text-optimaGray font-normal">(beneficiary)</small>
       </div>
       <div class="text-optimaGray">{{beneficiary.ssid || 'N/A' }}</div>
@@ -36,7 +36,7 @@
           <label class="absolute text-label -top-2 left-4 bg-white text-xs"
             >First name</label
           >
-          <p class="text-center text-sm font-medium pt-2">Kemisola</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.firstname || "N/A"}}</p>
         </div>
         <div
           class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
@@ -44,7 +44,7 @@
           <label class="absolute text-label -top-2 left-4 bg-white text-xs"
             >Last name</label
           >
-          <p class="text-center text-sm font-medium pt-2">Olusanya</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lastname}}</p>
         </div>
         <div
           class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
@@ -52,7 +52,7 @@
           <label class="absolute text-label -top-2 left-4 bg-white text-xs"
             >Middle name</label
           >
-          <p class="text-center text-sm font-medium pt-2">Damilola</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.middleName}}</p>
         </div>
       </div>
 
@@ -64,7 +64,7 @@
           <label class="absolute text-label -top-2 left-4 bg-white text-xs"
             >Phone Number</label
           >
-          <p class="text-center text-sm font-medium pt-2">0708983203</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.phoneNumber}}</p>
         </div>
 
         <div
@@ -74,7 +74,7 @@
             >Email</label
           >
           <p class="text-center text-sm font-medium pt-2">
-            olukoyadamilare_78@gmail.com
+            {{beneficiary.email}}
           </p>
         </div>
       </div>
@@ -87,7 +87,7 @@
           <label class="absolute -top-2 text-label left-4 bg-white text-xs"
             >SSID</label
           >
-          <p class="text-sm font-medium pt-2">11144400028</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.ssid}}</p>
         </div>
       </div>
 
@@ -99,7 +99,7 @@
           <label class="absolute -top-2 left-4 text-label bg-white text-xs"
             >BVN</label
           >
-          <p class="text-sm font-medium pt-2">11144400028</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.bvn}}</p>
         </div>
       </div>
 
@@ -111,7 +111,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Date of Birth</label
           >
-          <p class="text-center text-sm font-medium pt-2">Sep 23, 1998</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.dateOfBirth}}</p>
         </div>
 
         <div
@@ -120,7 +120,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Place of Birth</label
           >
-          <p class="text-center text-sm font-medium pt-2">Akure Ondo State</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.placeOfBirth}}</p>
         </div>
       </div>
 
@@ -132,7 +132,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >State of Origin</label
           >
-          <p class="text-sm font-medium pt-2">Bayelsa</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.state}}</p>
         </div>
       </div>
 
@@ -144,7 +144,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >LGA of Origin
           </label>
-          <p class="text-center text-sm font-medium pt-2">Onicha</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga}}</p>
         </div>
 
         <div
@@ -165,7 +165,7 @@
             >House Address</label
           >
           <p class="text-sm font-medium pt-2">
-            No $ Colorado Street, Gbaga, Illorin
+            {{beneficiary.address}}
           </p>
         </div>
       </div>
@@ -177,7 +177,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Gender</label
           >
-          <p class="text-sm font-medium pt-2">Male</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.gender || "N/A"}}</p>
         </div>
       </div>
     </div>
@@ -200,7 +200,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >State</label
           >
-          <p class="text-center text-sm font-medium pt-2">Lagos</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.state}}</p>
         </div>
 
         <div
@@ -209,7 +209,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >LGA</label
           >
-          <p class="text-center text-sm font-medium pt-2">Ikeja</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga}}</p>
         </div>
       </div>
 
@@ -222,7 +222,7 @@
             >House Address</label
           >
           <p class="text-sm font-medium pt-2">
-            No $ Colorado Street, Gbaga, Illorin
+            {{beneficiary.address}}
           </p>
         </div>
       </div>
@@ -246,7 +246,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Marital Status</label
           >
-          <p class="text-center text-sm font-medium pt-2">Single</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.maritalStatus}}</p>
         </div>
 
         <div
@@ -255,7 +255,9 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Number of Spouse(s)</label
           >
-          <p class="text-center text-sm font-medium pt-2">7</p>
+          <p class="text-center text-sm font-medium pt-2">
+            {{beneficiary.spouseList.length}}
+          </p>
         </div>
       </div>
 
@@ -267,7 +269,9 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Number of Child(ren)</label
           >
-          <p class="text-center text-sm font-medium pt-2">4</p>
+          <p class="text-center text-sm font-medium pt-2">
+            {{beneficiary.childList.length}}
+          </p>
         </div>
       </div>
     </div>
@@ -290,7 +294,9 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Highest Level of Education</label
           >
-          <p class="text-center text-sm font-medium pt-2">Masters of Science</p>
+          <p class="text-center text-sm font-medium pt-2">
+            {{beneficiary.education}}
+          </p>
         </div>
       </div>
     </div>
@@ -313,7 +319,9 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Current Health Condition</label
           >
-          <p class="text-center text-sm font-medium pt-2">Perfect Health</p>
+          <p class="text-center text-sm font-medium pt-2">
+            {{beneficiary.health}}
+          </p>
         </div>
       </div>
     </div>

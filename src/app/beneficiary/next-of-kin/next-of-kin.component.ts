@@ -109,6 +109,13 @@ export class NextOfKinComponent implements OnInit{
           duration: 4000,
           verticalPosition: 'bottom',
         });
+        this.beneficiaryService.setRouteToDisplay("employment");
+        this.router.navigate(['/home/beneficiary'],{
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'employment'
+          }
+        })
       },
       error: (err:any) => {
         console.error("err>>", err);
@@ -118,19 +125,11 @@ export class NextOfKinComponent implements OnInit{
           duration: 4000,
           verticalPosition: 'bottom',
         });
-             // if(err?.status === 401){
-        //   this.auth.agentLogout();
-        //   }
+          if(err?.status === 401){
+          this.auth.agentLogout();
+          }
       }
     })
-    
-    // this.beneficiaryService.setRouteToDisplay("employment");
-    // this.router.navigate(['/home/beneficiary'],{
-    //   relativeTo: this.route,
-    //   queryParams: {
-    //     progress: 'employment'
-    //   }
-    // })
   }
 
 }

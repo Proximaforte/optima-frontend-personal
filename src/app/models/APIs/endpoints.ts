@@ -20,7 +20,8 @@ export const endpoints = {
     maritalDetails: 'api/v1/onboarding/maritalDetails',
 
     //Get All Beneficiaries Onboarded
-    getAllBeneficiaries: 'api/v1/beneficiary/getBeneficiariesByLoggedInAgent'
+    getAllBeneficiaries: 'api/v1/beneficiary/getBeneficiariesByLoggedInAgent',
+    getBeneficiaryProfile: 'api/v1/beneficiary/getBeneficiary'
 }
 
 export interface ErrorMessage{
