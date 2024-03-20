@@ -68,9 +68,9 @@ export class AllBeneficiaryComponent implements OnInit{
     this.beneficiaryService.getAllBeneficiaries().subscribe({
       next: (res: any) => {
         this.showSpinner = false;
-      // console.log('res>>', res?.data);
-        this.beneficiaries = res?.data;
-        if(res?.data?.length === 0){
+       console.log('res>>', res?.data);
+        this.beneficiaries = res?.data?.beneficiaries;
+        if(res?.data?.beneficiaries?.length === 0){
           this.showNoData = true;
           this.showSpinner = false;
         }else{
@@ -88,7 +88,7 @@ export class AllBeneficiaryComponent implements OnInit{
         });
         if(err?.status === 401){
           this.showSpinner = false;
-         // this.authService.agentLogout();
+         this.authService.agentLogout();
           }
       }
     })

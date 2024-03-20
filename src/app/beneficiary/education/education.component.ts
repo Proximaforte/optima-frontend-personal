@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 export class EducationComponent implements OnInit {
 
   options: string[] = [
-    "Level of Education*","SSCE", "OND", "HND", "B.Sc", "B.Tech", "B.Eng", "MSc", "Phd", "Doctorate","Others", "None of the above, others"
+    "Level of Education*","SSCE", "OND", "HND", "B.Sc", "B.Tech", "B.Eng", "MSc", "Phd","Others", "None of the above, others"
   ]
 
   fundingOptions: string[] = [
