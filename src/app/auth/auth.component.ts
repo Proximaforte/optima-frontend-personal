@@ -77,9 +77,22 @@ export class AuthComponent implements OnInit {
     }
   }
 
+  getBrowserEye(){
+    const getNav: any = window?.navigator;
+    const brandsArray: [] = getNav?.userAgentData?.brands;
+   // console.log("brands>>>", brandsArray);
+    const filterBrowserType = brandsArray?.forEach((elem: any) => {
+      if (elem?.brand === 'Microsoft Edge') {
+        this.showEye = false;
+       // console.log("Browser Type>>", elem?.brand);
+      }
+    })
+  }
+
 
 
   ngOnInit(): void {
+    this.getBrowserEye();
     this.formInput();
     this.agentLogoutBeforeLeaving();
   }

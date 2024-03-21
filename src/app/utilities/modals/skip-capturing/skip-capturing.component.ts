@@ -15,6 +15,7 @@ import { FingerCaptureCompleteComponent } from 'src/app/beneficiary/verify-nin/f
 export class SkipCapturingComponent implements OnInit {
 
   successMark: string = "/assets/images/mark.svg";
+  captureImages: string = "/assets/images/capture_btn.svg"
   reasons: String[] = [
     'Beneficiary thumbs are cut-off',
     'Thumbs are burnt',
@@ -75,11 +76,11 @@ export class SkipCapturingComponent implements OnInit {
     this.showWebcam = false;
   }
 
-  public toggleWebcam(toggle:boolean) {
-  //  this.showWebcam = !this.showWebcam;
-  this.showWebcam = toggle;
-  //this.ngOnInit();
+   toggleWebcam(): void {
+    console.log('hey!!!')
+    this.showWebcam = !this.showWebcam;
   }
+
 
   ngOnInit(): void {
     this.showLatest = this.service.getShowOriginal();

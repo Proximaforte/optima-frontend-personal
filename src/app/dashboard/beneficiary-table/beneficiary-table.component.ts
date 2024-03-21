@@ -60,9 +60,9 @@ export class BeneficiaryTableComponent implements OnInit {
       next: (res: any) => {
        // console.log('res>>>', res);
         this.beneficiary = res?.data?.beneficiaries;
-        if(this.beneficiary?.length === 0){
-          this.beneficiary = mocks;
-        }
+        // if(this.beneficiary?.length === 0){
+        //   this.beneficiary = mocks;
+        // }
       },
       error: (err: any) => {
         console.error("err>>", err);
@@ -71,6 +71,7 @@ export class BeneficiaryTableComponent implements OnInit {
           duration: 4000,
           verticalPosition: 'bottom',
         });
+        if(err?.status === 401) this.authService.agentLogout();
       }
     })
   }

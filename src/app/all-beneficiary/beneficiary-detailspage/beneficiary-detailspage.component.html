@@ -344,7 +344,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Marital Status</label
           >
-          <p class="text-center text-sm font-medium pt-2">Single</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.maritalStatus}}</p>
         </div>
 
         <div
@@ -353,7 +353,9 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Number of Spouse(s)</label
           >
-          <p class="text-center text-sm font-medium pt-2">7</p>
+          <p class="text-center text-sm font-medium pt-2">
+            {{beneficiary.spouseList.length}}
+          </p>
         </div>
       </div>
 
@@ -365,7 +367,9 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Number of Child(ren)</label
           >
-          <p class="text-center text-sm font-medium pt-2">4</p>
+          <p class="text-center text-sm font-medium pt-2">
+            {{beneficiary.childList.length}}
+          </p>
         </div>
       </div>
     </div>

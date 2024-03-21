@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,44 +12,44 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './next-of-kin.component.html',
   styleUrls: ['./next-of-kin.component.scss']
 })
-export class NextOfKinComponent implements OnInit{
+export class NextOfKinComponent implements OnInit {
 
-  options:string[]=["State of residence"];
-  option2:string[]=["Local government of residence"];
+  options: string[] = ["State of residence"];
+  option2: string[] = ["Local government of residence"];
   nextOfKinForm!: FormGroup;
   sameResidence: boolean = false;
-  checked:boolean |any = false;
+  checked: boolean | any = false;
   option5: string[] = [
-    "Relationship*",  "FATHER",  "MOTHER",  "SPOUSE",  "CHILD", "GRAND_PARENT", "GRAND_SPOUSE", "Others"
+    "Relationship*", "FATHER", "MOTHER", "SPOUSE", "CHILD", "GRAND_PARENT", "GRAND_SPOUSE", "Others"
   ];
   showOthers: boolean = false;
-  userDetails:any = {};
+  userDetails: any = {};
   disableBtn: boolean = true;
-  showSpinner:boolean = false;
+  showSpinner: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private auth:AuthService
-  ){
-    const getUserData:any = localStorage.getItem('userDetails');
+    private auth: AuthService
+  ) {
+    const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
   }
 
 
 
-  toggleChecked(event:any){
-   this.disableBtn = false;
-      if(event === true){
-        this.sameResidence = true;
-      }else{
-        this.sameResidence = false; 
-      }
+  toggleChecked(event: any) {
+    this.disableBtn = false;
+    if (event === true) {
+      this.sameResidence = true;
+    } else {
+      this.sameResidence = false;
     }
+  }
 
-  getNextOfKinForm(){
+  getNextOfKinForm() {
     this.nextOfKinForm = new FormGroup({
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
@@ -64,9 +64,9 @@ export class NextOfKinComponent implements OnInit{
 
     this.nextOfKinForm.get('relationship')?.valueChanges.subscribe({
       next: (value: any) => {
-        if(value === 'Others'){
+        if (value === 'Others') {
           this.showOthers = true;
-        }else{
+        } else {
           this.showOthers = false;
         }
       }
@@ -77,7 +77,7 @@ export class NextOfKinComponent implements OnInit{
       next: (value: any) => {
         this.disableBtn = false;
       }
-       
+
     })
   }
 
@@ -85,7 +85,7 @@ export class NextOfKinComponent implements OnInit{
     this.getNextOfKinForm();
   }
 
-  submit(){
+  submit() {
     this.showSpinner = true;
     const payload = {
       beneficiaryPhoneNumber: this.userDetails?.phoneNumber,
@@ -96,13 +96,13 @@ export class NextOfKinComponent implements OnInit{
       ssid: this.nextOfKinForm.value?.ssid,
       phoneNumber: this.nextOfKinForm.value?.phoneNumber,
       email: this.nextOfKinForm.value?.email,
-      address: this.sameResidence === true ? this.userDetails?.address : this.nextOfKinForm.value?.address 
+      address: this.sameResidence === true ? this.userDetails?.address : this.nextOfKinForm.value?.address
     }
 
-   // console.log("payload>>", payload);
+    // console.log("payload>>", payload);
     this.beneficiaryService.nextOfKinDetails(payload).subscribe({
       next: (res: any) => {
-        console.log("res>>>", res);
+       // console.log("res>>>", res);
         this.showSpinner = false;
         this.toast.setSuccessMessage('Beneficiary Next of Kin data onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
@@ -110,24 +110,24 @@ export class NextOfKinComponent implements OnInit{
           verticalPosition: 'bottom',
         });
         this.beneficiaryService.setRouteToDisplay("employment");
-        this.router.navigate(['/home/beneficiary'],{
+        this.router.navigate(['/home/beneficiary'], {
           relativeTo: this.route,
           queryParams: {
             progress: 'employment'
           }
         })
       },
-      error: (err:any) => {
+      error: (err: any) => {
         console.error("err>>", err);
         this.showSpinner = false;
-        this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-          if(err?.status === 401){
+        if (err?.status === 401) {
           this.auth.agentLogout();
-          }
+        }
       }
     })
   }

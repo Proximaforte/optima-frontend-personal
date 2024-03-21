@@ -16,11 +16,14 @@
             </div>
         </div>
         <br>
-        <div class="text-center">
-            <!-- *ngIf="showCloseBtn === false"  -->
-            <button (click)="toggleWebcam(true)" style="background-color: #109856;"  class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <div class="flex justify-center">
+            <!-- *ngIf="showCloseBtn === false" class="text-center" -->
+            <button (click)="toggleWebcam()" style="background-color: #109856;"  class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Continue to capture finger image
             </button>
+            <!-- <img [src]="captureImages"> width="500" height="20"-->
+            <!-- <img (click)="toggleWebcam()" [src]="captureImages" class="w-full max-w-screen-xl h-20" alt="Button-like image"> -->
+
             <!-- <button *ngIf="showCloseBtn === true" (click)=" closeModal()" style="background-color: #109856; margin-top: 2px;"  class="w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"  mat-dialog-close>
                 Close Modal
             </button> -->

@@ -15,13 +15,7 @@ import { ToastsComponent } from '../utilities/toasts/toasts.component';
   styleUrls: ['./all-beneficiary.component.scss'],
 })
 export class AllBeneficiaryComponent implements OnInit{
-  // public page = 0;
-  // public pageSize = 15;
-  // public paginator: any;
-  // public start!: number;
-  // public end!: number;
-  // public total: number = 0;
-  // public element!: number;
+
   lastpage!: number;
   currentPage: number = 1;
   beneficiaries: Beneficiary[] = [];
@@ -33,6 +27,8 @@ export class AllBeneficiaryComponent implements OnInit{
     page: 1
   }
 paginationNumber: any[] = [];
+filterString:any;
+// | beneficiaryFilter: filterString;
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -74,7 +70,9 @@ paginationNumber: any[] = [];
         this.showSpinner = false;
      //  console.log('res>>', res?.data);
         this.beneficiaries = res?.data?.beneficiaries;
-        this.beneficiaries = mocks;
+        // this.beneficiaries = mocks;
+        // this.paginationParams.size = res?.size;
+        // this.paginationParams.page = res?.page;
         this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
         if(this.beneficiaries?.length === 0){  //res?.data?.beneficiaries?.length
           this.showNoData = true;

@@ -5,11 +5,13 @@ import { AllBeneficiaryRoutingModule } from './all-beneficiary-routing.module';
 import { AllBeneficiaryComponent } from './all-beneficiary.component';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import { BeneficiaryDetailspageComponent } from './beneficiary-detailspage/beneficiary-detailspage.component';
+import { BeneficiaryFilterPipe } from './pipes/beneficiary-filter.pipe';
 
 @NgModule({
   declarations: [
     AllBeneficiaryComponent,
-    BeneficiaryDetailspageComponent
+    BeneficiaryDetailspageComponent,
+    BeneficiaryFilterPipe
   ],
   imports: [
     CommonModule,

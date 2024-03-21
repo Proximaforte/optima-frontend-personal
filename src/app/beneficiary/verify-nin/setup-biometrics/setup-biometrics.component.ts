@@ -63,6 +63,7 @@ export class SetupBiometricsComponent {
         progress: param
       }
     });
+    setTimeout(() => location.reload(),300);
   }
 
   proceed(){
@@ -84,9 +85,9 @@ export class SetupBiometricsComponent {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-            // if(err?.status === 401){
-        //   this.auth.agentLogout();
-        //   }
+          if(err?.status === 401){
+          this.auth.agentLogout();
+          }
       }
     })
   }

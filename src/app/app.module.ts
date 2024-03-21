@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  HttpClientModule } from '@angular/common/http';
 import { AddStyleToOtpInputDirective } from './directives/add-style-to-otp-input.directive';
+import { BeneficiaryFilterPipe } from './pipes/beneficiary-filter.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddStyleToOtpInputDirective
+    AddStyleToOtpInputDirective,
+    BeneficiaryFilterPipe
   ],
   imports: [
     BrowserModule,

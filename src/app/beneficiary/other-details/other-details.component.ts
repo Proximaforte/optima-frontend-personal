@@ -86,7 +86,7 @@ export class OtherDetailsComponent implements OnInit {
    // this.dialog.open(SuccessfulBeneficiaryOnboardingComponent);
    this.beneficiaryService.otherDetails(payload).subscribe({
     next: (res: any) => {
-      console.log("res>>>", res);
+     // console.log("res>>>", res);
       this.showSpinner = false;
       this.dialog.open(SuccessfulBeneficiaryOnboardingComponent);
     },
