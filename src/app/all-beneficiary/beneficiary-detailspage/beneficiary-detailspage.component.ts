@@ -31,7 +31,8 @@ export class BeneficiaryDetailspageComponent implements OnInit{
   
   beneficiaryProfile$!: Subscription;
   beneficiary!: BeneficiaryProfile;
-  ssid: string = ''
+  ssid: string = '';
+  showSpinner: boolean = true;
 
   constructor(
     private beneficiaryService: BeneficiaryService,
@@ -43,7 +44,7 @@ export class BeneficiaryDetailspageComponent implements OnInit{
   const params = this.route.queryParams.subscribe({
     next: (param: any) => {
       this.ssid = param?.data;
-      //console.log('param>>', this.ssid);
+      console.log('param>>', this.ssid);
     }
   })
   }
@@ -51,7 +52,9 @@ export class BeneficiaryDetailspageComponent implements OnInit{
   getBeneficiaryProfileData(){
     this.beneficiaryService.getAllBeneficiaryProfiles(this.ssid).subscribe({
       next: (data: any) => {
-       // console.log('data>>', data);    
+        this.showSpinner = false;
+       //console.log('data>>', data);  
+       this.beneficiary = data?.data;  
         this.toast.setSuccessMessage( "Data retrieved successfully!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
@@ -59,6 +62,7 @@ export class BeneficiaryDetailspageComponent implements OnInit{
         });
       },
       error: (err: any) => {
+        this.showSpinner = false;
         console.error("Http error from beneficiary profile>>", err);
         this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
@@ -71,6 +75,7 @@ export class BeneficiaryDetailspageComponent implements OnInit{
   }
 
   getDummyData(){
+    this.showSpinner = false;
     this.beneficiaryProfile$ = this.beneficiaryService.getBeneficiaryProfile().subscribe({
       next: (profileData: any) => {
         //console.log('profile>>>', profileData);
@@ -80,7 +85,10 @@ export class BeneficiaryDetailspageComponent implements OnInit{
   }
 
   ngOnInit(): void {
-   this.getDummyData();
-   this.getBeneficiaryProfileData();
+   if(this.ssid === undefined){
+    this.getDummyData();
+   }else{
+    this.getBeneficiaryProfileData();
+   }
   }
 }

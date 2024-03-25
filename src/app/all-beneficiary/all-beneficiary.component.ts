@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FilterBoxComponent } from '../utilities/filter-box/filter-box.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BeneficiaryService } from '../services/beneficiary/beneficiary.service';
-import { Beneficiary, mocks, PaginationParams, BeneficiaryProfile } from '../models/beneficiary/beneficiary';
+import { Beneficiary,IncompleteBeneficiary, mocks, PaginationParams, BeneficiaryProfile } from '../models/beneficiary/beneficiary';
 import { AuthService } from '../services/authentication/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from '../services/alert/toasts.service';
@@ -19,6 +19,7 @@ export class AllBeneficiaryComponent implements OnInit{
   lastpage!: number;
   currentPage: number = 1;
   beneficiaries: Beneficiary[] = [];
+  inCompleteBeneficiaries: IncompleteBeneficiary[] = [];
   showSpinner: boolean = false;
   showNoData: boolean = false
   emptyTable: string = "/assets/images/noDataFound.png";
@@ -28,6 +29,9 @@ export class AllBeneficiaryComponent implements OnInit{
   }
 paginationNumber: any[] = [];
 filterString:any;
+filterIncomplete:any;
+showIncompleteBeneficiaries: boolean = false;
+showCompleteBeneficiaries: boolean = true;
 // | beneficiaryFilter: filterString;
   constructor(
     public dialog: MatDialog,
@@ -38,6 +42,20 @@ filterString:any;
     private snackbar: MatSnackBar,
     private toast: ToastsService
     ) {}
+
+    showInCompleteBeneficiaries(){
+      this.showNoData = false;
+      this.showIncompleteBeneficiaries = true;
+      this.showCompleteBeneficiaries = false;
+      this.getAllIncompleteBeneficiaries();
+    }
+
+    
+    showcompleteBeneficiaries(){
+      this.showCompleteBeneficiaries = true;
+      this.showIncompleteBeneficiaries = false;
+      this.getAllBeneficiaries();
+    }
 
   openModal(): void {
     const dialogRef = this.dialog.open(FilterBoxComponent, {
@@ -61,6 +79,41 @@ filterString:any;
 
   routeToOnboarding(){
     this.router.navigateByUrl('/home/beneficiary');
+  }
+
+  getAllIncompleteBeneficiaries(){
+    this.showSpinner = true;
+    this.beneficiaryService.getAllIncompleteBeneficiaries(this.paginationParams).subscribe({
+      next: (res: any) => {
+        this.showSpinner = false;
+        this.inCompleteBeneficiaries = res?.data?.beneficiaries;
+      //  console.log('incomplete beneficiaries>>', this.inCompleteBeneficiaries);
+        // this.beneficiaries = mocks;
+        // this.paginationParams.size = res?.size;
+        // this.paginationParams.page = res?.page;
+        this.paginationNumber = Array.from({ length: this.inCompleteBeneficiaries.length }, (_, index) => index + 1);
+        if(this.inCompleteBeneficiaries?.length === 0){  //res?.data?.beneficiaries?.length
+          this.showNoData = true;
+          this.showSpinner = false;
+        }else{
+          this.showNoData = false;
+        }
+      },
+      error: (err:any) => {
+        console.error('err>>>', err);
+        this.showSpinner = false;
+        this.showNoData = true;
+        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        // if(err?.status === 401){
+        //   this.showSpinner = false;
+        //  this.authService.agentLogout();
+        //   }
+      }
+    })
   }
 
   getAllBeneficiaries(){
@@ -100,6 +153,7 @@ filterString:any;
 
   ngOnInit(): void {
     this.getAllBeneficiaries();
+    // this.getAllIncompleteBeneficiaries();
   }
 
   viewBeneficiaryProfile(beneficiary:BeneficiaryProfile | any):any{
@@ -129,5 +183,24 @@ filterString:any;
    // console.log('current page>>', pageNoToPull);
     this.paginationParams.page = pageNoToPull;
     this.getAllBeneficiaries();
+  }
+
+
+  nextPage_(){
+    this.paginationParams.size++;
+    this.getAllIncompleteBeneficiaries();
+  }
+
+  prevPage_(){
+    if(this.paginationParams.size > 0){
+      this.paginationParams.size--
+      this.getAllIncompleteBeneficiaries();
+    }
+  }
+
+  getCurrentPage_(pageNoToPull:number){
+   // console.log('current page>>', pageNoToPull);
+    this.paginationParams.page = pageNoToPull;
+    this.getAllIncompleteBeneficiaries();
   }
 }

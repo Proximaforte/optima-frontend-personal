@@ -131,6 +131,11 @@ beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders, params: params});
   }
 
+  public getAllIncompleteBeneficiaries(paginationParams:PaginationParams):Observable<any>{
+    const params = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page));
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders, params: params});
+  }
+
   public getAllBeneficiaryProfiles(ssid:any):Observable<any>{
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getBeneficiaryProfile}/${ssid}`, { headers: this.interceptor?.customHttpHeaders});
   }

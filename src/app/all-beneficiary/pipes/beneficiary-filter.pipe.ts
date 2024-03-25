@@ -9,7 +9,7 @@ export class BeneficiaryFilterPipe implements PipeTransform {
   transform(value: Beneficiary[], beneficiaryFilter: string): any {
     if(!!value && beneficiaryFilter !== '') {
       return value.filter((elem: any) => {
-        return JSON.stringify(elem).toLocaleLowerCase().includes(beneficiaryFilter.toLocaleLowerCase())
+        return JSON.stringify(elem)?.toLocaleLowerCase().includes(beneficiaryFilter?.toLocaleLowerCase())
       })
     } else {
       return value;

@@ -29,6 +29,38 @@ export class Beneficiary {
     ) { }
 }
 
+export class IncompleteBeneficiary {
+    constructor(
+        public address: any,
+        public childList: any[],
+        public dateOfBirth: any,
+        public education: any,
+        public email: any,
+        public employment: any,
+        public financial: any,
+        public firstname: any,
+        public formStage: any,
+        public fullName: any,
+        public gender: any,
+        public health: any,
+        public houseOwner: any,
+        public lastname: any,
+        public lga: any,
+        public maritalStatus: any,
+        public middleName: any,
+        public nextOfKin: any,
+        public nin: any,
+        public other: any,
+        public phoneNumber: any,
+        public placeOfBirth: any,
+        public religion: any,
+        public spouseList: any[],
+        public ssid: any,
+        public state: any
+    ) { }
+}
+
+
 export const NigerianStates = [
     "Select state*",
     "Abia",

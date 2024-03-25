@@ -20,7 +20,11 @@ export class AuthService {
     private route: ActivatedRoute,
     private http: HttpClient,
     private interceptor: JwtInterceptorService
-  ) {}
+  ) {
+   if(this.getAgentData() !== null){
+    this.getRefreshToken();
+   }
+  }
 
   public loginAgendData(user: AgentCredentials): Observable<any> {
     const body = JSON.stringify(user);
@@ -33,6 +37,35 @@ export class AuthService {
         console.error('error from login observable>>', err);
         return throwError(() => err);
       }));
+  }
+
+ public getRefreshToken(){
+    const accessToken = this.getAgentData();
+    const splitToken:any = accessToken?.split('.')[1];
+    const decodeToken = JSON.parse(atob(splitToken));  //decode the Token Body
+    const expirationTime = decodeToken?.exp * 1000;
+    const currentTime = new Date().getTime();
+    const timeDifference = expirationTime - currentTime;
+    console.log('time difference>>', timeDifference);
+    if(timeDifference === 10){  //once time diffrence equals 10secs, the refresh token is called
+     this.refreshToken();
+    }
+  }
+
+  public refreshToken():Observable<any>{
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.refreshToken}`, { headers: this.interceptor?.customHttpHeaders}).pipe(
+      map((res:any) => {
+        console.log('refresh token response>>>', res);
+        if(res?.responseCode === 200){
+          this.setAgentToken(res?.data);
+        }
+        return res;
+      }),
+      catchError((err:any) => {
+        console.error('err from refresh token observable>>', err);
+       return throwError(() => err)
+      })
+    )
   }
 
   public forgotPasswords(path: forgotPasswords): Observable<any>{

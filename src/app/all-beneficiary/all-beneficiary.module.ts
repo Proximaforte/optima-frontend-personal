@@ -6,17 +6,23 @@ import { AllBeneficiaryComponent } from './all-beneficiary.component';
 import { UtilitiesModule } from '../utilities/utilities.module';
 import { BeneficiaryDetailspageComponent } from './beneficiary-detailspage/beneficiary-detailspage.component';
 import { BeneficiaryFilterPipe } from './pipes/beneficiary-filter.pipe';
+import {MatIconModule} from '@angular/material/icon';
+import { IncompletePipe } from './pipes/incomplete.pipe';
+
+const materialModules = [MatIconModule]
 
 @NgModule({
   declarations: [
     AllBeneficiaryComponent,
     BeneficiaryDetailspageComponent,
-    BeneficiaryFilterPipe
+    BeneficiaryFilterPipe,
+    IncompletePipe
   ],
   imports: [
     CommonModule,
     AllBeneficiaryRoutingModule,
-    UtilitiesModule
+    UtilitiesModule,
+    materialModules
   ],
    providers: [
   ],

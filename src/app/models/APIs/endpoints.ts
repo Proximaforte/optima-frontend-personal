@@ -6,6 +6,7 @@ export const endpoints = {
     changePassword : 'api/v1/agent-user/changePassword',
     getUserDetails: 'api/v1/agent-user',
     logoutUser: 'api/v1/logout',
+    refreshToken: 'api/v1/refresh',
 
     // Onboarding
     verificationDetails: 'api/v1/onboarding/verification',
@@ -21,7 +22,8 @@ export const endpoints = {
 
     //Get All Beneficiaries Onboarded
     getAllBeneficiaries: 'api/v1/beneficiary/getBeneficiariesByLoggedInAgent',
-    getBeneficiaryProfile: 'api/v1/beneficiary/getBeneficiary'
+    getBeneficiaryProfile: 'api/v1/beneficiary/getBeneficiary',
+    getIncompleteBeneficiaries: 'api/v1/beneficiary/getIncompleteOnboardedBeneficiaries'
 }
 
 export interface ErrorMessage{
