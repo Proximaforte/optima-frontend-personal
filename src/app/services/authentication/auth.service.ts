@@ -46,7 +46,7 @@ export class AuthService {
     const expirationTime = decodeToken?.exp * 1000;
     const currentTime = new Date().getTime();
     const timeDifference = expirationTime - currentTime;
-    console.log('time difference>>', timeDifference);
+   // console.log('time difference>>', timeDifference);
     if(timeDifference === 10){  //once time diffrence equals 10secs, the refresh token is called
      this.refreshToken();
     }
@@ -55,7 +55,7 @@ export class AuthService {
   public refreshToken():Observable<any>{
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.refreshToken}`, { headers: this.interceptor?.customHttpHeaders}).pipe(
       map((res:any) => {
-        console.log('refresh token response>>>', res);
+      //  console.log('refresh token response>>>', res);
         if(res?.responseCode === 200){
           this.setAgentToken(res?.data);
         }
