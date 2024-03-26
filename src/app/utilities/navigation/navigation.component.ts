@@ -107,7 +107,7 @@ export class NavigationComponent {
       setTimeout(() => location?.reload(), 300);
     } else if (item?.name === "all-beneficiary") {
       this.router.navigate(["/home/all-beneficiary"], { relativeTo: this.route });
-      setTimeout(() => location?.reload(), 300);
+     // setTimeout(() => location?.reload(), 300);
     } 
     // else if (item?.name === "profile") {
     //   this.router.navigate(["/home/profile"], { relativeTo: this.route });
