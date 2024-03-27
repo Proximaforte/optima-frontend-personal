@@ -30,7 +30,7 @@ export class ResidentialDetailsComponent implements OnInit {
   userDetails: any = {};
   disableBtn: boolean = true;
   showSpinner: boolean = false;
-
+  showWelcomeMsg:boolean = false;
 
   constructor(
     private router: Router,
@@ -43,6 +43,17 @@ export class ResidentialDetailsComponent implements OnInit {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
     //console.log("userData>>>", JSON.parse(getUserData)); //phoneNumber
+
+    const getMessage:any = sessionStorage.getItem('incomplete');
+    if(getMessage !== null){
+      this.showWelcomeMsg = true;
+      setTimeout(() => {
+        this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+       }, 2500);
+    }else{
+       this.showWelcomeMsg = false;
+    }
   }
 
   selectState(value: any){
@@ -88,8 +99,9 @@ export class ResidentialDetailsComponent implements OnInit {
 
   submitForm(){
     this.showSpinner = true;
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload:any = {
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       houseOwner: this.residentialInfo.value.placeOfResidence === "Yes, a house owner" ? true : this.residentialInfo.value.placeOfResidence ===  "No, a tenant" ? false : null,
       annualRent: this.residentialInfo.value?.annualPay,
       address: this.residentialInfo.value?.address,

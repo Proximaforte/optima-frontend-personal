@@ -9,6 +9,7 @@ export const endpoints = {
     refreshToken: 'api/v1/refresh',
 
     // Onboarding
+    verifyNIN: 'api/v1/onboarding/verifyNIN',
     verificationDetails: 'api/v1/onboarding/verification',
     personalDetails: 'api/v1/onboarding/personalDetails',
     residentialDetails: 'api/v1/onboarding/residentialDetails',

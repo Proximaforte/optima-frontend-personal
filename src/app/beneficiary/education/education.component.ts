@@ -28,6 +28,7 @@ export class EducationComponent implements OnInit {
   disableBtn: boolean = true;
   userDetails:any = {};
   showSpinner:boolean = false;
+  showWelcomeMsg:boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -38,6 +39,17 @@ export class EducationComponent implements OnInit {
   ){
     const getUserData:any = localStorage.getItem('userDetails');
      this.userDetails = JSON.parse(getUserData);
+
+     const getMessage:any = sessionStorage.getItem('incomplete');
+     if(getMessage !== null){
+       this.showWelcomeMsg = true;
+       setTimeout(() => {
+        this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+       }, 2500);
+     }else{
+        this.showWelcomeMsg = false;
+     }
   }
 
  
@@ -90,8 +102,9 @@ export class EducationComponent implements OnInit {
 
   submit(){
     this.showSpinner = true;
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       level: this.educationForm.value?.eduLevel,
       certification: this.educationForm.value?.certifications,
       primarySchool: this.educationForm.value?.primarySchAttended,

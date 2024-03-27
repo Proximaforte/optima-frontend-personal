@@ -22,6 +22,8 @@ export class OtherDetailsComponent implements OnInit {
   showSpecifyCrime: boolean = false;
   userDetails:any = {};
   showSpinner:boolean = false;
+
+  showWelcomeMsg:boolean = false;
   constructor(
     private dialog: MatDialog,
     private beneficiaryService: BeneficiaryService,
@@ -31,6 +33,17 @@ export class OtherDetailsComponent implements OnInit {
   ){
     const getUserData:any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
+
+    const getMessage:any = sessionStorage.getItem('incomplete');
+    if(getMessage !== null){
+      this.showWelcomeMsg = true;
+      setTimeout(() => {
+        this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+       }, 2500);
+    }else{
+       this.showWelcomeMsg = false;
+    }
   }
 
 
@@ -72,8 +85,9 @@ export class OtherDetailsComponent implements OnInit {
 
   succesfulOboarding(){
     this.showSpinner = true;
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       politicalView: this.othersForm.value?.politicalView,
       convicted: this.checked1,
       crimeType: this.othersForm.value?.crimeType,

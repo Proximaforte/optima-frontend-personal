@@ -99,10 +99,11 @@ export class FaceCapturingComponent implements OnInit {
 
 
   submit() {
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       nin: this.nin?.nin,
       type: 'FACIAL_ID', //PHONE_NUMBER
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       image: this.photograph?.split(',')[1]
     }
     sessionStorage.setItem('face_capture', JSON.stringify(payload));

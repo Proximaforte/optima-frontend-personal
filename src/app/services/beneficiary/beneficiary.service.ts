@@ -14,7 +14,8 @@ import {
    OtherDetails,
    VerificationDetails,
    MaritalDetails,
-   PaginationParams
+   PaginationParams,
+   NINParameter
   } from 'src/app/models/beneficiary/beneficiary';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -74,9 +75,14 @@ beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
     return this.beneficiaryDataObservable$.asObservable();
   }
 
+  public verifyNIN(nin: string): Observable<any>{
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${nin}`, { headers: this.interceptor?.customHttpHeaders})
+    }
+
+
   public personalDetails(data: PersonalDetails): Observable<any>{
   const body = JSON.stringify(data);
-  return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.personalDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+  return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.personalDetails}`, body, { headers: this.interceptor?.customHttpHeaders})
   }
 
   public residentialDetails(data: ResidentialDetails): Observable<any>{

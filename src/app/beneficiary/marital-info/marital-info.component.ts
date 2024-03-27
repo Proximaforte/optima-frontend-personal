@@ -46,6 +46,8 @@ export class MaritalInfoComponent implements OnInit {
   userDetails: any = {};
   showSpinner: boolean = false;
   disableBtn:boolean = true;
+
+  showWelcomeMsg:boolean = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -57,6 +59,17 @@ export class MaritalInfoComponent implements OnInit {
   ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
+
+    const getMessage:any = sessionStorage.getItem('incomplete');
+    if(getMessage !== null){
+      this.showWelcomeMsg = true;
+      setTimeout(() => {
+        this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+       }, 2500);
+    }else{
+       this.showWelcomeMsg = false;
+    }
   }
 
   ngOnInit(): void {
@@ -202,9 +215,9 @@ export class MaritalInfoComponent implements OnInit {
       childrenArray.push(ChildrenObj);
       //  console.log("children form>>>", childrenArray);
     }
-
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       maritalStatus: this.maritalInfoForm.get('maritalStatus')?.value,
       spouseList: spousalArray,
       childList: childrenArray

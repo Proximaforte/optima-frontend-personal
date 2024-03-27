@@ -38,6 +38,7 @@ export class FinancialComponent implements OnInit{
   showOthers: boolean = false;
   userDetails:any = {};
   showSpinner:boolean = false;
+  showWelcomeMsg:boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -48,6 +49,17 @@ export class FinancialComponent implements OnInit{
   ){
     const getUserData:any = localStorage.getItem('userDetails');
      this.userDetails = JSON.parse(getUserData);
+
+     const getMessage:any = sessionStorage.getItem('incomplete');
+     if(getMessage !== null){
+       this.showWelcomeMsg = true;
+       setTimeout(() => {
+        this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+       }, 2500);
+     }else{
+        this.showWelcomeMsg = false;
+     }
   }
 
    
@@ -81,8 +93,9 @@ export class FinancialComponent implements OnInit{
 
   submit(){
    this.showSpinner = true;
+   const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload:any = {
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       breadwinner: this.financialInfoForm.value?.breadWinner === 'yes' ? true : this.financialInfoForm.value?.breadWinner === 'no' ? false : null,
       monthlyIncome: this.financialInfoForm.value?.houseHoldIncome,
       monthlyExpenses: this.financialInfoForm.value?.averageAmtSpent,

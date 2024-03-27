@@ -32,9 +32,22 @@ export class HealthComponent implements OnInit {
   showSpecifyHMO: boolean = false;
   disableBtn: boolean = true;
 
+  showWelcomeMsg:boolean = false;
+
   constructor(
     private router: Router, private route: ActivatedRoute,
-  ){}
+  ){
+    const getMessage:any = sessionStorage.getItem('incomplete');
+    if(getMessage !== null){
+      this.showWelcomeMsg = true;
+      setTimeout(() => {
+        this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+       }, 2500);
+    }else{
+       this.showWelcomeMsg = false;
+    }
+  }
   
 
   getHealthForm(){

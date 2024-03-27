@@ -26,6 +26,8 @@ export class NextOfKinComponent implements OnInit {
   userDetails: any = {};
   disableBtn: boolean = true;
   showSpinner: boolean = false;
+
+  showWelcomeMsg:boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -36,6 +38,17 @@ export class NextOfKinComponent implements OnInit {
   ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
+
+    const getMessage:any = sessionStorage.getItem('incomplete');
+    if(getMessage !== null){
+      this.showWelcomeMsg = true;
+      setTimeout(() => {
+        this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+       }, 2500);
+    }else{
+       this.showWelcomeMsg = false;
+    }
   }
 
 
@@ -87,6 +100,7 @@ export class NextOfKinComponent implements OnInit {
 
   submit() {
     this.showSpinner = true;
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       beneficiaryPhoneNumber: this.userDetails?.phoneNumber,
       firstname: this.nextOfKinForm.value?.firstname,
@@ -94,7 +108,7 @@ export class NextOfKinComponent implements OnInit {
       relationship: this.nextOfKinForm.value.relationship === 'Others' ? this.nextOfKinForm.value?.specifyRelationship : this.nextOfKinForm.value.relationship,
       nin: this.nextOfKinForm.value?.nin,
       ssid: this.nextOfKinForm.value?.ssid,
-      phoneNumber: this.nextOfKinForm.value?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       email: this.nextOfKinForm.value?.email,
       address: this.sameResidence === true ? this.userDetails?.address : this.nextOfKinForm.value?.address
     }

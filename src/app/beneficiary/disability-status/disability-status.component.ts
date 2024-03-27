@@ -95,8 +95,10 @@ export class DisabilityStatusComponent implements OnInit{
       specifyDisabled: this.disabilityForm.value?.disability 
     }
 
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+
     const newHealthPayload: any = {
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       healthCondition: healthPayload?.healthCondition,
       healthAilment: healthPayload?.healthQuestion,
       specifyAilment: healthPayload?.specifyAilment,

@@ -33,6 +33,8 @@ export class EmploymentComponent implements OnInit {
   employmentForm!: FormGroup;
   userDetails: any = {};
   showSpinner:boolean = false;
+  showWelcomeMsg:boolean = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -43,6 +45,17 @@ export class EmploymentComponent implements OnInit {
   ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
+
+    const getMessage:any = sessionStorage.getItem('incomplete');
+    if(getMessage !== null){
+      this.showWelcomeMsg = true;
+       setTimeout(() => {
+        this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+       }, 2500);
+    }else{
+       this.showWelcomeMsg = false;
+    }
   }
 
 
@@ -64,7 +77,7 @@ export class EmploymentComponent implements OnInit {
 
     this.employmentForm.get('employmentStatus')?.valueChanges.subscribe({
       next: (value: any) => {
-        if (value === "Employed") {
+        if (value === "Employed" || value === "Both Employed and Self-employed") {
           this.showEmployed = true;
           this.showSelfEmployed = false;
           this.showRetired = false;
@@ -88,8 +101,9 @@ export class EmploymentComponent implements OnInit {
 
   submitForm() {
     this.showSpinner = true;
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload: any = {
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       status: this.employmentForm.value?.employmentStatus,
       employer: this.employmentForm.value?.nameOfEmployer,
       employerAddress: this.employmentForm.value?.employerOfficeAddress,

@@ -54,11 +54,11 @@ export class FingerCaptureCompleteComponent implements OnInit{
       image: this.passport,
       showLatest: true
     });
-
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       nin: this.nin?.nin,
       type: 'FACIAL_ID', //PHONE_NUMBER
-      phoneNumber: this.userDetails?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       image: this.passport?.split(',')[1]
     }
   //  console.log("payload>>", payload);

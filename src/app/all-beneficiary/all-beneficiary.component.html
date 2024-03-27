@@ -1,62 +1,59 @@
 <body>
 <div *ngIf="showCompleteBeneficiaries === true">
   <div class="rounded-xl border border-tableGray ml-4 py-4">
-    <div class="flex justify-between items-center mb-4 px-4">
-      <div class="relative w-4/12">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-          <svg
-            class="h-5 w-5 text-gray-400"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </span>
-        <input [(ngModel)]="filterString" name="filterString"
-          class="pl-10 pr-4 py-2 w-full bg-white  h-10 placeholder-zestPlaceholder outline-hidden rounded border-[1px] border-solid border-tableGray p-4 focus:border-tableGray focus:ring-tableGray"
-          type="text"
-          placeholder="Filter Completed Beneficiaries..."
-        />
+   
+      <!-- visible only on large screens -->
+    <div class="grid grid-cols-3 gap-4 p-4 hidden md:flex">
+      <div class="col-span-2 flex justify-start items-center">
+        <button (click)="showcompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded">Completed</button>
+        <button (click)="showInCompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
       </div>
-  
-      <div class="flex justify-between w-3/12">
 
-        <button mat-button routerLink="../beneficiary" id="action-btn" class="flex justify-between items-center">
-          <div class="flex items-center">
-              <mat-icon>person_add</mat-icon> &nbsp;
-              <b>Add New Beneficiary</b>
-          </div>
-          <div class="w-max-content"></div>
-      </button>
-      &nbsp;&nbsp;&nbsp;
-      <button (click)="showInCompleteBeneficiaries()" mat-button id="action-btn" class="flex justify-between items-center">
-        <div class="flex items-center">
-            <mat-icon>sentiment_very_dissatisfied</mat-icon> &nbsp;
-            <b>Incomplete Beneficiaries</b>
+      <div class="col-span-1 flex justify-end items-center" style="margin-left: 380px;">
+        <div class="relative">
+          <input type="text" [(ngModel)]="filterString" name="filterString" class="border border-gray-300 rounded-md px-4 py-2 pl-10" placeholder="Search...">
+          <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
+          </svg>
         </div>
-        <div class="w-max-content"></div>
-    </button>
-        <!-- <button (click)="openModal()"
-          class="flex text-black border border-tableGray font-bold py-2 px-4 rounded-md w-24"
-        >
-         
-          <img
-            src="assets/images/Filter.svg"
-            height="20"
-            width="20"
-            alt=""
-            class="mr-2"
-          />
-          Filter
-        </button> -->
+        <button (click)="routeToOnboarding()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded ml-2">
+          <div class="flex items-center">
+            <mat-icon>person_add</mat-icon> &nbsp;
+            <b>Add New Beneficiary</b>
+          </div>
+        </button>
       </div>
     </div>
-  
+
+       <!-- visible only on small screens -->
+    <div class="grid grid-rows-3 grid-cols-1 gap-4 block md:hidden">
+      <!-- First Row -->
+      <div class="flex justify-between">
+        <button (click)="showcompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-4">Completed</button>
+        <button (click)="showInCompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded mr-4">Incompleted</button>
+      </div>
+    
+      <!-- Second Row -->
+      <div class=" py-2 px-4 rounded">
+        <div class="relative">
+          <input type="text" [(ngModel)]="filterString" name="filterString" class="border border-gray-300 rounded-md px-4 py-2 pl-10" placeholder="Search..." style="width: 290px;">
+          <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+      </div>
+    
+      <!-- Third Row -->
+      <div class="py-2 px-4 rounded">
+        <button (click)="routeToOnboarding()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded w-full">
+          <div class="flex items-center">
+            <mat-icon>person_add</mat-icon> &nbsp;
+            <b>Add New Beneficiary</b>
+          </div>
+        </button>
+      </div>
+    </div>
+    
  <div *ngIf="showSpinner === false && showNoData === false">
   <div>
     <table class="w-full">
@@ -134,18 +131,7 @@
     </table>
   </div>
  <div class="flex justify-center">
-              
-              <!-- <pagination-controls
-                class="custom-pagination items-center mt-2"
-                previousLabel="Prev"
-                (pageChange)="currentPage = $event"
-              ></pagination-controls> -->
 
-
-       
-            
-
-              <!-- pagination -->
             </div>      
  </div>
 
@@ -154,31 +140,15 @@
 </div>
 
 <div role="status" id="spinner" *ngIf="showSpinner === true">
-  <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" class="w-8 h-8 hidden md:flex text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
       <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
   </svg>
   <span class="sr-only">Loading...</span>
 </div>
 
-
-    <!-- <div>
-      <native-pagination
-        [start]="start"
-        [end]="end"
-        [element]="element"
-        [total]="total"
-        (changePage)="pageChanged($event)"
-      ></native-pagination>
-    </div> -->
-
- 
-  
-
-
     <!-- pagination -->
   </div>
-
 
   <div class="flex justify-between items-center mt-8">
 
@@ -212,59 +182,58 @@
 
 <div *ngIf="showIncompleteBeneficiaries === true">
   <div class="rounded-xl border border-tableGray ml-4 py-4">
-    <div class="flex justify-between items-center mb-4 px-4">
-      <div class="relative w-4/12">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-          <svg
-            class="h-5 w-5 text-gray-400"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </span>
-        <input [(ngModel)]="filterString" name="filterString"
-          class="pl-10 pr-4 py-2 w-full bg-white  h-10 placeholder-zestPlaceholder outline-hidden rounded border-[1px] border-solid border-tableGray p-4 focus:border-tableGray focus:ring-tableGray"
-          type="text"
-          placeholder="Filter Incompleted Beneficiaries..."
-        />
-      </div>
-  
-      <div class="flex justify-between w-3/12">
 
-        <button mat-button routerLink="../beneficiary" id="action-btn" class="flex justify-between items-center">
-          <div class="flex items-center">
-              <mat-icon>person_add</mat-icon> &nbsp;
-              <b>Add New Beneficiary</b>
-          </div>
-          <div class="w-max-content"></div>
-      </button>
-      &nbsp;&nbsp;&nbsp;
-      <button (click)="showcompleteBeneficiaries()" mat-button id="action-btn" class="flex justify-between items-center">
-        <div class="flex items-center">
-            <mat-icon>sentiment_very_dissatisfied</mat-icon> &nbsp;
-            <b>Completed Beneficiaries</b>
+
+      <!-- visible only on large screens -->
+    <div class="grid grid-cols-3 gap-4 p-4 hidden md:flex">
+      <div class="col-span-2 flex justify-start items-center">
+        <button (click)="showcompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded">Completed</button>
+        <button (click)="showInCompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
+      </div>
+
+      <div class="col-span-1 flex justify-end items-center" style="margin-left: 380px;">
+        <div class="relative">
+          <input type="text" [(ngModel)]="filterString" name="filterString" class="border border-gray-300 rounded-md px-4 py-2 pl-10 w-full" placeholder="Search...">
+          <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
+          </svg>
         </div>
-        <div class="w-max-content"></div>
-    </button>
-        <!-- <button (click)="openModal()"
-          class="flex text-black border border-tableGray font-bold py-2 px-4 rounded-md w-24"
-        >
-         
-          <img
-            src="assets/images/Filter.svg"
-            height="20"
-            width="20"
-            alt=""
-            class="mr-2"
-          />
-          Filter
-        </button> -->
+        <button (click)="routeToOnboarding()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded ml-2">
+          <div class="flex items-center">
+            <mat-icon>person_add</mat-icon> &nbsp;
+            <b>Add New Beneficiary</b>
+          </div>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- visible only on small screens -->
+    <div class="grid grid-rows-3 grid-cols-1 gap-4 block md:hidden">
+      <!-- First Row -->
+      <div class="flex justify-between">
+        <button (click)="showcompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-4">Completed</button>
+        <button (click)="showInCompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded mr-4">Incompleted</button>
+      </div>
+    
+      <!-- Second Row -->
+      <div class=" py-2 px-4 rounded">
+        <div class="relative">
+          <input type="text" [(ngModel)]="filterString" name="filterString" class="border border-gray-300 rounded-md px-4 py-2 pl-10 w-full" placeholder="Search...">
+          <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
+          </svg>
+        </div>
+      </div>
+    
+      <!-- Third Row -->
+      <div class="py-2 px-4 rounded">
+        <button (click)="routeToOnboarding()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded">
+          <div class="flex items-center">
+            <mat-icon>person_add</mat-icon> &nbsp;
+            <b>Add New Beneficiary</b>
+          </div>
+        </button>
       </div>
     </div>
   
@@ -314,30 +283,34 @@
           </th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-200 bg-white" role="button" [routerLink]="['../beneficiary-details']">
+      <tbody class="divide-y divide-gray-200 bg-white" role="button">
         <!-- | incomplete: filterIncomplete -->
         <tr class="text-left" *ngFor="let beneficiary of inCompleteBeneficiaries;  let i=index">
-          <td (click)="viewBeneficiaryProfile(beneficiary)"
+          <td
             class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
           >
-            {{beneficiary?.firstname}} {{beneficiary?.lastname}}
+            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.firstname}} {{beneficiary?.lastname}}</span>
           </td>
-          <td (click)="viewBeneficiaryProfile(beneficiary)" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{beneficiary?.dateOfBirth | date }}
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.dateOfBirth | date }}</span>
           </td>
-          <td (click)="viewBeneficiaryProfile(beneficiary)" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{beneficiary?.email}}
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.email}}</span>
           </td>
-          <td (click)="viewBeneficiaryProfile(beneficiary)" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{beneficiary?.nin}}
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+           <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.nin}}</span>
           </td>
-          <td (click)="viewBeneficiaryProfile(beneficiary)" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          {{beneficiary?.phoneNumber}}
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+          <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.phoneNumber}}</span>
           </td>
-          <td (click)="viewBeneficiaryProfile(beneficiary)"
+          <td 
             class="relative flex justify-between whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 overflow-visible"
           >
-           {{beneficiary?.gender }}
+           <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.gender }}</span>
+          </td>
+          <td>
+            <button class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded text-xs" (click)="continueOnboarding(beneficiary)"  mat-raised-button> Continue Onboarding
+            </button>
           </td>
         </tr>
 
@@ -365,7 +338,7 @@
 </div>
 
 <div role="status" id="spinner" *ngIf="showSpinner === true">
-  <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" class="w-8 h-8 hidden md:flex text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
       <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
   </svg>

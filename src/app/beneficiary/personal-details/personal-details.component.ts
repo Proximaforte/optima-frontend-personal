@@ -27,6 +27,7 @@ export class PersonalDetailsComponent implements OnInit {
   userDetails: any = {};
   showSpinner:boolean = false;
 
+  showWelcomeMsg:boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -36,8 +37,19 @@ export class PersonalDetailsComponent implements OnInit {
     private auth: AuthService
   ){
     const getUserData:any = localStorage.getItem('userDetails');
-   // console.log('user data>>', JSON.parse(getUserData));
     this.userDetails = JSON.parse(getUserData);
+
+  const getMessage:any = sessionStorage.getItem('incomplete');
+  if(getMessage !== null){
+    this.showWelcomeMsg = true;
+    setTimeout(() => {
+      this.showWelcomeMsg = false;
+      sessionStorage.removeItem('incomplete');
+     }, 2500);
+  }else{
+     this.showWelcomeMsg = false;
+  }
+
   }
 
   
@@ -82,11 +94,12 @@ export class PersonalDetailsComponent implements OnInit {
    if(this.personalDetailsForm?.valid){
     this.showSpinner = true;
    // console.log("form values>>", this.personalDetailsForm.value);
+   const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       firstname: this.personalDetailsForm.value?.firstName,
       lastname: this.personalDetailsForm.value?.lastName,
       middleName: this.personalDetailsForm.value?.middleName,
-      phoneNumber: this.personalDetailsForm.value?.phoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       bvn:  this.personalDetailsForm.value?.bvn,
       email:  this.personalDetailsForm.value?.email,
       gender:  this.personalDetailsForm.value?.gender,

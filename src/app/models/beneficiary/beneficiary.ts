@@ -1311,6 +1311,10 @@ export interface MaritalDetails {
     childList: any[];
 }
 
+export interface NINParameter{
+    nin: string;
+}
+
 export interface BeneficiaryProfile{
          address: any,
          childList: any[],
