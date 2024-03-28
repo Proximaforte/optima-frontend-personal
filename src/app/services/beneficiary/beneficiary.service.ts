@@ -32,7 +32,10 @@ export class BeneficiaryService {
  routeObservable$: ReplaySubject<any> = new ReplaySubject<any>();
 beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
 
-  constructor(private http: HttpClient, private interceptor: JwtInterceptorService) { }
+  constructor(
+    private http: HttpClient,
+    private interceptor: JwtInterceptorService,
+    ) { }
 
   public setImageUrl(image: string){
     this.imageUrl = image;
@@ -79,10 +82,15 @@ beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${nin}`, { headers: this.interceptor?.customHttpHeaders})
     }
 
+    //api/v1/otp/agent/generate/89989
+
+    public verifyNINOTP(otp: string): Observable<any>{
+      return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyOTP}/${otp}`, { headers: this.interceptor?.customHttpHeaders})
+      }
 
   public personalDetails(data: PersonalDetails): Observable<any>{
   const body = JSON.stringify(data);
-  return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.personalDetails}`, body, { headers: this.interceptor?.customHttpHeaders})
+  return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.personalDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
   }
 
   public residentialDetails(data: ResidentialDetails): Observable<any>{

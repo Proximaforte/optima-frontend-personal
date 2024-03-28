@@ -31,7 +31,7 @@ export class ToastsService {
 
   //catch errs
   public setErrorMessage(message: string){
-   return this.error$.next(message);
+    this.error$.next(message);
   }
 
   public getErrorMessage(){

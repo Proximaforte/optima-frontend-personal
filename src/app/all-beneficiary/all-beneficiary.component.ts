@@ -213,18 +213,8 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
+    sessionStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
     sessionStorage.setItem('incomplete', "Let's continue from where you've stopped!")
-    // for(var i=0; i>this.routeArray?.length; i++){
-    //   if (this.routeArray[i]?.queryParam === beneficiary?.formStage) {
-    //     this.beneficiaryService.setRouteToDisplay(this.routeArray[i]?.routeToDiaplay);
-    //     this.router.navigate(['/home/beneficiary'], {
-    //       relativeTo: this.route,
-    //       queryParams: {
-    //         progress: this.routeArray[i]?.queryParam
-    //       }
-    //     })
-    //   }
-    // }
      if(beneficiary?.formStage === "VERIFY_NIN"){
       this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
       this.router.navigate(['/home/beneficiary'], {
@@ -241,7 +231,15 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'personal_details'
         }
       })
-     }else if(beneficiary?.formStage === "RESIDENTIAL_DETAILS"){
+     }else if(beneficiary?.formStage === "VERIFICATION"){
+      this.beneficiaryService.setRouteToDisplay("verification procedure");
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'verification_procedure'
+        }
+      })
+     }else if(beneficiary?.formStage === "ADDRESS_DETAILS"){
       this.beneficiaryService.setRouteToDisplay("residential details");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -249,7 +247,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'residential_details'
         }
       })
-     }else if(beneficiary?.formStage === "MARITAL_INFO"){
+     }else if(beneficiary?.formStage === "MARITAL_DETAILS"){
       this.beneficiaryService.setRouteToDisplay("marital info");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -257,7 +255,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'marital_info'
         }
       })
-     }else if(beneficiary?.formStage === "EDUCATION"){
+     }else if(beneficiary?.formStage === "EDUCATION_DETAILS"){
       this.beneficiaryService.setRouteToDisplay("education");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -265,7 +263,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'education'
         }
       })
-     }else if(beneficiary?.formStage === "HEALTH"){
+     }else if(beneficiary?.formStage === "HEALTH_DETAILS"){
       this.beneficiaryService.setRouteToDisplay("health");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -289,7 +287,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'next_of_kin'
         }
       })
-     }else if(beneficiary?.formStage === "EMPLOYMENT"){
+     }else if(beneficiary?.formStage === "EMPLOYMENT_DETAILS"){
       this.beneficiaryService.setRouteToDisplay("employment");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,

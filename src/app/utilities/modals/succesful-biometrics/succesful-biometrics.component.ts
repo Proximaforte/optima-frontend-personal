@@ -18,12 +18,19 @@ export class SuccesfulBiometricsComponent {
 
 
   submit(){
-    this.routeService.setRouteToDisplay("personal details");
+    this.routeService.setRouteToDisplay("residential details");
     this.router.navigate(['/home/beneficiary'],{
       relativeTo: this.route,
       queryParams: {
-        progress: 'personal_details'
+        progress: 'residential_details'
       }
     })
+    // this.routeService.setRouteToDisplay("personal details");
+    // this.router.navigate(['/home/beneficiary'],{
+    //   relativeTo: this.route,
+    //   queryParams: {
+    //     progress: 'personal_details'
+    //   }
+    // })
   }
 }

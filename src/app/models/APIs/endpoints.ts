@@ -12,6 +12,7 @@ export const endpoints = {
     verifyNIN: 'api/v1/onboarding/verifyNIN',
     verificationDetails: 'api/v1/onboarding/verification',
     personalDetails: 'api/v1/onboarding/personalDetails',
+    verifyOTP: 'api/v1/otp/agent/generate',
     residentialDetails: 'api/v1/onboarding/residentialDetails',
     educationDetails: 'api/v1/onboarding/educationalDetails',
     healthDetails: 'api/v1/onboarding/healthDetails',

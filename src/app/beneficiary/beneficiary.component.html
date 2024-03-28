@@ -22,6 +22,9 @@
             <div *ngIf="selectedItemName === 'personal details'" id="personal-details">
                 <app-personal-details></app-personal-details>
             </div>
+            <div *ngIf="selectedItemName === 'verification procedure'">
+                <app-verification-code></app-verification-code>
+            </div>
             <div *ngIf="selectedItemName === 'residential details'">
                 <app-residential-details></app-residential-details>
             </div>

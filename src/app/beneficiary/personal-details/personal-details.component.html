@@ -58,7 +58,7 @@
                     <label class="block text-xs font-light text-gray-700 mt-[-10px]">
                         Phone Number
                     </label>
-                    <input formControlName="phoneNumber" id="readonly-input" type="text"  class="focus:ring-indigo-500  rounded-none focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Placeholder" readonly>
+                    <input formControlName="phoneNumber" id="readonly-input" type="text"  class="focus:ring-indigo-500  rounded-none focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Input Phone number">
                  
                 </form>
           
@@ -68,11 +68,11 @@
             <div class="relative" >
                 <form [formGroup]="personalDetailsForm">
                     <label class="block text-xs font-light text-gray-700 mt-[-10px]">
-                      BVN
+                      BVN (Optional)
                     </label>
                     <input formControlName="bvn" type="text" aria-describedby="helper-text-explanation"
                     class="bg-gray-50 border  rounded-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Enter BVN*">
+                    placeholder="Enter BVN">
                 </form>
         
            
@@ -162,7 +162,7 @@
                 </div>
         </div>
         <div class="row-span-1 w-full mt-2">
-            <button (click)="submitForm()" type="submit" [disabled]="!personalDetailsForm.valid" [ngStyle]="{ 'background-color': !personalDetailsForm.valid ? '#B8B7C8' : '#109856' }"
+            <button (click)="submitForm()" type="submit" [disabled]="disableBtn" [ngStyle]="{ 'background-color': disableBtn ? '#B8B7C8' : '#109856' }"
                 class="w-full h-12 px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-500 focus:outline-none focus:bg-green-600">
                 <div class="flex items-center justify-center"> 
                     <span class="mr-2">Proceed</span> 

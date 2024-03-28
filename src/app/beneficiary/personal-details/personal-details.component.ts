@@ -28,6 +28,7 @@ export class PersonalDetailsComponent implements OnInit {
   showSpinner:boolean = false;
 
   showWelcomeMsg:boolean = false;
+  disableBtn:boolean = true;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -65,7 +66,7 @@ export class PersonalDetailsComponent implements OnInit {
       firstName: new FormControl(this.userDetails?.firstname, [Validators.required]),
       lastName: new FormControl(this.userDetails?.lastname, [Validators.required]),
       middleName: new FormControl(this.userDetails?.middleName, [Validators.required]),
-      phoneNumber: new FormControl(this.userDetails?.phoneNumber, [Validators.required]),
+      phoneNumber: new FormControl(sessionStorage.getItem('beneficiaryPhoneNumber' || null), [Validators.required]),
       bvn: new FormControl('', [Validators.required]),
       email: new FormControl(this.userDetails?.email, [Validators.required]),
       gender: new FormControl(this.userDetails?.gender, [Validators.required]),
@@ -77,6 +78,7 @@ export class PersonalDetailsComponent implements OnInit {
 
     this.personalDetailsForm.get('religion')?.valueChanges.subscribe({
       next: (value:any) => {
+        this.disableBtn = false;
         if(value === 'OTHERS'){
           this.showOthers = true;
         }else{
@@ -91,15 +93,13 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   submitForm(){
-   if(this.personalDetailsForm?.valid){
     this.showSpinner = true;
-   // console.log("form values>>", this.personalDetailsForm.value);
-   const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+   sessionStorage.setItem('beneficiaryPhoneNumber', this.personalDetailsForm.get('phoneNumber')?.value);
     const payload = {
       firstname: this.personalDetailsForm.value?.firstName,
       lastname: this.personalDetailsForm.value?.lastName,
       middleName: this.personalDetailsForm.value?.middleName,
-      phoneNumber: getBeneficiaryPhoneNumber,
+      phoneNumber: this.personalDetailsForm.get('phoneNumber')?.value,
       bvn:  this.personalDetailsForm.value?.bvn,
       email:  this.personalDetailsForm.value?.email,
       gender:  this.personalDetailsForm.value?.gender,
@@ -110,33 +110,33 @@ export class PersonalDetailsComponent implements OnInit {
     this.beneficiaryService.personalDetails(payload).subscribe({
       next: (res: any) => {
       //  console.log("response>>>", res);
-        this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded succesfully!');
+       this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        this.beneficiaryService.setRouteToDisplay("residential details");
-        this.router.navigate(['/home/beneficiary'],{
-          relativeTo: this.route,
-          queryParams: {
-            progress: 'residential_details'
-          }
-        })
+
+        this.router.navigate(["/home/verification-code"],{
+          relativeTo: this.route, 
+          queryParams:{
+            progress: "enter_verification_code",
+          }});
+     
       },
       error: (err:any) => {
         this.showSpinner = false;
         console.error("personal details error>>", err);
-        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        // if(err?.status === 401){
-        //   this.auth.agentLogout();
-        //   }
+
+        if(err?.status === 401){
+          this.auth.agentLogout();
+          }
       }
     })
-   }
   }
 
 }

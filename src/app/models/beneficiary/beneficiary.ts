@@ -1410,3 +1410,8 @@ export interface PaginationParams{
     size: number;
     page: number;
 }
+
+export interface TotalOnboarding{
+    completed: number | any,
+    incompleted: number | any
+}

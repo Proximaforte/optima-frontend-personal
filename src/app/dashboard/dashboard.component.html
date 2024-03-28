@@ -27,7 +27,14 @@
                 <small class="text-xl font-euclid font-normal ml-2 text-optimaGray">Successfully Onboarded</small
           >
         </div>
-        <p class="text-[104px] text-[#344054]">{{ total }}</p>
+        <p class="text-[104px] text-[#344054]">
+          {{
+            totalOnboarding.completed === '0' ? '0' :
+             totalOnboarding.completed?.length === 1 ? '0'+'0'+ totalOnboarding.completed :
+             totalOnboarding.completed?.length === 2 ? '0'+ totalOnboarding.completed :
+             totalOnboarding.completed?.length === 3?  totalOnboarding.completed : null
+            }}
+        </p>
       </div>
       <div class="border-r h-28 mt-6 mx-12"></div>
       <div class="py-5 min-h-full">
@@ -37,7 +44,14 @@
             >Incomplete Onboarding</small
           >
         </div>
-        <p class="text-[104px] text-[#344054]">{{ total }}</p>
+        <p class="text-[104px] text-[#344054]">
+          {{
+            totalOnboarding.incompleted === '0' ? '0' :
+             totalOnboarding.incompleted?.length === 1 ? '0'+'0'+ totalOnboarding.incompleted :
+             totalOnboarding.incompleted?.length === 2 ? '0'+ totalOnboarding.incompleted :
+             totalOnboarding.incompleted?.length === 3?  totalOnboarding.incompleted : null
+            }}
+        </p>
       </div>
     </div>
 
@@ -64,7 +78,7 @@
   </div>
 
   <div id="empty-data" class="container mx-auto">
-    <app-beneficiary-table></app-beneficiary-table>
+    <app-beneficiary-table (emitTotals$)="acceptTableTotals($event)"></app-beneficiary-table>
   </div>
 
 

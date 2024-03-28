@@ -8,8 +8,10 @@ import { BeneficiaryDetailspageComponent } from './beneficiary-detailspage/benef
 import { BeneficiaryFilterPipe } from './pipes/beneficiary-filter.pipe';
 import {MatIconModule} from '@angular/material/icon';
 import { IncompletePipe } from './pipes/incomplete.pipe';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 
-const materialModules = [MatIconModule]
+const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
 
 @NgModule({
   declarations: [

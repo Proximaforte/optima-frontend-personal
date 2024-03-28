@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TotalOnboarding } from '../models/beneficiary/beneficiary';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,11 +13,13 @@ export class DashboardComponent {
   total: number = 945;
   options: string[] = ['Today', 'Last 7days', 'This Month', 'Last 6 Months'];
   selectedValue: string = '';
-isOpen: any;
+  isOpen: any;
+  totalOnboarding: TotalOnboarding | any = {
+    completed: 0,
+    incompleted: 0
+  };
 
-  constructor (){
 
-  }
   agents: any = [
     { text: 'Agent code', data: 'AG1023', icon: 'assets/images/agentcode.svg' },
     {
@@ -31,6 +34,17 @@ isOpen: any;
     },
     { text: 'LGA', data: 'ILLorin South', icon: 'assets/images/lga.svg' },
   ];
- 
-  
+
+  constructor() {
+  }
+
+  acceptTableTotals(event: any) {
+    this.totalOnboarding = event;
+    console.log('event>>>', this.totalOnboarding);
+    this.totalOnboarding.completed = String(event.completed);
+    this.totalOnboarding.incompleted = String(event.incompleted);
+  }
+
+
+
 }

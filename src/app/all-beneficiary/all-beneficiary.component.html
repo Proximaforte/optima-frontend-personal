@@ -5,7 +5,7 @@
       <!-- visible only on large screens -->
     <div class="grid grid-cols-3 gap-4 p-4 hidden md:flex">
       <div class="col-span-2 flex justify-start items-center">
-        <button (click)="showcompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded">Completed</button>
+        <button (click)="showcompleteBeneficiaries()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded">Completed</button>
         <button (click)="showInCompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
       </div>
 
@@ -188,7 +188,7 @@
     <div class="grid grid-cols-3 gap-4 p-4 hidden md:flex">
       <div class="col-span-2 flex justify-start items-center">
         <button (click)="showcompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded">Completed</button>
-        <button (click)="showInCompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
+        <button (click)="showInCompleteBeneficiaries()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white  hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
       </div>
 
       <div class="col-span-1 flex justify-end items-center" style="margin-left: 380px;">
@@ -309,8 +309,19 @@
            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.gender }}</span>
           </td>
           <td>
-            <button class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded text-xs" (click)="continueOnboarding(beneficiary)"  mat-raised-button> Continue Onboarding
-            </button>
+
+              <button  mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="continueOnboarding(beneficiary)">
+                  <mat-icon>person_add</mat-icon>
+                  <span class="text-sm">Continue Onboarding</span>
+                </button>
+              </mat-menu>
+              
+
+
           </td>
         </tr>
 
