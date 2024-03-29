@@ -36,7 +36,7 @@ export class OtpIdentifierComponent {
   ){
     const getParams = this.route.queryParams.subscribe({
       next: (param:any) => {
-       console.log('param>>', param); 
+       //console.log('param>>', param); 
        this.param = param;
         if(param['platformType'] === 'phone'){
           this.showPhone = true;
@@ -94,7 +94,12 @@ export class OtpIdentifierComponent {
       this.service.forgotPasswords({identifier: this.emailValue}).subscribe({
         next: (res: any) => {
           this.showSpinner = false;
-          console.log('phone number identifier response>>>>', res);
+       //  console.log('phone number identifier response>>>>', res);
+        this.toast.setSuccessMessage(`Forgot passwords reset has been sent to ${this.emailValue}`);
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
           this.router.navigate(["/auth/input-otp"],{
             relativeTo: this.route,
             queryParams: {
@@ -106,7 +111,7 @@ export class OtpIdentifierComponent {
         error: (err:any) => {
           this.showSpinner = false;
           console.error(' email Http Error>>', err);
-          this.toast.setErrorMessage(err?.error?.responseMessage);
+          this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
           this.snackbar.openFromComponent(ToastsComponent,{
             duration: 4000,
             verticalPosition: 'bottom',
@@ -118,8 +123,8 @@ export class OtpIdentifierComponent {
       this.service.forgotPasswords({identifier: this.phoneNumberValue}).subscribe({
         next: (res: any) => {
           this.showSpinner = false;
-          console.log('phone number identifier response>>>>', res);
-          this.toast.setSuccessMessage(`${res?.data} implemented!`);
+        //  console.log('phone number identifier response>>>>', res);
+          this.toast.setSuccessMessage(`Forgot passwords reset has been sent to ${this.phoneNumberValue}`);
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
             verticalPosition: 'bottom',
@@ -136,7 +141,8 @@ export class OtpIdentifierComponent {
         error: (err:any) => {
           this.showSpinner = false;
           console.error('phone number Http Error>>', err);
-          this.toast.setErrorMessage(err?.error?.responseMessage);
+          this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+          this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
             verticalPosition: 'bottom',

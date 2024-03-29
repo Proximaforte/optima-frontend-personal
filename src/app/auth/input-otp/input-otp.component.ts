@@ -95,6 +95,7 @@ routeToNewPasswords(){
     next: (res: any) => {
       this.showSpinner = false;
       console.log('res>>>', res);
+      this.toast.setSuccessMessage("Valid OTP input");
       this.router.navigate(["/auth/input-new-password"], 
       {
         relativeTo: this.route,
@@ -105,8 +106,9 @@ routeToNewPasswords(){
     },
     error: (err: any) => {
       this.showSpinner = false;
-      console.error('err>>>', err?.error?.responseMessage);
-      this.toast.setErrorMessage(err?.error?.responseMessage);
+      console.error('err123>>>', err?.error?.responseMessage);
+      this.toast.setSuccessMessage(err?.error?.responseMessage === "invalid Token" ? 'Invalid OTP input' : err?.error?.responseMessage)
+      this.toast.setErrorMessage(err?.error?.responseMessage === "invalid Token" ? 'Invalid OTP input' : err?.error?.responseMessage);
       this.snackbar.openFromComponent(ToastsComponent,{
         duration: 4000,
         verticalPosition: 'bottom',
