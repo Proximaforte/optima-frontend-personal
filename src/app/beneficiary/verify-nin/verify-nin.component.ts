@@ -58,11 +58,12 @@ export class VerifyNINComponent implements OnInit {
 
     this.ninForm.get('nin')?.valueChanges.subscribe({
       next: (value: string) => {
-        if (this.ninForm.valid) {
+       // console.log('NIN value>>', value)
+       if (value.length === 11) {
+        this.showBtn = true;
           this.beneficiaryService.verifyNIN(value).subscribe({
             next: (response: any) => {
               if (response?.responseCode === 200) {
-                this.showBtn = true;
                 sessionStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
                 this.toast.setSuccessMessage("Beneficiary's NIN has been verified successfully!");
                 this.snackbar.openFromComponent(ToastsComponent, {
@@ -82,7 +83,7 @@ export class VerifyNINComponent implements OnInit {
               setTimeout(() => location.reload(), 3000);
             }
           })
-        }
+       }
 
 
       }

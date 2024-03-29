@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AuthComponent implements OnInit {
 
   optima: string = "/assets/images/optima.svg";
-  kwaraStateLogo: string = "/assets/images/kwara.svg"; // "/assets/images/arms.svg"
+  kwaraStateLogo: string = "/assets/images/coatOfArms.svg"; // "/assets/images/arms.svg"
   poweredByOptima: string = "/assets/images/powered.svg";
   showEye: boolean = true;
   showSpinner: boolean = false;

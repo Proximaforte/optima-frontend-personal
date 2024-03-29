@@ -109,13 +109,13 @@ export class PersonalDetailsComponent implements OnInit {
     }
     this.beneficiaryService.personalDetails(payload).subscribe({
       next: (res: any) => {
-      //  console.log("response>>>", res);
-       this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded succesfully!');
+    //   console.log("response>>>", res);
+        this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-
+  
         this.router.navigate(["/home/verification-code"],{
           relativeTo: this.route, 
           queryParams:{
@@ -126,12 +126,13 @@ export class PersonalDetailsComponent implements OnInit {
       error: (err:any) => {
         this.showSpinner = false;
         console.error("personal details error>>", err);
+        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
+          politeness: 'polite'
         });
-
         if(err?.status === 401){
           this.auth.agentLogout();
           }
