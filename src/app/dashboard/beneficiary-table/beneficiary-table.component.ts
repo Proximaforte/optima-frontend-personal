@@ -65,7 +65,7 @@ export class BeneficiaryTableComponent implements OnInit {
   getAllBeneficiries(){
     this.beneficiaryService.getAllBeneficiaries(this.paginationParams).subscribe({
       next: (res: any) => {
-        console.log('complete>>>', res?.data?.beneficiaries);
+      //  console.log('complete>>>', res?.data?.beneficiaries);
         this.beneficiary = res?.data?.beneficiaries;
         this.totals.completed = res?.data?.beneficiaries?.length;
         this.emitTotals$.emit(this.totals);

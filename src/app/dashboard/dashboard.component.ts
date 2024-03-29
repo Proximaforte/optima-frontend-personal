@@ -40,7 +40,7 @@ export class DashboardComponent {
 
   acceptTableTotals(event: any) {
     this.totalOnboarding = event;
-    console.log('event>>>', this.totalOnboarding);
+   // console.log('event>>>', this.totalOnboarding);
     this.totalOnboarding.completed = String(event.completed);
     this.totalOnboarding.incompleted = String(event.incompleted);
   }
