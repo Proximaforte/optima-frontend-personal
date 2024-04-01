@@ -13,6 +13,7 @@ export const endpoints = {
     verificationDetails: 'api/v1/onboarding/verification',
     personalDetails: 'api/v1/onboarding/personalDetails',
     verifyOTP: 'api/v1/otp/agent/generate',
+    verificationOTP: 'api/v1/onboarding/verification',
     residentialDetails: 'api/v1/onboarding/residentialDetails',
     educationDetails: 'api/v1/onboarding/educationalDetails',
     healthDetails: 'api/v1/onboarding/healthDetails',

@@ -1264,6 +1264,14 @@ export interface FinancialDetails {
     specifyAid: string;
 }
 
+export interface Verification {
+    nin: string;
+    type?: string;
+    phoneNumber: string;
+    image?: string;
+    otpCode: string;
+}
+
 export interface NextOfKin {
     beneficiaryPhoneNumber: string;
     firstname: string;

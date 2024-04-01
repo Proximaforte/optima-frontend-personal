@@ -97,7 +97,16 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
   submit() {
     //console.log("merged>>>", this.otpValue);
     const getBeneficiaryPhoneNumber: any = sessionStorage.getItem('beneficiaryPhoneNumber');
-    this.beneficiarySerive.verifyNINOTP(getBeneficiaryPhoneNumber).subscribe({
+    const getNIN: any = sessionStorage.getItem('nin');
+    const parseNIN = JSON.parse(getNIN);
+    const OTPPayload:any = {
+      nin: parseNIN?.nin,
+      type: 'FACIAL_ID',
+      phoneNumber: getBeneficiaryPhoneNumber,
+      image: '',
+      otpCode: this.otpValue
+    }
+    this.beneficiarySerive.verifyNINOTP(OTPPayload).subscribe({
       next: (res: any) => {
         console.log('res>>>', res);
         this.toast.setSuccessMessage("Phone number is verified succesfully!");

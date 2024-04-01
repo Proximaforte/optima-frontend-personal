@@ -15,7 +15,8 @@ import {
    VerificationDetails,
    MaritalDetails,
    PaginationParams,
-   NINParameter
+   NINParameter,
+   Verification
   } from 'src/app/models/beneficiary/beneficiary';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -84,8 +85,10 @@ beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
 
     //api/v1/otp/agent/generate/89989
 
-    public verifyNINOTP(otp: string): Observable<any>{
-      return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyOTP}/${otp}`, { headers: this.interceptor?.customHttpHeaders})
+    public verifyNINOTP(Verification: Verification): Observable<any>{
+      const body = JSON.stringify(Verification);
+      return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.verificationOTP}`,body, { headers: this.interceptor?.customHttpHeaders})
+      // return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyOTP}/${otp}`, { headers: this.interceptor?.customHttpHeaders})
       }
 
   public personalDetails(data: PersonalDetails): Observable<any>{
