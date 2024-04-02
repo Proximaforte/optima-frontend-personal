@@ -4,6 +4,10 @@ import { localGovt } from 'src/app/models/beneficiary/beneficiary';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { PaginationParams } from 'src/app/models/beneficiary/beneficiary';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { ToastsComponent } from '../toasts/toasts.component';
 
 @Component({
   selector: 'app-filter-box',
@@ -19,11 +23,17 @@ export class FilterBoxComponent implements OnInit{
   button1: string = "/assets/images/Button.svg";
   button2: string = "/assets/images/Button2.svg";
   filterParam!:FormGroup;
-  paginationParams!:PaginationParams;
+  paginationParams:PaginationParams = {
+    size: 10,
+    page: 1
+  };
 
   constructor(
     public dialogRef: MatDialogRef<FilterBoxComponent>,
-    private beneficiaryService: BeneficiaryService
+    private beneficiaryService: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
+    private auth:AuthService
     ) {
   }
 
@@ -150,9 +160,26 @@ export class FilterBoxComponent implements OnInit{
   }
 
   submit(){
-    console.log('hey!!!!')
+    //console.log('filter params>>>', this.filterParam.value);
     this.beneficiaryService.setFilterParams(this.filterParam.value);
-    this.beneficiaryService.getFilteredBeneficiaries(this.paginationParams,this.filterParam.value);
+   this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService?.getFilterParams(),this.paginationParams).subscribe({
+    next: (res: any) => {
+      console.log('filtered response<<<>>>', res);
+      this.toast.setSuccessMessage("Data filtered succesfully!");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+    },
+    error: (err: any) => {
+      console.error('err>>', err);
+      this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+    }
+   })
   }
 
   close(): void {

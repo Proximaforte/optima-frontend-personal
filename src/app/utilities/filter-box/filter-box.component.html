@@ -35,7 +35,7 @@
   </div>
 
   <div class="col-span-2 flex justify-start items-center" id="button-items">
-    <img [src]="button1" width="150px">
+    <img [src]="button1" width="150px" (click)="clearFilter()">
     &nbsp;&nbsp;
     <img [src]="button2" width="150px" (click)="submit()">
   </div>

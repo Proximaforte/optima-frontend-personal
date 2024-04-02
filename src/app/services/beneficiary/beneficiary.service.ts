@@ -34,6 +34,10 @@ export class BeneficiaryService {
   routeObservable$: ReplaySubject<any> = new ReplaySubject<any>();
   beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
   filterParams!: filterParams;
+  pagination: PaginationParams ={
+    size: 10,
+    page: 1
+  }
 
   constructor(
     private http: HttpClient,
@@ -58,7 +62,7 @@ export class BeneficiaryService {
 
   public setFilterParams(filterParams: filterParams) {
     this.filterParams = filterParams;
-    
+
   }
 
   public getFilterParams() {
@@ -161,23 +165,23 @@ export class BeneficiaryService {
 
   public getAllIncompleteBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
     const params = new HttpParams()
-    ?.set('crimeType', filterParams?.crimeType === null ? '' : filterParams?.crimeType)
-    ?.set('currentHealthCondition', filterParams?.currentHealthCondition === null ? '' : filterParams?.currentHealthCondition)
-    ?.set('educationFunding', filterParams?.educationFunding === null ? '' : filterParams?.educationFunding)
-    ?.set('educationLevel', filterParams?.educationLevel === null ? '' : filterParams?.educationLevel)
-    ?.set('filterString', filterParams?.filterString === null ? '' : filterParams?.filterString)
-    ?.set('gender', filterParams?.gender === null ? '' : filterParams?.gender)
-    ?.set('healthCondition', filterParams?.healthCondition === null ? '' : filterParams?.healthCondition)
-    ?.set('houseOwner', filterParams?.houseOwner === null ? '' : filterParams?.houseOwner)
-    ?.set('inSchool', filterParams?.inSchool === null ? '' : filterParams?.inSchool)
-    ?.set('lga', filterParams?.lga === null ? '' : filterParams?.lga)
-    ?.set('maritalStatus', filterParams?.maritalStatus === null ? '' : filterParams?.maritalStatus)
-    ?.set('size', String(paginationParams?.size))
-    ?.set('page', String(paginationParams?.page))
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}`, { 
-      headers: this.interceptor?.customHttpHeaders, 
+      ?.set('crimeType', filterParams?.crimeType)
+      ?.set('currentHealthCondition', filterParams?.currentHealthCondition)
+      ?.set('educationFunding', filterParams?.educationFunding)
+      ?.set('educationLevel', filterParams?.educationLevel)
+      ?.set('filterString', filterParams?.filterString)
+      ?.set('gender', filterParams?.gender)
+      ?.set('healthCondition', filterParams?.healthCondition)
+      ?.set('houseOwner', filterParams?.houseOwner)
+      ?.set('inSchool', filterParams?.inSchool)
+      ?.set('lga', filterParams?.lga)
+      ?.set('maritalStatus', filterParams?.maritalStatus)
+      ?.set('size', String(paginationParams?.size))
+      ?.set('page', String(paginationParams?.page))
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}`, {
+      headers: this.interceptor?.customHttpHeaders,
       params: params
-     });
+    });
   }
 
   public getAllBeneficiaryProfiles(ssid: any): Observable<any> {
@@ -186,19 +190,21 @@ export class BeneficiaryService {
 
   public getFilteredBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
     const params = new HttpParams()
-      ?.set('crimeType', filterParams?.crimeType === null ? '' : filterParams?.crimeType)
-      ?.set('currentHealthCondition', filterParams?.currentHealthCondition === null ? '' : filterParams?.currentHealthCondition)
-      ?.set('educationFunding', filterParams?.educationFunding === null ? '' : filterParams?.educationFunding)
-      ?.set('educationLevel', filterParams?.educationLevel === null ? '' : filterParams?.educationLevel)
-      ?.set('filterString', filterParams?.filterString === null ? '' : filterParams?.filterString)
-      ?.set('gender', filterParams?.gender === null ? '' : filterParams?.gender)
-      ?.set('healthCondition', filterParams?.healthCondition === null ? '' : filterParams?.healthCondition)
-      ?.set('houseOwner', filterParams?.houseOwner === null ? '' : filterParams?.houseOwner)
-      ?.set('inSchool', filterParams?.inSchool === null ? '' : filterParams?.inSchool)
-      ?.set('lga', filterParams?.lga === null ? '' : filterParams?.lga)
-      ?.set('maritalStatus', filterParams?.maritalStatus === null ? '' : filterParams?.maritalStatus)
+      ?.set('crimeType', String(filterParams?.crimeType))
+      ?.set('currentHealthCondition', String(filterParams?.currentHealthCondition))
+      ?.set('educationFunding', String(filterParams?.educationFunding))
+      ?.set('educationLevel', String(filterParams?.educationLevel))
+      ?.set('filterString', String(filterParams?.filterString))
+      ?.set('gender', String(filterParams?.gender))
+      ?.set('healthCondition', String(filterParams?.healthCondition))
+      ?.set('houseOwner', String(filterParams?.houseOwner))
+      ?.set('inSchool', String(filterParams?.inSchool))
+      ?.set('lga', String(filterParams?.lga))
+      ?.set('maritalStatus', String(filterParams?.maritalStatus))
       ?.set('size', String(paginationParams?.size))
       ?.set('page', String(paginationParams?.page))
+      console.log('params>>>', params);
+      console.log('payload>>>', filterParams);
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getFilteredBeneficiaries}`, {
       headers: this.interceptor?.customHttpHeaders,
       params: params
