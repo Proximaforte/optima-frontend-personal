@@ -4,20 +4,21 @@ import { endpoints } from 'src/app/models/APIs/endpoints';
 import { environment } from 'src/app/environments/environment.prod';
 import { JwtInterceptorService } from '../authentication/interceptor/jwt-interceptor.service';
 import {
-   PersonalDetails, 
-   ResidentialDetails,
-   EducationDetails,
-   HealthDetails,
-   FinancialDetails,
-   NextOfKin,
-   EmploymentDetails,
-   OtherDetails,
-   VerificationDetails,
-   MaritalDetails,
-   PaginationParams,
-   NINParameter,
-   Verification
-  } from 'src/app/models/beneficiary/beneficiary';
+  PersonalDetails,
+  ResidentialDetails,
+  EducationDetails,
+  HealthDetails,
+  FinancialDetails,
+  NextOfKin,
+  EmploymentDetails,
+  OtherDetails,
+  VerificationDetails,
+  MaritalDetails,
+  PaginationParams,
+  NINParameter,
+  Verification,
+  filterParams
+} from 'src/app/models/beneficiary/beneficiary';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 
@@ -29,135 +30,179 @@ export class BeneficiaryService {
   imageUrl: string = "";
   showOriginal: boolean = false;
 
- imageObservable$: ReplaySubject<any> = new ReplaySubject<any>();
- routeObservable$: ReplaySubject<any> = new ReplaySubject<any>();
-beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
+  imageObservable$: ReplaySubject<any> = new ReplaySubject<any>();
+  routeObservable$: ReplaySubject<any> = new ReplaySubject<any>();
+  beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
+  filterParams!: filterParams;
 
   constructor(
     private http: HttpClient,
     private interceptor: JwtInterceptorService,
-    ) { }
+  ) { }
 
-  public setImageUrl(image: string){
+  public setImageUrl(image: string) {
     this.imageUrl = image;
   }
 
-  public getImageUrl(){
+  public getImageUrl() {
     return this.imageUrl;
   }
 
-  public setShowOriginal(show: boolean){
+  public setShowOriginal(show: boolean) {
     this.showOriginal = show;
   }
 
-  public getShowOriginal(){
+  public getShowOriginal() {
     return this.showOriginal;
   }
 
-  public returnImageUrl(image: any){
-    this.imageObservable$.next(image);
-   // this.emitImage$.emit(image);
+  public setFilterParams(filterParams: filterParams) {
+    this.filterParams = filterParams;
+    
   }
 
-  public acceptImageUrl(): Observable<any>{
+  public getFilterParams() {
+    return this.filterParams;
+  }
+
+  public returnImageUrl(image: any) {
+    this.imageObservable$.next(image);
+    // this.emitImage$.emit(image);
+  }
+
+  public acceptImageUrl(): Observable<any> {
     return this.imageObservable$.asObservable();
   }
 
-  public setRouteToDisplay(route: string){
-  return this.routeObservable$.next(route);
+  public setRouteToDisplay(route: string) {
+    return this.routeObservable$.next(route);
   }
 
-  public getRouteToDisplay():Observable<any>{
+  public getRouteToDisplay(): Observable<any> {
     return this.routeObservable$.asObservable();
   }
 
-  public setBeneficiaryProfile(beneficiary:any){
+  public setBeneficiaryProfile(beneficiary: any) {
     return this.beneficiaryDataObservable$.next(beneficiary);
   }
 
-  public getBeneficiaryProfile():Observable<any>{
+  public getBeneficiaryProfile(): Observable<any> {
     return this.beneficiaryDataObservable$.asObservable();
   }
 
-  public verifyNIN(nin: string): Observable<any>{
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${nin}`, { headers: this.interceptor?.customHttpHeaders})
-    }
-
-    //api/v1/otp/agent/generate/89989
-
-    public verifyNINOTP(Verification: Verification): Observable<any>{
-      const body = JSON.stringify(Verification);
-      return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.verificationOTP}`,body, { headers: this.interceptor?.customHttpHeaders})
-      // return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyOTP}/${otp}`, { headers: this.interceptor?.customHttpHeaders})
-      }
-
-  public personalDetails(data: PersonalDetails): Observable<any>{
-  const body = JSON.stringify(data);
-  return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.personalDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+  public verifyNIN(nin: string): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${nin}`, { headers: this.interceptor?.customHttpHeaders })
   }
 
-  public residentialDetails(data: ResidentialDetails): Observable<any>{
+  //api/v1/otp/agent/generate/89989
+
+  public verifyNINOTP(Verification: Verification): Observable<any> {
+    const body = JSON.stringify(Verification);
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.verificationOTP}`, body, { headers: this.interceptor?.customHttpHeaders })
+    // return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyOTP}/${otp}`, { headers: this.interceptor?.customHttpHeaders})
+  }
+
+  public personalDetails(data: PersonalDetails): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.residentialDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.personalDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  public educationDetails(data: EducationDetails):Observable<any>{
+  public residentialDetails(data: ResidentialDetails): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.educationDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.residentialDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  public healthDetails(data: HealthDetails):Observable<any>{
+  public educationDetails(data: EducationDetails): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.healthDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.educationDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  public financialDetails(data: FinancialDetails):Observable<any>{
+  public healthDetails(data: HealthDetails): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.financialDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.healthDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  
-  public nextOfKinDetails(data: NextOfKin):Observable<any>{
+  public financialDetails(data: FinancialDetails): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.nextOfKinDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.financialDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  public employmentDetails(data: EmploymentDetails):Observable<any>{
+
+  public nextOfKinDetails(data: NextOfKin): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.employmentDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.nextOfKinDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  public otherDetails(data: OtherDetails):Observable<any>{
+  public employmentDetails(data: EmploymentDetails): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.otherDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.employmentDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  
-  public Verification(data: VerificationDetails):Observable<any>{
+  public otherDetails(data: OtherDetails): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.verificationDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.otherDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  public maritalDetails(data: MaritalDetails):Observable<any>{
+
+  public Verification(data: VerificationDetails): Observable<any> {
     const body = JSON.stringify(data);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.maritalDetails}`, body, { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.verificationDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  public getAllBeneficiaries(paginationParams:PaginationParams):Observable<any>{
+  public maritalDetails(data: MaritalDetails): Observable<any> {
+    const body = JSON.stringify(data);
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.maritalDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
+  }
+
+  public getAllBeneficiaries(paginationParams: PaginationParams): Observable<any> {
     const params = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page));
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders, params: params});
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders, params: params });
   }
 
-  public getAllIncompleteBeneficiaries(paginationParams:PaginationParams):Observable<any>{
-    const params = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page));
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders, params: params});
+  public getAllIncompleteBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
+    const params = new HttpParams()
+    ?.set('crimeType', filterParams?.crimeType === null ? '' : filterParams?.crimeType)
+    ?.set('currentHealthCondition', filterParams?.currentHealthCondition === null ? '' : filterParams?.currentHealthCondition)
+    ?.set('educationFunding', filterParams?.educationFunding === null ? '' : filterParams?.educationFunding)
+    ?.set('educationLevel', filterParams?.educationLevel === null ? '' : filterParams?.educationLevel)
+    ?.set('filterString', filterParams?.filterString === null ? '' : filterParams?.filterString)
+    ?.set('gender', filterParams?.gender === null ? '' : filterParams?.gender)
+    ?.set('healthCondition', filterParams?.healthCondition === null ? '' : filterParams?.healthCondition)
+    ?.set('houseOwner', filterParams?.houseOwner === null ? '' : filterParams?.houseOwner)
+    ?.set('inSchool', filterParams?.inSchool === null ? '' : filterParams?.inSchool)
+    ?.set('lga', filterParams?.lga === null ? '' : filterParams?.lga)
+    ?.set('maritalStatus', filterParams?.maritalStatus === null ? '' : filterParams?.maritalStatus)
+    ?.set('size', String(paginationParams?.size))
+    ?.set('page', String(paginationParams?.page))
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}`, { 
+      headers: this.interceptor?.customHttpHeaders, 
+      params: params
+     });
   }
 
-  public getAllBeneficiaryProfiles(ssid:any):Observable<any>{
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getBeneficiaryProfile}/${ssid}`, { headers: this.interceptor?.customHttpHeaders});
+  public getAllBeneficiaryProfiles(ssid: any): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getBeneficiaryProfile}/${ssid}`, { headers: this.interceptor?.customHttpHeaders });
   }
 
-
-
+  public getFilteredBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
+    const params = new HttpParams()
+      ?.set('crimeType', filterParams?.crimeType === null ? '' : filterParams?.crimeType)
+      ?.set('currentHealthCondition', filterParams?.currentHealthCondition === null ? '' : filterParams?.currentHealthCondition)
+      ?.set('educationFunding', filterParams?.educationFunding === null ? '' : filterParams?.educationFunding)
+      ?.set('educationLevel', filterParams?.educationLevel === null ? '' : filterParams?.educationLevel)
+      ?.set('filterString', filterParams?.filterString === null ? '' : filterParams?.filterString)
+      ?.set('gender', filterParams?.gender === null ? '' : filterParams?.gender)
+      ?.set('healthCondition', filterParams?.healthCondition === null ? '' : filterParams?.healthCondition)
+      ?.set('houseOwner', filterParams?.houseOwner === null ? '' : filterParams?.houseOwner)
+      ?.set('inSchool', filterParams?.inSchool === null ? '' : filterParams?.inSchool)
+      ?.set('lga', filterParams?.lga === null ? '' : filterParams?.lga)
+      ?.set('maritalStatus', filterParams?.maritalStatus === null ? '' : filterParams?.maritalStatus)
+      ?.set('size', String(paginationParams?.size))
+      ?.set('page', String(paginationParams?.page))
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getFilteredBeneficiaries}`, {
+      headers: this.interceptor?.customHttpHeaders,
+      params: params
+    });
+  }
 
 }

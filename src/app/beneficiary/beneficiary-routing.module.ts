@@ -8,6 +8,7 @@ import { FingerCapturingComponent } from './verify-nin/finger-capturing/finger-c
 import { FingerCapturingProcedureComponent } from './verify-nin/finger-capturing-procedure/finger-capturing-procedure.component';
 import { DisabilityStatusComponent } from './disability-status/disability-status.component';
 import { FinancialComponent } from './financial/financial.component';
+import { OccupationComponent } from './occupation/occupation.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'finger-capturing', component: FingerCapturingComponent},
   {path: 'finger-capturing-procedure', component: FingerCapturingProcedureComponent},
   {path: 'disability-status', component: DisabilityStatusComponent},
+  {path: 'occupation', component: OccupationComponent}
   //  {path: 'financial-status', component: FinancialComponent},
 ];
 

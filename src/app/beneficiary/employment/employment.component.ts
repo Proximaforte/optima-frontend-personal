@@ -117,17 +117,17 @@ export class EmploymentComponent implements OnInit {
     this.beneficiaryService.employmentDetails(payload).subscribe({
       next: (value: any) => {
         this.showSpinner = false;
-        console.log("res>>", value);
+       // console.log("res>>", value);
         this.toast.setSuccessMessage('Beneficiary Employment data onboarded succesfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        this.beneficiaryService.setRouteToDisplay("other details");
+        this.beneficiaryService.setRouteToDisplay("occupation");
         this.router.navigate(['/home/beneficiary'], {
           relativeTo: this.route,
           queryParams: {
-            progress: 'other_details'
+            progress: 'occupation'
           }
         })
       },
@@ -139,7 +139,7 @@ export class EmploymentComponent implements OnInit {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-
+        
         // if (err?.status === 401) {
         //   this.auth.agentLogout();
         // }

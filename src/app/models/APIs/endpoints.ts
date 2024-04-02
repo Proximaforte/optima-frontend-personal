@@ -26,7 +26,8 @@ export const endpoints = {
     //Get All Beneficiaries Onboarded
     getAllBeneficiaries: 'api/v1/beneficiary/getBeneficiariesByLoggedInAgent',
     getBeneficiaryProfile: 'api/v1/beneficiary/getBeneficiary',
-    getIncompleteBeneficiaries: 'api/v1/beneficiary/getIncompleteOnboardedBeneficiaries'
+    getIncompleteBeneficiaries: 'api/v1/beneficiary/getIncompleteOnboardedBeneficiaries',
+    getFilteredBeneficiaries: 'api/v1/beneficiary/getFilteredBeneficiaries'
 }
 
 export interface ErrorMessage{

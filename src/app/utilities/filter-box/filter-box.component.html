@@ -10,24 +10,33 @@
 
   <div class="flex justify-between">
     <p mat-dialog-title class="text-2xl font-bold">Filters</p>
-    <button class="text-red-600 mr-4 font-bold">Clear Filter</button>
+    <button (click)="clearFilter()" class="text-red-600 mr-4 font-bold">Clear Filter</button>
   </div>
-  <div mat-dialog-content></div>
-  <div mat-dialog-actions class="flex justify-between">
-    <button
-      mat-button
-      class="text-red-600 font-bold py-2 px-4 w-48 h-10 rounded-md border mx-4 border-red-600"
-      (click)="close()"
-    >
-      Clear Filters
-    </button>
+  <div mat-dialog-content>
+    <!-- [formGroup]="filterParam" [(ngModel)]="filterString" name="filterString"-->
+    <form class="max-w-sm" [formGroup]="filterParam" >
+    <div class="relative">
+      <input type="text" formControlName="filterString" class="border border-gray-300 px-4 py-2 pl-10" placeholder="Search..." style="width: 300px;">
+      <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
+      </svg>
+    </div>
+    <br>
+    <!-- [formControlName]="data.filterBy"  [(ngModel)]="value.filterBy" [name]="value.filterBy"-->
+ <div *ngFor="let value of filterOptions">
+  <select [formControlName]="value.filterBy"
+      class="bg-gray-50 rounded-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer" style="width: 300px;">
+      <option *ngFor="let item of value?.details; let id=index" >
+          {{ item }}
+      </option>
+  </select><br>
+ </div>
+  </form>
+  </div>
 
-    <button
-      mat-button
-      class="text-white bg-optimaGreen font-bold py-2 px-4 h-10 w-48 rounded-md -ml-2"
-      (click)="close()"
-    >
-      Apply
-    </button>
+  <div class="col-span-2 flex justify-start items-center" id="button-items">
+    <img [src]="button1" width="150px">
+    &nbsp;&nbsp;
+    <img [src]="button2" width="150px" (click)="submit()">
   </div>
 </div>

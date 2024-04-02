@@ -126,7 +126,7 @@ export class AllBeneficiaryComponent implements OnInit {
 
   getAllIncompleteBeneficiaries() {
     this.showSpinner = true;
-    this.beneficiaryService.getAllIncompleteBeneficiaries(this.paginationParams).subscribe({
+    this.beneficiaryService.getAllIncompleteBeneficiaries(this.beneficiaryService.getFilterParams(),this.paginationParams).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
         this.inCompleteBeneficiaries = res?.data?.beneficiaries;
@@ -161,14 +161,11 @@ export class AllBeneficiaryComponent implements OnInit {
 
   getAllBeneficiaries() {
     this.showSpinner = true;
-    this.beneficiaryService.getAllBeneficiaries(this.paginationParams).subscribe({
+    this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService.getFilterParams(),this.paginationParams).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
         //  console.log('res>>', res?.data);
         this.beneficiaries = res?.data?.beneficiaries;
-        // this.beneficiaries = mocks;
-        // this.paginationParams.size = res?.size;
-        // this.paginationParams.page = res?.page;
         this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
         if (this.beneficiaries?.length === 0) {  //res?.data?.beneficiaries?.length
           this.showNoData = true;

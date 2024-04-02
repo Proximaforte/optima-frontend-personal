@@ -63,7 +63,7 @@ export class BeneficiaryTableComponent implements OnInit {
   }
 
   getAllBeneficiries(){
-    this.beneficiaryService.getAllBeneficiaries(this.paginationParams).subscribe({
+    this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService.getFilterParams(), this.paginationParams).subscribe({
       next: (res: any) => {
       //  console.log('complete>>>', res?.data?.beneficiaries);
         this.beneficiary = res?.data?.beneficiaries;
@@ -86,7 +86,7 @@ export class BeneficiaryTableComponent implements OnInit {
   }
 
   getAllIncompletedBeneficiaries(){
-    this.beneficiaryService.getAllIncompleteBeneficiaries(this.paginationParams).subscribe({
+    this.beneficiaryService.getAllIncompleteBeneficiaries(this.beneficiaryService.getFilterParams(),this.paginationParams).subscribe({
       next: (res: any) => {
       //  console.log('complete>>>', res?.data?.beneficiaries);
         //this.beneficiary = res?.data?.beneficiaries;

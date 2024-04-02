@@ -9,7 +9,7 @@
         <button (click)="showInCompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
       </div>
 
-      <div class="col-span-1 flex justify-end items-center" style="margin-left: 380px;">
+      <div class="col-span-1 flex justify-end items-center" style="margin-left: 280px;">
         <div class="relative">
           <input type="text" [(ngModel)]="filterString" name="filterString" class="border border-gray-300 rounded-md px-4 py-2 pl-10" placeholder="Search...">
           <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -22,6 +22,10 @@
             <b>Add New Beneficiary</b>
           </div>
         </button>
+        <button (click)="openModal()" class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
+          <mat-icon class="mr-1">filter_list</mat-icon>
+          Filter
+      </button> 
       </div>
     </div>
 
@@ -51,6 +55,7 @@
             <b>Add New Beneficiary</b>
           </div>
         </button>
+        
       </div>
     </div>
     
@@ -191,7 +196,7 @@
         <button (click)="showInCompleteBeneficiaries()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white  hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
       </div>
 
-      <div class="col-span-1 flex justify-end items-center" style="margin-left: 380px;">
+      <div class="col-span-1 flex justify-end items-center" style="margin-left: 280px;">
         <div class="relative">
           <input type="text" [(ngModel)]="filterString" name="filterString" class="border border-gray-300 rounded-md px-4 py-2 pl-10 w-full" placeholder="Search...">
           <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -204,6 +209,10 @@
             <b>Add New Beneficiary</b>
           </div>
         </button>
+        <button class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
+          <mat-icon class="mr-1">filter_list</mat-icon>
+          Filter
+      </button> 
       </div>
     </div>
 

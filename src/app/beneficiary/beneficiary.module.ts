@@ -38,6 +38,8 @@ import { UtilitiesModule } from '../utilities/utilities.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { OccupationComponent } from './occupation/occupation.component';
+
 
 
 const materialModules = [
@@ -70,7 +72,8 @@ const materialModules = [
     BiometricsSuccessfulModalComponent,
     SidebarHelperComponent,
     DisabilityStatusComponent,
-    FingerCaptureCompleteComponent
+    FingerCaptureCompleteComponent,
+    OccupationComponent
   ],
   imports: [
     CommonModule,

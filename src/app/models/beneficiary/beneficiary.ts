@@ -60,6 +60,20 @@ export class IncompleteBeneficiary {
     ) { }
 }
 
+export interface filterParams{
+    crimeType?: string | null;
+    currentHealthCondition?: string | null;
+    educationFunding?: string | null;
+    educationLevel?: string | null;
+    filterString?: string | null;
+    gender?: string | null;
+    healthCondition?: string | null;
+    houseOwner?: string | null;
+    inSchool?: string | null;
+    lga?: string | null;
+    maritalStatus?: string | null;
+}
+
 
 export const NigerianStates = [
     "Select state*",

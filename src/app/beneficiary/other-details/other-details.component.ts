@@ -22,6 +22,7 @@ export class OtherDetailsComponent implements OnInit {
   showSpecifyCrime: boolean = false;
   userDetails:any = {};
   showSpinner:boolean = false;
+  disableBtn: boolean = true;
 
   showWelcomeMsg:boolean = false;
   constructor(
@@ -77,6 +78,16 @@ export class OtherDetailsComponent implements OnInit {
         }
       }
     })
+
+    this.othersForm.get('transportMeans')?.valueChanges.subscribe({
+      next: (value: any) => {
+        if(value === "Rail"){
+          this.disableBtn = false;
+        }else{
+          this.disableBtn = false;
+        }
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -96,8 +107,6 @@ export class OtherDetailsComponent implements OnInit {
       numberOfCar: this.othersForm.value?.numberOfCar 
     }
 
-  //  console.log('payload>>', payload);
-   // this.dialog.open(SuccessfulBeneficiaryOnboardingComponent);
    this.beneficiaryService.otherDetails(payload).subscribe({
     next: (res: any) => {
      // console.log("res>>>", res);
