@@ -211,7 +211,7 @@ export class OccupationComponent implements OnInit {
   submitForm() {
     this.showSpinner = true;
     const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
-    const totalPayload = {
+    const totalPayload:any = {
       phoneNumber: getBeneficiaryPhoneNumber,
       type: this.occupationForm.value.occupation,
       nameOfInstitution: this.occupationForm.value.nameOfInstitution,

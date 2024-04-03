@@ -18,7 +18,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
   ninPlaceHolder: string = '';
   otpValue: string = '';
   disabledBtn: boolean = true;
-  countdown: number = 60;
+  countdown: number = 300;
   timerSubscription$!: Subscription;
   showBtn: boolean = false;
   showWelcomeMsg: boolean = false;
@@ -101,7 +101,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
     const parseNIN = JSON.parse(getNIN);
     const OTPPayload:any = {
       nin: parseNIN?.nin,
-      type: 'FACIAL_ID',
+      type: 'PHONE_NUMBER',
       phoneNumber: getBeneficiaryPhoneNumber,
       image: '',
       otpCode: this.otpValue
@@ -123,6 +123,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
       },
       error: (err: any) => {
         console.error('err>>>', err);
+        this.toast.setSuccessMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText);
         this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText);
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,

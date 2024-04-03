@@ -107,6 +107,10 @@ export class BeneficiaryService {
     // return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyOTP}/${otp}`, { headers: this.interceptor?.customHttpHeaders})
   }
 
+  public generateOTP(parameter: string): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyOTP}/${parameter}`, { headers: this.interceptor?.customHttpHeaders })
+  }
+
   public personalDetails(data: PersonalDetails): Observable<any> {
     const body = JSON.stringify(data);
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.personalDetails}`, body, { headers: this.interceptor?.customHttpHeaders });

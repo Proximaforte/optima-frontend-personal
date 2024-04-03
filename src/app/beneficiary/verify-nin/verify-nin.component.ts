@@ -65,11 +65,13 @@ export class VerifyNINComponent implements OnInit {
             next: (response: any) => {
               if (response?.responseCode === 200) {
                 sessionStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
+                 sessionStorage.setItem('NINDetails',JSON.stringify(response?.data));
                 this.toast.setSuccessMessage("Beneficiary's NIN has been verified successfully!");
                 this.snackbar.openFromComponent(ToastsComponent, {
                   duration: 4000,
                   verticalPosition: 'bottom',
                 });
+                
               }
             },
             error: (err: any) => {

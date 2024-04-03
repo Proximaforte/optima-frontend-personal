@@ -30,6 +30,8 @@ export class PersonalDetailsComponent implements OnInit {
 
   showWelcomeMsg:boolean = false;
   disableBtn:boolean = true;
+  ninDetails: any = {};
+  formattedDate: string = "";
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -52,6 +54,11 @@ export class PersonalDetailsComponent implements OnInit {
      this.showWelcomeMsg = false;
   }
 
+  const getBeneficiaryNin:any = sessionStorage.getItem('NINDetails');
+  this.ninDetails = JSON.parse(getBeneficiaryNin)
+  // console.log('details>>', JSON.parse(getBeneficiaryNin));
+  var newDate =  this.ninDetails.birthDate.split('-');
+   this.formattedDate = `${newDate[0]}/${newDate[1]}/${newDate[2]}`;
   }
 
   
@@ -64,14 +71,14 @@ export class PersonalDetailsComponent implements OnInit {
 
   getPersonalForm(){
     this.personalDetailsForm = new FormGroup({
-      firstName: new FormControl(this.userDetails?.firstname, [Validators.required]),
-      lastName: new FormControl(this.userDetails?.lastname, [Validators.required]),
-      middleName: new FormControl(this.userDetails?.middleName, [Validators.required]),
-      phoneNumber: new FormControl(sessionStorage.getItem('beneficiaryPhoneNumber' || null), [Validators.required]),
+      firstName: new FormControl(this.ninDetails.firstName, [Validators.required]),
+      lastName: new FormControl(this.ninDetails.lastName, [Validators.required]),
+      middleName: new FormControl(this.ninDetails.middleName, [Validators.required]),
+      phoneNumber: new FormControl(this.ninDetails.phone, [Validators.required]),
       bvn: new FormControl('', [Validators.required]),
-      email: new FormControl(this.userDetails?.email, [Validators.required]),
-      gender: new FormControl(this.userDetails?.gender, [Validators.required]),
-      dateOfBirth: new FormControl('Oct 04, 2009', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      gender: new FormControl(this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null, [Validators.required]),
+      dateOfBirth: new FormControl( this.formattedDate, [Validators.required]),
       placeOfBirth: new FormControl('', [Validators.required]),
       religion: new FormControl('', [Validators.required]),
       others: new FormControl(''),
@@ -89,25 +96,14 @@ export class PersonalDetailsComponent implements OnInit {
     })
   }
 
-  datePipe(event: any) {
-    var dateObject = new Date(event);
-    var day = dateObject.getDate();
-    var month = dateObject.getMonth() + 1;
-    var year = dateObject.getFullYear();
-    var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
-    this.dateOfBirth = formattedDate;
-  }
 
   ngOnInit(): void {
     this.getPersonalForm();
   }
 
   submitForm(){
-    var dateObject = new Date(this.dateOfBirth);
-    var day = dateObject.getDate();
-    var month = dateObject.getMonth() + 1;
-    var year = dateObject.getFullYear();
-    var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    //var dateObject = new Date(this.ninDetails?.birthDate);
+
 
     const getNin: any = sessionStorage.getItem('nin');
     let newNin: any = JSON.parse(getNin);
@@ -123,10 +119,11 @@ export class PersonalDetailsComponent implements OnInit {
       bvn:  this.personalDetailsForm.value?.bvn,
       email:  this.personalDetailsForm.value?.email,
       gender:  this.personalDetailsForm.value?.gender,
-      dateOfBirth: formattedDate ,// this.personalDetailsForm.value?.dateOfBirth,
+      dateOfBirth:  this.formattedDate,
       placeOfBirth:  this.personalDetailsForm.value?.placeOfBirth,
       religion:  this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
     }
+    console.log("zzzzz>>>", payload);
     this.beneficiaryService.personalDetails(payload).subscribe({
       next: (res: any) => {
     //   console.log("response>>>", res);
@@ -141,6 +138,15 @@ export class PersonalDetailsComponent implements OnInit {
           queryParams:{
             progress: "enter_verification_code",
           }});
+
+          this.beneficiaryService.generateOTP(this.personalDetailsForm.get('phoneNumber')?.value).subscribe({
+            next: (res: any) => {
+              console.log('res>>>', res);
+            },
+            error: (err: any) => {
+              console.error("err>>>", err);
+            }
+          })
      
       },
       error: (err:any) => {

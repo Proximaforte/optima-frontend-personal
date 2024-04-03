@@ -107,21 +107,21 @@
             </div>
             <div class="p-4">
                 <div class="relative">
-                    <!-- <form [formGroup]="personalDetailsForm"> -->
-                        <!-- <label class="block text-xs font-light text-gray-700 mt-[-10px]">
+                    <form [formGroup]="personalDetailsForm">
+                        <label class="block text-xs font-light text-gray-700 mt-[-10px]">
                             Date of Birth
                            </label>
-                           <input formControlName="dateOfBirth" id="readonly-input" type="text"  class="focus:ring-indigo-500  rounded-none focus:border-indigo-500 block w-full w-[220px] shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Date of Birth"> 
-                    -->
-                    <mat-form-field id="date-picker">
+                           <input [value]="ninDetails.birthDate" readonly formControlName="dateOfBirth" id="readonly-input" type="text"  class="focus:ring-indigo-500  rounded-none focus:border-indigo-500 block w-full w-[220px] shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Date of Birth"> 
+                   
+                    <!-- <mat-form-field id="date-picker">
                         <mat-label> 
                             Date of Birth*
                         </mat-label>
-                        <input matInput [matDatepicker]="picker" [(ngModel)]="dateOfBirth" [name]="dateOfBirth">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="dateOfBirth" [name]="dateOfBirth" [value]="ninDetails.birthDate">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field> 
-                        <!-- </form> -->
+                      </mat-form-field>  -->
+                        </form>
                 </div>  
             </div>
           </div>
