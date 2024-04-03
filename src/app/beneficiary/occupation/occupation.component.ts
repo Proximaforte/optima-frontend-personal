@@ -212,7 +212,7 @@ export class OccupationComponent implements OnInit {
     this.showSpinner = true;
     const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const totalPayload = {
-      phoneNumber: getBeneficiaryPhoneNumber === null ? "08149647594" : getBeneficiaryPhoneNumber,
+      phoneNumber: getBeneficiaryPhoneNumber,
       type: this.occupationForm.value.occupation,
       nameOfInstitution: this.occupationForm.value.nameOfInstitution,
       matriculationNumber: this.occupationForm.value.matriculationNumber,
