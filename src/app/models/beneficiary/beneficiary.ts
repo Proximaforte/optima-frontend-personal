@@ -1437,3 +1437,27 @@ export interface TotalOnboarding{
     completed: number | any,
     incompleted: number | any
 }
+
+export interface Occupation{
+    phoneNumber: string,
+    type: string,
+    nameOfInstitution: string,
+    matriculationNumber: string,
+    faculty: string,
+    department: string,
+    funding: string,
+    diplomaType: string,
+    dateOfFistAppointment: string,
+    dateOfConfirmation: string,
+    onTransfer: boolean | any,
+    dateOfTransfer: string,
+    cadre: string,
+    highestQualification: string,
+    gradeLevel: string,
+    onStudyLeave: boolean| any,
+    leavePaid: boolean| any,
+    trained: boolean| any,
+    trainingType: string,
+    professionalQualifications: string[],
+    psn: string
+  }

@@ -26,6 +26,7 @@ export class PersonalDetailsComponent implements OnInit {
   showOthers: boolean = false;
   userDetails: any = {};
   showSpinner:boolean = false;
+  dateOfBirth: string | any = "";
 
   showWelcomeMsg:boolean = false;
   disableBtn:boolean = true;
@@ -88,14 +89,33 @@ export class PersonalDetailsComponent implements OnInit {
     })
   }
 
+  datePipe(event: any) {
+    var dateObject = new Date(event);
+    var day = dateObject.getDate();
+    var month = dateObject.getMonth() + 1;
+    var year = dateObject.getFullYear();
+    var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    this.dateOfBirth = formattedDate;
+  }
+
   ngOnInit(): void {
     this.getPersonalForm();
   }
 
   submitForm(){
+    var dateObject = new Date(this.dateOfBirth);
+    var day = dateObject.getDate();
+    var month = dateObject.getMonth() + 1;
+    var year = dateObject.getFullYear();
+    var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+
+    const getNin: any = sessionStorage.getItem('nin');
+    let newNin: any = JSON.parse(getNin);
+
     this.showSpinner = true;
    sessionStorage.setItem('beneficiaryPhoneNumber', this.personalDetailsForm.get('phoneNumber')?.value);
-    const payload = {
+    const payload:any = {
+      nin: newNin?.nin,
       firstname: this.personalDetailsForm.value?.firstName,
       lastname: this.personalDetailsForm.value?.lastName,
       middleName: this.personalDetailsForm.value?.middleName,
@@ -103,7 +123,7 @@ export class PersonalDetailsComponent implements OnInit {
       bvn:  this.personalDetailsForm.value?.bvn,
       email:  this.personalDetailsForm.value?.email,
       gender:  this.personalDetailsForm.value?.gender,
-      dateOfBirth:  this.personalDetailsForm.value?.dateOfBirth,
+      dateOfBirth: formattedDate ,// this.personalDetailsForm.value?.dateOfBirth,
       placeOfBirth:  this.personalDetailsForm.value?.placeOfBirth,
       religion:  this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
     }

@@ -17,7 +17,8 @@ import {
   PaginationParams,
   NINParameter,
   Verification,
-  filterParams
+  filterParams,
+  Occupation
 } from 'src/app/models/beneficiary/beneficiary';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -158,6 +159,11 @@ export class BeneficiaryService {
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.maritalDetails}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
+  public occupationDetails(data: Occupation): Observable<any> {
+    const body = JSON.stringify(data);
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.occupataion}`, body, { headers: this.interceptor?.customHttpHeaders });
+  }
+
   public getAllBeneficiaries(paginationParams: PaginationParams): Observable<any> {
     const params = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page));
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders, params: params });
@@ -180,7 +186,7 @@ export class BeneficiaryService {
       ?.set('page', String(paginationParams?.page))
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}`, {
       headers: this.interceptor?.customHttpHeaders,
-      params: params
+      // params: params
     });
   }
 
@@ -203,12 +209,14 @@ export class BeneficiaryService {
       ?.set('maritalStatus', String(filterParams?.maritalStatus))
       ?.set('size', String(paginationParams?.size))
       ?.set('page', String(paginationParams?.page))
-      console.log('params>>>', params);
-      console.log('payload>>>', filterParams);
+      // console.log('params>>>', params);
+      // console.log('payload>>>', filterParams);
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getFilteredBeneficiaries}`, {
       headers: this.interceptor?.customHttpHeaders,
       params: params
     });
   }
+
+ 
 
 }

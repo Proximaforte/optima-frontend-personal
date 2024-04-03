@@ -6,6 +6,7 @@ import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { Occupation } from 'src/app/models/beneficiary/beneficiary';
 
 @Component({
   selector: 'app-occupation',
@@ -46,11 +47,39 @@ export class OccupationComponent implements OnInit {
   showEmployed: boolean = false;
   occupationForm!: FormGroup;
   userDetails: any = {};
-  showSpinner:boolean = false;
-  showWelcomeMsg:boolean = false;
-  showStudentsInfo:boolean = false;
-  showCivilServerntsInfo:boolean = false;
-  checked:boolean = false;
+  showSpinner: boolean = false;
+  showWelcomeMsg: boolean = false;
+  showStudentsInfo: boolean = false;
+  showCivilServerntsInfo: boolean = false;
+  checked: boolean = false;
+  showOthers: boolean = false;
+  occupationEnums: Occupation = {
+    phoneNumber: "",
+    type: "",
+    nameOfInstitution: "",
+    matriculationNumber: "",
+    faculty: "",
+    department: "",
+    funding: "",
+    diplomaType: "",
+
+    dateOfFistAppointment: "", //
+    dateOfConfirmation: "", //
+    onTransfer: null,
+    dateOfTransfer: "", //
+    cadre: "",
+    highestQualification: "",
+    gradeLevel: "",
+    onStudyLeave: null,
+    leavePaid: null, //
+    trained: null,
+    trainingType: "",
+    professionalQualifications: [ //
+      ""
+    ],
+    psn: ""
+  }
+
 
   constructor(
     private router: Router,
@@ -63,15 +92,15 @@ export class OccupationComponent implements OnInit {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
 
-    const getMessage:any = sessionStorage.getItem('incomplete');
-    if(getMessage !== null){
+    const getMessage: any = sessionStorage.getItem('incomplete');
+    if (getMessage !== null) {
       this.showWelcomeMsg = true;
-       setTimeout(() => {
+      setTimeout(() => {
         this.showWelcomeMsg = false;
         sessionStorage.removeItem('incomplete');
-       }, 2500);
-    }else{
-       this.showWelcomeMsg = false;
+      }, 2500);
+    } else {
+      this.showWelcomeMsg = false;
     }
   }
 
@@ -85,7 +114,8 @@ export class OccupationComponent implements OnInit {
       this.words.push(this.currentWord.trim());
       this.currentWord = ''; // Clear the input
     }
-    console.log('words array>>>', this.words);
+    // console.log('words array>>>', this.words);
+    this.occupationEnums.professionalQualifications = this.words;
   }
 
   removeWord(word: string) {
@@ -107,20 +137,30 @@ export class OccupationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEmploymentForm(); 
+    this.getEmploymentForm();
   }
 
   getEmploymentForm() {
     this.occupationForm = new FormGroup({
       occupation: new FormControl('', [Validators.required]),
-      nameOfEmployer: new FormControl('', [Validators.required]),
-      employerOfficeAddress: new FormControl('', [Validators.required]),
-      otherSourcesOfIncome: new FormControl('', [Validators.required]),
-      nameOfBusiness: new FormControl('', [Validators.required]),
-      natureOfBusiness: new FormControl('', [Validators.required]),
-      pensionAccount: new FormControl('', [Validators.required]),
-      pensionPaymentQuestion: new FormControl('', [Validators.required])
+      nameOfInstitution: new FormControl('', [Validators.required]),
+      matriculationNumber: new FormControl('', [Validators.required]),
+      faculty: new FormControl('', [Validators.required]),
+      department: new FormControl('', [Validators.required]),
+      funding: new FormControl('', [Validators.required]),
+      diplomaType: new FormControl('', [Validators.required]),
+      others: new FormControl('', [Validators.required]),
+
+      onTransfer: new FormControl('', [Validators.required]),
+      cadre: new FormControl('', [Validators.required]),
+      highestQualification: new FormControl('', [Validators.required]),
+      gradeLevel: new FormControl('', [Validators.required]),
+      onStudyLeave: new FormControl('', [Validators.required]),
+      trained: new FormControl('', [Validators.required]),
+      trainingType: new FormControl('', [Validators.required]),
+      psn: new FormControl('', [Validators.required]),
     })
+
 
     this.occupationForm.get('occupation')?.valueChanges.subscribe({
       next: (value: any) => {
@@ -130,20 +170,99 @@ export class OccupationComponent implements OnInit {
         } else if (value === "Civil servant") {
           this.showCivilServerntsInfo = true;
           this.showStudentsInfo = false;
-        } 
+        }
       }
     })
+
+
+    this.occupationForm.get('diplomaType')?.valueChanges.subscribe({
+      next: (value:any) => {
+        if(value === "Others"){
+          this.showOthers = true;
+        }else{
+          this.showOthers = true;
+        }
+      }
+    })
+  }
+
+  datePipe(event: any, dateVariable: any) {
+    var dateObject = new Date(event);
+    var day = dateObject.getDate();
+    var month = dateObject.getMonth() + 1;
+    var year = dateObject.getFullYear();
+    var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    if (dateVariable === 'dateOfFistAppointment') {
+      this.occupationEnums.dateOfFistAppointment = formattedDate;
+    } else if (dateVariable === 'dateOfConfirmation') {
+      this.occupationEnums.dateOfConfirmation = formattedDate;
+    } else if (dateVariable === 'dateOfTransfer') {
+      this.occupationEnums.dateOfTransfer = formattedDate;
+    }
+  }
+
+  checkBox(event: any, checkVariable: any) {
+    if (checkVariable === 'leavePaid') {
+      this.occupationEnums.leavePaid = event;
+    }
   }
 
 
   submitForm() {
     this.showSpinner = true;
-    // const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
-    this.beneficiaryService.setRouteToDisplay("other details");
-    this.router.navigate(['/home/beneficiary'],{
-      relativeTo: this.route,
-      queryParams: {
-        progress: 'other_details'
+    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const totalPayload = {
+      phoneNumber: getBeneficiaryPhoneNumber === null ? "08149647594" : getBeneficiaryPhoneNumber,
+      type: this.occupationForm.value.occupation,
+      nameOfInstitution: this.occupationForm.value.nameOfInstitution,
+      matriculationNumber: this.occupationForm.value.matriculationNumber,
+      faculty: this.occupationForm.value.faculty,
+      department: this.occupationForm.value.department,
+      funding: this.occupationForm.value.funding,
+      diplomaType: this.occupationForm.value.diplomaType === "Others" ? this.occupationForm.value.others : this.occupationForm.value.diplomaType,
+      dateOfFistAppointment: this.occupationEnums.dateOfFistAppointment,
+      dateOfConfirmation: this.occupationEnums.dateOfConfirmation,
+      onTransfer: this.occupationForm.value.onTransfer === "Yes" ? true : this.occupationForm.value.onTransfer === "No" ? false : null,
+      dateOfTransfer:  this.occupationEnums.dateOfTransfer,
+      cadre: this.occupationForm.value.cadre,
+      highestQualification: this.occupationForm.value.highestQualification,
+      gradeLevel: this.occupationForm.value.gradeLevel,
+      onStudyLeave: this.occupationForm.value.onStudyLeave === "Yes" ? true : this.occupationForm.value.onStudyLeave === "No" ? false : null,
+      leavePaid: this.occupationEnums.leavePaid === null ? false : this.occupationEnums.leavePaid,
+      trained:  this.occupationForm.value.trained === "Yes" ? true : this.occupationForm.value.trained === "No" ? false : null,
+      trainingType: this.occupationForm.value.trainingType,
+      professionalQualifications: this.occupationEnums.professionalQualifications,
+      psn: this.occupationForm.value.psn,
+    }
+    // console.log("totals>>>", totalPayload);
+    this.beneficiaryService.occupationDetails(totalPayload).subscribe({
+      next: (res: any) => {
+        this.showSpinner = false;
+       // console.log("res>>>>", res);
+        this.toast.setSuccessMessage('Beneficiary Occupation data is onboarded succesfully!');
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        this.beneficiaryService.setRouteToDisplay("other details");
+        this.router.navigate(['/home/beneficiary'],{
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'other_details'
+          }
+        })
+      },
+      error: (err: any) => {
+        console.error("err>>>", err);
+        this.showSpinner = false;
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        if (err?.status === 401) {
+          this.auth.agentLogout();
+        }
       }
     })
   }

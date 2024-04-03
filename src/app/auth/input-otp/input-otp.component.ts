@@ -94,7 +94,7 @@ routeToNewPasswords(){
   this.authService.validateOTP({token: this.otpValue, identifier: this.routeParams?.value}).subscribe({
     next: (res: any) => {
       this.showSpinner = false;
-      console.log('res>>>', res);
+     // console.log('res>>>', res);
       this.toast.setSuccessMessage("Valid OTP input");
       this.router.navigate(["/auth/input-new-password"], 
       {

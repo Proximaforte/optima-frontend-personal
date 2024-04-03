@@ -108,7 +108,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
     }
     this.beneficiarySerive.verifyNINOTP(OTPPayload).subscribe({
       next: (res: any) => {
-        console.log('res>>>', res);
+       // console.log('res>>>', res);
         this.toast.setSuccessMessage("Phone number is verified succesfully!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,

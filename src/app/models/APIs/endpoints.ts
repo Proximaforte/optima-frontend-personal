@@ -22,6 +22,7 @@ export const endpoints = {
     employmentDetails: 'api/v1/onboarding/employmentDetails',
     otherDetails: 'api/v1/onboarding/otherDetails',
     maritalDetails: 'api/v1/onboarding/maritalDetails',
+    occupataion: 'api/v1/onboarding/occupationDetails',
 
     //Get All Beneficiaries Onboarded
     getAllBeneficiaries: 'api/v1/beneficiary/getBeneficiariesByLoggedInAgent',
