@@ -61,7 +61,7 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit{
   getBeneficiaryProfileData(){
     this.beneficiaryService.getAllBeneficiaryProfiles(this.ssid).subscribe({
       next: (data: any) => {
-      // console.log('data>>', data?.data?.base64Image); 
+     // console.log('data>>', data); 
        this.profileImage =  `data:image/png;base64,${data?.data?.base64Image}`;
        //https://base64.guru/converter/decode/image
        this.beneficiary = data?.data;  
@@ -89,7 +89,7 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit{
     this.showSpinner = false;
     this.beneficiaryProfile$ = this.beneficiaryService.getBeneficiaryProfile().subscribe({
       next: (profileData: any) => {
-        //console.log('profile>>>', profileData);
+      //  console.log('profile>>>', profileData);
         this.beneficiary = profileData;
       }
     })

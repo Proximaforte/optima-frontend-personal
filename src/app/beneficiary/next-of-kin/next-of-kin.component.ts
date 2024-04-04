@@ -107,7 +107,7 @@ export class NextOfKinComponent implements OnInit {
       lastname: this.nextOfKinForm.value?.lastname,
       relationship: this.nextOfKinForm.value.relationship === 'Others' ? this.nextOfKinForm.value?.specifyRelationship : this.nextOfKinForm.value.relationship,
       nin: this.nextOfKinForm.value?.nin,
-      ssid: this.nextOfKinForm.value?.ssid,
+      nokSsid: this.nextOfKinForm.value?.ssid,
       phoneNumber: getBeneficiaryPhoneNumber,
       email: this.nextOfKinForm.value?.email,
       address: this.sameResidence === true ? this.userDetails?.address : this.nextOfKinForm.value?.address

@@ -219,8 +219,8 @@ export class BeneficiaryService {
     });
   }
 
-  public getAllBeneficiaryProfiles(ssid: any): Observable<any> {
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getBeneficiaryProfile}/${ssid}`, { headers: this.interceptor?.customHttpHeaders });
+  public getAllBeneficiaryProfiles(nokSsid: any): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getBeneficiaryProfile}/${nokSsid}`, { headers: this.interceptor?.customHttpHeaders });
   }
 
   public getFilteredBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {

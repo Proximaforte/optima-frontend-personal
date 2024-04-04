@@ -1292,7 +1292,7 @@ export interface NextOfKin {
     lastname: string;
     relationship: string;
     nin: string;
-    ssid: string;
+    nokSsid: string;
     phoneNumber: string;
     email: string;
     address: string;
@@ -1363,7 +1363,8 @@ export interface BeneficiaryProfile{
          placeOfBirth: any,
          religion: any,
          spouseList: any[],
-         ssid: any,
+         occupation:any,
+         nokSsid: any,
          state: any
 }
 

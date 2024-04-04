@@ -15,7 +15,7 @@
         {{beneficiary.firstname}} {{beneficiary.lastname}}
         <small class="text-sm text-optimaGray font-normal">(beneficiary)</small>
       </div>
-      <div class="text-optimaGray">{{beneficiary.ssid || 'N/A' }}</div>
+      <div class="text-optimaGray">{{beneficiary.nokSsid || 'N/A' }}</div>
     </div>
   </div>
   <!-- *ngIf="showSpinner === true" -->
@@ -95,7 +95,7 @@
           <label class="absolute -top-2 text-label left-4 bg-white text-xs"
             >SSID</label
           >
-          <p class="text-sm font-medium pt-2">{{beneficiary.ssid}}</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.nokSsid}}</p>
         </div>
       </div>
 
@@ -466,7 +466,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >SSID</label
           >
-          <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.ssid  || "N/A"}}</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.nokSsid  || "N/A"}}</p>
         </div>
       </div>
       <!-- 5th Line -->
@@ -540,6 +540,40 @@
         >
         <p class="text-center text-sm font-medium pt-2">{{beneficiary.other?.crimeDescription || "N/A"}}</p>
       </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- OCCUPATION -->
+   <div class="w-[702px] mt-20 ml-8">
+    <div class="border-b">
+      <p class="font-semibold text-2xl pl-6 text-optimaGray">
+        Occupation
+      </p>
+    </div>
+
+    <div>
+      <!-- 1st Line -->
+      <div class="flex justify-between mt-10">
+        <div
+          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+        >
+          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+            >Occupation</label
+          >
+          <p class="text-center text-sm font-medium pt-2">
+            {{beneficiary.occupation || "N/A"}}
+          </p>
+        </div>
+
+        <!-- <div
+        class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Crime Description</label
+        >
+        <p class="text-center text-sm font-medium pt-2">{{beneficiary.other?.crimeDescription || "N/A"}}</p>
+      </div> -->
       </div>
     </div>
   </div>

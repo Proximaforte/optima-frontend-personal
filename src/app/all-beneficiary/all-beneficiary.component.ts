@@ -202,7 +202,7 @@ export class AllBeneficiaryComponent implements OnInit {
     this.router.navigate(['/home/beneficiary-details'], {
       relativeTo: this.route,
       queryParams: {
-        data: beneficiary?.ssid
+        data: beneficiary?.nokSsid
       }
     })
   }
@@ -210,14 +210,24 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
+   // console.log('profile>>', beneficiary);
     sessionStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
-    sessionStorage.setItem('incomplete', "Let's continue from where you've stopped!")
-     if(beneficiary?.formStage === "VERIFY_NIN"){
+    sessionStorage.setItem('incomplete', "Let's continue from where you've stopped!");
+    //OTP_VERIFICATION
+     if(beneficiary?.formStage === "NIN_VERIFICATION" || beneficiary?.formStage === "VERIFICATION"){
       this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
           progress: 'verify_NIN'
+        }
+      })
+     }else if(beneficiary?.formStage === "OTP_VERIFICATION"){
+      this.beneficiaryService.setRouteToDisplay("verification procedure");
+      this.router.navigate(['/home/verification-code'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'enter_verification_code' 
         }
       })
      }else if(beneficiary?.formStage === "PERSONAL_DETAILS"){
@@ -228,7 +238,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'personal_details'
         }
       })
-     }else if(beneficiary?.formStage === "VERIFICATION"){
+     }else if(beneficiary?.formStage === "BIO_VERIFICATION" || beneficiary?.formStage === "VERIFIED"){
       this.beneficiaryService.setRouteToDisplay("verification procedure");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -290,6 +300,14 @@ export class AllBeneficiaryComponent implements OnInit {
         relativeTo: this.route,
         queryParams: {
           progress: 'employment'
+        }
+      })
+     }else if(beneficiary?.formStage === "OCCUPATION_DETAILS"){
+      this.beneficiaryService.setRouteToDisplay("occupation");
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'occupation'
         }
       })
      }else if(beneficiary?.formStage === "OTHER_DETAILS"){
