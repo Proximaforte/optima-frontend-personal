@@ -164,7 +164,7 @@ export class AllBeneficiaryComponent implements OnInit {
     this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService.getFilterParams(),this.paginationParams).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
-        //  console.log('res>>', res?.data);
+        // console.log('res>>', res?.data);
         this.beneficiaries = res?.data?.beneficiaries;
         this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
         if (this.beneficiaries?.length === 0) {  //res?.data?.beneficiaries?.length
