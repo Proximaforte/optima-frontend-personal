@@ -224,12 +224,19 @@ export class AllBeneficiaryComponent implements OnInit {
       })
      }else if(beneficiary?.formStage === "OTP_VERIFICATION"){
       this.beneficiaryService.setRouteToDisplay("verification procedure");
-      this.router.navigate(['/home/verification-code'], {
+      this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'enter_verification_code' 
+          progress: 'verification_procedure'
         }
       })
+      // this.beneficiaryService.setRouteToDisplay("verification procedure");
+      // this.router.navigate(['/home/verification-code'], {
+      //   relativeTo: this.route,
+      //   queryParams: {
+      //     progress: 'enter_verification_code' 
+      //   }
+      // })
      }else if(beneficiary?.formStage === "PERSONAL_DETAILS"){
       this.beneficiaryService.setRouteToDisplay("personal details");
       this.router.navigate(['/home/beneficiary'], {
