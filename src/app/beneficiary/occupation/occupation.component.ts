@@ -22,7 +22,11 @@ export class OccupationComponent implements OnInit {
     "Other Sources of Income e.g farming business etc*"
   ];
   option3: string[] = [
-    "Sponsorship type*", "Self sponsorship", "On scholarship"
+    "Sponsorship type*",
+    "Parents",
+    "Self-Funded",
+    "Scholarship",
+    "Free Government Support / Subsidized Education"
   ];
   option4: string[] = [
     "(For diploma students) Diploma type*", "National Diploma", "School Diploma", "Others"
@@ -259,6 +263,7 @@ export class OccupationComponent implements OnInit {
       error: (err: any) => {
         console.error("err>>>", err);
         this.showSpinner = false;
+        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
