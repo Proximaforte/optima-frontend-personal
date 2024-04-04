@@ -61,17 +61,17 @@ export class IncompleteBeneficiary {
 }
 
 export interface filterParams{
-    crimeType?: string ;
-    currentHealthCondition?: string ;
-    educationFunding?: string ;
-    educationLevel?: string ;
-    filterString?: string;
-    gender?: string ;
-    healthCondition?: string ;
-    houseOwner?: string;
-    inSchool?: string;
-    lga?: string;
-    maritalStatus?: string;
+    crimeType?: string | any ;
+    currentHealthCondition?: string | any ;
+    educationFunding?: string | any;
+    educationLevel?: string | any;
+    filterString?: string | any;
+    gender?: string | any;
+    healthCondition?: string | any;
+    houseOwner?: string | any;
+    inSchool?: string | any;
+    lga?: string | any;
+    maritalStatus?: string | any;
 }
 
 

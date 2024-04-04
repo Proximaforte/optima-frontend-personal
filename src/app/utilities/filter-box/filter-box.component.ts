@@ -164,7 +164,7 @@ export class FilterBoxComponent implements OnInit{
     this.beneficiaryService.setFilterParams(this.filterParam.value);
    this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService?.getFilterParams(),this.paginationParams).subscribe({
     next: (res: any) => {
-      console.log('filtered response<<<>>>', res);
+    //  console.log('filtered response<<<>>>', res);
       this.toast.setSuccessMessage("Data filtered succesfully!");
       this.snackbar.openFromComponent(ToastsComponent, {
         duration: 4000,

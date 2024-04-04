@@ -35,10 +35,11 @@ export class BeneficiaryService {
   routeObservable$: ReplaySubject<any> = new ReplaySubject<any>();
   beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
   filterParams!: filterParams;
-  pagination: PaginationParams ={
+  pagination: PaginationParams = {
     size: 10,
     page: 1
   }
+  params: any
 
   constructor(
     private http: HttpClient,
@@ -101,7 +102,7 @@ export class BeneficiaryService {
 
   //api/v1/otp/agent/generate/89989
 
-  public verifyNINOTP(Verification: Verification): Observable<any> {
+  public verifyNINOTP(Verification: Verification | any): Observable<any> {
     const body = JSON.stringify(Verification);
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.verificationOTP}`, body, { headers: this.interceptor?.customHttpHeaders })
     // return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.verifyOTP}/${otp}`, { headers: this.interceptor?.customHttpHeaders})
@@ -174,23 +175,47 @@ export class BeneficiaryService {
   }
 
   public getAllIncompleteBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
-    const params = new HttpParams()
-      ?.set('crimeType', filterParams?.crimeType)
-      ?.set('currentHealthCondition', filterParams?.currentHealthCondition)
-      ?.set('educationFunding', filterParams?.educationFunding)
-      ?.set('educationLevel', filterParams?.educationLevel)
-      ?.set('filterString', filterParams?.filterString)
-      ?.set('gender', filterParams?.gender)
-      ?.set('healthCondition', filterParams?.healthCondition)
-      ?.set('houseOwner', filterParams?.houseOwner)
-      ?.set('inSchool', filterParams?.inSchool)
-      ?.set('lga', filterParams?.lga)
-      ?.set('maritalStatus', filterParams?.maritalStatus)
-      ?.set('size', String(paginationParams?.size))
-      ?.set('page', String(paginationParams?.page))
+
+    const params: any = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page))
+    let crimeType: any = filterParams?.crimeType && filterParams.crimeType.length > 0 ? String(filterParams.crimeType) : null
+    let currentHealthCondition: any = filterParams?.currentHealthCondition && filterParams.currentHealthCondition.length > 0 ? String(filterParams.currentHealthCondition) : null
+    let educationFunding: any = filterParams?.educationFunding && filterParams.educationFunding.length > 0 ? String(filterParams.educationFunding) : null
+    let educationLevel: any = filterParams?.educationLevel && filterParams.educationLevel.length > 0 ? String(filterParams.educationLevel) : null
+    let filterString: any = filterParams?.filterString && filterParams.filterString.length > 0 ? String(filterParams.filterString) : null
+    let gender: any = filterParams?.gender && filterParams.gender.length > 0 ? String(filterParams.gender) : null
+    let healthCondition: any = filterParams?.healthCondition && filterParams.healthCondition.length > 0 ? String(filterParams.healthCondition) : null
+    let houseOwner: any = filterParams?.houseOwner && filterParams.houseOwner.length > 0 ? String(filterParams.houseOwner) : null
+    let inSchool: any = filterParams?.inSchool && filterParams.inSchool.length > 0 ? String(filterParams.inSchool) : null
+    let lga: any = filterParams?.lga && filterParams.lga.length > 0 ? String(filterParams.lga) : null
+    let maritalStatus: any = filterParams?.maritalStatus && filterParams.maritalStatus.length > 0 ? String(filterParams.maritalStatus) : null
+
+    if (crimeType !== null) {
+      params.set('crimeType', crimeType);
+    } else if (currentHealthCondition !== null) {
+      params.set('currentHealthCondition', currentHealthCondition);
+    } else if (educationFunding !== null) {
+      params.set('educationFunding', educationFunding);
+    } else if (educationLevel !== null) {
+      params.set('educationLevel', educationLevel);
+    } else if (filterString !== null) {
+      params.set('filterString', filterString);
+    } else if (gender !== null) {
+      params.set('gender', gender);
+    } else if (healthCondition !== null) {
+      params.set('healthCondition', healthCondition);
+    } else if (houseOwner !== null) {
+      params.set('houseOwner', houseOwner);
+    } else if (inSchool !== null) {
+      params.set('inSchool', inSchool);
+    } else if (lga !== null) {
+      params.set('lga', lga);
+    } else if (maritalStatus !== null) {
+      params.set('maritalStatus', maritalStatus);
+    }
+  //  console.log('params>>', params);
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}`, {
       headers: this.interceptor?.customHttpHeaders,
-      // params: params
+      params: params
     });
   }
 
@@ -199,28 +224,49 @@ export class BeneficiaryService {
   }
 
   public getFilteredBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
-    const params = new HttpParams()
-      ?.set('crimeType', String(filterParams?.crimeType))
-      ?.set('currentHealthCondition', String(filterParams?.currentHealthCondition))
-      ?.set('educationFunding', String(filterParams?.educationFunding))
-      ?.set('educationLevel', String(filterParams?.educationLevel))
-      ?.set('filterString', String(filterParams?.filterString))
-      ?.set('gender', String(filterParams?.gender))
-      ?.set('healthCondition', String(filterParams?.healthCondition))
-      ?.set('houseOwner', String(filterParams?.houseOwner))
-      ?.set('inSchool', String(filterParams?.inSchool))
-      ?.set('lga', String(filterParams?.lga))
-      ?.set('maritalStatus', String(filterParams?.maritalStatus))
-      ?.set('size', String(paginationParams?.size))
-      ?.set('page', String(paginationParams?.page))
-      // console.log('params>>>', params);
-      // console.log('payload>>>', filterParams);
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getFilteredBeneficiaries}`, {
+    const params: any = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page))
+    let crimeType: any = filterParams?.crimeType && filterParams.crimeType.length > 0 ? String(filterParams.crimeType) : null
+    let currentHealthCondition: any = filterParams?.currentHealthCondition && filterParams.currentHealthCondition.length > 0 ? String(filterParams.currentHealthCondition) : null
+    let educationFunding: any = filterParams?.educationFunding && filterParams.educationFunding.length > 0 ? String(filterParams.educationFunding) : null
+    let educationLevel: any = filterParams?.educationLevel && filterParams.educationLevel.length > 0 ? String(filterParams.educationLevel) : null
+    let filterString: any = filterParams?.filterString && filterParams.filterString.length > 0 ? String(filterParams.filterString) : null
+    let gender: any = filterParams?.gender && filterParams.gender.length > 0 ? String(filterParams.gender) : null
+    let healthCondition: any = filterParams?.healthCondition && filterParams.healthCondition.length > 0 ? String(filterParams.healthCondition) : null
+    let houseOwner: any = filterParams?.houseOwner && filterParams.houseOwner.length > 0 ? String(filterParams.houseOwner) : null
+    let inSchool: any = filterParams?.inSchool && filterParams.inSchool.length > 0 ? String(filterParams.inSchool) : null
+    let lga: any = filterParams?.lga && filterParams.lga.length > 0 ? String(filterParams.lga) : null
+    let maritalStatus: any = filterParams?.maritalStatus && filterParams.maritalStatus.length > 0 ? String(filterParams.maritalStatus) : null
+
+    if (crimeType !== null) {
+      params.set('crimeType', crimeType);
+    } else if (currentHealthCondition !== null) {
+      params.set('currentHealthCondition', currentHealthCondition);
+    } else if (educationFunding !== null) {
+      params.set('educationFunding', educationFunding);
+    } else if (educationLevel !== null) {
+      params.set('educationLevel', educationLevel);
+    } else if (filterString !== null) {
+      params.set('filterString', filterString);
+    } else if (gender !== null) {
+      params.set('gender', gender);
+    } else if (healthCondition !== null) {
+      params.set('healthCondition', healthCondition);
+    } else if (houseOwner !== null) {
+      params.set('houseOwner', houseOwner);
+    } else if (inSchool !== null) {
+      params.set('inSchool', inSchool);
+    } else if (lga !== null) {
+      params.set('lga', lga);
+    } else if (maritalStatus !== null) {
+      params.set('maritalStatus', maritalStatus);
+    }
+    //console.log('params>>', params);
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, {
       headers: this.interceptor?.customHttpHeaders,
       params: params
     });
   }
 
- 
+
 
 }

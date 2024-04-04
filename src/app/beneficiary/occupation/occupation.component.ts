@@ -186,18 +186,22 @@ export class OccupationComponent implements OnInit {
     })
   }
 
+  //`${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;
   datePipe(event: any, dateVariable: any) {
     var dateObject = new Date(event);
     var day = dateObject.getDate();
     var month = dateObject.getMonth() + 1;
     var year = dateObject.getFullYear();
     var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    var letDate = formattedDate.split('/');
+    var formattedDates = `${parseInt(letDate[0], 10)}/${parseInt(letDate[1], 10)}/${letDate[2]}`;
+    //console.log('formatted date>>', formattedDates); dd/mm/yyyy format
     if (dateVariable === 'dateOfFistAppointment') {
-      this.occupationEnums.dateOfFistAppointment = formattedDate;
+      this.occupationEnums.dateOfFistAppointment = formattedDates;
     } else if (dateVariable === 'dateOfConfirmation') {
-      this.occupationEnums.dateOfConfirmation = formattedDate;
+      this.occupationEnums.dateOfConfirmation = formattedDates;
     } else if (dateVariable === 'dateOfTransfer') {
-      this.occupationEnums.dateOfTransfer = formattedDate;
+      this.occupationEnums.dateOfTransfer = formattedDates;
     }
   }
 

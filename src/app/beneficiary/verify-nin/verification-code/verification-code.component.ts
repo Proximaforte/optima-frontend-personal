@@ -23,6 +23,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
   showBtn: boolean = false;
   showWelcomeMsg: boolean = false;
   maskedPhoneNumber: string = '';
+  showSpinner:boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -96,6 +97,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
 
   submit() {
     //console.log("merged>>>", this.otpValue);
+    this.showSpinner = true;
     const getBeneficiaryPhoneNumber: any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const getNIN: any = sessionStorage.getItem('nin');
     const parseNIN = JSON.parse(getNIN);
@@ -109,6 +111,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
     this.beneficiarySerive.verifyNINOTP(OTPPayload).subscribe({
       next: (res: any) => {
        // console.log('res>>>', res);
+       this.showSpinner = false;
         this.toast.setSuccessMessage("Phone number is verified succesfully!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
@@ -123,6 +126,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
       },
       error: (err: any) => {
         console.error('err>>>', err);
+        this.showSpinner = false;
         this.toast.setSuccessMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText);
         this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText);
         this.snackbar.openFromComponent(ToastsComponent, {
