@@ -80,7 +80,7 @@ export class BeneficiaryTableComponent implements OnInit {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        if(err?.status === 401) this.authService.agentLogout();
+      //  if(err?.status === 401) this.authService.agentLogout();
       }
     })
   }
@@ -103,7 +103,7 @@ export class BeneficiaryTableComponent implements OnInit {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        if(err?.status === 401) this.authService.agentLogout();
+       // if(err?.status === 401) this.authService.agentLogout();
       }
     })
   }
