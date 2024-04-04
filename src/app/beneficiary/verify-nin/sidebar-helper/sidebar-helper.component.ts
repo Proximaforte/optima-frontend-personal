@@ -11,6 +11,7 @@ export class SidebarHelperComponent {
   beneficiaryItems: String[] | any = [
     "verify beneficiary nin",
     "personal details",
+    "verification procedure",
     "residential details",
     "marital info",
     "education",
@@ -18,6 +19,7 @@ export class SidebarHelperComponent {
     "financial",
     "next of kin",
     "employment",
+    "occupation",
     "other details"
   ]
   selectedItemIndex: number | null = null;
