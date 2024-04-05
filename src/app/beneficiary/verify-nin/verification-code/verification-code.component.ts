@@ -24,6 +24,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
   showWelcomeMsg: boolean = false;
   maskedPhoneNumber: string = '';
   showSpinner:boolean = false;
+  showVerificationStepper: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -47,6 +48,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
     let maskedPhoneNumber = getBeneficiaryNumber?.replace(/\d(?=\d{4})/g, '*'); // Replace all but the last 4 digits with '*'
     maskedPhoneNumber = maskedPhoneNumber?.slice(0, -2) + getBeneficiaryNumber?.slice(-2);
     this.maskedPhoneNumber = maskedPhoneNumber;
+/////////////////////////////////////////////////////////////////////////
 
   }
 
@@ -75,6 +77,13 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.startTimer();
+
+    let checkVerified = sessionStorage.getItem('verification');
+    if(checkVerified === null){
+     this.showVerificationStepper = true;
+    }else{
+     this.showVerificationStepper = false;
+    }
   }
 
 
@@ -123,6 +132,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
             progress: "setup_biometrics",
           }
         });
+        sessionStorage.removeItem('verification');
       },
       error: (err: any) => {
         console.error('err>>>', err);

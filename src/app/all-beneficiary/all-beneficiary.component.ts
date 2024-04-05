@@ -229,14 +229,6 @@ export class AllBeneficiaryComponent implements OnInit {
         }
       })
     } else if (beneficiary?.formStage === "NIN_VERIFICATION") {
-      this.beneficiaryService.setRouteToDisplay("verification procedure");
-      this.router.navigate(['/home/beneficiary'], {
-        relativeTo: this.route,
-        queryParams: {
-          progress: 'enter_verification_code'
-        }
-      })
-    } else if (beneficiary?.formStage === "OTP_VERIFICATION") {
       this.beneficiaryService.setRouteToDisplay("personal details");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -244,8 +236,18 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'personal_details'
         }
       })
+    } else if (beneficiary?.formStage === "OTP_VERIFICATION") {
+      this.beneficiaryService.setRouteToDisplay("biometrics");
+      sessionStorage.setItem('biometrics', 'biometrics');
+      this.router.navigate(['/home/setup-biometrics'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'finger_capture_done'
+        }
+      })
     } else if (beneficiary?.formStage === "PERSONAL_DETAILS" || beneficiary?.formStage === "VERIFIED") {
       this.beneficiaryService.setRouteToDisplay("verification procedure");
+      sessionStorage.setItem('verification', 'verification');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {

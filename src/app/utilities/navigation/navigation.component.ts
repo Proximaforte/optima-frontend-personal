@@ -101,6 +101,7 @@ export class NavigationComponent {
           progress: 'verify_NIN'
         }
       });
+      sessionStorage.removeItem('verification');
       setTimeout(() => location?.reload(), 300);
     } else if (item?.name === "dashboard") {
       this.router.navigate(["/home/dashboard"], { relativeTo: this.route });

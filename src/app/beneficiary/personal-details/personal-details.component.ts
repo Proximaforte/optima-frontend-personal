@@ -141,7 +141,7 @@ export class PersonalDetailsComponent implements OnInit {
 
           this.beneficiaryService.generateOTP(this.personalDetailsForm.get('phoneNumber')?.value).subscribe({
             next: (res: any) => {
-              console.log('res>>>', res);
+             // console.log('res>>>', res);
             },
             error: (err: any) => {
               console.error("err>>>", err);
