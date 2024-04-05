@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { ToastsComponent } from '../../toasts/toasts.component';
 
 @Component({
   selector: 'app-successful-beneficiary-onboarding',
@@ -7,14 +12,34 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./successful-beneficiary-onboarding.component.scss']
 })
 export class SuccessfulBeneficiaryOnboardingComponent {
-
   successMark: string = "/assets/images/congratulationz.jpg";
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private beneficiaryService: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
+    private auth: AuthService
   ){}
 
   routeBeneficiaryTable(){
-    this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
+    const beneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    this.beneficiaryService.onboardingSubmitted(beneficiaryPhoneNumber).subscribe({
+      next: (res:any) => {
+       // console.log('res>>>', res);
+        this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
+      },
+      error: (err: any) => {
+        console.log('err>>>', err);
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        if(err?.status === 401){
+        this.auth.agentLogout();
+        }
+      }
+    })
   }
 }

@@ -169,6 +169,10 @@ export class BeneficiaryService {
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.occupataion}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
+  public onboardingSubmitted(phoneNumber: string): Observable<any> {
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.onboardingSuccesfull}/${phoneNumber}`, { headers: this.interceptor?.customHttpHeaders });
+  }
+
   public getAllBeneficiaries(paginationParams: PaginationParams): Observable<any> {
     const params = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page));
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, { headers: this.interceptor?.customHttpHeaders, params: params });

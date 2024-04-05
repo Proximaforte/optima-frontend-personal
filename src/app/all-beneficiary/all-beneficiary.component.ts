@@ -326,15 +326,25 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'other_details'
         }
       })
-    } else if (beneficiary?.formStage === "OTHER_DETAILS" || beneficiary?.formStage === "COMPLETED") {
-      this.router.navigate(['/home/all-beneficiary'], {
-        relativeTo: this.route,
-      });
-      this.toast.setSuccessMessage("Beneficiary's onboarding has been completed succesfully!");
-      this.snackbar.openFromComponent(ToastsComponent, {
-        duration: 4000,
-        verticalPosition: 'bottom',
-      });
+    } else if (beneficiary?.formStage === "OTHER_DETAILS") {
+      //|| beneficiary?.formStage === "COMPLETED"
+      this.beneficiaryService.onboardingSubmitted(beneficiary?.phoneNumber)?.subscribe({
+        next: (elem: any) => {
+         // console.log('res>>', elem);
+          this.router.navigate(['/home/all-beneficiary'], {
+            relativeTo: this.route,
+          });
+          this.toast.setSuccessMessage("Beneficiary's onboarding has been completed succesfully!");
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+        },
+        error: (err:any) => {
+          console.error('err>>>', err);
+        }
+      })
+     
     }
   }
 
