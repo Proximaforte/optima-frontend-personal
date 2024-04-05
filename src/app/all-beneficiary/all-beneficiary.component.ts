@@ -120,13 +120,13 @@ export class AllBeneficiaryComponent implements OnInit {
   //   // this.loadData();
   // }
 
-  routeToOnboarding(){
+  routeToOnboarding() {
     this.router.navigateByUrl('/home/beneficiary');
   }
 
   getAllIncompleteBeneficiaries() {
     this.showSpinner = true;
-    this.beneficiaryService.getAllIncompleteBeneficiaries(this.beneficiaryService.getFilterParams(),this.paginationParams).subscribe({
+    this.beneficiaryService.getAllIncompleteBeneficiaries(this.beneficiaryService.getFilterParams(), this.paginationParams).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
         this.inCompleteBeneficiaries = res?.data?.beneficiaries;
@@ -146,7 +146,7 @@ export class AllBeneficiaryComponent implements OnInit {
         console.error('err>>>', err);
         this.showSpinner = false;
         this.showNoData = true;
-        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText ==='Unknown Error' ? 'Network Error': err?.statusText  || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText === 'Unknown Error' ? 'Network Error' : err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
@@ -161,7 +161,7 @@ export class AllBeneficiaryComponent implements OnInit {
 
   getAllBeneficiaries() {
     this.showSpinner = true;
-    this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService.getFilterParams(),this.paginationParams).subscribe({
+    this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService.getFilterParams(), this.paginationParams).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
         // console.log('res>>', res?.data);
@@ -178,7 +178,7 @@ export class AllBeneficiaryComponent implements OnInit {
         console.error('err>>>', err);
         this.showSpinner = false;
         this.showNoData = true;
-        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText ==='Unknown Error' ? 'Network Error': err?.statusText  || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText === 'Unknown Error' ? 'Network Error' : err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
@@ -210,11 +210,17 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
-   // console.log('profile>>', beneficiary);
+    //console.log('profile>>', beneficiary);
     sessionStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
     sessionStorage.setItem('incomplete', "Let's continue from where you've stopped!");
-    //OTP_VERIFICATION
-     if(beneficiary?.formStage === "NIN_VERIFICATION" || beneficiary?.formStage === "VERIFICATION"){
+    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
+      next: (details:any) => {
+        const stringedData = JSON.stringify(details?.data);
+        sessionStorage.setItem('NINDetails', stringedData);
+      }
+    })
+ 
+    if (beneficiary?.formStage === "VERIFICATION") {
       this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -222,22 +228,15 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'verify_NIN'
         }
       })
-     }else if(beneficiary?.formStage === "OTP_VERIFICATION"){
+    } else if (beneficiary?.formStage === "NIN_VERIFICATION") {
       this.beneficiaryService.setRouteToDisplay("verification procedure");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'verification_procedure'
+          progress: 'enter_verification_code'
         }
       })
-      // this.beneficiaryService.setRouteToDisplay("verification procedure");
-      // this.router.navigate(['/home/verification-code'], {
-      //   relativeTo: this.route,
-      //   queryParams: {
-      //     progress: 'enter_verification_code' 
-      //   }
-      // })
-     }else if(beneficiary?.formStage === "PERSONAL_DETAILS"){
+    } else if (beneficiary?.formStage === "OTP_VERIFICATION") {
       this.beneficiaryService.setRouteToDisplay("personal details");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -245,7 +244,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'personal_details'
         }
       })
-     }else if(beneficiary?.formStage === "BIO_VERIFICATION" || beneficiary?.formStage === "VERIFIED"){
+    } else if (beneficiary?.formStage === "PERSONAL_DETAILS" || beneficiary?.formStage === "VERIFIED") {
       this.beneficiaryService.setRouteToDisplay("verification procedure");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -253,7 +252,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'verification_procedure'
         }
       })
-     }else if(beneficiary?.formStage === "ADDRESS_DETAILS"){
+    } else if (beneficiary?.formStage === "BIO_VERIFICATION" || beneficiary?.formStage === "OTP_VERIFICATION") {
       this.beneficiaryService.setRouteToDisplay("residential details");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -261,7 +260,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'residential_details'
         }
       })
-     }else if(beneficiary?.formStage === "MARITAL_DETAILS"){
+    } else if (beneficiary?.formStage === "ADDRESS_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("marital info");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -269,7 +268,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'marital_info'
         }
       })
-     }else if(beneficiary?.formStage === "EDUCATION_DETAILS"){
+    } else if (beneficiary?.formStage === "MARITAL_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("education");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -277,7 +276,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'education'
         }
       })
-     }else if(beneficiary?.formStage === "HEALTH_DETAILS"){
+    } else if (beneficiary?.formStage === "EDUCATION_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("health");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -285,7 +284,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'health'
         }
       })
-     }else if(beneficiary?.formStage === "FINANCIAL_DETAILS"){
+    } else if (beneficiary?.formStage === "HEALTH_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("financial");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -293,7 +292,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'financial'
         }
       })
-     }else if(beneficiary?.formStage === "NEXT_OF_KIN"){
+    } else if (beneficiary?.formStage === "FINANCIAL_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("next of kin");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -301,7 +300,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'next_of_kin'
         }
       })
-     }else if(beneficiary?.formStage === "EMPLOYMENT_DETAILS"){
+    } else if (beneficiary?.formStage === "NEXT_OF_KIN") {
       this.beneficiaryService.setRouteToDisplay("employment");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -309,7 +308,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'employment'
         }
       })
-     }else if(beneficiary?.formStage === "OCCUPATION_DETAILS"){
+    } else if (beneficiary?.formStage === "EMPLOYMENT_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("occupation");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -317,7 +316,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'occupation'
         }
       })
-     }else if(beneficiary?.formStage === "OTHER_DETAILS"){
+    } else if (beneficiary?.formStage === "OCCUPATION_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("other details");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -325,7 +324,16 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'other_details'
         }
       })
-     }
+    } else if (beneficiary?.formStage === "OTHER_DETAILS" || beneficiary?.formStage === "COMPLETED") {
+      this.router.navigate(['/home/all-beneficiary'], {
+        relativeTo: this.route,
+      });
+      this.toast.setSuccessMessage("Beneficiary's onboarding has been completed succesfully!");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+    }
   }
 
   nextPage() {
