@@ -15,7 +15,7 @@
         {{beneficiary.firstname}} {{beneficiary.lastname}}
         <small class="text-sm text-optimaGray font-normal">(beneficiary)</small>
       </div>
-      <div class="text-optimaGray">{{beneficiary.nokSsid || 'N/A' }}</div>
+      <div class="text-optimaGray">{{beneficiary.ssid || 'N/A' }}</div>
     </div>
   </div>
   <!-- *ngIf="showSpinner === true" -->
@@ -95,7 +95,7 @@
           <label class="absolute -top-2 text-label left-4 bg-white text-xs"
             >SSID</label
           >
-          <p class="text-sm font-medium pt-2">{{beneficiary.nokSsid}}</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.ssid}}</p>
         </div>
       </div>
 
@@ -352,19 +352,19 @@
           class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
         >
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Marital Status</label
+            >Bread Winner</label
           >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.maritalStatus  || "N/A"}}</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.financial?.breadwinner === true ? "Yes" : "No"  || "N/A"}}</p>
         </div>
 
         <div
           class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
         >
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Number of Spouse(s)</label
+            >Monthly Income</label
           >
           <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.spouseList.length  || "N/A"}}
+            {{beneficiary.financial?.monthlyIncome  || "N/A"}}
           </p>
         </div>
       </div>
@@ -375,10 +375,10 @@
           class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
         >
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Number of Child(ren)</label
+            >Monthly Expenses</label
           >
           <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.childList.length  || "N/A"}}
+            {{beneficiary.financial?.monthlyExpenses  || "N/A"}}
           </p>
         </div>
       </div>
@@ -466,7 +466,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >SSID</label
           >
-          <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.nokSsid  || "N/A"}}</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.ssid  || "N/A"}}</p>
         </div>
       </div>
       <!-- 5th Line -->

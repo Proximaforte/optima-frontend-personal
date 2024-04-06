@@ -202,7 +202,7 @@ export class AllBeneficiaryComponent implements OnInit {
     this.router.navigate(['/home/beneficiary-details'], {
       relativeTo: this.route,
       queryParams: {
-        data: beneficiary?.nokSsid
+        data: beneficiary?.ssid
       }
     })
   }
