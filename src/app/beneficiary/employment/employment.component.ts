@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 })
 export class EmploymentComponent implements OnInit {
 
-  options: string[] = [
+  options: string[] | any = [
     "Emploment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-employed", "Retired"
   ];
   option2: string[] = [
@@ -56,6 +56,14 @@ export class EmploymentComponent implements OnInit {
     }else{
        this.showWelcomeMsg = false;
     }
+  }
+
+  getDropdownItems(){
+    this.beneficiaryService.getEmploymentDropdown().subscribe({
+      next: (item: any) => {
+        this.options = new Set(["Emploment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-employed", "Retired"].concat(item.data));
+      }
+    })
   }
 
 

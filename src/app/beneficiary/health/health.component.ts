@@ -11,21 +11,18 @@ import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.ser
 })
 export class HealthComponent implements OnInit {
 
-  options: string[] = [
+  options: string[] | any  = [
     "Current health condition*",  "Perfect Health",  "Minor Health Concerns", "Major Health Concerns"
   ]
 
-  ailments: string[] = ["Are you currently suffering from any of the following?*",
-    "High Blood Pressure", "Low Blood Pressure", "Diabetes", "Asthma", "Eye Issues", "Ear Issues","Heart Issues", "Kidney Issues","Others", "None of the above, Others"
+  ailments: string[] | any = ["Are you currently suffering from any of the following?*","High Blood Pressure", "Low Blood Pressure", "Diabetes", "Asthma", "Eye Issues", "Ear Issues","Heart Issues", "Kidney Issues","Others", "None of the above, Others"
   ]
 
-  hmo: string[] = ["Do you have an HMO?*","yes", "no"]
+  hmo: string[] | any = ["Do you have an HMO?*","yes", "no"]
 
-  optionz: string[] = ["Are you currently receiving treatment?*","yes", "no"]
+  optionz: string[] | any = ["Are you currently receiving treatment?*","yes", "no"]
 
-  fundingOptions: string[] = [
-    "Source of Funding*",  "Parents", "Self-Funded", "Scholarship", "Free Government Support / Subsidized Education"
-  ]
+
 
   healthForm!:FormGroup;
   showSpecifyAiment: boolean = false;
@@ -35,7 +32,7 @@ export class HealthComponent implements OnInit {
   showWelcomeMsg:boolean = false;
 
   constructor(
-    private router: Router, private route: ActivatedRoute,
+    private router: Router, private route: ActivatedRoute, private beneficiaryService: BeneficiaryService
   ){
     const getMessage:any = sessionStorage.getItem('incomplete');
     if(getMessage !== null){
@@ -89,8 +86,25 @@ export class HealthComponent implements OnInit {
     });
   }
 
+
+  getHealthConditions(){
+    this.beneficiaryService.getHealthCondtionsDropdown().subscribe({
+      next: (item: any) => {
+        this.options = new Set([ "Current health condition*",  "Perfect Health",  "Minor Health Concerns", "Major Health Concerns"].concat(item.data));
+      }
+    })
+
+
+    this.beneficiaryService.getHealthAilmentsDropdown().subscribe({
+      next: (item: any) => {
+        this.ailments = new Set(["Are you currently suffering from any of the following?*","High Blood Pressure", "Low Blood Pressure", "Diabetes", "Asthma", "Eye Issues", "Ear Issues","Heart Issues", "Kidney Issues","Others", "None of the above, Others"].concat(item.data));
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.getHealthForm();
+    this.getHealthConditions();
   }
 
 

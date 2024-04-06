@@ -14,8 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./other-details.component.scss']
 })
 export class OtherDetailsComponent implements OnInit {
-  options: string[] = ["If yes, for what offence?*", "Theft", "Assault", "Drug", "Fraud", "Drug-related offenses", "Traffic violation", "Others"];
-  option2:  string[] = ["what is your regular means of transportation?*", "Own car", "Public transport", "Okada", "Rail"];
+  options: string[] | any = ["If yes, for what offence?*", "Theft", "Assault", "Drug", "Fraud", "Drug-related offenses", "Traffic violation", "Others"];
+  option2:  string[] | any = ["what is your regular means of transportation?*", "Own car", "Public transport", "Okada", "Rail"];
   checked1:boolean | any;
   checked2:boolean | any;
   othersForm!: FormGroup;
@@ -86,6 +86,21 @@ export class OtherDetailsComponent implements OnInit {
         }else{
           this.disableBtn = false;
         }
+      }
+    })
+  }
+
+  getDropdownItems(){
+    this.beneficiaryService.getTransportDropdown().subscribe({
+      next: (item: any) => {
+        this.option2 = new Set(["what is your regular means of transportation?*", "Own car", "Public transport", "Okada", "Rail"].concat(item.data));
+      }
+    })
+
+
+    this.beneficiaryService.getCriminalTypesDropdown().subscribe({
+      next: (item: any) => {
+        this.options = new Set(["If yes, for what offence?*", "Theft", "Assault", "Drug", "Fraud", "Drug-related offenses", "Traffic violation", "Others"].concat(item.data));
       }
     })
   }

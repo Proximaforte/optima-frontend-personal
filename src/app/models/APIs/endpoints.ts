@@ -29,7 +29,24 @@ export const endpoints = {
     getAllBeneficiaries: 'api/v1/beneficiary/getBeneficiariesByLoggedInAgent',
     getBeneficiaryProfile: 'api/v1/beneficiary/getBeneficiary',
     getIncompleteBeneficiaries: 'api/v1/beneficiary/getIncompleteOnboardedBeneficiaries',
-    getFilteredBeneficiaries: 'api/v1/beneficiary/getFilteredBeneficiaries'
+    getFilteredBeneficiaries: 'api/v1/beneficiary/getFilteredBeneficiaries',
+
+
+    //enums
+
+    religion: 'api/v1/enums/religion',
+    education: 'api/v1/enums/educationLevels',
+    educationSponsor: 'api/v1/enums/educationFunding',
+    healthConditions: 'api/v1/enums/healthConditions',
+    healthAilments: 'api/v1/enums/healthAilments',
+    moneyRange: 'api/v1/enums/moneyRange',
+    aidType: 'api/v1/enums/aidType',
+    relationship: 'api/v1/enums/relationship',
+    employment: 'api/v1/enums/employmentStatus',
+    diplomaTypes: 'api/v1/enums/diplomaTypes',
+    cadres: 'api/v1/enums/cadres',
+    transportTypes: 'api/v1/enums/transportMeans',
+    criminalTypes: 'api/v1/enums/crimeType'
 }
 
 export interface ErrorMessage{

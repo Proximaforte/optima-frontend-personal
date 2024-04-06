@@ -20,11 +20,11 @@ export class FinancialComponent implements OnInit{
     "Are you the bread winner of the household?*",  "yes",  "no"
   ]
 
-  option2: string[] = [
+  option2: string[] | any = [
     "Average amount spent monthly by household*",  "0 - 50K",  "50K - 100K",  "100K - 250K", "250K - 500K",  "500K - 1M",  "1M & above", "I don't know"
   ]
 
-  option4: string[] = [
+  option4: string[] |  any = [
     "What is your monthly household income*", "0 - 50K",  "50K - 100K",  "100K - 250K", "250K - 500K",  "500K - 1M",  "1M & above", "I don't know"
   ]
 
@@ -32,7 +32,7 @@ export class FinancialComponent implements OnInit{
     "Have you received financial aid before*",  "yes",  "no"
   ]
 
-  option5: string[] = [
+  option5: string[] | any = [
     "If yes, please specify*",  "Education",  "Medical",  "Financial",  "Transportation", "None of the above, others"
   ]
   showOthers: boolean = false;
@@ -62,11 +62,25 @@ export class FinancialComponent implements OnInit{
      }
   }
 
-   
+   getDropdownItems(){
+    this.beneficiaryService.getMoneyRangeDropdown().subscribe({
+      next: (item: any) => {
+        this.option2 = new Set([ "Average amount spent monthly by household*",  "0 - 50K",  "50K - 100K",  "100K - 250K", "250K - 500K",  "500K - 1M",  "1M & above", "I don't know"].concat(item.data));
+        this.option4 = new Set(["What is your monthly household income*", "0 - 50K",  "50K - 100K",  "100K - 250K", "250K - 500K",  "500K - 1M",  "1M & above", "I don't know"].concat(item.data));
+      }
+    })
+
+    this.beneficiaryService.getAideDropdown().subscribe({
+      next: (item: any) => {
+        this.option5 = new Set(["If yes, please specify*",  "Education",  "Medical",  "Financial",  "Transportation", "None of the above, others"].concat(item.data));
+      }
+    })
+   }
 
 
   ngOnInit(): void {
     this.getFinancialForm();
+    this.getDropdownItems();
   }
 
   getFinancialForm(){

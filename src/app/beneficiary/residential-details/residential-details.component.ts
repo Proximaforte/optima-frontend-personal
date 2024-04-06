@@ -57,7 +57,7 @@ export class ResidentialDetailsComponent implements OnInit {
   }
 
   selectState(value: any){
-    console.log("selected state>>", this.selectedState);
+   // console.log("selected state>>", this.selectedState);
   }
 
   residencyForm(){

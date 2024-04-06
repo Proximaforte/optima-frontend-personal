@@ -14,11 +14,11 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 })
 export class EducationComponent implements OnInit {
 
-  options: string[] = [
+  options: string[] | any = [
     "Level of Education*","SSCE", "OND", "HND", "B.Sc", "B.Tech", "B.Eng", "MSc", "Phd","Others", "None of the above, others"
   ]
 
-  fundingOptions: string[] = [
+  fundingOptions: string[] |any = [
     "Who is your sponsor?*" , "Parents", "Self-Funded", "Scholarship", "Free Government Support / Subsidized Education"
   ]
 
@@ -64,8 +64,27 @@ export class EducationComponent implements OnInit {
   }
 
 
+  
+
+getDropDownTypes(){
+  this.beneficiaryService.getEducationDropdown().subscribe({
+    next: (item: any) => {
+      this.options = new Set(["Level of Education*","SSCE", "OND", "HND", "B.Sc", "B.Tech", "B.Eng", "MSc", "Phd","Others", "None of the above, others"].concat(item.data));
+    }
+  })
+
+
+  this.beneficiaryService.getEducationSponsorDropdown().subscribe({
+    next: (item: any) => {
+      this.fundingOptions = new Set(["Who is your sponsor?*" , "Parents", "Self-Funded", "Scholarship", "Free Government Support / Subsidized Education"].concat(item.data));
+    }
+  })
+}
+
+
   ngOnInit(): void {
     this.getEduForm();
+    this.getDropDownTypes();
   }
 
   getEduForm(){

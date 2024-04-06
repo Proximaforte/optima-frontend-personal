@@ -183,10 +183,10 @@ export class AllBeneficiaryComponent implements OnInit {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        // if(err?.status === 401){
-        //   this.showSpinner = false;
-        //  this.authService.agentLogout();
-        //   }
+        if(err?.status === 401){
+          this.showSpinner = false;
+         this.authService.agentLogout();
+          }
       }
     })
   }
@@ -242,9 +242,15 @@ export class AllBeneficiaryComponent implements OnInit {
       this.router.navigate(['/home/setup-biometrics'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'finger_capture_done'
+          progress: 'setup_biometrics'
         }
       })
+      // this.router.navigate(['/home/setup-biometrics'], {
+      //   relativeTo: this.route,
+      //   queryParams: {
+      //     progress: 'finger_capture_done'
+      //   }
+      // })
     } else if (beneficiary?.formStage === "PERSONAL_DETAILS" || beneficiary?.formStage === "VERIFIED") {
       this.beneficiaryService.setRouteToDisplay("verification procedure");
       sessionStorage.setItem('verification', 'verification');
@@ -254,7 +260,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'verification_procedure'
         }
       })
-    } else if (beneficiary?.formStage === "BIO_VERIFICATION" || beneficiary?.formStage === "OTP_VERIFICATION") {
+    } else if (beneficiary?.formStage === "BIO_VERIFICATION") {
       this.beneficiaryService.setRouteToDisplay("residential details");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
@@ -342,6 +348,15 @@ export class AllBeneficiaryComponent implements OnInit {
         },
         error: (err:any) => {
           console.error('err>>>', err);
+          this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+          if(err?.status === 401){
+            this.showSpinner = false;
+           this.authService.agentLogout();
+            }
         }
       })
      

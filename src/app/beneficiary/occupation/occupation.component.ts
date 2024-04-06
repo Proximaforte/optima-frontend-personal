@@ -16,26 +16,28 @@ import { Occupation } from 'src/app/models/beneficiary/beneficiary';
 export class OccupationComponent implements OnInit {
 
   options: string[] = [
-    "What is your occupation*", "Student", "Civil servant", "Others"
+    "What is your occupation*", "Student", "Civil servant", "Other"
   ];
   option2: string[] = [
     "Other Sources of Income e.g farming business etc*"
   ];
-  option3: string[] = [
+  option3: string[] | any = [
     "Sponsorship type*",
     "Parents",
     "Self-Funded",
     "Scholarship",
     "Free Government Support / Subsidized Education"
   ];
-  option4: string[] = [
+  option4: string[] | any = [
     "(For diploma students) Diploma type*", "National Diploma", "School Diploma", "Others"
   ];
   option5: string[] = [
     "Are you on transfer?*", "Yes", "No"
   ];
-  option6: string[] = [
-    "What cadre are you?*", "professional", "executive", "admin"
+  option6: string[] | any = [
+    "What cadre are you?*","PROFESSIONAL",
+    "EXECUTIVE",
+    "ADMIN"
   ];
   option7: string[] = [
     "On Study Leave?*", "Yes", "No"
@@ -43,7 +45,7 @@ export class OccupationComponent implements OnInit {
   option8: string[] = [
     "Have you gone on a training before?*", "Yes", "No"
   ];
-  option9: string[] = [
+  option9: string[] | any = [
     "Local or Foreign?*", "Local", "Foreign"
   ];
   showRetired: boolean = false;
@@ -132,7 +134,7 @@ export class OccupationComponent implements OnInit {
       this.wordz.push(this.currentWordz.trim());
       this.currentWordz = ''; // Clear the input
     }
-    console.log('words array>>>', this.wordz);
+  //  console.log('words array>>>', this.wordz);
   }
 
   removeWord2(word: string) {
@@ -140,8 +142,37 @@ export class OccupationComponent implements OnInit {
     this.wordz = this.wordz.filter(w => w !== word);
   }
 
+
+  getDropdownItems(){
+    this.beneficiaryService.getEducationSponsorDropdown().subscribe({
+      next: (item: any) => {
+        this.option3 = new Set([ "Sponsorship type*",
+        "Parents",
+        "Self-Funded",
+        "Scholarship",
+        "Free Government Support / Subsidized Education"].concat(item.data));
+      }
+    })
+
+    this.beneficiaryService.getDiplomaTypesDropdown().subscribe({
+      next: (item: any) => {
+        this.option4 = new Set(["(For diploma students) Diploma type*", "National Diploma", "School Diploma"].concat(item.data));
+      }
+    })
+
+
+    this.beneficiaryService.getCadreTypesDropdown().subscribe({
+      next: (item: any) => {
+        this.option6 = new Set(["What cadre are you?*","PROFESSIONAL",
+        "EXECUTIVE",
+        "ADMIN"].concat(item.data));
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.getEmploymentForm();
+    this.getDropdownItems();
   }
 
   getEmploymentForm() {
@@ -174,6 +205,9 @@ export class OccupationComponent implements OnInit {
         } else if (value === "Civil servant") {
           this.showCivilServerntsInfo = true;
           this.showStudentsInfo = false;
+        }else{
+          this.showCivilServerntsInfo = false;
+          this.showStudentsInfo = false; 
         }
       }
     })
@@ -181,7 +215,7 @@ export class OccupationComponent implements OnInit {
 
     this.occupationForm.get('diplomaType')?.valueChanges.subscribe({
       next: (value:any) => {
-        if(value === "Others"){
+        if(value === "Other"){
           this.showOthers = true;
         }else{
           this.showOthers = true;

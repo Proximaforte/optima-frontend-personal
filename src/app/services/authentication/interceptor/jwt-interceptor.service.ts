@@ -33,8 +33,8 @@ export class JwtInterceptorService implements HttpInterceptor{
 
   public customNoAuthHttpHeaders:any = new HttpHeaders({
     'Content-Type': 'application/json',
-    'method': 'POST'
-    // 'accept': '*/*',
+    'accept': '*/*',
+       // 'method': 'POST',
     // 'no-auth': 'true',
     // 'Skip-Interceptor': 'true',
     // 'Referrer-Policy': 'strict-origin-when-cross-origin'

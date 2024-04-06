@@ -50,7 +50,7 @@ export class FaceCapturingComponent implements OnInit {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
 
-    const getNin: any = sessionStorage.getItem('nin');
+    const getNin: any = sessionStorage.getItem('NINDetails');
     // console.log("get NIN>>", JSON.parse(getNin));
     this.nin = JSON.parse(getNin);
   }

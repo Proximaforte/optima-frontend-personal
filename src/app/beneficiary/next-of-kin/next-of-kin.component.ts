@@ -19,8 +19,8 @@ export class NextOfKinComponent implements OnInit {
   nextOfKinForm!: FormGroup;
   sameResidence: boolean = false;
   checked: boolean | any = false;
-  option5: string[] = [
-    "Relationship*", "FATHER", "MOTHER", "SPOUSE", "CHILD", "GRAND_PARENT", "GRAND_SPOUSE", "Others"
+  option5: string[] | any = [
+    "Relationship*", "FATHER", "MOTHER", "SPOUSE", "CHILD", "GRAND_PARENT", "GRAND_SPOUSE"
   ];
   showOthers: boolean = false;
   userDetails: any = {};
@@ -77,7 +77,7 @@ export class NextOfKinComponent implements OnInit {
 
     this.nextOfKinForm.get('relationship')?.valueChanges.subscribe({
       next: (value: any) => {
-        if (value === 'Others') {
+        if (value === 'OTHERS') {
           this.showOthers = true;
         } else {
           this.showOthers = false;
@@ -94,8 +94,17 @@ export class NextOfKinComponent implements OnInit {
     })
   }
 
+  getDropdownItems(){
+    this.beneficiaryService.getRelationshipDropdown().subscribe({
+      next: (item: any) => {
+        this.option5 = new Set([ "Relationship*", "FATHER", "MOTHER", "SPOUSE", "CHILD", "GRAND_PARENT", "GRAND_SPOUSE"].concat(item.data));
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.getNextOfKinForm();
+    this.getDropdownItems();
   }
 
   submit() {

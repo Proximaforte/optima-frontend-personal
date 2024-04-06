@@ -271,6 +271,60 @@ export class BeneficiaryService {
     });
   }
 
+  //ENUMS
+
+  public getReligionDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.religion}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getEducationDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.education}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getEducationSponsorDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.educationSponsor}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getHealthCondtionsDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.healthConditions}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getHealthAilmentsDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.healthAilments}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getMoneyRangeDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.moneyRange}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  
+  public getAideDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.aidType}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getRelationshipDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.relationship}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getEmploymentDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.employment}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getDiplomaTypesDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.diplomaTypes}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getCadreTypesDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.cadres}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getTransportDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.transportTypes}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getCriminalTypesDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.criminalTypes}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
 
 
 }

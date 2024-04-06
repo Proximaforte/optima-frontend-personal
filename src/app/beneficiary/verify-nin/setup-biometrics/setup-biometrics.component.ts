@@ -55,6 +55,24 @@ export class SetupBiometricsComponent {
    // console.log('skip thumprint image>>>', this.skipThumbprintPayload);
   }
 
+  // const payload = {
+  //   nin: this.nin?.nin,
+  //   type: 'FACIAL_ID', //PHONE_NUMBER
+  //   phoneNumber: getBeneficiaryPhoneNumber,
+  //   image: this.photograph?.split(',')[1]
+  // }
+
+  // const payload = {
+  //   nin: this.nin?.nin,
+  //   type: 'FACIAL_ID', //PHONE_NUMBER
+  //   phoneNumber: getBeneficiaryPhoneNumber,
+  //   image: this.passport?.split(',')[1]
+  // }
+
+
+
+
+
   procedureInterface(param: string, route: string){
     // this.showOtp = true;
     this.router.navigate([route],{

@@ -21,7 +21,7 @@ export class DisabilityStatusComponent implements OnInit{
   disabilityForm!: FormGroup;
   showInputBox: boolean = false;
 
-  options: string[] = [
+  options: string[] | any = [
     "Beneficiary Disability type*","Vision impairment", "Deaf or hard of hearing", 
     "Dumb or speaking challenge", "Mental health conditions", "Intellectual disability", 
     "Acquired brain injury", "Physical disability", "Autism spectrum disorder",
@@ -63,8 +63,21 @@ export class DisabilityStatusComponent implements OnInit{
    }
   }
 
+  getDropdownEnums(){
+    this.beneficiaryService.getHealthAilmentsDropdown().subscribe({
+      next: (item: any) => {
+        this.options = new Set(["Beneficiary Disability type*","Vision impairment", "Deaf or hard of hearing", 
+        "Dumb or speaking challenge", "Mental health conditions", "Intellectual disability", 
+        "Acquired brain injury", "Physical disability", "Autism spectrum disorder",
+         "Cerebral palsy","Stroke", "Spina bifida",
+        "Arthritis", "Spinal cord injury", "Others"].concat(item.data));
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.getDisabilityForm();
+    this.getDropdownEnums();
   }
 
   getDisabilityForm(){

@@ -16,7 +16,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   emailPlaceHolder: string = '';
   email: string = 'Email';
-  options: String[] = [
+  options: String[] | any = [
     "Religion*",
     "CHRISTIANITY",
     "ISLAM",
@@ -96,9 +96,18 @@ export class PersonalDetailsComponent implements OnInit {
     })
   }
 
+  getDropDowns(){
+    this.beneficiaryService.getReligionDropdown().subscribe({
+      next: (item: any) => {
+        this.options = new Set(["Religion*","CHRISTIANITY","ISLAM","OTHERS"].concat(item.data));
+      }
+    })
+  }
+
 
   ngOnInit(): void {
     this.getPersonalForm();
+    this.getDropDowns();
   }
 
   submitForm() {

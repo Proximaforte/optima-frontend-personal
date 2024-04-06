@@ -161,6 +161,7 @@ export class FilterBoxComponent implements OnInit{
 
   submit(){
     //console.log('filter params>>>', this.filterParam.value);
+    
     this.beneficiaryService.setFilterParams(this.filterParam.value);
    this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService?.getFilterParams(),this.paginationParams).subscribe({
     next: (res: any) => {
