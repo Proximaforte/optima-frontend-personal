@@ -100,7 +100,6 @@ export class NextOfKinComponent implements OnInit {
 
   submit() {
     this.showSpinner = true;
-    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload:any = {
       beneficiaryPhoneNumber: this.userDetails?.phoneNumber,
       firstname: this.nextOfKinForm.value?.firstname,
@@ -108,7 +107,7 @@ export class NextOfKinComponent implements OnInit {
       relationship: this.nextOfKinForm.value.relationship === 'Others' ? this.nextOfKinForm.value?.specifyRelationship : this.nextOfKinForm.value.relationship,
       nokNin: this.nextOfKinForm.value?.nin,
       nokSsid: this.nextOfKinForm.value?.ssid,
-      phoneNumber: getBeneficiaryPhoneNumber,
+      phoneNumber: this.nextOfKinForm.value?.phoneNumber,
       email: this.nextOfKinForm.value?.email,
       address: this.sameResidence === true ? this.userDetails?.address : this.nextOfKinForm.value?.address
     }
