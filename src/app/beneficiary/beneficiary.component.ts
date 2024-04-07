@@ -102,58 +102,58 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
 
   itemClicked(index: number, selectedItemName: string) {
     this.selectedItemIndex = index;
-    if (index + 1 === 1) {
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "verify_NIN" } });
-      this.selectedItemName = selectedItemName;
-      sessionStorage.removeItem('biometrics');
-    } else if (index + 1 === 2) {
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "personal_details" } });
-      this.selectedItemName = selectedItemName;
-      sessionStorage.removeItem('biometrics');
-    }else if (index + 1 === 3) {
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "enter_verification_code" } });
-      this.selectedItemName = selectedItemName;
-      sessionStorage.removeItem('biometrics');
-    } else if (index + 1 === 4) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "residential_details" } });
-      this.selectedItemName = selectedItemName;
-    } else if (index + 1 === 5) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "marital_info" } });
-      this.selectedItemName = selectedItemName;
-    } else if (index + 1 === 6) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "education" } });
-      this.selectedItemName = selectedItemName;
-    } else if (index + 1 === 7) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "health" } });
-      this.selectedItemName = selectedItemName;
-    } else if (index + 1 === 8) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "financial" } });
-      this.selectedItemName = selectedItemName;
-    } else if (index + 1 === 9) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "next_of_kin" } });
-      this.selectedItemName = selectedItemName;
-    } else if (index + 1 === 10) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "employment" } });
-      this.selectedItemName = selectedItemName;
-    } else if (index + 1 === 11) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "occupation" } });
-      this.selectedItemName = selectedItemName;
-    }  else if (index + 1 === 12) {
-      sessionStorage.removeItem('biometrics');
-      this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "other_details" } });
-      this.selectedItemName = selectedItemName;
-    }else if(sessionStorage.getItem('biometrics') === 'biometrics'){
-      this.router.navigate(['/home/face-capturing'], { relativeTo: this.route, queryParams: { progress: "face_capturing" } });
-      this.selectedItemName = 'biometrics';
-    }
+    // if (index + 1 === 1) {
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "verify_NIN" } });
+    //   this.selectedItemName = selectedItemName;
+    //   sessionStorage.removeItem('biometrics');
+    // } else if (index + 1 === 2) {
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "personal_details" } });
+    //   this.selectedItemName = selectedItemName;
+    //   sessionStorage.removeItem('biometrics');
+    // }else if (index + 1 === 3) {
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "enter_verification_code" } });
+    //   this.selectedItemName = selectedItemName;
+    //   sessionStorage.removeItem('biometrics');
+    // } else if (index + 1 === 4) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "residential_details" } });
+    //   this.selectedItemName = selectedItemName;
+    // } else if (index + 1 === 5) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "marital_info" } });
+    //   this.selectedItemName = selectedItemName;
+    // } else if (index + 1 === 6) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "education" } });
+    //   this.selectedItemName = selectedItemName;
+    // } else if (index + 1 === 7) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "health" } });
+    //   this.selectedItemName = selectedItemName;
+    // } else if (index + 1 === 8) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "financial" } });
+    //   this.selectedItemName = selectedItemName;
+    // } else if (index + 1 === 9) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "next_of_kin" } });
+    //   this.selectedItemName = selectedItemName;
+    // } else if (index + 1 === 10) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "employment" } });
+    //   this.selectedItemName = selectedItemName;
+    // } else if (index + 1 === 11) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "occupation" } });
+    //   this.selectedItemName = selectedItemName;
+    // }  else if (index + 1 === 12) {
+    //   sessionStorage.removeItem('biometrics');
+    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "other_details" } });
+    //   this.selectedItemName = selectedItemName;
+    // }else if(sessionStorage.getItem('biometrics') === 'biometrics'){
+    //   this.router.navigate(['/home/face-capturing'], { relativeTo: this.route, queryParams: { progress: "face_capturing" } });
+    //   this.selectedItemName = 'biometrics';
+    // }
   }
 
 

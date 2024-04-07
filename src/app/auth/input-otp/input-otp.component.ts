@@ -26,7 +26,7 @@ export class InputOTPComponent implements OnInit, OnDestroy{
   showSpinner: boolean = false;
 
 
-  countdown: number = 60;
+  countdown: number = 300;
   timerSubscription$!: Subscription;
   
   constructor(
