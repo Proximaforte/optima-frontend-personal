@@ -30,6 +30,7 @@ export class NewPasswordsComponent implements OnInit {
   errorMsg: string = '';
   disabledBtn: boolean = true;
   routeParams: any = {};
+  showSpinner: boolean = false;
 
   passwordForm!: FormGroup;
   constructor(
@@ -112,13 +113,15 @@ export class NewPasswordsComponent implements OnInit {
   }
 
   submitCorrectData(){
+    this.showSpinner = true;
     const payload:any = {
-      oldPassword: localStorage.getItem('oldPasswords') === null ? 'N/A' : localStorage.getItem('oldPasswords'),
+      identifier: this.routeParams?.identifier,
       password: this.passwordForm.get('password')?.value,
       confirmPassword: this.passwordForm.get('conFirmPassword')?.value
     }
-   this.authService.changePasswords(payload).subscribe({
+   this.authService.resetPassword(payload).subscribe({
     next: (res:any) => {
+      this.showSpinner = false;
       console.log('response>>>', res);
       this.dialog.open(SuccesfulPasswordsComponent,{
         width: '450px',
@@ -127,6 +130,7 @@ export class NewPasswordsComponent implements OnInit {
      });
     },
     error: (err: any) => {
+      this.showSpinner = false;
       console.error('err>>>', err);
       this.toast.setErrorMessage(err?.error?.failureReason);
       this.snackbar.openFromComponent(ToastsComponent,{

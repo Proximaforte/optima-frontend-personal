@@ -3,7 +3,7 @@ import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpClient, HttpResponse } from '@angular/common/http';
 import { JwtInterceptorService } from './interceptor/jwt-interceptor.service';
-import { AgentCredentials, changePassword, forgotPasswords } from 'src/app/models/login/auth';
+import { AgentCredentials, changePassword, forgotPasswords, resetAgentPassword } from 'src/app/models/login/auth';
 import { environment } from 'src/app/environments/environment.prod';
 import { endpoints } from 'src/app/models/APIs/endpoints';
 import { HealthDetails } from 'src/app/models/beneficiary/beneficiary';
@@ -80,6 +80,10 @@ export class AuthService {
   public changePasswords(path: changePassword): Observable<any>{
     const body = JSON.stringify(path);
     return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.changePassword}`, body , { headers: this.interceptor?.customHttpHeaders});
+  }
+
+  public resetPassword(param: resetAgentPassword): Observable<any>{
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.resetPassword}?password=${param?.password}&confirmPassword=${param?.confirmPassword}&identifier=${param?.identifier}` , { headers: this.interceptor?.customNoAuthHttpHeaders});
   }
 
   public getUserDetails():Observable<any>{

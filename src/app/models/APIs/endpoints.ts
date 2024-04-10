@@ -4,6 +4,7 @@ export const endpoints = {
     forgetPassword: 'api/v1/agent-user/forgetPassword',
     validateForgetPasswordToken: 'api/v1/agent-user/validateForgetPasswordToken',
     changePassword : 'api/v1/agent-user/changePassword',
+    resetPassword: 'api/v1/agent-user/resetPassword',
     getUserDetails: 'api/v1/agent-user',
     logoutUser: 'api/v1/logout',
     refreshToken: 'api/v1/refresh',

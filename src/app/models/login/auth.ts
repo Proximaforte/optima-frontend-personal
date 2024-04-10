@@ -15,3 +15,9 @@ export interface changePassword {
     password: string,
     confirmPassword: string
 }
+
+export interface resetAgentPassword{
+    password: string,
+    confirmPassword: string,
+    identifier: string
+}
