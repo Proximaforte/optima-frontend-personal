@@ -122,7 +122,7 @@ export class NewPasswordsComponent implements OnInit {
    this.authService.resetPassword(payload).subscribe({
     next: (res:any) => {
       this.showSpinner = false;
-      console.log('response>>>', res);
+     // console.log('response>>>', res);
       this.dialog.open(SuccesfulPasswordsComponent,{
         width: '450px',
         height: '310px',
@@ -132,6 +132,7 @@ export class NewPasswordsComponent implements OnInit {
     error: (err: any) => {
       this.showSpinner = false;
       console.error('err>>>', err);
+      this.toast.setSuccessMessage(err?.error?.failureReason);
       this.toast.setErrorMessage(err?.error?.failureReason);
       this.snackbar.openFromComponent(ToastsComponent,{
         duration: 4000,
