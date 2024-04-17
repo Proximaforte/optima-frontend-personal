@@ -1,0 +1,29 @@
+<body   style="background-image: url('/assets/images/bg-image.svg');">
+
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>logout</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    <span>Are you sure you want to logout?</span>
+  </mat-toolbar>
+  
+
+
+<mat-dialog-content>
+  <div class="grid grid-cols-5 gap-4 flex items-center justify-center" id="mat-dialog">
+    <div >
+      <button (click)="logoutUser()" mat-dialog-close  id="cta-btns" class="bg-gray-200 hover:bg-green-700 border-gray-700 hover:text-white py-2 px-4 rounded ml-4" mat-button>
+        YES
+      </button>
+    </div>
+    &nbsp;&nbsp;
+    <div >
+      <button  id="cta-btns" mat-button mat-dialog-close class="bg-gray-200 hover:bg-green-700 border-gray-700 hover:text-white py-2 px-4 rounded ml-4">
+        NO
+      </button>
+    </div>
+</div>
+    
+</mat-dialog-content>
+</body>

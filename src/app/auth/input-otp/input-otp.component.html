@@ -5,7 +5,7 @@
         </h2>
 
         <div>
-            <p>A 4-digit pin has been sent to <br> <a class="font-medium">{{routeParams?.value}}</a></p>
+            <p>OTP has been sent to <a class="font-medium">{{routeParams?.value}}</a></p>
             <br>
             <form [formGroup]="otpForm">
                 <div class="mb-4">
@@ -15,7 +15,7 @@
 
                 </div>
                 <div class="mb-4">
-                    <span class="text-xs">Didn't recieve a code? <b>Resend OTP</b> in <b>{{ countdown }}s</b></span>
+                    <span class="text-xs">Didn't receive a code? <b>Resend OTP</b> in <b>{{ countdown }}s</b></span>
                 </div>
                 <br>
 

@@ -18,7 +18,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
   ninPlaceHolder: string = '';
   otpValue: string = '';
   disabledBtn: boolean = true;
-  countdown: number = 300;
+  countdown: number = 60;
   timerSubscription$!: Subscription;
   showBtn: boolean = false;
   showWelcomeMsg: boolean = false;

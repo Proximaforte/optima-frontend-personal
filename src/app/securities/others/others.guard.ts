@@ -19,8 +19,8 @@ export class othersGuard implements CanActivate{
     state: RouterStateSnapshot): boolean{
       if(!this.authService.agentIsLoggedIn()){
         this.router.navigate(['/auth/login'],{relativeTo: this.route});
-        console.info(route);
-        console.info(state);
+        // console.info(route);
+        // console.info(state);
         return false
       }
     return true;

@@ -30,9 +30,11 @@ import { OtpInputComponent } from './otp-input/otp-input.component';
 import { VerifyBvnOtpComponent } from './verify-bvn-otp/verify-bvn-otp.component';
 import { ToastsComponent } from './toasts/toasts.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { LogoutComponent } from './modals/logout/logout.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 const materialModules = [
-  MatDialogModule,MatButtonModule,MatTooltipModule,MatSnackBarModule
+  MatDialogModule,MatButtonModule,MatTooltipModule,MatSnackBarModule,MatToolbarModule
 ]
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ const materialModules = [
     OtpInputComponent,
     VerifyBvnOtpComponent,
     ToastsComponent,
+    LogoutComponent,
   ],
   imports: [
     CommonModule,

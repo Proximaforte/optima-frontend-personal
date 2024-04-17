@@ -31,6 +31,7 @@ export class NewPasswordsComponent implements OnInit {
   disabledBtn: boolean = true;
   routeParams: any = {};
   showSpinner: boolean = false;
+  showDirectives:boolean = false;
 
   passwordForm!: FormGroup;
   constructor(
@@ -63,6 +64,10 @@ export class NewPasswordsComponent implements OnInit {
 
   ngOnInit(): void {
     this.passwordInputForm()
+  }
+
+  showDirectiveStatments(){
+    this.showDirectives = true;
   }
 
   passwordInputForm(){
@@ -132,8 +137,8 @@ export class NewPasswordsComponent implements OnInit {
     error: (err: any) => {
       this.showSpinner = false;
       console.error('err>>>', err);
-      this.toast.setSuccessMessage(err?.error?.failureReason);
-      this.toast.setErrorMessage(err?.error?.failureReason);
+      this.toast.setSuccessMessage(err?.error?.responseMessage);
+      this.toast.setErrorMessage(err?.error?.responseMessage);
       this.snackbar.openFromComponent(ToastsComponent,{
         duration: 4000,
         verticalPosition: 'bottom',

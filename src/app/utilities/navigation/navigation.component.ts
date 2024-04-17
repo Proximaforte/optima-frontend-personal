@@ -8,6 +8,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutComponent } from '../modals/logout/logout.component';
 
 
 @Component({
@@ -57,7 +59,8 @@ export class NavigationComponent {
     private route: ActivatedRoute,
     private routeService: BeneficiaryService,
     private snackbar: MatSnackBar,
-    private toast: ToastsService
+    private toast: ToastsService,
+    private dialog: MatDialog
   ) {
     this.bankLogo = this.sanitizer.bypassSecurityTrustUrl(
       `assets/images/info.svg`
@@ -79,20 +82,24 @@ export class NavigationComponent {
 
   onLogout(item: any) {
     if (item?.name === "logout") {
-      this.authService.logoutUser().subscribe({
-        next: (res: any) => {
-          //  console.log("logout res>>>", res)
-          this.toast.setSuccessMessage('User is logged Out Successfully');
-          this.snackbar.openFromComponent(ToastsComponent, {
-            duration: 4000,
-            verticalPosition: 'bottom',
-          });
-        },
-        error: (err: any) => {
-          console.error("logout error>>>", err);
-        }
-      })
-      this.authService.agentLogout()
+      this.dialog.open(LogoutComponent,{
+        height: '200px',
+        width: '500px'
+      });
+      // this.authService.logoutUser().subscribe({
+      //   next: (res: any) => {
+      //     //  console.log("logout res>>>", res)
+      //     this.toast.setSuccessMessage('User is logged Out Successfully');
+      //     this.snackbar.openFromComponent(ToastsComponent, {
+      //       duration: 4000,
+      //       verticalPosition: 'bottom',
+      //     });
+      //   },
+      //   error: (err: any) => {
+      //     console.error("logout error>>>", err);
+      //   }
+      // })
+      // this.authService.agentLogout();
     } else if (item?.name === "beneficiary") {
       this.routeService.setRouteToDisplay("verify beneficiary nin");
       this.router.navigate(['/home/beneficiary'], {

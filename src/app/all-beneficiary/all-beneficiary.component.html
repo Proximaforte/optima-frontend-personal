@@ -113,7 +113,7 @@
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white" role="button" [routerLink]="['../beneficiary-details']">
         <!-- | beneficiaryFilter: filterString -->
-        <tr class="text-left" *ngFor="let beneficiary of beneficiaries;  let i=index">
+        <tr class="text-left" *ngFor="let beneficiary of beneficiaries| beneficiaryFilter: filterString;  let i=index">
           <td (click)="viewBeneficiaryProfile(beneficiary)"
             class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
           >
@@ -305,7 +305,7 @@
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white" role="button">
         <!-- | incomplete: filterIncomplete -->
-        <tr class="text-left" *ngFor="let beneficiary of inCompleteBeneficiaries;  let i=index">
+        <tr class="text-left" *ngFor="let beneficiary of inCompleteBeneficiaries  | incomplete: filterIncomplete;  let i=index">
           <td
             class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
           >
