@@ -142,7 +142,7 @@ getDropDownTypes(){
       next: (res:any) => {
         console.log("res>>", res);
         this.showSpinner = false;
-        this.toast.setSuccessMessage('Beneficiary Education data onboarded succesfully!');
+        this.toast.setSuccessMessage('Beneficiary Education data onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

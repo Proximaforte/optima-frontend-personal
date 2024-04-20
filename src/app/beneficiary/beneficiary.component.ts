@@ -154,6 +154,8 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     //   this.router.navigate(['/home/face-capturing'], { relativeTo: this.route, queryParams: { progress: "face_capturing" } });
     //   this.selectedItemName = 'biometrics';
     // }
+
+
   }
 
 

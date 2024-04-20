@@ -121,7 +121,7 @@ export class ResidentialDetailsComponent implements OnInit {
             progress: 'marital_info'
           }
         })
-        this.toast.setSuccessMessage('Beneficiary Residential Details is onboarded succesfully!');
+        this.toast.setSuccessMessage('Beneficiary Residential Details is onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

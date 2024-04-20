@@ -129,7 +129,7 @@ export class DisabilityStatusComponent implements OnInit{
       next: (res: any) => {
         //console.log("res>>", res);
         this.showSpinner = false;
-        this.toast.setSuccessMessage('Beneficiary Health data onboarded succesfully!');
+        this.toast.setSuccessMessage('Beneficiary Health data is onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

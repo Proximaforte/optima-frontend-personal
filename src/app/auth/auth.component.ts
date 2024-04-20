@@ -26,6 +26,7 @@ export class AuthComponent implements OnInit {
   loginForm!: FormGroup;
   emailPlaceHolder: string = '';
   passwordPlaceHolder: string = '';
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -111,7 +112,7 @@ export class AuthComponent implements OnInit {
            try{
             this.authService.setAgentToken(details?.token);
             this.router.navigate(['/home/dashboard'], { relativeTo: this.route }).then(() => location?.reload());
-            this.toast.setSuccessMessage('User is logged In Succesfully');
+            this.toast.setSuccessMessage('User is logged In Successfully');
             this.snackbar.openFromComponent(ToastsComponent, {
               duration: 4000,
               verticalPosition: 'bottom',

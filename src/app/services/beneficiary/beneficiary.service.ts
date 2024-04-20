@@ -39,7 +39,8 @@ export class BeneficiaryService {
     size: 10,
     page: 1
   }
-  params: any
+  params: any;
+  personalDetailsObj:any = {}
 
   constructor(
     private http: HttpClient,
@@ -52,6 +53,14 @@ export class BeneficiaryService {
 
   public getImageUrl() {
     return this.imageUrl;
+  }
+
+  public setPersonalDetails(details:any){
+    this.personalDetailsObj = details;
+  }
+
+  public getPersonalDetails(){
+    return this.personalDetailsObj;
   }
 
   public setShowOriginal(show: boolean) {

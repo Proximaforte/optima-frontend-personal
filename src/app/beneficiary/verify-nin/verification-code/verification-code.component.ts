@@ -68,9 +68,16 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.countdown--;
         if (this.countdown === 0) {
-          this.router.navigateByUrl("/home/beneficiary");
-          this.router.navigate(["/home/beneficiary"], { relativeTo: this.route, queryParams: { progress: "verify_NIN" } });
+          // this.router.navigateByUrl("/home/beneficiary");
+          this.beneficiarySerive.setRouteToDisplay("personal details");
+          this.router.navigate(["/home/beneficiary"], { relativeTo: this.route, queryParams: { progress: "personal_details" } });
           this.timerSubscription$.unsubscribe(); // Stop the timer
+          // this.beneficiarySerive.personalDetails(this.beneficiarySerive.getPersonalDetails()).subscribe({
+          //   next:(res:any) => {
+          //     this.startTimer();
+          //     //ome/verification-code?progress=enter_verification_code
+          //   }
+          // })
         }
       });
   }
@@ -121,7 +128,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
       next: (res: any) => {
        // console.log('res>>>', res);
        this.showSpinner = false;
-        this.toast.setSuccessMessage("Phone number is verified succesfully!");
+        this.toast.setSuccessMessage("Phone number is verified successfully!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

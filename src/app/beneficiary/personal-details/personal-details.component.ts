@@ -132,11 +132,13 @@ export class PersonalDetailsComponent implements OnInit {
       placeOfBirth: this.personalDetailsForm.value?.placeOfBirth,
       religion: this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
     }
-    console.log("zzzzz>>>", payload);
+ //   console.log("zzzzz>>>", payload);
+ 
     this.beneficiaryService.personalDetails(payload).subscribe({
       next: (res: any) => {
         //   console.log("response>>>", res);
-        this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded succesfully!');
+       // this.beneficiaryService.setPersonalDetails(payload);
+        this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

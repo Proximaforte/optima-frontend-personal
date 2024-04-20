@@ -281,7 +281,7 @@ export class OccupationComponent implements OnInit {
       next: (res: any) => {
         this.showSpinner = false;
        // console.log("res>>>>", res);
-        this.toast.setSuccessMessage('Beneficiary Occupation data is onboarded succesfully!');
+        this.toast.setSuccessMessage('Beneficiary Occupation data is onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

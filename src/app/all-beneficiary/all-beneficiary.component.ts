@@ -28,8 +28,8 @@ export class AllBeneficiaryComponent implements OnInit {
     page: 1
   }
   paginationNumber: any[] = [];
-  filterString: any;
-  filterIncomplete: any;
+  filterString: any = "";
+  filterIncomplete: any = "";
   showIncompleteBeneficiaries: boolean = false;
   showCompleteBeneficiaries: boolean = true;
   routeArray: any = [
@@ -75,6 +75,7 @@ export class AllBeneficiaryComponent implements OnInit {
     },
   ]
   // | beneficiaryFilter: filterString;
+
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -340,7 +341,7 @@ export class AllBeneficiaryComponent implements OnInit {
           this.router.navigate(['/home/all-beneficiary'], {
             relativeTo: this.route,
           });
-          this.toast.setSuccessMessage("Beneficiary's onboarding has been completed succesfully!");
+          this.toast.setSuccessMessage("Beneficiary's onboarding has been completed successfully!");
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
             verticalPosition: 'bottom',

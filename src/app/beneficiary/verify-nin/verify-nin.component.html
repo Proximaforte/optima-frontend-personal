@@ -17,7 +17,7 @@
         </div>
         
         <div class="relative w-96 h-11">
-          <form [formGroup]="ninForm">
+          <form [formGroup]="ninForm" (keyup.enter)="submit()">
             <input formControlName="nin" [placeholder]="ninPlaceHolder" (blur)="onInputBlur()" (click)="detectClicked()" [readOnly]="ninForm.get('nin')?.value?.length === 11 ? true : false"
             class="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer text-blue-gray-700 outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 border-t-transparent focus:border-t-transparent border-blue-gray-200 focus:border-gray-900" />
         <label

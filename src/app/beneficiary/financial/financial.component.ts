@@ -122,7 +122,7 @@ export class FinancialComponent implements OnInit{
       next: (item: any) => {
       //  console.log('item>>>', item);
         this.showSpinner = false;
-        this.toast.setSuccessMessage('Beneficiary Financial data onboarded succesfully!');
+        this.toast.setSuccessMessage('Beneficiary Financial data onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
