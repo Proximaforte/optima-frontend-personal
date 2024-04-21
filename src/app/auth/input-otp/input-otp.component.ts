@@ -26,7 +26,7 @@ export class InputOTPComponent implements OnInit, OnDestroy{
   showSpinner: boolean = false;
 
 
-  countdown: number = 60;
+  countdown: number = 120;
   timerSubscription$!: Subscription;
   
   constructor(
@@ -38,7 +38,7 @@ export class InputOTPComponent implements OnInit, OnDestroy{
   ){
     const getParams = this.route.queryParams.subscribe({
       next: (param:any) => {
-        console.log("param123>>>", param);
+      //  console.log("param123>>>", param);
         this.routeParams = param;
       }
     })
