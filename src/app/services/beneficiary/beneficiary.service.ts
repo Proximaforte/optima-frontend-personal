@@ -280,6 +280,13 @@ export class BeneficiaryService {
     });
   }
 
+
+  public getDashboardStats(reportRange: any): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.dashboardStats}?reportRange=${reportRange}`, { headers: this.interceptor?.customHttpHeaders });
+  }
+
+  
+
   //ENUMS
 
   public getReligionDropdown(): Observable<any> {
@@ -333,6 +340,10 @@ export class BeneficiaryService {
 
   public getCriminalTypesDropdown(): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.criminalTypes}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getReportRanges():Observable<any>{
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.reportRanges}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
 
 

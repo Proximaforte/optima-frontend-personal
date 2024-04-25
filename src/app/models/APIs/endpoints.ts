@@ -47,7 +47,12 @@ export const endpoints = {
     diplomaTypes: 'api/v1/enums/diplomaTypes',
     cadres: 'api/v1/enums/cadres',
     transportTypes: 'api/v1/enums/transportMeans',
-    criminalTypes: 'api/v1/enums/crimeType'
+    criminalTypes: 'api/v1/enums/crimeType',
+    reportRanges: 'api/v1/enums/reportRanges',
+
+    //dashboard statistics
+    
+    dashboardStats: 'api/v1/dashboard/agent/statistics'
 }
 
 export interface ErrorMessage{

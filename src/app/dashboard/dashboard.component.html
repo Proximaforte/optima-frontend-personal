@@ -3,13 +3,13 @@
     <div class="ml-4">
         <div class="h-12 w-56 mb-6 px-4">
 
-            <mat-form-field>
+            <mat-form-field [formGroup]="dashBoardDropdown">
                 <mat-label>
                     <mat-icon>calendar_today</mat-icon>
-                    <span> {{ options[2] }}</span>
+                    <span> Select Date range</span>
                 </mat-label>
-                <mat-select disableRipple>
-                    <mat-option value="" *ngFor="let option of options" class="bg-white">
+                <mat-select disableRipple formControlName="dateType">
+                    <mat-option [value]="option" *ngFor="let option of options" class="bg-white">
                         {{ option }}
                     </mat-option>
 
