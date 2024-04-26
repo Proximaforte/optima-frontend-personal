@@ -95,7 +95,7 @@ export class OtpIdentifierComponent {
         next: (res: any) => {
           this.showSpinner = false;
        //  console.log('phone number identifier response>>>>', res);
-        this.toast.setSuccessMessage(`Forgot passwords reset has been sent to ${this.emailValue}`);
+        this.toast.setSuccessMessage(`OTP has been sent to ${this.emailValue}`);
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
@@ -124,7 +124,7 @@ export class OtpIdentifierComponent {
         next: (res: any) => {
           this.showSpinner = false;
         //  console.log('phone number identifier response>>>>', res);
-          this.toast.setSuccessMessage(`Forgot passwords reset has been sent to ${this.phoneNumberValue}`);
+          this.toast.setSuccessMessage(`OTP has been sent to ${this.phoneNumberValue}`);
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
             verticalPosition: 'bottom',

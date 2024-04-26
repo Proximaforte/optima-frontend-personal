@@ -37,11 +37,11 @@ export class NavigationComponent {
       name: 'all-beneficiary',
       route: '/home/all-beneficiary',
     },
-    {
-      icon: 'assets/images/profile.svg',
-      name: 'profile',
-      route: '/home/profile',
-    },
+    // {
+    //   icon: 'assets/images/profile.svg',
+    //   name: 'profile',
+    //   route: '/home/profile',
+    // },
     {
       icon: 'assets/images/logout.svg',
       name: 'logout',

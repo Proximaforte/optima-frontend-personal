@@ -60,8 +60,10 @@ startTimer() {
     )
     .subscribe(() => {
       this.countdown--;
+      ///auth/otp-identifier?platformType
       if (this.countdown === 0) {
-        this.router.navigateByUrl("/auth/forgot-paswords");
+       // this.router.navigateByUrl("/auth/forgot-paswords");
+       this.router.navigate(["/auth/otp-identifier"], {relativeTo: this.route, queryParams: {platformType: 'phone'}});
         this.timerSubscription$.unsubscribe(); // Stop the timer
       }
     });

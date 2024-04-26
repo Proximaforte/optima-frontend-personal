@@ -58,9 +58,32 @@ export class EducationComponent implements OnInit {
   //  console.log("event>>", event);
     if(event === true){
       this.showOthers = true;
+      this.disableBtn = true;
+      this.cheeckIfEductionDetailsAreFilled();
     }else{
       this.showOthers = false; 
+      this.disableBtn = true;
     }
+  }
+
+
+  cheeckIfEductionDetailsAreFilled(){
+    if( this.showOthers === true && this.educationForm?.get('funding')?.value?.length === 0){
+      this.toast.setSuccessMessage("Educational Funding is required");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+    }else if(this.showOthers === true && this.educationForm?.get('currentLevel')?.value?.length === 0){
+      this.toast.setSuccessMessage("Educational Current Level is required");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+    }else{
+      this.disableBtn = false;
+    }
+
   }
 
 
@@ -106,6 +129,15 @@ getDropDownTypes(){
         this.disableBtn = false;
       }
     })
+
+
+    this.educationForm.get('funding')?.valueChanges?.subscribe({
+      next: (value:any) => {
+        if(value?.length > 1){
+          this.disableBtn = false;
+        }
+      }
+    })
   }
 
 
@@ -123,7 +155,7 @@ getDropDownTypes(){
     this.showSpinner = true;
     const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
-      phoneNumber: getBeneficiaryPhoneNumber,
+      phoneNumber:getBeneficiaryPhoneNumber ,
       level: this.educationForm.value?.eduLevel,
       certification: this.educationForm.value?.certifications,
       primarySchool: this.educationForm.value?.primarySchAttended,
@@ -137,7 +169,7 @@ getDropDownTypes(){
       funding: this.educationForm.value?.funding
     }
 
-   // console.log('payload>>>', payload);
+    // console.log('payload>>>', payload);
     this.beneficiaryService.educationDetails(payload).subscribe({
       next: (res:any) => {
         console.log("res>>", res);

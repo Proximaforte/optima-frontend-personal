@@ -92,12 +92,19 @@ export class MaritalInfoComponent implements OnInit {
           this.showOthers = false;
           this.disableBtn = false;
         }
+
+
+        if(value === "MARRIED" && this.maritalInfoForm?.get('numberOfSpouse')?.value?.length === 0){
+          this.disableBtn = true;
+        }
       }
     })
 
+
     this.maritalInfoForm?.get('numberOfSpouse')?.valueChanges.subscribe({
-      next: (value: any) => {
-        this.spouse = Number(value)
+      next: (values: any) => {
+      //  console.log('number of spouse>>>', values);
+        this.spouse = Number(values)
       }
     })
 
@@ -110,9 +117,11 @@ export class MaritalInfoComponent implements OnInit {
 
   detectClicked() {
     this.emailPlaceHolder = 'Input number of spouse(s)';
+    this.disableBtn = false;
   }
   onInputBlur() {
     this.emailPlaceHolder = '';
+    this.disableBtn = false;
   }
 
   detectClicked_() {
