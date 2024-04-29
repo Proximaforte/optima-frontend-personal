@@ -79,7 +79,7 @@ export class NewPasswordsComponent implements OnInit {
     this.passwordForm.get('conFirmPassword')?.valueChanges.subscribe({
       next: (conFirmPassword: string) => {
         const password:FormControl|any = <FormControl>this.passwordForm.get('password')?.value;
-        if(conFirmPassword !== password && password?.length > 1){
+        if((conFirmPassword !== password) && (password?.length > 1)){
           this.errorMsg = "*passwords do not match";
           this.disabledBtn = true;
         }else{
@@ -137,8 +137,8 @@ export class NewPasswordsComponent implements OnInit {
     error: (err: any) => {
       this.showSpinner = false;
       console.error('err>>>', err);
-      this.toast.setSuccessMessage(err?.error?.failureReason);
-      this.toast.setErrorMessage(err?.error?.failureReason);
+      this.toast.setSuccessMessage(err?.error?.failureReason === undefined ? err?.error?.responseMessage : err?.error?.failureReason);
+      this.toast.setErrorMessage(err?.error?.failureReason === undefined ? err?.error?.responseMessage : err?.error?.failureReason);
       this.snackbar.openFromComponent(ToastsComponent,{
         duration: 4000,
         verticalPosition: 'bottom',
