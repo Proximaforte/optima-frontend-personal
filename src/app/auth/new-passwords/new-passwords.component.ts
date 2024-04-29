@@ -137,8 +137,8 @@ export class NewPasswordsComponent implements OnInit {
     error: (err: any) => {
       this.showSpinner = false;
       console.error('err>>>', err);
-      this.toast.setSuccessMessage(err?.error?.responseMessage);
-      this.toast.setErrorMessage(err?.error?.responseMessage);
+      this.toast.setSuccessMessage(err?.error?.failureReason);
+      this.toast.setErrorMessage(err?.error?.failureReason);
       this.snackbar.openFromComponent(ToastsComponent,{
         duration: 4000,
         verticalPosition: 'bottom',
