@@ -36,6 +36,7 @@ export class FinancialComponent implements OnInit{
     "If yes, please specify*",  "Education",  "Medical",  "Financial",  "Transportation", "None of the above, others"
   ]
   showOthers: boolean = false;
+  disableBtn: boolean = true;
   userDetails:any = {};
   showSpinner:boolean = false;
   showWelcomeMsg:boolean = false;
@@ -97,8 +98,10 @@ export class FinancialComponent implements OnInit{
       //  console.log("item>>>", value);
         if(value === "yes"){
           this.showOthers = true;
+          this.disableBtn = false;
         }else{
           this.showOthers = false;
+          this.disableBtn = false;
         }
       }
     })

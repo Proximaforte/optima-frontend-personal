@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
     incompleted: 0
   };
   agentData: {} = {};
+  showSpinner:boolean = true;
 
 
   agents: any = [
@@ -50,6 +51,9 @@ export class DashboardComponent implements OnInit {
    // console.log('event>>>', this.totalOnboarding);
     this.totalOnboarding.completed = String(event.completed);
     this.totalOnboarding.incompleted = String(event.incompleted);
+    if(event.completed > 0){
+      this.showSpinner = false;
+    }
   }
 
   getDashboardForm(){
