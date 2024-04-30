@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from '../services/alert/toasts.service';
 import { ToastsComponent } from '../utilities/toasts/toasts.component';
 
+
 @Component({
   selector: 'app-all-beneficiary',
   templateUrl: './all-beneficiary.component.html',
@@ -27,6 +28,7 @@ export class AllBeneficiaryComponent implements OnInit {
     size: 10,
     page: 1
   }
+  paginationArrayToShow: any = []
   paginationNumber: any[] = [];
   filterString: any = "";
   filterIncomplete: any = "";
@@ -135,7 +137,8 @@ export class AllBeneficiaryComponent implements OnInit {
         // this.beneficiaries = mocks;
         // this.paginationParams.size = res?.size;
         // this.paginationParams.page = res?.page;
-        this.paginationNumber = Array.from({ length: this.inCompleteBeneficiaries.length }, (_, index) => index + 1);
+       // this.paginationNumber = Array.from({ length: this.inCompleteBeneficiaries.length }, (_, index) => index + 1);
+       this.paginationArrayToShow = Array(this.paginationParams.page).fill(this.paginationParams.page).map((_, index) => index + 1);
         if (this.inCompleteBeneficiaries?.length === 0) {  //res?.data?.beneficiaries?.length
           this.showNoData = true;
           this.showSpinner = false;
@@ -167,8 +170,9 @@ export class AllBeneficiaryComponent implements OnInit {
         this.showSpinner = false;
         // console.log('res>>', res?.data);
         this.beneficiaries = res?.data?.beneficiaries;
-        this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
-        if (this.beneficiaries?.length === 0) {  //res?.data?.beneficiaries?.length
+       // this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
+         this.paginationArrayToShow = Array(this.paginationParams.page).fill(this.paginationParams.page).map((_, index) => index + 1);
+        if (this.beneficiaries?.length === 0) {  
           this.showNoData = true;
           this.showSpinner = false;
         } else {
@@ -365,13 +369,13 @@ export class AllBeneficiaryComponent implements OnInit {
   }
 
   nextPage() {
-    this.paginationParams.size++;
+    this.paginationParams.page++;
     this.getAllBeneficiaries();
   }
 
   prevPage() {
-    if (this.paginationParams.size > 0) {
-      this.paginationParams.size--
+    if (this.paginationParams.page > 0) {
+      this.paginationParams.page--
       this.getAllBeneficiaries();
     }
   }
@@ -384,13 +388,13 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   nextPage_() {
-    this.paginationParams.size++;
+    this.paginationParams.page++;
     this.getAllIncompleteBeneficiaries();
   }
 
   prevPage_() {
-    if (this.paginationParams.size > 0) {
-      this.paginationParams.size--
+    if (this.paginationParams.page > 0) {
+      this.paginationParams.page--
       this.getAllIncompleteBeneficiaries();
     }
   }

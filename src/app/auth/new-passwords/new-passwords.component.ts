@@ -32,6 +32,12 @@ export class NewPasswordsComponent implements OnInit {
   routeParams: any = {};
   showSpinner: boolean = false;
   showDirectives:boolean = false;
+  hasDigit:boolean = false;
+  hasLowerCaseLetter:boolean = false;
+  hasUpperCaseLetter:boolean = false;
+  hasSymbol: boolean = false;
+  passwordMatches:boolean = false;
+  containsEightCharacters:boolean = false;
 
   passwordForm!: FormGroup;
   constructor(
@@ -44,7 +50,7 @@ export class NewPasswordsComponent implements OnInit {
   ){
     const routeParam = this.route.queryParams.subscribe({
       next: (param: any) => {
-        console.log('params>>', param);
+       // console.log('params>>', param);
         this.routeParams = param;
       }
     })
@@ -76,18 +82,95 @@ export class NewPasswordsComponent implements OnInit {
       conFirmPassword: new FormControl('', [Validators.required])
     });
 
+    this.passwordForm.get('password')?.valueChanges.subscribe({
+      next: (stringVal: string) => {
+        if(stringVal.length === 0){
+          this.hasUpperCaseLetter = false;
+          this.hasLowerCaseLetter = false;
+          this.hasDigit = false;
+          this.hasSymbol = false;
+        }
+
+         // Validation to check if passwords has at least a length of Eight
+        if(stringVal?.length > 7){
+          this.containsEightCharacters = true;
+        }else if(stringVal?.length < 8){
+          this.containsEightCharacters = false;
+        }
+
+        // Validation to check if passwords has a digit
+        if(stringVal.match(/\d/) !== null){
+         // console.log("has string");
+          this.hasDigit = true;
+        }else{
+         // console.log("does not have string");
+          this.hasDigit = false;
+        }
+
+        // Validation to check if passwords has either a lowercase or uppercase letter
+        if(!stringVal?.includes(stringVal?.toLocaleUpperCase()) && stringVal.match(/^[a-z]+$/) !== null){
+          console.log("has only lowercase letter");
+          this.hasLowerCaseLetter = true;
+          // this.hasUpperCaseLetter = false;
+        }else if(
+          stringVal.match(/[a-z]/) !== null && stringVal.match(/[A-Z]/) !== null
+          // stringVal?.includes(stringVal?.toLocaleLowerCase())  || stringVal.match(/^[a-z]+$/) !== null
+          // || stringVal?.includes(stringVal?.toLocaleUpperCase()) || stringVal.match(/^[A-Z]+$/) !== null
+        ){
+          console.log("has both lowercase and uppercase letter");
+          this.hasUpperCaseLetter = true;
+          this.hasLowerCaseLetter = true;
+        }else if(!stringVal?.includes(stringVal?.toLocaleLowerCase()) && stringVal.match(/^[A-Z]+$/) !== null){
+          console.log("has only uppercase letter");
+          this.hasUpperCaseLetter = true;
+          // this.hasLowerCaseLetter = false;
+        }
+
+          // Validation to check if passwords has a symbol
+        if(/[^\w\s]/.test(stringVal)){
+          this.hasSymbol = true;
+        }else{
+          this.hasSymbol = false;
+        }
+
+      }
+    })
+
+      // Validation to check if passwords === confirmPasswords
+
     this.passwordForm.get('conFirmPassword')?.valueChanges.subscribe({
       next: (conFirmPassword: string) => {
         const password:FormControl|any = <FormControl>this.passwordForm.get('password')?.value;
         if((conFirmPassword !== password) && (password?.length > 1)){
           this.errorMsg = "*passwords do not match";
-          this.disabledBtn = true;
+         // this.disabledBtn = true;
+         this.passwordMatches = false;
+       ///  console.log('password not match>>',  this.passwordForm.get('conFirmPassword')?.value);
         }else{
+         // console.log('password match>>',  this.passwordForm.get('conFirmPassword')?.value);
           this.errorMsg = "";
-          this.disabledBtn = false;
+          this.passwordMatches = true;
+         // this.disabledBtn = false;
+         this.validityStateChecker();
         }
       }
     })
+
+  }
+
+  validityStateChecker(){
+    if(
+      this.hasUpperCaseLetter === true &&
+      this.hasLowerCaseLetter === true &&
+      this.hasDigit === true &&
+      this.hasSymbol === true &&
+      this.containsEightCharacters === true &&
+      this.passwordMatches === true
+    ){
+      this.disabledBtn = false;
+    }else{
+      this.disabledBtn = true;
+    }
   }
 
 
@@ -143,6 +226,9 @@ export class NewPasswordsComponent implements OnInit {
         duration: 4000,
         verticalPosition: 'bottom',
       });
+      if(err?.error?.responseMessage === 'OTP has expired'){
+        this.router.navigateByUrl("/auth/forgot-passwords");
+      }
     }
    })
   }

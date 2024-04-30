@@ -146,6 +146,7 @@ export class DisabilityStatusComponent implements OnInit{
         console.error("err123>>>", err);
         this.showSpinner = false;
         this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.failureReason || err?.statusText || "Oops an error occured!");
+        this.toast.setSuccessMessage( err?.error?.responseMessage || err?.error?.failureReason || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

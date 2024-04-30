@@ -26,6 +26,7 @@ export class LogoutComponent {
             duration: 4000,
             verticalPosition: 'bottom',
           });
+
         },
         error: (err: any) => {
           console.error("logout error>>>", err);

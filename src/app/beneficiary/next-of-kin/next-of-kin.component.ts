@@ -142,6 +142,7 @@ export class NextOfKinComponent implements OnInit {
         console.error("err>>", err);
         this.showSpinner = false;
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

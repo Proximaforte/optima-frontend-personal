@@ -12,7 +12,7 @@
     </div>
     <div class="ml-3 mt-8 font-sora">
       <div class="text-2xl font-bold">
-        {{beneficiary.firstname}} {{beneficiary.lastname}}
+        {{beneficiary.firstname || "N/A"}} {{beneficiary.lastname || "N/A"}}
         <small class="text-sm text-optimaGray font-normal">(beneficiary)</small>
       </div>
       <div class="text-optimaGray">{{beneficiary.ssid || 'N/A' }}</div>
@@ -52,7 +52,7 @@
           <label class="absolute text-label -top-2 left-4 bg-white text-xs"
             >Last name</label
           >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lastname}}</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lastname || "N/A"}}</p>
         </div>
         <div
           class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
@@ -60,7 +60,7 @@
           <label class="absolute text-label -top-2 left-4 bg-white text-xs"
             >Middle name</label
           >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.middleName}}</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.middleName || "N/A"}}</p>
         </div>
       </div>
 
@@ -72,7 +72,7 @@
           <label class="absolute text-label -top-2 left-4 bg-white text-xs"
             >Phone Number</label
           >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.phoneNumber}}</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.phoneNumber || "N/A"}}</p>
         </div>
 
         <div
@@ -82,7 +82,7 @@
             >Email</label
           >
           <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.email}}
+            {{beneficiary.email || "N/A"}}
           </p>
         </div>
       </div>
@@ -95,7 +95,7 @@
           <label class="absolute -top-2 text-label left-4 bg-white text-xs"
             >SSID</label
           >
-          <p class="text-sm font-medium pt-2">{{beneficiary.ssid}}</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.ssid || "N/A"}}</p>
         </div>
       </div>
 
@@ -107,7 +107,7 @@
           <label class="absolute -top-2 left-4 text-label bg-white text-xs"
             >BVN</label
           >
-          <p class="text-sm font-medium pt-2">{{beneficiary.bvn}}</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.bvn || "N/A"}}</p>
         </div>
       </div>
 
@@ -119,7 +119,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Date of Birth</label
           >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.dateOfBirth}}</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.dateOfBirth || "N/A"}}</p>
         </div>
 
         <div
@@ -128,7 +128,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >Place of Birth</label
           >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.placeOfBirth}}</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.placeOfBirth || "N/A"}}</p>
         </div>
       </div>
 
@@ -140,7 +140,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >State of Origin</label
           >
-          <p class="text-sm font-medium pt-2">{{beneficiary.state}}</p>
+          <p class="text-sm font-medium pt-2">{{beneficiary.state || "N/A"}}</p>
         </div>
       </div>
 
@@ -152,7 +152,7 @@
           <label class="absolute -top-2 left-4 bg-white text-xs text-label"
             >LGA of Origin
           </label>
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga}}</p>
+          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga || "N/A"}}</p>
         </div>
 
         <div
@@ -162,7 +162,7 @@
             >Hometown</label
           >
           <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.lga + ',' + beneficiary.state}}
+            {{beneficiary.lga + ',' + beneficiary.state || "N/A"}}
           </p>
         </div>
       </div>
@@ -546,35 +546,86 @@
 
    <!-- OCCUPATION -->
    <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Occupation
-      </p>
-    </div>
+ <div>
+  <div class="border-b">
+    <p class="font-semibold text-2xl pl-6 text-optimaGray">
+      Occupation
+    </p>
+  </div>
 
-    <div>
-      <!-- 1st Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Occupation</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.occupation || "N/A"}}
-          </p>
-        </div>
-
-        <!-- <div
+  <div>
+    <!-- 1st Line -->
+    <div class="flex justify-between mt-10">
+      <div
         class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
       >
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-          >Crime Description</label
+          >Cadre</label
         >
-        <p class="text-center text-sm font-medium pt-2">{{beneficiary.other?.crimeDescription || "N/A"}}</p>
-      </div> -->
+        <p class="text-center text-sm font-medium pt-2">
+          {{beneficiary.occupation?.cadre || "N/A"}}
+        </p>
       </div>
+
+      <div
+      class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+    >
+      <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+        >Highest Qualification</label
+      >
+      <p class="text-center text-sm font-medium pt-2">
+        {{beneficiary.occupation?.highestQualification || "N/A"}}
+      </p>
     </div>
+
+      <!-- <div
+      class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+    >
+      <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+        >Crime Description</label
+      >
+      <p class="text-center text-sm font-medium pt-2">{{beneficiary.other?.crimeDescription || "N/A"}}</p>
+    </div> -->
+    </div>
+  </div>
+ </div>
+ <br>
+<div>
+  <!-- 1st Line -->
+  <div class="flex justify-between mt-10">
+    <div
+      class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+    >
+      <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+        >Date of Confirmation</label
+      >
+      <p class="text-center text-sm font-medium pt-2">
+        {{beneficiary.occupation?.dateOfConfirmation || "N/A"}}
+      </p>
+    </div>
+
+    <div
+    class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+  >
+    <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+      >Date of Appointment</label
+    >
+    <p class="text-center text-sm font-medium pt-2">
+      {{beneficiary.occupation?.dateOfFistAppointment || "N/A"}}
+    </p>
+  </div>
+
+    <!-- <div
+    class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+  >
+    <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+      >Crime Description</label
+    >
+    <p class="text-center text-sm font-medium pt-2">{{beneficiary.other?.crimeDescription || "N/A"}}</p>
+  </div> -->
+  </div>
+</div>
+
+    
   </div>
 </div>
