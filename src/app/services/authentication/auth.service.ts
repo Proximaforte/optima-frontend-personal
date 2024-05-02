@@ -83,7 +83,8 @@ export class AuthService {
   }
 
   public resetPassword(param: resetAgentPassword): Observable<any>{
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.resetPassword}?password=${param?.password}&confirmPassword=${param?.confirmPassword}&identifier=${param?.identifier}` , { headers: this.interceptor?.customNoAuthHttpHeaders});
+    const body = JSON.stringify(param)
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.resetPassword}`,body , { headers: this.interceptor?.customNoAuthHttpHeaders});
   }
 
   public getUserDetails():Observable<any>{

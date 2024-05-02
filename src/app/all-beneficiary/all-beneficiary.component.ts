@@ -8,6 +8,7 @@ import { AuthService } from '../services/authentication/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from '../services/alert/toasts.service';
 import { ToastsComponent } from '../utilities/toasts/toasts.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class AllBeneficiaryComponent implements OnInit {
   filterIncomplete: any = "";
   showIncompleteBeneficiaries: boolean = false;
   showCompleteBeneficiaries: boolean = true;
+  beneficiaryFilterSubscription$!: Subscription;
   routeArray: any = [
     {
       routeToDiaplay: 'verify beneficiary nin',
@@ -104,6 +106,22 @@ export class AllBeneficiaryComponent implements OnInit {
   }
 
   openModal(): void {
+   // console.log("Filter completed beneficiaries");
+    const dialogRef = this.dialog.open(FilterBoxComponent, {
+      width: '30%',
+      height: '100%',
+      panelClass: 'custom-dialog-container',
+
+      position: { right: '0' },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openSecondModal():void{
+    //console.log("Filter incompleted beneficiaries");
     const dialogRef = this.dialog.open(FilterBoxComponent, {
       width: '30%',
       height: '100%',
@@ -129,71 +147,86 @@ export class AllBeneficiaryComponent implements OnInit {
 
   getAllIncompleteBeneficiaries() {
     this.showSpinner = true;
-    this.beneficiaryService.getAllIncompleteBeneficiaries(this.beneficiaryService.getFilterParams(), this.paginationParams).subscribe({
-      next: (res: any) => {
-        this.showSpinner = false;
-        this.inCompleteBeneficiaries = res?.data?.beneficiaries;
-        //  console.log('incomplete beneficiaries>>', this.inCompleteBeneficiaries);
-        // this.beneficiaries = mocks;
-        // this.paginationParams.size = res?.size;
-        // this.paginationParams.page = res?.page;
-       // this.paginationNumber = Array.from({ length: this.inCompleteBeneficiaries.length }, (_, index) => index + 1);
-       this.paginationArrayToShow = Array(this.paginationParams.page).fill(this.paginationParams.page).map((_, index) => index + 1);
-        if (this.inCompleteBeneficiaries?.length === 0) {  //res?.data?.beneficiaries?.length
-          this.showNoData = true;
-          this.showSpinner = false;
-        } else {
-          this.showNoData = false;
-        }
-      },
-      error: (err: any) => {
-        console.error('err>>>', err);
-        this.showSpinner = false;
-        this.showNoData = true;
-        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText === 'Unknown Error' ? 'Network Error' : err?.statusText || "Oops an error occured!");
-        this.snackbar.openFromComponent(ToastsComponent, {
-          duration: 4000,
-          verticalPosition: 'bottom',
-        });
-        // if(err?.status === 401){
-        //   this.showSpinner = false;
-        //  this.authService.agentLogout();
-        //   }
+    this.beneficiaryFilterSubscription$ = this.beneficiaryService.getBeneficiaryParams().subscribe({
+      next: (dataToFilter: any) => {
+        console.log("incomplete beneficiary dataToFilter>>", dataToFilter)
+        this.beneficiaryService.getAllIncompleteBeneficiaries(dataToFilter, this.paginationParams).subscribe({
+          next: (res: any) => {
+            this.showSpinner = false;
+            this.inCompleteBeneficiaries = res?.data?.beneficiaries;
+            //  console.log('incomplete beneficiaries>>', this.inCompleteBeneficiaries);
+            // this.beneficiaries = mocks;
+            // this.paginationParams.size = res?.size;
+            // this.paginationParams.page = res?.page;
+           // this.paginationNumber = Array.from({ length: this.inCompleteBeneficiaries.length }, (_, index) => index + 1);
+           this.paginationArrayToShow = Array(this.paginationParams.page).fill(this.paginationParams.page).map((_, index) => index + 1);
+            if (this.inCompleteBeneficiaries?.length === 0) {  //res?.data?.beneficiaries?.length
+              this.showNoData = true;
+              this.showSpinner = false;
+            } else {
+              this.showNoData = false;
+            }
+          },
+          error: (err: any) => {
+            console.error('err>>>', err);
+            this.showSpinner = false;
+            this.showNoData = true;
+            this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText === 'Unknown Error' ? 'Network Error' : err?.statusText || "Oops an error occured!");
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
+            // if(err?.status === 401){
+            //   this.showSpinner = false;
+            //  this.authService.agentLogout();
+            //   }
+          }
+        })
       }
     })
+
   }
 
   getAllBeneficiaries() {
     this.showSpinner = true;
-    this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService.getFilterParams(), this.paginationParams).subscribe({
-      next: (res: any) => {
-        this.showSpinner = false;
-        // console.log('res>>', res?.data);
-        this.beneficiaries = res?.data?.beneficiaries;
-       // this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
-         this.paginationArrayToShow = Array(this.paginationParams.page).fill(this.paginationParams.page).map((_, index) => index + 1);
-        if (this.beneficiaries?.length === 0) {  
-          this.showNoData = true;
-          this.showSpinner = false;
-        } else {
-          this.showNoData = false;
-        }
-      },
-      error: (err: any) => {
-        console.error('err>>>', err);
-        this.showSpinner = false;
-        this.showNoData = true;
-        this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText === 'Unknown Error' ? 'Network Error' : err?.statusText || "Oops an error occured!");
-        this.snackbar.openFromComponent(ToastsComponent, {
-          duration: 4000,
-          verticalPosition: 'bottom',
-        });
-        if(err?.status === 401){
-          this.showSpinner = false;
-         this.authService.agentLogout();
+    // console.log("params>>", this.beneficiaryService.getFilterParams());
+    this.beneficiaryFilterSubscription$ = this.beneficiaryService.getBeneficiaryParams().subscribe({
+      next: (dataToFilter:any) => {
+        console.log('complete beneficiary dataToFilter>>', dataToFilter);
+        this.beneficiaryService.getFilteredBeneficiaries(dataToFilter, this.paginationParams).subscribe({
+          next: (res: any) => {
+            this.showSpinner = false;
+            // console.log('res>>', res?.data);
+            this.beneficiaries = res?.data?.beneficiaries;
+           // this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
+             this.paginationArrayToShow = Array(this.paginationParams.page).fill(this.paginationParams.page).map((_, index) => index + 1);
+            if (this.beneficiaries?.length === 0) {  
+              this.showNoData = true;
+              this.showSpinner = false;
+            } else {
+              this.showNoData = false;
+            }
+          },
+          error: (err: any) => {
+            console.error('err>>>', err);
+            this.showSpinner = false;
+            this.showNoData = true;
+            this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText === 'Unknown Error' ? 'Network Error' : err?.statusText || "Oops an error occured!");
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
+            if(err?.status === 401){
+              this.showSpinner = false;
+             this.authService.agentLogout();
+              }
           }
+        })
+
+
       }
     })
+  
   }
 
   ngOnInit(): void {

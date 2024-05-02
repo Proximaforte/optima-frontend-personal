@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { localGovt } from 'src/app/models/beneficiary/beneficiary';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -14,7 +14,7 @@ import { ToastsComponent } from '../toasts/toasts.component';
   templateUrl: './filter-box.component.html',
   styleUrls: ['./filter-box.component.scss']
 })
-export class FilterBoxComponent implements OnInit{
+export class FilterBoxComponent implements OnInit {
 
   personalDetailsForm!: any;
   filterString: any;
@@ -22,8 +22,8 @@ export class FilterBoxComponent implements OnInit{
   allLGA: string[] = [];
   button1: string = "/assets/images/Button.svg";
   button2: string = "/assets/images/Button2.svg";
-  filterParam!:FormGroup;
-  paginationParams:PaginationParams = {
+  filterParam!: FormGroup | any;
+  paginationParams: PaginationParams = {
     size: 10,
     page: 1
   };
@@ -33,8 +33,8 @@ export class FilterBoxComponent implements OnInit{
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private auth:AuthService
-    ) {
+    private auth: AuthService
+  ) {
   }
 
   getLGA = localGovt?.map((item: any) => item.localGovt);
@@ -159,35 +159,33 @@ export class FilterBoxComponent implements OnInit{
     });
   }
 
-  submit(){
-    //console.log('filter params>>>', this.filterParam.value);
-    
-    this.beneficiaryService.setFilterParams(this.filterParam.value);
-   this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService?.getFilterParams(),this.paginationParams).subscribe({
-    next: (res: any) => {
-    //  console.log('filtered response<<<>>>', res);
-      this.toast.setSuccessMessage("Data filtered successfully!");
-      this.snackbar.openFromComponent(ToastsComponent, {
-        duration: 4000,
-        verticalPosition: 'bottom',
-      });
-    },
-    error: (err: any) => {
-      console.error('err>>', err);
-      this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-      this.snackbar.openFromComponent(ToastsComponent, {
-        duration: 4000,
-        verticalPosition: 'bottom',
-      });
-    }
-   })
+  submit() {
+    // console.log('filter params>>>', this.filterParam.value);
+    const filterPayload: any = {};
+
+    Object.keys(this.filterParam.getRawValue()).forEach((key: any) => {
+      if (this.filterParam.get(key).value) {
+        filterPayload[key] = this.filterParam.get(key).value;
+      }
+    });
+
+    this.beneficiaryService.setBeneficiaryFilter(filterPayload);
+   setTimeout(() => {
+    this.toast.setSuccessMessage("Data filtered successfully!");
+    this.snackbar.openFromComponent(ToastsComponent, {
+      duration: 4000,
+      verticalPosition: 'bottom',
+    });
+    this.dialogRef.close();
+   }, 400);
+
   }
 
   close(): void {
     this.dialogRef.close();
   }
 
-  clearFilter(){
+  clearFilter() {
     this.filterParam.reset();
   }
 

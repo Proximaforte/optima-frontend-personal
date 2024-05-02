@@ -119,24 +119,24 @@
           <td (click)="viewBeneficiaryProfile(beneficiary)"
             class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
           >
-            {{beneficiary?.firstname}} {{beneficiary?.lastname}}
+            {{beneficiary?.firstname || "N/A"}} {{beneficiary?.lastname  || "N/A"}}
           </td>
           <td (click)="viewBeneficiaryProfile(beneficiary)" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{beneficiary?.dateOfBirth  }}
+            {{beneficiary?.dateOfBirth  || "N/A" }}
           </td>
           <td (click)="viewBeneficiaryProfile(beneficiary)" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{beneficiary?.email}}
+            {{beneficiary?.email  || "N/A"}}
           </td>
           <td (click)="viewBeneficiaryProfile(beneficiary)" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            {{beneficiary?.nin}}
+            {{beneficiary?.nin  || "N/A"}}
           </td>
           <td (click)="viewBeneficiaryProfile(beneficiary)" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          {{beneficiary?.phoneNumber}}
+          {{beneficiary?.phoneNumber  || "N/A"}}
           </td>
           <td (click)="viewBeneficiaryProfile(beneficiary)"
             class="relative flex justify-between whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 overflow-visible"
           >
-           {{beneficiary?.gender }}
+           {{beneficiary?.gender  || "N/A"}}
           </td>
         </tr>
 
@@ -222,7 +222,7 @@
             <b>Add New Beneficiary</b>
           </div>
         </button>
-        <button (click)="openModal()" class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
+        <button (click)="openSecondModal()" class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
           <mat-icon class="mr-1">filter_list</mat-icon>
           Filter
       </button> 
@@ -247,7 +247,7 @@
           </svg>
         </div>
         &nbsp;&nbsp;
-        <button (click)="openModal()" class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
+        <button (click)="openSecondModal()" class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
           <mat-icon class="mr-1">filter_list</mat-icon>
           Filter
       </button> 
@@ -316,24 +316,24 @@
           <td
             class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
           >
-            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.firstname}} {{beneficiary?.lastname}}</span>
+            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.firstname || "N/A"}} {{beneficiary?.lastname || "N/A"}}</span>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.dateOfBirth }}</span>
+            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.dateOfBirth  || "N/A"}}</span>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.email}}</span>
+            <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.email || "N/A"}}</span>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-           <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.nin}}</span>
+           <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.nin || "N/A"}}</span>
           </td>
           <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-          <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.phoneNumber}}</span>
+          <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.phoneNumber || "N/A"}}</span>
           </td>
           <td 
             class="relative flex justify-between whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 overflow-visible"
           >
-           <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.gender }}</span>
+           <span (click)="viewBeneficiaryProfile(beneficiary)">{{beneficiary?.gender  || "N/A"}}</span>
           </td>
           <td>
 

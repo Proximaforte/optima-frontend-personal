@@ -34,6 +34,7 @@ export class BeneficiaryService {
   imageObservable$: ReplaySubject<any> = new ReplaySubject<any>();
   routeObservable$: ReplaySubject<any> = new ReplaySubject<any>();
   beneficiaryDataObservable$: ReplaySubject<any> = new ReplaySubject<any>();
+  filterBeneficiaries$: ReplaySubject<any> = new ReplaySubject<any>();
   filterParams!: filterParams;
   pagination: PaginationParams = {
     size: 10,
@@ -45,7 +46,9 @@ export class BeneficiaryService {
   constructor(
     private http: HttpClient,
     private interceptor: JwtInterceptorService,
-  ) { }
+  ) { 
+    this.setBeneficiaryFilter({});
+  }
 
   public setImageUrl(image: string) {
     this.imageUrl = image;
@@ -73,11 +76,18 @@ export class BeneficiaryService {
 
   public setFilterParams(filterParams: filterParams) {
     this.filterParams = filterParams;
-
   }
 
   public getFilterParams() {
     return this.filterParams;
+  }
+
+  public setBeneficiaryFilter(filterParams: filterParams){
+    this.filterBeneficiaries$.next(filterParams);
+  }
+
+  public getBeneficiaryParams():Observable<any>{
+    return this.filterBeneficiaries$.asObservable();
   }
 
   public returnImageUrl(image: any) {
@@ -190,43 +200,19 @@ export class BeneficiaryService {
   public getAllIncompleteBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
 
     const params: any = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page))
-    let crimeType: any = filterParams?.crimeType && filterParams.crimeType.length > 0 ? String(filterParams.crimeType) : null
-    let currentHealthCondition: any = filterParams?.currentHealthCondition && filterParams.currentHealthCondition.length > 0 ? String(filterParams.currentHealthCondition) : null
-    let educationFunding: any = filterParams?.educationFunding && filterParams.educationFunding.length > 0 ? String(filterParams.educationFunding) : null
-    let educationLevel: any = filterParams?.educationLevel && filterParams.educationLevel.length > 0 ? String(filterParams.educationLevel) : null
-    let filterString: any = filterParams?.filterString && filterParams.filterString.length > 0 ? String(filterParams.filterString) : null
-    let gender: any = filterParams?.gender && filterParams.gender.length > 0 ? String(filterParams.gender) : null
-    let healthCondition: any = filterParams?.healthCondition && filterParams.healthCondition.length > 0 ? String(filterParams.healthCondition) : null
-    let houseOwner: any = filterParams?.houseOwner && filterParams.houseOwner.length > 0 ? String(filterParams.houseOwner) : null
-    let inSchool: any = filterParams?.inSchool && filterParams.inSchool.length > 0 ? String(filterParams.inSchool) : null
-    let lga: any = filterParams?.lga && filterParams.lga.length > 0 ? String(filterParams.lga) : null
-    let maritalStatus: any = filterParams?.maritalStatus && filterParams.maritalStatus.length > 0 ? String(filterParams.maritalStatus) : null
+    let crimeType: any = filterParams?.crimeType === undefined ? '' : `crimeType=${filterParams?.crimeType}&`;
+    let currentHealthCondition: any =  filterParams?.currentHealthCondition === undefined ? '' : `currentHealthCondition=${filterParams?.currentHealthCondition}&`;
+    let educationFunding: any = filterParams?.educationFunding === undefined ? '' : `educationFunding=${filterParams?.educationFunding}&`;
+    let educationLevel: any = filterParams?.educationLevel === undefined ? '' : `educationLevel=${filterParams?.educationLevel}&`;
+    let filterString: any = filterParams?.filterString === undefined ? '' : `filterString=${filterParams?.filterString}&`;
+    let gender: any = filterParams?.gender === undefined ? '' : `gender=${filterParams?.gender}&`;
+    let healthCondition: any = filterParams?.healthCondition === undefined ? '' : `healthCondition=${filterParams?.healthCondition}&`;
+    let houseOwner: any = filterParams?.houseOwner === undefined ? '' : `houseOwner=${filterParams?.houseOwner}&`;
+    let inSchool: any = filterParams?.inSchool === undefined ? '' : `inSchool=${filterParams?.inSchool}&`;
+    let lga: any = filterParams?.lga === undefined ? '' : `lga=${filterParams?.lga}&`;
+    let maritalStatus: any = filterParams?.maritalStatus === undefined ? '' : `maritalStatus=${filterParams?.maritalStatus}`;
 
-    if (crimeType !== null) {
-      params.set('crimeType', crimeType);
-    } else if (currentHealthCondition !== null) {
-      params.set('currentHealthCondition', currentHealthCondition);
-    } else if (educationFunding !== null) {
-      params.set('educationFunding', educationFunding);
-    } else if (educationLevel !== null) {
-      params.set('educationLevel', educationLevel);
-    } else if (filterString !== null) {
-      params.set('filterString', filterString);
-    } else if (gender !== null) {
-      params.set('gender', gender);
-    } else if (healthCondition !== null) {
-      params.set('healthCondition', healthCondition);
-    } else if (houseOwner !== null) {
-      params.set('houseOwner', houseOwner);
-    } else if (inSchool !== null) {
-      params.set('inSchool', inSchool);
-    } else if (lga !== null) {
-      params.set('lga', lga);
-    } else if (maritalStatus !== null) {
-      params.set('maritalStatus', maritalStatus);
-    }
-  //  console.log('params>>', params);
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}`, {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getIncompleteBeneficiaries}?${crimeType}${currentHealthCondition}${educationFunding}${educationLevel}${filterString}${gender}${healthCondition}${houseOwner}${inSchool}${lga}${maritalStatus}`, {
       headers: this.interceptor?.customHttpHeaders,
       params: params
     });
@@ -238,48 +224,25 @@ export class BeneficiaryService {
 
   public getFilteredBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
     const params: any = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page))
-    let crimeType: any = filterParams?.crimeType && filterParams.crimeType.length > 0 ? String(filterParams.crimeType) : null
-    let currentHealthCondition: any = filterParams?.currentHealthCondition && filterParams.currentHealthCondition.length > 0 ? String(filterParams.currentHealthCondition) : null
-    let educationFunding: any = filterParams?.educationFunding && filterParams.educationFunding.length > 0 ? String(filterParams.educationFunding) : null
-    let educationLevel: any = filterParams?.educationLevel && filterParams.educationLevel.length > 0 ? String(filterParams.educationLevel) : null
-    let filterString: any = filterParams?.filterString && filterParams.filterString.length > 0 ? String(filterParams.filterString) : null
-    let gender: any = filterParams?.gender && filterParams.gender.length > 0 ? String(filterParams.gender) : null
-    let healthCondition: any = filterParams?.healthCondition && filterParams.healthCondition.length > 0 ? String(filterParams.healthCondition) : null
-    let houseOwner: any = filterParams?.houseOwner && filterParams.houseOwner.length > 0 ? String(filterParams.houseOwner) : null
-    let inSchool: any = filterParams?.inSchool && filterParams.inSchool.length > 0 ? String(filterParams.inSchool) : null
-    let lga: any = filterParams?.lga && filterParams.lga.length > 0 ? String(filterParams.lga) : null
-    let maritalStatus: any = filterParams?.maritalStatus && filterParams.maritalStatus.length > 0 ? String(filterParams.maritalStatus) : null
+    let crimeType: any = filterParams?.crimeType === undefined ? '' : `crimeType=${filterParams?.crimeType}&`;
+    let currentHealthCondition: any =  filterParams?.currentHealthCondition === undefined ? '' : `currentHealthCondition=${filterParams?.currentHealthCondition}&`;
+    let educationFunding: any = filterParams?.educationFunding === undefined ? '' : `educationFunding=${filterParams?.educationFunding}&`;
+    let educationLevel: any = filterParams?.educationLevel === undefined ? '' : `educationLevel=${filterParams?.educationLevel}&`;
+    let filterString: any = filterParams?.filterString === undefined ? '' : `filterString=${filterParams?.filterString}&`;
+    let gender: any = filterParams?.gender === undefined ? '' : `gender=${filterParams?.gender}&`;
+    let healthCondition: any = filterParams?.healthCondition === undefined ? '' : `healthCondition=${filterParams?.healthCondition}&`;
+    let houseOwner: any = filterParams?.houseOwner === undefined ? '' : `houseOwner=${filterParams?.houseOwner}&`;
+    let inSchool: any = filterParams?.inSchool === undefined ? '' : `inSchool=${filterParams?.inSchool}&`;
+    let lga: any = filterParams?.lga === undefined ? '' : `lga=${filterParams?.lga}&`;
+    let maritalStatus: any = filterParams?.maritalStatus === undefined ? '' : `maritalStatus=${filterParams?.maritalStatus}`;
 
-    if (crimeType !== null) {
-      params.set('crimeType', crimeType);
-    } else if (currentHealthCondition !== null) {
-      params.set('currentHealthCondition', currentHealthCondition);
-    } else if (educationFunding !== null) {
-      params.set('educationFunding', educationFunding);
-    } else if (educationLevel !== null) {
-      params.set('educationLevel', educationLevel);
-    } else if (filterString !== null) {
-      params.set('filterString', filterString);
-    } else if (gender !== null) {
-      params.set('gender', gender);
-    } else if (healthCondition !== null) {
-      params.set('healthCondition', healthCondition);
-    } else if (houseOwner !== null) {
-      params.set('houseOwner', houseOwner);
-    } else if (inSchool !== null) {
-      params.set('inSchool', inSchool);
-    } else if (lga !== null) {
-      params.set('lga', lga);
-    } else if (maritalStatus !== null) {
-      params.set('maritalStatus', maritalStatus);
-    }
-    //console.log('params>>', params);
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}`, {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getAllBeneficiaries}?${crimeType}${currentHealthCondition}${educationFunding}${educationLevel}${filterString}${gender}${healthCondition}${houseOwner}${inSchool}${lga}${maritalStatus}`, {
       headers: this.interceptor?.customHttpHeaders,
       params: params
     });
   }
 
+  
 
   public getDashboardStats(reportRange: any): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.dashboardStats}?reportRange=${reportRange}`, { headers: this.interceptor?.customHttpHeaders });
