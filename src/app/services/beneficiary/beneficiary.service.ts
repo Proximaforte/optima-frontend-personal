@@ -269,7 +269,7 @@ export class BeneficiaryService {
   }
 
   public getHealthAilmentsDropdown(): Observable<any> {
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.healthAilments}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.disabilityTypes}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
 
   public getMoneyRangeDropdown(): Observable<any> {

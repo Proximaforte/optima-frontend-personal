@@ -31,6 +31,7 @@ export class DisabilityStatusComponent implements OnInit{
   previousHealthData: any = {};
   userDetails:any = {};
   showSpinner:boolean = false;
+  disableBtn: boolean = true;
 
   constructor(
     private router: Router,
@@ -66,11 +67,8 @@ export class DisabilityStatusComponent implements OnInit{
   getDropdownEnums(){
     this.beneficiaryService.getHealthAilmentsDropdown().subscribe({
       next: (item: any) => {
-        this.options = new Set(["Beneficiary Disability type*","Vision impairment", "Deaf or hard of hearing", 
-        "Dumb or speaking challenge", "Mental health conditions", "Intellectual disability", 
-        "Acquired brain injury", "Physical disability", "Autism spectrum disorder",
-         "Cerebral palsy","Stroke", "Spina bifida",
-        "Arthritis", "Spinal cord injury", "Others"].concat(item.data));
+        this.options = new Set(["Beneficiary Disability type*"].concat(item.data));
+       // console.log('options sets>>', this.options);
       }
     })
   }
@@ -89,11 +87,16 @@ export class DisabilityStatusComponent implements OnInit{
     this.disabilityForm?.get('disabilityType')?.valueChanges.subscribe({
       next: (value: string) => {
       //  console.log("innerValue>>", value);
+      this.disableBtn = false;
         if(value === 'Others'){
           this.showInputBox = true;
         }else{
           this.showInputBox = false;
         }
+
+     
+
+
       }
     })
   }

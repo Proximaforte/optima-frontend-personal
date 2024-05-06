@@ -40,6 +40,7 @@ export const endpoints = {
     educationSponsor: 'api/v1/enums/educationFunding',
     healthConditions: 'api/v1/enums/healthConditions',
     healthAilments: 'api/v1/enums/healthAilments',
+    disabilityTypes: 'api/v1/enums/disabilityTypes',
     moneyRange: 'api/v1/enums/moneyRange',
     aidType: 'api/v1/enums/aidType',
     relationship: 'api/v1/enums/relationship',
