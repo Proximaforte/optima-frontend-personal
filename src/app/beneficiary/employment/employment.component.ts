@@ -34,6 +34,7 @@ export class EmploymentComponent implements OnInit {
   userDetails: any = {};
   showSpinner:boolean = false;
   showWelcomeMsg:boolean = false;
+  disableBtn: boolean = true;
 
   constructor(
     private router: Router,
@@ -61,7 +62,7 @@ export class EmploymentComponent implements OnInit {
   getDropdownItems(){
     this.beneficiaryService.getEmploymentDropdown().subscribe({
       next: (item: any) => {
-        this.options = new Set(["Emploment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-employed", "Retired"].concat(item.data));
+        this.options = new Set(["Employment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-employed", "Retired"].concat(item.data));
       }
     })
   }
@@ -85,22 +86,57 @@ export class EmploymentComponent implements OnInit {
 
     this.employmentForm.get('employmentStatus')?.valueChanges.subscribe({
       next: (value: any) => {
+        this.disableBtn = false;
         if (value === "Employed" || value === "Both Employed and Self-employed") {
           this.showEmployed = true;
           this.showSelfEmployed = false;
           this.showRetired = false;
+          this.disableBtn = true;
         } else if (value === "Self-Employed") {
           this.showEmployed = false;
           this.showSelfEmployed = true;
           this.showRetired = false;
+          this.disableBtn = true;
         } else if (value === "Retired") {
           this.showEmployed = false;
           this.showSelfEmployed = false;
           this.showRetired = true;
+          this.disableBtn = true;
         } else {
           this.showEmployed = false;
           this.showSelfEmployed = false;
           this.showRetired = false;
+        }
+      }
+    })
+
+    this.employmentForm.get('otherSourcesOfIncome')?.valueChanges.subscribe({
+      next: (item: any) => {
+        if(item?.length > 1){
+          this.disableBtn = false;
+        }else{
+          this.disableBtn = true;
+        }
+      }
+    })
+
+    this.employmentForm.get('natureOfBusiness')?.valueChanges.subscribe({
+      next: (item: any) => {
+        if(item?.length > 1){
+          this.disableBtn = false;
+        }else{
+          this.disableBtn = true;
+        }
+      }
+    })
+
+
+    this.employmentForm.get('pensionPaymentQuestion')?.valueChanges.subscribe({
+      next: (item: any) => {
+        if(item){
+          this.disableBtn = false;
+        }else{
+          this.disableBtn = true;
         }
       }
     })

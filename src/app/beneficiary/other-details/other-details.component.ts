@@ -79,12 +79,12 @@ export class OtherDetailsComponent implements OnInit {
       }
     })
 
-    this.othersForm.get('transportMeans')?.valueChanges.subscribe({
+    this.othersForm.get('numberOfCar')?.valueChanges.subscribe({
       next: (value: any) => {
-        if(value === "Rail"){
+        if(value){
           this.disableBtn = false;
         }else{
-          this.disableBtn = false;
+          this.disableBtn = true;
         }
       }
     })

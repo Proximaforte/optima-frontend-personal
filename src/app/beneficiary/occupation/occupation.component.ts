@@ -59,6 +59,8 @@ export class OccupationComponent implements OnInit {
   showCivilServerntsInfo: boolean = false;
   checked: boolean = false;
   showOthers: boolean = false;
+  showOtherzz: boolean = false;
+  disableBtn: boolean = true;
   occupationEnums: Occupation = {
     phoneNumber: "",
     type: "",
@@ -185,6 +187,7 @@ export class OccupationComponent implements OnInit {
       funding: new FormControl('', [Validators.required]),
       diplomaType: new FormControl('', [Validators.required]),
       others: new FormControl('', [Validators.required]),
+      otherOccupation: new FormControl('', [Validators.required]),
 
       onTransfer: new FormControl('', [Validators.required]),
       cadre: new FormControl('', [Validators.required]),
@@ -202,12 +205,45 @@ export class OccupationComponent implements OnInit {
         if (value === "Student") {
           this.showStudentsInfo = true;
           this.showCivilServerntsInfo = false;
+          this.showOtherzz = false; 
         } else if (value === "Civil servant") {
           this.showCivilServerntsInfo = true;
           this.showStudentsInfo = false;
-        }else{
+          this.showOtherzz = false; 
+        }else if (value === "Other") {
           this.showCivilServerntsInfo = false;
-          this.showStudentsInfo = false; 
+          this.showStudentsInfo = false;
+          this.showOtherzz = true; 
+        }
+      }
+    })
+
+    this.occupationForm.get('otherOccupation')?.valueChanges.subscribe({
+      next: (value: any) => {
+        if(value?.length > 1){
+          this.disableBtn = false;
+        }else{
+          this.disableBtn = true;
+        }
+      }
+    })
+
+    this.occupationForm.get('others')?.valueChanges.subscribe({
+      next: (value: any) => {
+        if(value?.length > 1){
+          this.disableBtn = false;
+        }else{
+          this.disableBtn = true;
+        }
+      }
+    })
+
+    this.occupationForm.get('psn')?.valueChanges.subscribe({
+      next: (value: any) => {
+        if(value?.length > 1){
+          this.disableBtn = false;
+        }else{
+          this.disableBtn = true;
         }
       }
     })
@@ -249,13 +285,13 @@ export class OccupationComponent implements OnInit {
     }
   }
 
-
+//otherOccupation
   submitForm() {
     this.showSpinner = true;
     const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const totalPayload:any = {
       phoneNumber: getBeneficiaryPhoneNumber,
-      type: this.occupationForm.value.occupation,
+      type: this.occupationForm.value.occupation === "Other" ? `Other: ${this.occupationForm.get('otherOccupation')?.value}` : this.occupationForm.value.occupation,
       nameOfInstitution: this.occupationForm.value.nameOfInstitution,
       matriculationNumber: this.occupationForm.value.matriculationNumber,
       faculty: this.occupationForm.value.faculty,

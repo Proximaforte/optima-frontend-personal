@@ -81,7 +81,15 @@
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <input type="text" formControlName="others" id="text-input" aria-describedby="helper-text-explanation"
                     class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Name of Department*">
+                    placeholder="Name of Diploma Department*">
+            </form>
+        </div>
+
+        <div class="row-span-1" *ngIf="showOtherzz === true">
+            <form class="max-w-sm" [formGroup]="occupationForm">
+                <input type="text" formControlName="otherOccupation" id="text-input" aria-describedby="helper-text-explanation"
+                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Input Occupation*">
             </form>
         </div>
 
@@ -247,8 +255,8 @@
 
 
         <div class="row-span-1 w-full mt-2">
-            <button (click)="submitForm()" id="btn" type="submit" [disabled]="null"
-                [ngStyle]="{ 'background-color': null ? '#B8B7C8' : '#109856' }"
+            <button (click)="submitForm()" id="btn" type="submit" [disabled]="disableBtn"
+                [ngStyle]="{ 'background-color': disableBtn ? '#B8B7C8' : '#109856' }"
                 class="h-12 w-[400px] px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                 <div class="flex items-center justify-center">
                     <span class="mr-2">Proceed</span>
