@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
     incompleted: 0
   };
   agentData: {} = {};
-  showSpinner:boolean = true;
+  showSpinner: boolean = true;
 
 
   agents: any = [
@@ -39,7 +39,8 @@ export class DashboardComponent implements OnInit {
     { text: 'LGA', data: 'ILLorin South', icon: 'assets/images/lga.svg' },
   ];
 
-  dashBoardDropdown!:FormGroup;
+  dashBoardDropdown!: FormGroup;
+  statsApiHasError: boolean = false;
 
   constructor(
     private beneficiaryService: BeneficiaryService
@@ -47,28 +48,32 @@ export class DashboardComponent implements OnInit {
   }
 
   acceptTableTotals(event: any) {
-    this.totalOnboarding = event;
-   // console.log('event>>>', this.totalOnboarding);
-    this.totalOnboarding.completed = String(event.completed);
-    this.totalOnboarding.incompleted = String(event.incompleted);
-    if(event.completed > 0){
-      this.showSpinner = false;
+    if (this.statsApiHasError == true) {
+      this.totalOnboarding = event;
+      // console.log('event>>>', this.totalOnboarding);
+      this.totalOnboarding.completed = String(event.completed);
+      this.totalOnboarding.incompleted = String(event.incompleted);
+      if (event.completed > 0) {
+        this.showSpinner = false;
+      }
+
     }
+
   }
 
-  getDashboardForm(){
+  getDashboardForm() {
     this.dashBoardDropdown = new FormGroup({
       dateType: new FormControl('Today')
     })
 
     this.dashBoardDropdown.get('dateType')?.valueChanges.subscribe({
-      next: (item:any) => {
+      next: (item: any) => {
         this.beneficiaryService.getDashboardStats(item).subscribe({
           next: (res: any) => {
-            // console.log("response>>>", res?.data);
-            // this.totalOnboarding.completed = res?.data?.completedOnboarding;
-            // this.totalOnboarding.incompleted =res?.data?.incompleteOnboarding;
-           // this.agentData = res?.data;
+            this.showSpinner = false;
+            this.totalOnboarding.completed = String(res?.data?.completedOnboarding);
+            this.totalOnboarding.incompleted = String(res?.data?.incompleteOnboarding);
+            // this.agentData = res?.data;
             this.agents = [
               { text: 'Agent code', data: `${res?.data?.center?.agentCode}`, icon: 'assets/images/agentcode.svg' },
               {
@@ -82,14 +87,17 @@ export class DashboardComponent implements OnInit {
                 icon: 'assets/images/centercode.svg',
               },
               {
-                 text: 'LGA', 
-                 data: `${res?.data?.center?.address},${res?.data?.center?.lga}, ${res?.data?.center?.state}`,
-                 icon: 'assets/images/lga.svg' 
-                }
+                text: 'LGA',
+                data: `${res?.data?.center?.address},${res?.data?.center?.lga}, ${res?.data?.center?.state}`,
+                icon: 'assets/images/lga.svg'
+              }
             ];
           },
           error: (err: any) => {
             console.error("dashbord err>>>", err);
+            if (err) {
+              this.statsApiHasError = true;
+            }
           }
         })
       }
@@ -101,19 +109,22 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  getReportRanges(){
+  getReportRanges() {
     this.beneficiaryService.getReportRanges().subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         this.options = res?.data;
       }
     })
   }
 
-  getDefaultDashboardStats(){
+  getDefaultDashboardStats() {
     this.beneficiaryService.getDashboardStats('Today').subscribe({
       next: (res: any) => {
-        console.log("response>>>", res?.data);
-       // this.agentData = res?.data;
+        //  console.log("response>>>", res?.data);
+        this.showSpinner = false;
+        this.totalOnboarding.completed = String(res?.data?.completedOnboarding);
+        this.totalOnboarding.incompleted = String(res?.data?.incompleteOnboarding);
+        // this.agentData = res?.data;
         this.agents = [
           { text: 'Agent code', data: `${res?.data?.center?.agentCode}`, icon: 'assets/images/agentcode.svg' },
           {
@@ -127,14 +138,17 @@ export class DashboardComponent implements OnInit {
             icon: 'assets/images/centercode.svg',
           },
           {
-             text: 'LGA', 
-             data: `${res?.data?.center?.address},${res?.data?.center?.lga}, ${res?.data?.center?.state}`,
-             icon: 'assets/images/lga.svg' 
-            }
+            text: 'LGA',
+            data: `${res?.data?.center?.address},${res?.data?.center?.lga}, ${res?.data?.center?.state}`,
+            icon: 'assets/images/lga.svg'
+          }
         ];
       },
       error: (err: any) => {
         console.error("dashbord err>>>", err);
+        if (err) {
+          this.statsApiHasError = true;
+        }
       }
     })
   }
@@ -142,7 +156,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getReportRanges();
     this.getDashboardForm();
-    // this.getDefaultDashboardStats();
+    this.getDefaultDashboardStats();
   }
 
 

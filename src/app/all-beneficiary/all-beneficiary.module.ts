@@ -25,8 +25,6 @@ const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
     AllBeneficiaryRoutingModule,
     UtilitiesModule,
     materialModules
-  ],
-   providers: [
-  ],
+  ]
 })
 export class AllBeneficiaryModule { }

@@ -178,6 +178,7 @@ export class EmploymentComponent implements OnInit {
       error: (err: any) => {
         this.showSpinner = false;
         console.error("err from employment details>>", err);
+        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,

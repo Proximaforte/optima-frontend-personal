@@ -20,7 +20,7 @@ import {
   filterParams,
   Occupation
 } from 'src/app/models/beneficiary/beneficiary';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 
 @Injectable({
@@ -189,7 +189,8 @@ export class BeneficiaryService {
   }
 
   public onboardingSubmitted(phoneNumber: string): Observable<any> {
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.onboardingSuccesfull}/${phoneNumber}`, { headers: this.interceptor?.customHttpHeaders });
+    const body = JSON.stringify({phoneNumber: phoneNumber});
+    return this.http.post(`${environment?.baseUrl}/${endpoints?.onboardingSuccesfull}`, body, { headers: this.interceptor?.customHttpHeaders});
   }
 
   public getAllBeneficiaries(paginationParams: PaginationParams): Observable<any> {
@@ -245,6 +246,7 @@ export class BeneficiaryService {
   
 
   public getDashboardStats(reportRange: any): Observable<any> {
+    console.log('reportRange>>', reportRange);
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.dashboardStats}?reportRange=${reportRange}`, { headers: this.interceptor?.customHttpHeaders });
   }
 

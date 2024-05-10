@@ -248,7 +248,6 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
-    //console.log('profile>>', beneficiary);
     sessionStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
     sessionStorage.setItem('incomplete', "Let's continue from where you've stopped!");
     this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
@@ -399,6 +398,10 @@ export class AllBeneficiaryComponent implements OnInit {
       })
      
     }
+  }
+
+  refreshPage(){
+    location.reload();
   }
 
   nextPage() {

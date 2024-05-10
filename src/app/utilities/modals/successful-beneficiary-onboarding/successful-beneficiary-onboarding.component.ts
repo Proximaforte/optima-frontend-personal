@@ -30,7 +30,8 @@ export class SuccessfulBeneficiaryOnboardingComponent {
         this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
       },
       error: (err: any) => {
-        console.log('err>>>', err);
+        console.error('err>>>', err);
+        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
