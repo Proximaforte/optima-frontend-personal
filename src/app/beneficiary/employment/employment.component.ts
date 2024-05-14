@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 export class EmploymentComponent implements OnInit {
 
   options: string[] | any = [
-    "Emploment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-employed", "Retired"
+    "Employment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-employed", "Retired"
   ];
   option2: string[] = [
     "Other Sources of Income e.g farming business etc*"
@@ -185,9 +185,9 @@ export class EmploymentComponent implements OnInit {
           verticalPosition: 'bottom',
         });
         
-        // if (err?.status === 401) {
-        //   this.auth.agentLogout();
-        // }
+        if (err?.status === 401) {
+          this.auth.agentLogout();
+        }
       }
     })
   }

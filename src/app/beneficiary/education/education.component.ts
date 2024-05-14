@@ -29,6 +29,7 @@ export class EducationComponent implements OnInit {
   userDetails:any = {};
   showSpinner:boolean = false;
   showWelcomeMsg:boolean = false;
+  showOtherLevel: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -122,6 +123,7 @@ getDropDownTypes(){
       tertiaryInstitutionLocation: new FormControl('', [Validators.required]),
       currentLevel: new FormControl('', [Validators.required]),
       funding: new FormControl('', [Validators.required]),
+      otherLevel:  new FormControl('', [Validators.required])
     })
 
     this.educationForm.get('tertiaryInstitutionLocation')?.valueChanges.subscribe({
@@ -135,6 +137,16 @@ getDropDownTypes(){
       next: (value:any) => {
         if(value?.length > 1){
           this.disableBtn = false;
+        }
+      }
+    });
+
+    this.educationForm.get('eduLevel')?.valueChanges.subscribe({
+      next: (value: any) => {
+        if(value === "Others" || value === "None of the above, others"){
+          this.showOtherLevel = true;
+        }else{
+          this.showOtherLevel = false;
         }
       }
     })
@@ -157,6 +169,7 @@ getDropDownTypes(){
     const payload = {
       phoneNumber:getBeneficiaryPhoneNumber ,
       level: this.educationForm.value?.eduLevel,
+      otherLevel: this.educationForm.value?.eduLevel === 'Others' ? this.educationForm.value?.otherLevel: this.educationForm.value?.eduLevel === 'None of the above, others' ? this.educationForm.value?.otherLevel : null,
       certification: this.educationForm.value?.certifications,
       primarySchool: this.educationForm.value?.primarySchAttended,
       primarySchoolAddress: this.educationForm.value?.primarySchLocation,
@@ -169,10 +182,9 @@ getDropDownTypes(){
       funding: this.educationForm.value?.funding
     }
 
-    // console.log('payload>>>', payload);
     this.beneficiaryService.educationDetails(payload).subscribe({
       next: (res:any) => {
-        console.log("res>>", res);
+        //console.log("res>>", res);
         this.showSpinner = false;
         this.toast.setSuccessMessage('Beneficiary Education data onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {

@@ -40,6 +40,7 @@ export class FinancialComponent implements OnInit{
   userDetails:any = {};
   showSpinner:boolean = false;
   showWelcomeMsg:boolean = false;
+  showOtherAide: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -91,6 +92,7 @@ export class FinancialComponent implements OnInit{
       averageAmtSpent: new FormControl('', [Validators.required]),
       financialAid: new FormControl('', [Validators.required]),
       ifYes: new FormControl('', [Validators.required]),
+      otherAidType: new FormControl('', [Validators.required])
     })
 
     this.financialInfoForm.get('financialAid')?.valueChanges.subscribe({
@@ -106,6 +108,16 @@ export class FinancialComponent implements OnInit{
       }
     })
 
+    this.financialInfoForm.get('ifYes')?.valueChanges?.subscribe({
+      next:(value:any) => {
+        if(value === 'None of the above, others'){
+          this.showOtherAide = true;
+        }else{
+          this.showOtherAide = false; 
+        }
+      }
+    })
+
   }
 
   submit(){
@@ -117,10 +129,11 @@ export class FinancialComponent implements OnInit{
       monthlyIncome: this.financialInfoForm.value?.houseHoldIncome,
       monthlyExpenses: this.financialInfoForm.value?.averageAmtSpent,
       receivedAid: this.financialInfoForm.value?.financialAid === 'yes' ? true : this.financialInfoForm.value?.financialAid === 'no' ? false : null,
-      specifyAid: this.financialInfoForm.value?.ifYes
+      specifyAid: this.financialInfoForm.value?.ifYes,
+      otherAidType: this.financialInfoForm.value?.ifYes === 'None of the above, others' ? this.financialInfoForm.value?.otherAidType : null
     }
 
-  //  console.log('data>>', payload);
+    //console.log('data>>', payload);
     this.beneficiaryService.financialDetails(payload).subscribe({
       next: (item: any) => {
       //  console.log('item>>>', item);
@@ -148,9 +161,9 @@ export class FinancialComponent implements OnInit{
           verticalPosition: 'bottom',
         });
 
-          // if(err?.status === 401){
-        //   this.auth.agentLogout();
-        //   }
+          if(err?.status === 401){
+          this.auth.agentLogout();
+          }
       }
     })
  

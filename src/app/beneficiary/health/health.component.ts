@@ -9,6 +9,7 @@ import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.ser
   templateUrl: './health.component.html',
   styleUrls: ['./health.component.scss']
 })
+
 export class HealthComponent implements OnInit {
 
   options: string[] | any  = [
@@ -109,7 +110,7 @@ export class HealthComponent implements OnInit {
 
 
   routeToNext(){
-   // console.log('form submit>>', this.healthForm.value);
+    //console.log('form submit>>', this.healthForm.value);
     this.router.navigate(['/home/disability-status'],{
       relativeTo: this.route,
       queryParams: {

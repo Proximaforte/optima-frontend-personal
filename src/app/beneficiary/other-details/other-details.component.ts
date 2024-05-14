@@ -23,6 +23,7 @@ export class OtherDetailsComponent implements OnInit {
   userDetails:any = {};
   showSpinner:boolean = false;
   disableBtn: boolean = true;
+  showOwnCar: boolean = false;
 
   showWelcomeMsg:boolean = false;
   constructor(
@@ -79,12 +80,22 @@ export class OtherDetailsComponent implements OnInit {
       }
     })
 
+    this.othersForm.get('transportMeans')?.valueChanges.subscribe({
+      next: (value: any) => {
+        if(value === "Own car"){
+          this.showOwnCar = true;
+          this.disableBtn = true;
+        }else{
+          this.showOwnCar = false;
+          this.disableBtn = false;
+        }
+      }
+    })
+
     this.othersForm.get('numberOfCar')?.valueChanges.subscribe({
       next: (value: any) => {
         if(value){
           this.disableBtn = false;
-        }else{
-          this.disableBtn = true;
         }
       }
     })

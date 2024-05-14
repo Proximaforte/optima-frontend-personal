@@ -186,7 +186,7 @@ export class OccupationComponent implements OnInit {
       department: new FormControl('', [Validators.required]),
       funding: new FormControl('', [Validators.required]),
       diplomaType: new FormControl('', [Validators.required]),
-      others: new FormControl('', [Validators.required]),
+      specifyDiplomaType: new FormControl('', [Validators.required]),
       otherOccupation: new FormControl('', [Validators.required]),
 
       onTransfer: new FormControl('', [Validators.required]),
@@ -214,6 +214,7 @@ export class OccupationComponent implements OnInit {
           this.showCivilServerntsInfo = false;
           this.showStudentsInfo = false;
           this.showOtherzz = true; 
+          this.showOthers = false;
         }
       }
     })
@@ -228,7 +229,7 @@ export class OccupationComponent implements OnInit {
       }
     })
 
-    this.occupationForm.get('others')?.valueChanges.subscribe({
+    this.occupationForm.get('specifyDiplomaType')?.valueChanges.subscribe({
       next: (value: any) => {
         if(value?.length > 1){
           this.disableBtn = false;
@@ -291,13 +292,15 @@ export class OccupationComponent implements OnInit {
     const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
     const totalPayload:any = {
       phoneNumber: getBeneficiaryPhoneNumber,
-      type: this.occupationForm.value.occupation === "Other" ? `Other: ${this.occupationForm.get('otherOccupation')?.value}` : this.occupationForm.value.occupation,
+      type: this.occupationForm.value.occupation,
+      otherOccupationType: this.occupationForm.value.occupation === "Other" ? this.occupationForm.get('otherOccupation')?.value : null ,
       nameOfInstitution: this.occupationForm.value.nameOfInstitution,
       matriculationNumber: this.occupationForm.value.matriculationNumber,
       faculty: this.occupationForm.value.faculty,
       department: this.occupationForm.value.department,
       funding: this.occupationForm.value.funding,
-      diplomaType: this.occupationForm.value.diplomaType === "Others" ? this.occupationForm.value.others : this.occupationForm.value.diplomaType,
+      diplomaType: this.occupationForm.value.diplomaType,
+      otherDiplomaType: this.occupationForm.value.diplomaType === "Other" ? this.occupationForm.value.specifyDiplomaType : null,
       dateOfFistAppointment: this.occupationEnums.dateOfFistAppointment,
       dateOfConfirmation: this.occupationEnums.dateOfConfirmation,
       onTransfer: this.occupationForm.value.onTransfer === "Yes" ? true : this.occupationForm.value.onTransfer === "No" ? false : null,
@@ -312,7 +315,7 @@ export class OccupationComponent implements OnInit {
       professionalQualifications: this.occupationEnums.professionalQualifications,
       psn: this.occupationForm.value.psn,
     }
-    // console.log("totals>>>", totalPayload);
+   // console.log("totals>>>", totalPayload);
     this.beneficiaryService.occupationDetails(totalPayload).subscribe({
       next: (res: any) => {
         this.showSpinner = false;

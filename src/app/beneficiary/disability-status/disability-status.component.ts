@@ -124,10 +124,10 @@ export class DisabilityStatusComponent implements OnInit{
       receivingTreatment: healthPayload?.receivingTreatmentQuestion === 'no' ? false : healthPayload?.receivingTreatmentQuestion === 'yes' ? true : null,
       disabled: healthPayload?.idDisabled,
       disableType: healthPayload?.disableType,
-      specifyDisabled: healthPayload?.specifyDisabled
+      specifyDisabled: this.disabilityForm.value?.disabilityType === 'Others' ? healthPayload?.specifyDisabled : null
     }
 
-  //  console.log('health payload>>>', newHealthPayload);
+   //console.log('health payload>>>', newHealthPayload);
     this.beneficiaryService.healthDetails(newHealthPayload).subscribe({
       next: (res: any) => {
         //console.log("res>>", res);
@@ -155,9 +155,9 @@ export class DisabilityStatusComponent implements OnInit{
           verticalPosition: 'bottom',
         });
 
-        // if(err?.status === 401){
-        //   this.auth.agentLogout();
-        //   }
+        if(err?.status === 401){
+          this.auth.agentLogout();
+          }
       }
     })
   

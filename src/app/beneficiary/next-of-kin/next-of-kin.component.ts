@@ -120,8 +120,9 @@ export class NextOfKinComponent implements OnInit {
       phoneNumber: this.nextOfKinForm.value?.phoneNumber,
       email: this.nextOfKinForm.value?.email,
       address: this.sameResidence === true ? this.userDetails?.address : this.nextOfKinForm.value?.address,
-      specifyRelationship: this.nextOfKinForm.value.relationship === 'OTHERS' ? this.nextOfKinForm.value?.specifyRelationship : "",
+      specifyRelationship: this.nextOfKinForm.value.relationship === 'OTHERS' ? this.nextOfKinForm.value?.specifyRelationship : null,
     }
+
     this.beneficiaryService.nextOfKinDetails(payload).subscribe({
       next: (res: any) => {
        // console.log("res>>>", res);
