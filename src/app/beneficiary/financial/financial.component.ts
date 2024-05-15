@@ -104,7 +104,7 @@ export class FinancialComponent implements OnInit{
           this.showOtherAide = false; 
         }else{
           this.showOthers = false;
-          this.disableBtn = true;
+          this.disableBtn = false;
           this.showOtherAide = false; 
         }
       }

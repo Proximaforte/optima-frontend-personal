@@ -107,16 +107,18 @@ export class AuthComponent implements OnInit {
       this.authService.loginAgendData(this.loginForm.value).subscribe({
         next: (details: any) => {
          // console.log("login response details>>>", details);
-          this.showSpinner = false;
           if (details?.token) {
            try{
             this.authService.setAgentToken(details?.token);
-            this.router.navigate(['/home/dashboard'], { relativeTo: this.route }).then(() => location?.reload());
-            this.toast.setSuccessMessage('User is logged In Successfully');
-            this.snackbar.openFromComponent(ToastsComponent, {
-              duration: 4000,
-              verticalPosition: 'bottom',
-            });
+        setTimeout(() => {
+          this.router.navigate(['/home/dashboard'], { relativeTo: this.route }).then(() => location?.reload());
+          this.showSpinner = false;
+          this.toast.setSuccessMessage('User is logged In Successfully');
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+        }, 1000)
            }catch(err:any){
             console.error('err>>>', err);
            }
