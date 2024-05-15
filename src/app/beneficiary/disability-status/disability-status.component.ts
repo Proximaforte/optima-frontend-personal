@@ -127,7 +127,7 @@ export class DisabilityStatusComponent implements OnInit{
       specifyDisabled: this.disabilityForm.value?.disabilityType === 'Others' ? healthPayload?.specifyDisabled : null
     }
 
-   //console.log('health payload>>>', newHealthPayload);
+ //  console.log('health payload>>>', newHealthPayload);
     this.beneficiaryService.healthDetails(newHealthPayload).subscribe({
       next: (res: any) => {
         //console.log("res>>", res);

@@ -110,7 +110,7 @@ export class HealthComponent implements OnInit {
 
 
   routeToNext(){
-    //console.log('form submit>>', this.healthForm.value);
+   // console.log('Health form submit>>', this.healthForm.value);
     this.router.navigate(['/home/disability-status'],{
       relativeTo: this.route,
       queryParams: {
