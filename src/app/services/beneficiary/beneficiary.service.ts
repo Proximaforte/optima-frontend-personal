@@ -271,6 +271,10 @@ export class BeneficiaryService {
   }
 
   public getHealthAilmentsDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.healthAilments}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getDisabilityTypesDropdown(): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.disabilityTypes}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
 
@@ -289,6 +293,10 @@ export class BeneficiaryService {
 
   public getEmploymentDropdown(): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.employment}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
+
+  public getBusinessNatureDropdown(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.businessNature}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
 
   public getDiplomaTypesDropdown(): Observable<any> {

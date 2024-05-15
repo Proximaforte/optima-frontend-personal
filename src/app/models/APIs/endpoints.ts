@@ -45,6 +45,7 @@ export const endpoints = {
     aidType: 'api/v1/enums/aidType',
     relationship: 'api/v1/enums/relationship',
     employment: 'api/v1/enums/employmentStatus',
+    businessNature: 'api/v1/enums/businessNature',
     diplomaTypes: 'api/v1/enums/diplomaTypes',
     cadres: 'api/v1/enums/cadres',
     transportTypes: 'api/v1/enums/transportMeans',

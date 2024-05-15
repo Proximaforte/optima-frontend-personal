@@ -109,7 +109,7 @@ export class NewPasswordsComponent implements OnInit {
 
         // Validation to check if passwords has either a lowercase or uppercase letter
         if(!stringVal?.includes(stringVal?.toLocaleUpperCase()) && stringVal.match(/^[a-z]+$/) !== null){
-          console.log("has only lowercase letter");
+       //   console.log("has only lowercase letter");
           this.hasLowerCaseLetter = true;
           // this.hasUpperCaseLetter = false;
         }else if(
@@ -117,11 +117,11 @@ export class NewPasswordsComponent implements OnInit {
           // stringVal?.includes(stringVal?.toLocaleLowerCase())  || stringVal.match(/^[a-z]+$/) !== null
           // || stringVal?.includes(stringVal?.toLocaleUpperCase()) || stringVal.match(/^[A-Z]+$/) !== null
         ){
-          console.log("has both lowercase and uppercase letter");
+         // console.log("has both lowercase and uppercase letter");
           this.hasUpperCaseLetter = true;
           this.hasLowerCaseLetter = true;
         }else if(!stringVal?.includes(stringVal?.toLocaleLowerCase()) && stringVal.match(/^[A-Z]+$/) !== null){
-          console.log("has only uppercase letter");
+        //  console.log("has only uppercase letter");
           this.hasUpperCaseLetter = true;
           // this.hasLowerCaseLetter = false;
         }

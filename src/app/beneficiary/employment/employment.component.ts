@@ -26,6 +26,9 @@ export class EmploymentComponent implements OnInit {
   option4: string[] = [
     "Is your Pension being paid into your Account?*", "yes", "no"
   ];
+  option5: string[] | any  = [
+    "What is the nature of your business?*"
+  ];
 
   showRetired: boolean = false;
   showSelfEmployed: boolean = false;
@@ -35,6 +38,7 @@ export class EmploymentComponent implements OnInit {
   showSpinner:boolean = false;
   showWelcomeMsg:boolean = false;
   disableBtn: boolean = true;
+  showOtherBusiness:boolean = false;
 
   constructor(
     private router: Router,
@@ -64,12 +68,21 @@ export class EmploymentComponent implements OnInit {
       next: (item: any) => {
         this.options = new Set(["Employment status*", "Employed", "Unemployed", "Self-Employed", "Both Employed and Self-employed", "Retired"].concat(item.data));
       }
+    });
+
+
+    this.beneficiaryService.getBusinessNatureDropdown().subscribe({
+      next: (item: any) => {
+        console.log('business nature>>', item);
+        this.option5 = new Set(["What is the nature of your business?*"].concat(item.data));
+      }
     })
   }
 
 
   ngOnInit(): void {
     this.getEmploymentForm();
+    this.getDropdownItems();
   }
 
   getEmploymentForm() {
@@ -81,7 +94,8 @@ export class EmploymentComponent implements OnInit {
       nameOfBusiness: new FormControl('', [Validators.required]),
       natureOfBusiness: new FormControl('', [Validators.required]),
       pensionAccount: new FormControl('', [Validators.required]),
-      pensionPaymentQuestion: new FormControl('', [Validators.required])
+      pensionPaymentQuestion: new FormControl('', [Validators.required]),
+      otherBusinessNature: new FormControl('', [Validators.required])
     })
 
     this.employmentForm.get('employmentStatus')?.valueChanges.subscribe({
@@ -120,13 +134,28 @@ export class EmploymentComponent implements OnInit {
       }
     })
 
-    this.employmentForm.get('natureOfBusiness')?.valueChanges.subscribe({
-      next: (item: any) => {
-        if(item?.length > 1){
+    this.employmentForm.get('otherBusinessNature')?.valueChanges?.subscribe({
+      next: (value: string) => {
+        if(value?.length > 0){
           this.disableBtn = false;
         }else{
-          this.disableBtn = true;
+          this.disableBtn = true
         }
+      }
+    })
+
+    this.employmentForm.get('natureOfBusiness')?.valueChanges.subscribe({
+      next: (item: any) => {
+        if(item === "Others"){
+          this.showOtherBusiness = true;
+          this.disableBtn = true;
+        }else if(item === "What is the nature of your business?*"){
+          this.disableBtn = true;
+        }else{
+          this.showOtherBusiness = false;
+          this.disableBtn = false;
+        }
+
       }
     })
 
@@ -154,6 +183,7 @@ export class EmploymentComponent implements OnInit {
       otherSourceOfIncome: this.employmentForm.value?.otherSourcesOfIncome,
       businessName: this.employmentForm.value?.nameOfBusiness,
       businessNature: this.employmentForm.value?.natureOfBusiness,
+      otherBusinessNature: this.employmentForm.value?.natureOfBusiness === "Others" ? this.employmentForm.get('otherBusinessNature')?.value : null,
       hasPensionAccount: this.employmentForm.value?.pensionAccount === 'yes' ? true : this.employmentForm.value?.pensionAccount === 'no' ? false : null
     }
 

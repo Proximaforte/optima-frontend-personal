@@ -50,9 +50,19 @@
         </div>
         <div class="row-span-1" *ngIf="showSelfEmployed === true" >
             <form class="max-w-sm" [formGroup]="employmentForm">
-                <input type="text" formControlName="natureOfBusiness" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="What is the nature of your business?*">
+                 <select formControlName="natureOfBusiness" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option5; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
             </form>
         </div>
+        <div class="row-span-1" *ngIf="showOtherBusiness === true">
+            <form class="max-w-sm" [formGroup]="employmentForm">
+                <input type="text"  formControlName="otherBusinessNature" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="What is the name of your business?*">
+            </form>
+        </div>
+
         <div class="row-span-1" *ngIf="showRetired === true" >
             <form class="max-w-sm" [formGroup]="employmentForm">
                 <select formControlName="pensionAccount" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">

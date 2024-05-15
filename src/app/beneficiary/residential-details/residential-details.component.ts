@@ -63,7 +63,7 @@ export class ResidentialDetailsComponent implements OnInit {
   residencyForm(){
     this.residentialInfo = new FormGroup({
       placeOfResidence: new FormControl('',[Validators?.required]),
-      annualPay: new FormControl(0),
+      annualPay: new FormControl('', [Validators.required]),
       address: new FormControl('',[Validators?.required]),
       selectState: new FormControl('',[Validators?.required]),
       selectLga: new FormControl('',[Validators?.required]),
@@ -103,17 +103,16 @@ export class ResidentialDetailsComponent implements OnInit {
     const payload:any = {
       phoneNumber: getBeneficiaryPhoneNumber,
       houseOwner: this.residentialInfo.value.placeOfResidence === "Yes, a house owner" ? true : this.residentialInfo.value.placeOfResidence ===  "No, a tenant" ? false : null,
-      annualRent: this.residentialInfo.value?.annualPay,
+      annualRent: Number(this.residentialInfo.value?.annualPay),
       address: this.residentialInfo.value?.address,
       state: this.residentialInfo.value?.selectState,
       lga: this.residentialInfo.value?.selectLga
     }
 
-   // console.log("data>>>", payload);
+   //console.log("data>>>", payload);
     this.beneficiaryService.residentialDetails(payload).subscribe({
       next: (res:any) => {
         this.showSpinner = false;
-      //  console.log("res>>>", res);
         this.beneficiaryService.setRouteToDisplay("marital info");
         this.router.navigate(['/home/beneficiary'],{
           relativeTo: this.route,

@@ -65,7 +65,7 @@ export class DisabilityStatusComponent implements OnInit{
   }
 
   getDropdownEnums(){
-    this.beneficiaryService.getHealthAilmentsDropdown().subscribe({
+    this.beneficiaryService.getDisabilityTypesDropdown().subscribe({
       next: (item: any) => {
         this.options = new Set(["Beneficiary Disability type*"].concat(item.data));
        // console.log('options sets>>', this.options);
@@ -87,12 +87,24 @@ export class DisabilityStatusComponent implements OnInit{
     this.disabilityForm?.get('disabilityType')?.valueChanges.subscribe({
       next: (value: string) => {
       //  console.log("innerValue>>", value);
-      this.disableBtn = false;
+       this.disableBtn = false;
         if(value === 'Others'){
           this.showInputBox = true;
+          this.disableBtn = true;
         }else{
           this.showInputBox = false;
+        //  this.disableBtn = true;
         }
+
+        this.disabilityForm.get('disability')?.valueChanges?.subscribe({
+          next: (value: any) => {
+            if(value?.length > 0){
+              this.disableBtn = false;
+            }else{
+              this.disableBtn = true;
+            }
+          }
+        })
 
      
 

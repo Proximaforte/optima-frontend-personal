@@ -67,8 +67,8 @@ export class FinancialComponent implements OnInit{
    getDropdownItems(){
     this.beneficiaryService.getMoneyRangeDropdown().subscribe({
       next: (item: any) => {
-        this.option2 = new Set([ "Average amount spent monthly by household*",  "0 - 50K",  "50K - 100K",  "100K - 250K", "250K - 500K",  "500K - 1M",  "1M & above", "I don't know"].concat(item.data));
-        this.option4 = new Set(["What is your monthly household income*", "0 - 50K",  "50K - 100K",  "100K - 250K", "250K - 500K",  "500K - 1M",  "1M & above", "I don't know"].concat(item.data));
+        this.option2 = new Set([ "Average amount spent monthly by household*"].concat(item.data));
+        this.option4 = new Set(["What is your monthly household income*"].concat(item.data));
       }
     })
 
@@ -100,10 +100,12 @@ export class FinancialComponent implements OnInit{
       //  console.log("item>>>", value);
         if(value === "yes"){
           this.showOthers = true;
-          this.disableBtn = false;
+          this.disableBtn = true;
+          this.showOtherAide = false; 
         }else{
           this.showOthers = false;
-          this.disableBtn = false;
+          this.disableBtn = true;
+          this.showOtherAide = false; 
         }
       }
     })
@@ -112,8 +114,20 @@ export class FinancialComponent implements OnInit{
       next:(value:any) => {
         if(value === 'None of the above, others'){
           this.showOtherAide = true;
+          this.disableBtn = true;
         }else{
           this.showOtherAide = false; 
+          this.disableBtn = false;
+        }
+      }
+    })
+
+    this.financialInfoForm.get('otherAidType')?.valueChanges.subscribe({
+      next: (value: any) => {
+        if(value?.length > 0){
+          this.disableBtn = false;
+        }else{
+          this.disableBtn = true;
         }
       }
     })

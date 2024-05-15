@@ -149,7 +149,7 @@ export class AllBeneficiaryComponent implements OnInit {
     this.showSpinner = true;
     this.beneficiaryFilterSubscription$ = this.beneficiaryService.getBeneficiaryParams().subscribe({
       next: (dataToFilter: any) => {
-        console.log("incomplete beneficiary dataToFilter>>", dataToFilter)
+       // console.log("incomplete beneficiary dataToFilter>>", dataToFilter)
         this.beneficiaryService.getAllIncompleteBeneficiaries(dataToFilter, this.paginationParams).subscribe({
           next: (res: any) => {
             this.showSpinner = false;
@@ -192,7 +192,7 @@ export class AllBeneficiaryComponent implements OnInit {
     // console.log("params>>", this.beneficiaryService.getFilterParams());
     this.beneficiaryFilterSubscription$ = this.beneficiaryService.getBeneficiaryParams().subscribe({
       next: (dataToFilter:any) => {
-        console.log('complete beneficiary dataToFilter>>', dataToFilter);
+       // console.log('complete beneficiary dataToFilter>>', dataToFilter);
         this.beneficiaryService.getFilteredBeneficiaries(dataToFilter, this.paginationParams).subscribe({
           next: (res: any) => {
             this.showSpinner = false;

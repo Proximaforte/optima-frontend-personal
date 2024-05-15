@@ -66,7 +66,7 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit{
        this.profileImage = data?.data?.base64Image !== null ?  `data:image/png;base64,${data?.data?.base64Image}`: 'assets/images/profilepic.svg'; // `data:image/png;base64,${data?.data?.base64Image}`;
        //https://base64.guru/converter/decode/image
        this.beneficiary = data?.data;  
-       console.log("occupation data>>>", this.beneficiary?.occupation);
+     //  console.log("occupation data>>>", this.beneficiary?.occupation);
         this.toast.setSuccessMessage( "Data retrieved successfully!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,

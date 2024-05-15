@@ -1314,6 +1314,7 @@ export interface OtherDetails {
     politicalView: string;
     convicted: boolean;
     crimeType: string;
+    specifyCrimeType: string;
     crimeDescription: string;
     transportMeans: string;
     numberOfCar: number

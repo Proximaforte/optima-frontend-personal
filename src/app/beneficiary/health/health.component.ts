@@ -61,7 +61,7 @@ export class HealthComponent implements OnInit {
 
     this.healthForm.get('healthQuestion')?.valueChanges.subscribe({
       next: (value:any) => {
-        if(value === 'Others'){
+        if(value === 'None of the above, Others'){
           this.showSpecifyAiment = true;
         }else{
           this.showSpecifyAiment = false;
@@ -98,7 +98,7 @@ export class HealthComponent implements OnInit {
 
     this.beneficiaryService.getHealthAilmentsDropdown().subscribe({
       next: (item: any) => {
-        this.ailments = new Set(["Are you currently suffering from any of the following?*","High Blood Pressure", "Low Blood Pressure", "Diabetes", "Asthma", "Eye Issues", "Ear Issues","Heart Issues", "Kidney Issues","Others", "None of the above, Others"].concat(item.data));
+        this.ailments = new Set(["Are you currently suffering from any of the following?*"].concat(item.data));
       }
     })
   }

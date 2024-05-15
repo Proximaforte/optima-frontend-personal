@@ -65,9 +65,10 @@ export class OtherDetailsComponent implements OnInit {
     this.othersForm = new FormGroup({
       politicalView: new FormControl('', [Validators.required]),
       crimeType: new FormControl('', [Validators.required]),
+      specifyCrimeType: new FormControl('', [Validators.required]),
       crimeDescription: new FormControl('', [Validators.required]),
       transportMeans: new FormControl('', [Validators.required]),
-      numberOfCar: new FormControl('', [Validators.required])
+      numberOfCar: new FormControl(null, [Validators.required, Validators.min(1)])
     })
 
     this.othersForm.get('crimeType')?.valueChanges.subscribe({
@@ -94,7 +95,9 @@ export class OtherDetailsComponent implements OnInit {
 
     this.othersForm.get('numberOfCar')?.valueChanges.subscribe({
       next: (value: any) => {
-        if(value){
+        if(value <= 0){
+          this.disableBtn = true;
+        }else{
           this.disableBtn = false;
         }
       }
@@ -128,9 +131,10 @@ export class OtherDetailsComponent implements OnInit {
       politicalView: this.othersForm.value?.politicalView,
       convicted: this.checked1,
       crimeType: this.othersForm.value?.crimeType,
-      crimeDescription: this.othersForm.value?.crimeDescription,
+      specifyCrimeType: this.othersForm.value?.specifyCrimeType,
       transportMeans: this.othersForm.value?.transportMeans,
-      numberOfCar: this.othersForm.value?.numberOfCar 
+      numberOfCar: this.othersForm.value?.numberOfCar,
+      crimeDescription: ''
     }
 
    this.beneficiaryService.otherDetails(payload).subscribe({
