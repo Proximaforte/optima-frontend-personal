@@ -67,26 +67,6 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // const pdfWidth = 270//imgProps.width;
-  // const pdfHeight = 290//imgProps.height;400
-
-
-  // convertToPDF() {
-  //   const element:any = document.getElementById('contentToConvert');
-  //   html2canvas(element).then((canvas) => {
-  //     const imgData = canvas.toDataURL('image/png');
-  //     const pdf = new jspdf.jsPDF();
-  //     const imgProps = pdf.getImageProperties(imgData);
-  //     const pdfWidth = window?.innerWidth; 
-  //     const pdfHeight = window?.innerHeight; 
-  //     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-  //     pdf.save('converted-document.pdf');
-  //   });
-  // }
-
-  //// pdf.internal.pageSize.getWidth();
-  // (imgProps.height * pdfWidth) / imgProps.width;
-
   ngAfterViewInit(): void {
     const imageElement = this.el.nativeElement.querySelector('#spinner');
     this.renderer.addClass(imageElement, 'hidden');
