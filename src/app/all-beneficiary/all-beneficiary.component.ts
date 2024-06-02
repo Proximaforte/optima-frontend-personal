@@ -176,10 +176,10 @@ export class AllBeneficiaryComponent implements OnInit {
               duration: 4000,
               verticalPosition: 'bottom',
             });
-            // if(err?.status === 401){
-            //   this.showSpinner = false;
-            //  this.authService.agentLogout();
-            //   }
+            if(err?.status === 401  || err?.error?.responseCode === 401){
+              this.showSpinner = false;
+             this.authService.agentLogout();
+              }
           }
         })
       }
@@ -216,7 +216,7 @@ export class AllBeneficiaryComponent implements OnInit {
               duration: 4000,
               verticalPosition: 'bottom',
             });
-            if(err?.status === 401){
+            if(err?.status === 401 || err?.error?.responseCode === 401){
               this.showSpinner = false;
              this.authService.agentLogout();
               }

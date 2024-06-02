@@ -7,7 +7,7 @@ import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular
 })
 export class OtpInputComponent {
 
-  @Output() otpChange = new EventEmitter<string>();
+  @Output() otpChange: EventEmitter<any> = new EventEmitter<string>();
   @ViewChild('input1') input1!: ElementRef;
   @ViewChild('input2') input2!: ElementRef;
   @ViewChild('input3') input3!: ElementRef;

@@ -1,555 +1,325 @@
 <div class="ml-4">
-  <div class="bg-[#ECFDF3] h-12 rounded-t-2xl w-11/12"></div>
-  <div class="flex flex-row items-center ml-6 -mt-6">
-    <div>
-      <img
-        [src]="profileImage"
-        height="96"
-        width="96"
-        alt=""
-        class="rounded-full"
-      />
-    </div>
-    <div class="ml-3 mt-8 font-sora">
-      <div class="text-2xl font-bold">
-        {{beneficiary.firstname || "N/A"}} {{beneficiary.lastname || "N/A"}}
-        <small class="text-sm text-optimaGray font-normal">(beneficiary)</small>
+  <div id="first-half-pdf">
+    <div class="bg-[#ECFDF3] h-12 rounded-t-2xl w-11/12"></div>
+    <div class="flex flex-row items-center ml-6 -mt-6">
+      <div>
+        <img
+          [src]="profileImage"
+          height="96"
+          width="96"
+          alt=""
+          class="rounded-full"
+        />
       </div>
-      <div class="text-optimaGray">{{beneficiary.ssid || 'N/A' }}</div>
-    </div>
-  </div>
-  <!-- *ngIf="showSpinner === true" -->
-  <div role="status" id="spinner" #spinner>
-    <svg class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-    </svg>
-    <span class="sr-only">Loading...</span>
-  </div>
-
-  <!-- BASIC INFORMATION  -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Basic Information
-      </p>
-    </div>
-
-    <div>
-      <!-- first line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
-        >
-          <label class="absolute text-label -top-2 left-4 bg-white text-xs"
-            >First name</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.firstname || "N/A"}}</p>
+      <div class="ml-3 mt-8 font-sora">
+        <div class="text-2xl font-bold">
+          {{beneficiary.firstname || "N/A"}} {{beneficiary.lastname || "N/A"}}
+          <small class="text-sm text-optimaGray font-normal">(beneficiary)</small>
         </div>
-        <div
-          class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
-        >
-          <label class="absolute text-label -top-2 left-4 bg-white text-xs"
-            >Last name</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lastname || "N/A"}}</p>
-        </div>
-        <div
-          class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
-        >
-          <label class="absolute text-label -top-2 left-4 bg-white text-xs"
-            >Middle name</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.middleName || "N/A"}}</p>
-        </div>
-      </div>
-
-      <!-- Second line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute text-label -top-2 left-4 bg-white text-xs"
-            >Phone Number</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.phoneNumber || "N/A"}}</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute text-label -top-2 left-4 bg-white text-xs"
-            >Email</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.email || "N/A"}}
-          </p>
-        </div>
-      </div>
-
-      <!-- Third Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 text-label left-4 bg-white text-xs"
-            >SSID</label
-          >
-          <p class="text-sm font-medium pt-2">{{beneficiary.ssid || "N/A"}}</p>
-        </div>
-      </div>
-
-      <!-- 4th Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 text-label bg-white text-xs"
-            >BVN</label
-          >
-          <p class="text-sm font-medium pt-2">{{beneficiary.bvn || "N/A"}}</p>
-        </div>
-      </div>
-
-      <!-- 5th line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Date of Birth</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.dateOfBirth || "N/A"}}</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Place of Birth</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.placeOfBirth || "N/A"}}</p>
-        </div>
-      </div>
-
-      <!-- 6th line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >State of Origin</label
-          >
-          <p class="text-sm font-medium pt-2">{{beneficiary.state || "N/A"}}</p>
-        </div>
-      </div>
-
-      <!-- 7th line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >LGA of Origin
-          </label>
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga || "N/A"}}</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Hometown</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.lga + ',' + beneficiary.state || "N/A"}}
-          </p>
-        </div>
-      </div>
-      <!-- 8th Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >House Address</label
-          >
-          <p class="text-sm font-medium pt-2">
-            {{beneficiary.address  || "N/A"}}
-          </p>
-        </div>
-      </div>
-      <!-- 9th Line-->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Gender</label
-          >
-          <p class="text-sm font-medium pt-2">{{beneficiary.gender || "N/A"}}</p>
-        </div>
+        <div class="text-optimaGray">{{beneficiary.ssid || 'N/A' }}</div>
       </div>
     </div>
-  </div>
-
-  <!-- RESIDENTIAL INFORMATION -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Residential Information
-      </p>
+    <!-- *ngIf="showSpinner === true" -->
+    <div role="status" id="spinner" #spinner>
+      <svg class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+          <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+      </svg>
+      <span class="sr-only">Loading...</span>
     </div>
-
-    <div>
-      <!-- first line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >State</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.state  || "N/A"}}</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >LGA</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga  || "N/A"}}</p>
-        </div>
-      </div>
-
-      <!-- 2nd Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >House Address</label
-          >
-          <p class="text-sm font-medium pt-2">
-            {{beneficiary.address  || "N/A"}}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MARITAL INFORMATION -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Marital Information
-      </p>
-    </div>
-
-    <div>
-      <!-- first line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Marital Status</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.maritalStatus  || "N/A"}}</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Number of Spouse(s)</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.spouseList.length  || "N/A"}}
-          </p>
-        </div>
-      </div>
-
-      <!-- 2nd Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Number of Child(ren)</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.childList.length  || "N/A"}}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- EDUCATION INFORMATION -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Educational Information
-      </p>
-    </div>
-
-    <div>
-      <!-- 1st Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Highest Level of Education</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.education?.level  || "N/A"}}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HEALTH INFORMATION -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Other Health Information
-      </p>
-    </div>
-
-    <div>
-      <!-- 1st Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Current Health Condition</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.health?.healthCondition  || "N/A"}}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FINANCIAL INFORMATION -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Financial Information
-      </p>
-    </div>
-
-    <div>
-      <!-- first line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Bread Winner</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.financial?.breadwinner === true ? "Yes" : "No"  || "N/A"}}</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Monthly Income</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.financial?.monthlyIncome  || "N/A"}}
-          </p>
-        </div>
-      </div>
-
-      <!-- 2nd Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Monthly Expenses</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.financial?.monthlyExpenses  || "N/A"}}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- NEXT OF KIN -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">Next of Kin</p>
-    </div>
-
-    <div>
-      <!-- first line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >First Name</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.nextOfKin?.firstname  || "N/A"}}</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Last Name</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.nextOfKin?.lastname  || "N/A"}}</p>
-        </div>
-      </div>
-
-      <!-- 2nd Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >NIN</label
-          >
-          <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.nokNin  || "N/A"}}</p>
-        </div>
-      </div>
-      <!-- 3rd line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Phone Number</label
-          >
-          <p class="text-center text-sm font-medium pt-2">{{beneficiary.nextOfKin?.phoneNumber  || "N/A"}}</p>
-        </div>
-
-        <div
-          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Email</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.nextOfKin?.email  || "N/A"}}
-          </p>
-        </div>
-
-        <div
-        class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-      >
-        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-          >Relationship</label
-        >
-        <p class="text-center text-sm font-medium pt-2">
-          {{beneficiary.nextOfKin?.relationship  || "N/A"}}
+  
+    <!-- BASIC INFORMATION  -->
+    <div class="w-[702px] mt-20 ml-8">
+      <div class="border-b">
+        <p class="font-semibold text-2xl pl-6 text-optimaGray">
+          Basic Information
         </p>
       </div>
-      </div>
-
-      <!-- 4th Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >SSID</label
+  
+      <div>
+        <!-- first line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
           >
-          <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.nokSsid  || "N/A"}}</p>
+            <label class="absolute text-label -top-2 left-4 bg-white text-xs"
+              >First name</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.firstname || "N/A"}}</p>
+          </div>
+          <div
+            class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
+          >
+            <label class="absolute text-label -top-2 left-4 bg-white text-xs"
+              >Last name</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.lastname || "N/A"}}</p>
+          </div>
+          <div
+            class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
+          >
+            <label class="absolute text-label -top-2 left-4 bg-white text-xs"
+              >Middle name</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.middleName || "N/A"}}</p>
+          </div>
+        </div>
+  
+        <!-- Second line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+          >
+            <label class="absolute text-label -top-2 left-4 bg-white text-xs"
+              >Phone Number</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.phoneNumber || "N/A"}}</p>
+          </div>
+  
+          <div
+            class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+          >
+            <label class="absolute text-label -top-2 left-4 bg-white text-xs"
+              >Email</label
+            >
+            <p class="text-center text-sm font-medium pt-2">
+              {{beneficiary.email || "N/A"}}
+            </p>
+          </div>
+        </div>
+  
+        <!-- Third Line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 text-label left-4 bg-white text-xs"
+              >SSID</label
+            >
+            <p class="text-sm font-medium pt-2">{{beneficiary.ssid || "N/A"}}</p>
+          </div>
+        </div>
+  
+        <!-- 4th Line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 text-label bg-white text-xs"
+              >BVN</label
+            >
+            <p class="text-sm font-medium pt-2">{{beneficiary.bvn || "N/A"}}</p>
+          </div>
+        </div>
+  
+        <!-- 5th line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Date of Birth</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.dateOfBirth || "N/A"}}</p>
+          </div>
+  
+          <div
+            class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Place of Birth</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.placeOfBirth || "N/A"}}</p>
+          </div>
+        </div>
+  
+        <!-- 6th line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >State of Origin</label
+            >
+            <p class="text-sm font-medium pt-2">{{beneficiary.state || "N/A"}}</p>
+          </div>
+        </div>
+  
+        <!-- 7th line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >LGA of Origin
+            </label>
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga || "N/A"}}</p>
+          </div>
+  
+          <div
+            class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Hometown</label
+            >
+            <p class="text-center text-sm font-medium pt-2">
+              {{beneficiary.lga + ',' + beneficiary.state || "N/A"}}
+            </p>
+          </div>
+        </div>
+        <!-- 8th Line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >House Address</label
+            >
+            <p class="text-sm font-medium pt-2">
+              {{beneficiary.address  || "N/A"}}
+            </p>
+          </div>
+        </div>
+        <!-- 9th Line-->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Gender</label
+            >
+            <p class="text-sm font-medium pt-2">{{beneficiary.gender || "N/A"}}</p>
+          </div>
         </div>
       </div>
-      <!-- 5th Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Address</label
+    </div>
+  
+    <!-- RESIDENTIAL INFORMATION -->
+    <div class="w-[702px] mt-20 ml-8">
+      <div class="border-b">
+        <p class="font-semibold text-2xl pl-6 text-optimaGray">
+          Residential Information
+        </p>
+      </div>
+  
+      <div>
+        <!-- first line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
           >
-          <p class="text-sm font-medium pt-2">
-            {{beneficiary.nextOfKin?.address  || "N/A"}}
-          </p>
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >State</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.state  || "N/A"}}</p>
+          </div>
+  
+          <div
+            class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >LGA</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga  || "N/A"}}</p>
+          </div>
+        </div>
+  
+        <!-- 2nd Line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >House Address</label
+            >
+            <p class="text-sm font-medium pt-2">
+              {{beneficiary.address  || "N/A"}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- MARITAL INFORMATION -->
+    <div class="w-[702px] mt-20 ml-8">
+      <div class="border-b">
+        <p class="font-semibold text-2xl pl-6 text-optimaGray">
+          Marital Information
+        </p>
+      </div>
+  
+      <div>
+        <!-- first line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Marital Status</label
+            >
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.maritalStatus  || "N/A"}}</p>
+          </div>
+  
+          <div
+            class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Number of Spouse(s)</label
+            >
+            <p class="text-center text-sm font-medium pt-2">
+              {{beneficiary.spouseList.length  || "N/A"}}
+            </p>
+          </div>
+        </div>
+  
+        <!-- 2nd Line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Number of Child(ren)</label
+            >
+            <p class="text-center text-sm font-medium pt-2">
+              {{beneficiary.childList.length  || "N/A"}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- EDUCATION INFORMATION -->
+    <div class="w-[702px] mt-20 ml-8">
+      <div class="border-b">
+        <p class="font-semibold text-2xl pl-6 text-optimaGray">
+          Educational Information
+        </p>
+      </div>
+  
+      <div>
+        <!-- 1st Line -->
+        <div class="flex justify-between mt-10">
+          <div
+            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Highest Level of Education</label
+            >
+            <p class="text-center text-sm font-medium pt-2">
+              {{beneficiary.education?.level  || "N/A"}}
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- OTHER INFORMATION -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Other Information
-      </p>
-    </div>
-
-    <div>
-      <!-- 1st Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Beneficiaries Political view</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.other?.politicalView  || "N/A"}}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECURITY INFORMATION -->
-  <div class="w-[702px] mt-20 ml-8">
-    <div class="border-b">
-      <p class="font-semibold text-2xl pl-6 text-optimaGray">
-        Security Information
-      </p>
-    </div>
-
-    <div>
-      <!-- 1st Line -->
-      <div class="flex justify-between mt-10">
-        <div
-          class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-        >
-          <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-            >Has the beneficiary been arrested before</label
-          >
-          <p class="text-center text-sm font-medium pt-2">
-            {{beneficiary.other=== true ? 'YES' : 'NO'  || "N/A"}}
-          </p>
-        </div>
-
-        <div
-        class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-      >
-        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-          >Crime Description</label
-        >
-        <p class="text-center text-sm font-medium pt-2">{{beneficiary.other?.crimeDescription || "N/A"}}</p>
-      </div>
-      </div>
-    </div>
-  </div>
-
-   <!-- OCCUPATION -->
-   <div class="w-[702px] mt-20 ml-8">
- <div>
+ <div id="second-half-pdf">
+ <!-- HEALTH INFORMATION -->
+ <div class="w-[702px] mt-20 ml-8">
   <div class="border-b">
     <p class="font-semibold text-2xl pl-6 text-optimaGray">
-      Occupation
+      Other Health Information
     </p>
   </div>
 
@@ -560,10 +330,208 @@
         class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
       >
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-          >Cadre</label
+          >Current Health Condition</label
         >
         <p class="text-center text-sm font-medium pt-2">
-          {{beneficiary.occupation?.cadre || "N/A"}}
+          {{beneficiary.health?.healthCondition  || "N/A"}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINANCIAL INFORMATION -->
+<div class="w-[702px] mt-20 ml-8">
+  <div class="border-b">
+    <p class="font-semibold text-2xl pl-6 text-optimaGray">
+      Financial Information
+    </p>
+  </div>
+
+  <div>
+    <!-- first line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Bread Winner</label
+        >
+        <p class="text-center text-sm font-medium pt-2">{{beneficiary.financial?.breadwinner === true ? "Yes" : "No"  || "N/A"}}</p>
+      </div>
+
+      <div
+        class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Monthly Income</label
+        >
+        <p class="text-center text-sm font-medium pt-2">
+          {{beneficiary.financial?.monthlyIncome  || "N/A"}}
+        </p>
+      </div>
+    </div>
+
+    <!-- 2nd Line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Monthly Expenses</label
+        >
+        <p class="text-center text-sm font-medium pt-2">
+          {{beneficiary.financial?.monthlyExpenses  || "N/A"}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEXT OF KIN -->
+<div class="w-[702px] mt-20 ml-8">
+  <div class="border-b">
+    <p class="font-semibold text-2xl pl-6 text-optimaGray">Next of Kin</p>
+  </div>
+
+  <div>
+    <!-- first line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >First Name</label
+        >
+        <p class="text-center text-sm font-medium pt-2">{{beneficiary.nextOfKin?.firstname  || "N/A"}}</p>
+      </div>
+
+      <div
+        class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Last Name</label
+        >
+        <p class="text-center text-sm font-medium pt-2">{{beneficiary.nextOfKin?.lastname  || "N/A"}}</p>
+      </div>
+    </div>
+
+    <!-- 2nd Line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >NIN</label
+        >
+        <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.nokNin  || "N/A"}}</p>
+      </div>
+    </div>
+    <!-- 3rd line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Phone Number</label
+        >
+        <p class="text-center text-sm font-medium pt-2">{{beneficiary.nextOfKin?.phoneNumber  || "N/A"}}</p>
+      </div>
+
+      <div
+        class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Email</label
+        >
+        <p class="text-center text-sm font-medium pt-2">
+          {{beneficiary.nextOfKin?.email  || "N/A"}}
+        </p>
+      </div>
+
+      <div
+      class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+    >
+      <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+        >Relationship</label
+      >
+      <p class="text-center text-sm font-medium pt-2">
+        {{beneficiary.nextOfKin?.relationship  || "N/A"}}
+      </p>
+    </div>
+    </div>
+
+    <!-- 4th Line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >SSID</label
+        >
+        <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.nokSsid  || "N/A"}}</p>
+      </div>
+    </div>
+    <!-- 5th Line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Address</label
+        >
+        <p class="text-sm font-medium pt-2">
+          {{beneficiary.nextOfKin?.address  || "N/A"}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OTHER INFORMATION -->
+<div class="w-[702px] mt-20 ml-8">
+  <div class="border-b">
+    <p class="font-semibold text-2xl pl-6 text-optimaGray">
+      Other Information
+    </p>
+  </div>
+
+  <div>
+    <!-- 1st Line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Beneficiaries Political view</label
+        >
+        <p class="text-center text-sm font-medium pt-2">
+          {{beneficiary.other?.politicalView  || "N/A"}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECURITY INFORMATION -->
+<div class="w-[702px] mt-20 ml-8">
+  <div class="border-b">
+    <p class="font-semibold text-2xl pl-6 text-optimaGray">
+      Security Information
+    </p>
+  </div>
+
+  <div>
+    <!-- 1st Line -->
+    <div class="flex justify-between mt-10">
+      <div
+        class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+      >
+        <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+          >Has the beneficiary been arrested before</label
+        >
+        <p class="text-center text-sm font-medium pt-2">
+          {{beneficiary.other=== true ? 'YES' : 'NO'  || "N/A"}}
         </p>
       </div>
 
@@ -571,25 +539,23 @@
       class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
     >
       <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-        >Highest Qualification</label
-      >
-      <p class="text-center text-sm font-medium pt-2">
-        {{beneficiary.occupation?.highestQualification || "N/A"}}
-      </p>
-    </div>
-
-      <!-- <div
-      class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-    >
-      <label class="absolute -top-2 left-4 bg-white text-xs text-label"
         >Crime Description</label
       >
       <p class="text-center text-sm font-medium pt-2">{{beneficiary.other?.crimeDescription || "N/A"}}</p>
-    </div> -->
+    </div>
     </div>
   </div>
- </div>
- <br>
+</div>
+
+ <!-- OCCUPATION -->
+ <div class="w-[702px] mt-20 ml-8">
+<div>
+<div class="border-b">
+  <p class="font-semibold text-2xl pl-6 text-optimaGray">
+    Occupation
+  </p>
+</div>
+
 <div>
   <!-- 1st Line -->
   <div class="flex justify-between mt-10">
@@ -597,10 +563,10 @@
       class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
     >
       <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-        >Date of Confirmation</label
+        >Cadre</label
       >
       <p class="text-center text-sm font-medium pt-2">
-        {{beneficiary.occupation?.dateOfConfirmation || "N/A"}}
+        {{beneficiary.occupation?.cadre || "N/A"}}
       </p>
     </div>
 
@@ -608,10 +574,10 @@
     class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
   >
     <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-      >Date of Appointment</label
+      >Highest Qualification</label
     >
     <p class="text-center text-sm font-medium pt-2">
-      {{beneficiary.occupation?.dateOfFistAppointment || "N/A"}}
+      {{beneficiary.occupation?.highestQualification || "N/A"}}
     </p>
   </div>
 
@@ -625,7 +591,64 @@
   </div> -->
   </div>
 </div>
-
-    
+</div>
+<br>
+<div>
+<!-- 1st Line -->
+<div class="flex justify-between mt-10">
+  <div
+    class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+  >
+    <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+      >Date of Confirmation</label
+    >
+    <p class="text-center text-sm font-medium pt-2">
+      {{beneficiary.occupation?.dateOfConfirmation || "N/A"}}
+    </p>
   </div>
+
+  <div
+  class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+>
+  <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+    >Date of Appointment</label
+  >
+  <p class="text-center text-sm font-medium pt-2">
+    {{beneficiary.occupation?.dateOfFistAppointment || "N/A"}}
+  </p>
+</div>
+
+  <!-- <div
+  class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
+>
+  <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+    >Crime Description</label
+  >
+  <p class="text-center text-sm font-medium pt-2">{{beneficiary.other?.crimeDescription || "N/A"}}</p>
+</div> -->
+</div>
+</div>
+
+  
+</div>
+
+ </div>
+
+ <div class="flex justify-between mt-10">
+  <div
+    class="form-group relative h-[50px] w-full rounded flex px-3 items-center"
+  >
+    <p class="text-sm font-medium pt-2">
+  <button id="export" (click)="convertToPDF('first-half-pdf', {height:290, width: 270 }, 'first_page')" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-4">
+    📑  Download First Page 
+  </button> 
+    &nbsp;&nbsp;&nbsp;
+  <button id="export" (click)="convertToPDF('second-half-pdf', {height:290, width: 270 }, 'second_page')" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded mr-4">
+    📑  Download Second Page
+  </button>
+
+    </p>
+  </div>
+</div>
+
 </div>
