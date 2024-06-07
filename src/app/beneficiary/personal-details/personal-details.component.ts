@@ -54,11 +54,14 @@ export class PersonalDetailsComponent implements OnInit {
       this.showWelcomeMsg = false;
     }
 
+   if(sessionStorage.getItem('NINDetails') !== null){
     const getBeneficiaryNin: any = sessionStorage.getItem('NINDetails');
     this.ninDetails = JSON.parse(getBeneficiaryNin)
-    // console.log('details>>', JSON.parse(getBeneficiaryNin));
-    var newDate = this.ninDetails.birthDate?.split('-');
+    var newDate:any = this.ninDetails.birthDate?.split('-');
     this.formattedDate = `${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;
+   }else{
+    console.log(null);
+   }
   }
 
 

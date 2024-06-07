@@ -101,7 +101,7 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
 
 
   itemClicked(index: number, selectedItemName: string) {
-    this.selectedItemIndex = index;
+    this.selectedItemIndex = index; 
     // if (index + 1 === 1) {
     //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "verify_NIN" } });
     //   this.selectedItemName = selectedItemName;

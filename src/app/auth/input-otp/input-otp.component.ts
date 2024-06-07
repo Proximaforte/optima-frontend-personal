@@ -1,5 +1,4 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit , ElementRef, ViewChild, OnDestroy, Renderer2} from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -60,9 +59,7 @@ startTimer() {
     )
     .subscribe(() => {
       this.countdown--;
-      ///auth/otp-identifier?platformType
       if (this.countdown === 0) {
-       // this.router.navigateByUrl("/auth/forgot-paswords");
        this.router.navigate(["/auth/otp-identifier"], {relativeTo: this.route, queryParams: {platformType: 'phone'}});
         this.timerSubscription$.unsubscribe(); // Stop the timer
       }
