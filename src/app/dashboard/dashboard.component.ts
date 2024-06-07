@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TotalOnboarding } from '../models/beneficiary/beneficiary';
 import { BeneficiaryService } from '../services/beneficiary/beneficiary.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastsComponent } from '../utilities/toasts/toasts.component';
+import { ToastsService } from '../services/alert/toasts.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -43,7 +46,9 @@ export class DashboardComponent implements OnInit {
   statsApiHasError: boolean = false;
 
   constructor(
-    private beneficiaryService: BeneficiaryService
+    private beneficiaryService: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
   ) {
   }
 
@@ -97,6 +102,11 @@ export class DashboardComponent implements OnInit {
             console.error("dashbord err>>>", err);
             if (err) {
               this.statsApiHasError = true;
+              this.toast.setErrorMessage(err?.error?.responseMessage ?? 'Oops an error occured!');
+              this.snackbar.openFromComponent(ToastsComponent, {
+                duration: 4000,
+                verticalPosition: 'bottom',
+              });
             }
           }
         })
@@ -148,6 +158,11 @@ export class DashboardComponent implements OnInit {
         console.error("dashbord err>>>", err);
         if (err) {
           this.statsApiHasError = true;
+          this.toast.setErrorMessage(err?.error?.responseMessage ?? 'Oops an error occured!');
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
         }
       }
     })
