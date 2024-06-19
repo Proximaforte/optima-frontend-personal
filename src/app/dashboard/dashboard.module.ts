@@ -8,8 +8,9 @@ import { BeneficiaryTableComponent } from './beneficiary-table/beneficiary-table
 import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-const materialModules = [MatIconModule, MatSelectModule]
+const materialModules = [MatIconModule, MatSelectModule, MatSnackBarModule,MatSnackBarModule]
 
 @NgModule({
   declarations: [

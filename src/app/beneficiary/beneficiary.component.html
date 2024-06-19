@@ -1,5 +1,6 @@
 <div class="grid grid-cols-5 gap-4">
-    <div class="col-span-1 h-full hidden sm:block w-[300px]">
+    <div class="col-span-1 h-full hidden lg:block w-[300px]">
+        <!-- hidden sm:block -->
           <mat-stepper orientation="vertical" [linear]="isLinear" #stepper >
             <mat-step *ngFor="let item of beneficiaryItems; let i = index" >
                 <ng-template matStepperIcon="edit">

@@ -74,7 +74,6 @@ export class AuthComponent implements OnInit {
       this.authService.agentIsLoggedIn() && !this.authGuard.canActivate == false
     ) {
       this.router.navigate(['/home/dashboard'], { relativeTo: this.route }); //current route supposed normally
-
     }
   }
 
