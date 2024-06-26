@@ -101,12 +101,14 @@ export class DashboardComponent implements OnInit {
           error: (err: any) => {
             console.error("dashbord err>>>", err);
             if (err) {
+            setTimeout(() => {
               this.statsApiHasError = true;
               this.toast.setErrorMessage(err?.error?.responseMessage ?? 'Oops an error occured!');
               this.snackbar.openFromComponent(ToastsComponent, {
                 duration: 4000,
                 verticalPosition: 'bottom',
               });
+            }, 2000)
             }
           }
         })

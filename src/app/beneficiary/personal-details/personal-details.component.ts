@@ -151,7 +151,7 @@ export class PersonalDetailsComponent implements OnInit {
         this.router.navigate(["/home/verification-code"], {
           relativeTo: this.route,
           queryParams: {
-            progress: "enter_verification_code",
+            progress: "enter_verification_code"
           }
         });
 

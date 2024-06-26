@@ -25,6 +25,8 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
   maskedPhoneNumber: string = '';
   showSpinner:boolean = false;
   showVerificationStepper: boolean = false;
+  rawPhoneNumber:string | null | any = '';
+  showResendOTP:boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -44,10 +46,13 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
       this.showWelcomeMsg = false;
     }
 
+   if(sessionStorage.getItem('beneficiaryPhoneNumber') !== null){
     let getBeneficiaryNumber: any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    this.rawPhoneNumber = sessionStorage.getItem('beneficiaryPhoneNumber');
     let maskedPhoneNumber = getBeneficiaryNumber?.replace(/\d(?=\d{4})/g, '*'); // Replace all but the last 4 digits with '*'
     maskedPhoneNumber = maskedPhoneNumber?.slice(0, -2) + getBeneficiaryNumber?.slice(-2);
     this.maskedPhoneNumber = maskedPhoneNumber;
+   }
 /////////////////////////////////////////////////////////////////////////
 
   }
@@ -69,9 +74,11 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
         this.countdown--;
         if (this.countdown === 0) {
           // this.router.navigateByUrl("/home/beneficiary");
-          this.beneficiarySerive.setRouteToDisplay("personal details");
-          this.router.navigate(["/home/beneficiary"], { relativeTo: this.route, queryParams: { progress: "personal_details" } });
+          this.showResendOTP = true;
+         // this.beneficiarySerive.setRouteToDisplay("personal details");
+          // this.router.navigate(["/home/beneficiary"], { relativeTo: this.route, queryParams: { progress: "personal_details" } });
           this.timerSubscription$.unsubscribe(); // Stop the timer
+          // this.resendOTP();
           // this.beneficiarySerive.personalDetails(this.beneficiarySerive.getPersonalDetails()).subscribe({
           //   next:(res:any) => {
           //     this.startTimer();
@@ -80,6 +87,22 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
           // })
         }
       });
+  }
+
+  resendOTP(){
+    this.showSpinner = true;
+    this.beneficiarySerive.generateOTP(this.rawPhoneNumber).subscribe({
+      next: (res: any) => {
+       //  console.log('OTP resent>>>', res);
+         this.showSpinner = false;
+        this.startTimer();
+        this.showResendOTP = false;
+      },
+      error: (err: any) => {
+        console.error("err>>>", err);
+        this.showSpinner = false;
+      }
+    })    
   }
 
   ngOnInit(): void {
