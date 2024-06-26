@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class OtherDetailsComponent implements OnInit {
   options: string[] | any = ["If yes, for what offence?*", "Theft", "Assault", "Drug", "Fraud", "Drug-related offenses", "Traffic violation", "Others"];
   option2:  string[] | any = ["what is your regular means of transportation?*", "Own car", "Public transport", "Okada", "Rail"];
+  option3: string[]|any = ["What is your political view?*","active", "passive"];
   checked1:boolean | any;
   checked2:boolean | any;
   othersForm!: FormGroup;

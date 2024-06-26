@@ -46,7 +46,7 @@ export class OccupationComponent implements OnInit {
     "Have you gone on a training before?*", "Yes", "No"
   ];
   option9: string[] | any = [
-    "Local or Foreign?*", "Local", "Foreign"
+    "Local or Foreign? (Optional)", "Local", "Foreign"
   ];
   showRetired: boolean = false;
   showSelfEmployed: boolean = false;

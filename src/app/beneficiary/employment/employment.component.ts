@@ -90,7 +90,7 @@ export class EmploymentComponent implements OnInit {
       employmentStatus: new FormControl('', [Validators.required]),
       nameOfEmployer: new FormControl('', [Validators.required]),
       employerOfficeAddress: new FormControl('', [Validators.required]),
-      otherSourcesOfIncome: new FormControl('', [Validators.required]),
+      otherSourcesOfIncome: new FormControl('none', [Validators.required]),
       nameOfBusiness: new FormControl('', [Validators.required]),
       natureOfBusiness: new FormControl('', [Validators.required]),
       pensionAccount: new FormControl('', [Validators.required]),

@@ -124,7 +124,7 @@
 
         <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
             <mat-form-field style="width: 385px;">
-                <mat-label class="text-sm">{{occupationEnums.dateOfTransfer.length === 0 ? 'Date of Transfer*' : occupationEnums.dateOfTransfer }}</mat-label>
+                <mat-label class="text-sm">{{occupationEnums.dateOfTransfer.length === 0 ? 'Date of Transfer (Optional)' : occupationEnums.dateOfTransfer }}</mat-label>
                 <input matInput [matDatepicker]="pickerz" [(ngModel)]="occupationEnums.dateOfTransfer" [name]="occupationEnums.dateOfTransfer" (ngModelChange)="datePipe($event,'dateOfTransfer')">
                 <mat-datepicker-toggle matIconSuffix [for]="pickerz"></mat-datepicker-toggle>
                 <mat-datepicker #pickerz></mat-datepicker>

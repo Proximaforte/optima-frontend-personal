@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
@@ -78,6 +78,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
          // this.beneficiarySerive.setRouteToDisplay("personal details");
           // this.router.navigate(["/home/beneficiary"], { relativeTo: this.route, queryParams: { progress: "personal_details" } });
           this.timerSubscription$.unsubscribe(); // Stop the timer
+
           // this.resendOTP();
           // this.beneficiarySerive.personalDetails(this.beneficiarySerive.getPersonalDetails()).subscribe({
           //   next:(res:any) => {
@@ -94,9 +95,10 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
     this.beneficiarySerive.generateOTP(this.rawPhoneNumber).subscribe({
       next: (res: any) => {
        //  console.log('OTP resent>>>', res);
+       this.countdown = 120;
          this.showSpinner = false;
-        this.startTimer();
         this.showResendOTP = false;
+        this.startTimer();
       },
       error: (err: any) => {
         console.error("err>>>", err);
@@ -118,9 +120,9 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    if (this.timerSubscription$) {
-      this.timerSubscription$.unsubscribe();
-    }
+    // if (this.timerSubscription$) {
+    //   this.timerSubscription$.unsubscribe();
+    // }
   }
 
   handleOtpChange(value: string): void {
