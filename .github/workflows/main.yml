@@ -26,7 +26,22 @@ jobs:
           echo "" >> vpn-credentials.txt
           sudo chmod 600 vpn-credentials.txt
           cat vpn-credentials.txt  # Debugging step to verify content   
-          
+
+      - name: Connect to VPN
+        uses: "kota65535/github-openvpn-connect-action@v2"
+        with:
+          config_file: .github/workflows/proxima-gtw-vpn-UDP4-1194-tosyne-nobus-vpn-config.ovpn
+          username: ${{ secrets.VPN_USERNAME }}
+          password: ${{ secrets.VPN_PASSWORD }}
+          client_key: ${{ secrets.USER_KEY }}
+
+      - name: Verify VPN Connection
+        run: |
+          sudo ip a  # List network interfaces for debugging
+          sudo netstat -rn  # Check routing table for debugging
+          sudo traceroute 192.168.10.15  # Trace route to target server for debugging
+          ping -c 4 192.168.10.15  # Ping the server to verify connectivity   
+
       - name: Use SSH
         uses: appleboy/ssh-action@master
         with:
