@@ -40,7 +40,6 @@ jobs:
           sudo ip a  # List network interfaces for debugging
           sudo netstat -rn  # Check routing table for debugging
           sudo traceroute 192.168.10.15  # Trace route to target server for debugging
-          ping -c 4 192.168.10.15  # Ping the server to verify connectivity   
 
       - name: Use SSH
         uses: appleboy/ssh-action@master
