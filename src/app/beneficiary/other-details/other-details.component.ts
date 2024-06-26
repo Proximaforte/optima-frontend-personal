@@ -131,12 +131,14 @@ export class OtherDetailsComponent implements OnInit {
       phoneNumber: getBeneficiaryPhoneNumber,
       politicalView: this.othersForm.value?.politicalView,
       convicted: this.checked1,
-      crimeType: this.othersForm.value?.crimeType,
+      crimeType: this.checked1 === true ? this.othersForm.value?.crimeType : null,
       specifyCrimeType: this.othersForm.value?.specifyCrimeType,
       transportMeans: this.othersForm.value?.transportMeans,
       numberOfCar: this.othersForm.value?.numberOfCar,
       crimeDescription: ''
     }
+
+    //console.log('payload>>>', payload);
 
    this.beneficiaryService.otherDetails(payload).subscribe({
     next: (res: any) => {

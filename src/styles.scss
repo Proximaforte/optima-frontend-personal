@@ -77,3 +77,18 @@ $primary:   #007CBB !default;
   // border-color: transparent;
   //  border: transparent;
 }
+
+.green-radio.mat-radio-button::ng-deep {
+  --mat-radio-checked-color: green;
+  --mat-radio-ripple-color: green;
+  color: green;
+  }
+  
+  .green-radio.mat-radio-button.mat-radio-checked::ng-deep {
+  background-color: green;
+  border-color: green;
+  }
+  
+  .green-radio.mat-radio-button.mat-radio-checked .mat-radio-outer-circle::ng-deep {
+  background-color: green;
+  }

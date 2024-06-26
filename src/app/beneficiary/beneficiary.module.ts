@@ -39,13 +39,14 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OccupationComponent } from './occupation/occupation.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 
 const materialModules = [
   MatStepperModule, MatExpansionModule, MatFormFieldModule,
    MatInputModule,MatIconModule, MatCardModule, MatDialogModule,MatSelectModule,
-   MatSnackBarModule, MatDatepickerModule
+   MatSnackBarModule, MatDatepickerModule,MatRadioModule
 ]
 
 

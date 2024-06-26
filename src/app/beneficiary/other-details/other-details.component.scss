@@ -3,3 +3,26 @@ body {
     font-family: 'Euclid Circular A';
 }
 
+
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+    margin-left: 16px;
+    color: green;
+  }
+  
+
+  .green-radio.mat-radio-button::ng-deep {
+    --mat-radio-checked-color: green;
+    --mat-radio-ripple-color: green;
+    color: green;
+    }
+    
+    .green-radio.mat-radio-button.mat-radio-checked::ng-deep {
+    background-color: green;
+    border-color: green;
+    }
+    
+    .green-radio.mat-radio-button.mat-radio-checked .mat-radio-outer-circle::ng-deep {
+    background-color: green;
+    }
+    
+  

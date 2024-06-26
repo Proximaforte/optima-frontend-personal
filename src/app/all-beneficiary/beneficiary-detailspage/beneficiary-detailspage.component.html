@@ -424,7 +424,8 @@
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
           >NIN</label
         >
-        <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.nokNin  || "N/A"}}</p>
+        <p class="text-sm font-medium pt-2">{{ beneficiary.nin || "N/A"}}</p>
+        <!-- beneficiary.nextOfKin?.nokNin   -->
       </div>
     </div>
     <!-- 3rd line -->
@@ -444,8 +445,9 @@
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
           >Email</label
         >
-        <p class="text-center text-sm font-medium pt-2">
-          {{beneficiary.nextOfKin?.email  || "N/A"}}
+        <p class="text-center text-sm font-medium pt-2"> 
+          <!-- beneficiary.nextOfKin?.email  -->
+          {{beneficiary.email  || "N/A"}}
         </p>
       </div>
 
@@ -469,7 +471,8 @@
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
           >SSID</label
         >
-        <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.nokSsid  || "N/A"}}</p>
+        <p class="text-sm font-medium pt-2">{{beneficiary.ssid || "N/A"}}</p>
+        <!-- beneficiary.nextOfKin?.nokSsid  -->
       </div>
     </div>
     <!-- 5th Line -->
