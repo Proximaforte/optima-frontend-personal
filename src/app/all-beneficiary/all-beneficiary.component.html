@@ -14,7 +14,7 @@
 
       <div class="col-span-1 flex justify-end items-center" style="margin-left: 280px;">
         <div class="relative">
-          <input type="text" [(ngModel)]="filterString" name="filterString" class="border border-gray-300 rounded-md px-4 py-2 pl-10" placeholder="Search...">
+          <input type="text" [(ngModel)]="filterString" name="filterString" (ngModelChange)="listenToSearch($event)" class="border border-gray-300 rounded-md px-4 py-2 pl-10" placeholder="Search...">
           <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
           </svg>
@@ -44,7 +44,7 @@
       <!-- Second Row -->
       <div class=" py-2 px-4 rounded">
         <div class="relative">
-          <input type="text" [(ngModel)]="filterString" name="filterString" class="border border-gray-300 rounded-md px-4 py-2 pl-10" placeholder="Search..." style="width: 290px;">
+          <input type="text" [(ngModel)]="filterString" name="filterString" (ngModelChange)="listenToSearch($event)" class="border border-gray-300 rounded-md px-4 py-2 pl-10" placeholder="Search..." style="width: 290px;">
           <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
           </svg>
@@ -117,7 +117,7 @@
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white" role="button" [routerLink]="['../beneficiary-details']">
         <!-- | beneficiaryFilter: filterString -->
-        <tr class="text-left" *ngFor="let beneficiary of beneficiaries| beneficiaryFilter: filterString;  let i=index">
+        <tr class="text-left" *ngFor="let beneficiary of beneficiaries;  let i=index">
           <td (click)="viewBeneficiaryProfile(beneficiary)"
             class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
           >
@@ -214,7 +214,7 @@
 
       <div class="col-span-1 flex justify-end items-center" style="margin-left: 280px;">
         <div class="relative">
-          <input type="text" [(ngModel)]="filterIncomplete" name="filterIncomplete" class="border border-gray-300 rounded-md px-4 py-2 pl-10 w-full" placeholder="Search...">
+          <input type="text" [(ngModel)]="filterIncomplete" name="filterIncomplete" (ngModelChange)="listenToSearch($event)" class="border border-gray-300 rounded-md px-4 py-2 pl-10 w-full" placeholder="Search...">
           <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
           </svg>
@@ -245,7 +245,7 @@
       <!-- Second Row -->
       <div class=" py-2 px-4 rounded">
         <div class="relative">
-          <input type="text" [(ngModel)]="filterIncomplete" name="filterIncomplete" class="border border-gray-300 rounded-md px-4 py-2 pl-10 w-full" placeholder="Search...">
+          <input type="text" [(ngModel)]="filterIncomplete" name="filterIncomplete" (ngModelChange)="listenToSearch($event)" class="border border-gray-300 rounded-md px-4 py-2 pl-10 w-full" placeholder="Search...">
           <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
           </svg>
@@ -316,7 +316,7 @@
       </thead>
       <tbody class="divide-y divide-gray-200 bg-white" role="button">
         <!-- | incomplete: filterIncomplete -->
-        <tr class="text-left" *ngFor="let beneficiary of inCompleteBeneficiaries  | incomplete: filterIncomplete;  let i=index">
+        <tr class="text-left" *ngFor="let beneficiary of inCompleteBeneficiaries;  let i=index">
           <td
             class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center"
           >

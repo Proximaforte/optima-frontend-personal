@@ -200,7 +200,7 @@ export class BeneficiaryService {
   }
 
   public getAllIncompleteBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
-
+   // console.log("incompleted filterParams>>", filterParams);
     const params: any = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page))
     let crimeType: any = filterParams?.crimeType === undefined ? '' : `crimeType=${filterParams?.crimeType}&`;
     let currentHealthCondition: any =  filterParams?.currentHealthCondition === undefined ? '' : `currentHealthCondition=${filterParams?.currentHealthCondition}&`;
@@ -225,6 +225,7 @@ export class BeneficiaryService {
   }
 
   public getFilteredBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
+   // console.log('completed filterParams>>', filterParams);
     const params: any = new HttpParams().set('size', String(paginationParams?.size)).set('page', String(paginationParams?.page))
     let crimeType: any = filterParams?.crimeType === undefined ? '' : `crimeType=${filterParams?.crimeType}&`;
     let currentHealthCondition: any =  filterParams?.currentHealthCondition === undefined ? '' : `currentHealthCondition=${filterParams?.currentHealthCondition}&`;
@@ -247,7 +248,7 @@ export class BeneficiaryService {
   
 
   public getDashboardStats(reportRange: any): Observable<any> {
-    console.log('reportRange>>', reportRange);
+   // console.log('reportRange>>', reportRange);
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.dashboardStats}?reportRange=${reportRange}`, { headers: this.interceptor?.customHttpHeaders });
   }
 

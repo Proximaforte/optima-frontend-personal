@@ -88,8 +88,7 @@ export class AllBeneficiaryComponent implements OnInit {
     private authService: AuthService,
     private snackbar: MatSnackBar,
     private toast: ToastsService
-  ) {
-  }
+  ) {}
 
   showInCompleteBeneficiaries() {
     this.showNoData = false;
@@ -145,12 +144,22 @@ export class AllBeneficiaryComponent implements OnInit {
     this.router.navigateByUrl('/home/beneficiary');
   }
 
+  listenToSearch(event: any){
+    // console.log("event>>>", event);
+     console.log('filterString>>>', this.filterIncomplete);
+    this.showSpinner = true;
+    this.getAllIncompleteBeneficiaries();
+    this.getAllBeneficiaries();
+  }
+
   getAllIncompleteBeneficiaries() {
     this.showSpinner = true;
     this.beneficiaryFilterSubscription$ = this.beneficiaryService.getBeneficiaryParams().subscribe({
       next: (dataToFilter: any) => {
-       // console.log("incomplete beneficiary dataToFilter>>", dataToFilter)
-        this.beneficiaryService.getAllIncompleteBeneficiaries(dataToFilter, this.paginationParams).subscribe({
+        this.beneficiaryService.getAllIncompleteBeneficiaries(
+          Object.entries({})?.length === 0 ? {filterString: this.filterIncomplete}   : dataToFilter, 
+          this.paginationParams
+        ).subscribe({
           next: (res: any) => {
             this.showSpinner = false;
             this.inCompleteBeneficiaries = res?.data?.beneficiaries;
@@ -189,11 +198,12 @@ export class AllBeneficiaryComponent implements OnInit {
 
   getAllBeneficiaries() {
     this.showSpinner = true;
-    // console.log("params>>", this.beneficiaryService.getFilterParams());
     this.beneficiaryFilterSubscription$ = this.beneficiaryService.getBeneficiaryParams().subscribe({
       next: (dataToFilter:any) => {
-       // console.log('complete beneficiary dataToFilter>>', dataToFilter);
-        this.beneficiaryService.getFilteredBeneficiaries(dataToFilter, this.paginationParams).subscribe({
+        this.beneficiaryService.getFilteredBeneficiaries(
+          Object.entries({})?.length === 0 ? { filterString: this.filterString}  : dataToFilter, 
+          this.paginationParams
+        ).subscribe({
           next: (res: any) => {
             this.showSpinner = false;
             // console.log('res>>', res?.data);

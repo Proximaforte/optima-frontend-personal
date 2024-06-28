@@ -77,7 +77,7 @@ export class SkipCapturingComponent implements OnInit {
   }
 
    toggleWebcam(): void {
-    console.log('hey!!!')
+   // console.log('hey!!!')
     this.showWebcam = !this.showWebcam;
   }
 

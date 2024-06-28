@@ -424,7 +424,7 @@
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
           >NIN</label
         >
-        <p class="text-sm font-medium pt-2">{{ beneficiary.nin || "N/A"}}</p>
+        <p class="text-sm font-medium pt-2">{{ beneficiary.nextOfKin?.nin || "N/A"}}</p>
         <!-- beneficiary.nextOfKin?.nokNin   -->
       </div>
     </div>
@@ -447,7 +447,7 @@
         >
         <p class="text-center text-sm font-medium pt-2"> 
           <!-- beneficiary.nextOfKin?.email  -->
-          {{beneficiary.email  || "N/A"}}
+          {{beneficiary.nextOfKin?.email  || "N/A"}}
         </p>
       </div>
 
@@ -471,7 +471,7 @@
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
           >SSID</label
         >
-        <p class="text-sm font-medium pt-2">{{beneficiary.ssid || "N/A"}}</p>
+        <p class="text-sm font-medium pt-2">{{beneficiary.nextOfKin?.ssid || "N/A"}}</p>
         <!-- beneficiary.nextOfKin?.nokSsid  -->
       </div>
     </div>

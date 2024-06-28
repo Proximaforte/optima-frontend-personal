@@ -92,10 +92,14 @@
                             (ngModel)="nameOfChildren[i]" (name)="nameOfChildren[i]" (value)="nameOfChildren[i] === undefined ? '' : nameOfChildren[i]" (blur)="pushNameOfChildren($event, i)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Name of child*">
-                            <input type="text" id="child" aria-describedby="helper-text-explanation"
+                            <input type="number" id="child" aria-describedby="helper-text-explanation"
                             (ngModel)="ageOfChildren[i]" (name)="ageOfChildren[i]" (value)="ageOfChildren[i] === undefined ? '' : ageOfChildren[i]" (blur)="pushAgeOfChildren($event, i)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Age of Child*">
+                                <input type="text" id="child" aria-describedby="helper-text-explanation"
+                                (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i] === undefined ? '' : dobOfChild[i]" (blur)="pushDOBofChild($event, i)"
+                                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Date of Birth*">
                             <!-- <input type="text" id="child" aria-describedby="helper-text-explanation"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Child's education status*"> -->

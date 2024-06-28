@@ -149,6 +149,7 @@ export class MaritalInfoComponent implements OnInit {
   childrenEduStatus: any[] = [];
   nameOfChildSchool: any[] = [];
   childPhoneNumber: any[] = [];
+  dobOfChild: any[] = [];
 
   listen(event: any, position: number): any {
     if (event?.target?.value === 'yes') {
@@ -165,7 +166,7 @@ export class MaritalInfoComponent implements OnInit {
   }
 
   pushAgeOfChildren(event: any, index: any) {
-    this.ageOfChildren.splice(index - 1, 0, event?.target?.value);
+    this.ageOfChildren.splice(index - 1, 0, Number(event?.target?.value));
   }
 
   pushIsChildInSchool(event: any, index: any) {
@@ -178,6 +179,10 @@ export class MaritalInfoComponent implements OnInit {
 
   pushNameOfChildSchool(event: any, index: any) {
     this.nameOfChildSchool.splice(index - 1, 0, event?.target?.value);
+  }
+  //dobOfChild
+  pushDOBofChild(event: any, index: any) {
+    this.dobOfChild.splice(index - 1, 0, event?.target?.value);
   }
 
 
@@ -212,7 +217,8 @@ export class MaritalInfoComponent implements OnInit {
       this.ageOfChildren?.length,
       this.childrenEduStatus?.length,
       this.childPhoneNumber?.length,
-      this.nameOfChildSchool?.length
+      this.nameOfChildSchool?.length,
+      this.dobOfChild?.length
     ); i++) {
       const ChildrenObj = {
         name: this.nameOfChildren[i],
@@ -220,6 +226,7 @@ export class MaritalInfoComponent implements OnInit {
         inSchool: this.childrenEduStatus[i],
         phoneNumber: this.childPhoneNumber[i],
         schoolName: this.nameOfChildSchool[i],
+        dob: this.dobOfChild[i]
       }
       childrenArray.push(ChildrenObj);
       //  console.log("children form>>>", childrenArray);
