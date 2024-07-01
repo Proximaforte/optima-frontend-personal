@@ -26,18 +26,27 @@ export class AuthService {
    }
   }
 
-  public loginAgendData(user: AgentCredentials): Observable<any> {
-    const body = JSON.stringify(user);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.login}`, body, { headers: this.interceptor?.customNoAuthHttpHeaders}).pipe(
-      map((res: any) => {
-        //console.log('Login response>>', res);
-        return res;
-      }),
-      catchError((err: any) => {
-        console.error('error from login observable>>', err);
-        return throwError(() => err);
-      }));
-  }
+  // public loginAgendData(user: AgentCredentials): Observable<any> {
+  //   const body = JSON.stringify(user);
+  //   return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.login}`, body, { headers: this.interceptor?.customNoAuthHttpHeaders}).pipe(
+  //     map((res: any) => {
+  //       //console.log('Login response>>', res);
+  //       return res;
+  //     }),
+  //     catchError((err: any) => {
+  //       console.error('error from login observable>>', err);
+  //       return throwError(() => err);
+  //     }));
+  // }
+
+  async login(email: string, password: string): Promise<any> {
+    try {
+        const response = await this.http.post<any>(`${environment?.baseUrl}/${endpoints?.login}`, { email, password }).toPromise();
+        return response; 
+    } catch (error) {
+        throw error; 
+    }
+}
 
  public getRefreshToken(){
     const accessToken = this.getAgentData();

@@ -77,14 +77,14 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  getBrowserEye(){
+  getBrowserEye() {
     const getNav: any = window?.navigator;
     const brandsArray: [] = getNav?.userAgentData?.brands;
-   // console.log("brands>>>", brandsArray);
+    // console.log("brands>>>", brandsArray);
     const filterBrowserType = brandsArray?.forEach((elem: any) => {
       if (elem?.brand === 'Microsoft Edge') {
         this.showEye = false;
-       // console.log("Browser Type>>", elem?.brand);
+        // console.log("Browser Type>>", elem?.brand);
       }
     })
   }
@@ -99,16 +99,12 @@ export class AuthComponent implements OnInit {
 
   //email: judeomosehin@gmail.com,  passwords: Password123@
 
-
-  signIn() {
+  async onLogin() {
     this.showSpinner = true;
     if (this.loginForm.valid) {
-      this.authService.loginAgendData(this.loginForm.value).subscribe({
-        next: (details: any) => {
-         // console.log("login response details>>>", details);
-          if (details?.token) {
-           try{
-            this.authService.setAgentToken(details?.token);
+      try {
+        const response = await this.authService.login(this.loginForm.value.email, this.loginForm.value.password);
+        this.authService.setAgentToken(response?.token);
         setTimeout(() => {
           this.router.navigate(['/home/dashboard'], { relativeTo: this.route }).then(() => location?.reload());
           this.showSpinner = false;
@@ -117,31 +113,61 @@ export class AuthComponent implements OnInit {
             duration: 4000,
             verticalPosition: 'bottom',
           });
-        }, 1000)
-           }catch(err:any){
-            console.error('err>>>', err);
-           }
-          } else {
-            this.router.navigate(['/auth/change-passwords'], { relativeTo: this.route });
-          }
-        },
-        error: (err: any) => {
-          console.error("error>>>", err);
-          this.showSpinner = false;
-          this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-          this.snackbar.openFromComponent(ToastsComponent, {
-            duration: 4000,
-            verticalPosition: 'bottom',
-          });
-        }
-      })
-      // if (window?.location?.search === "?route=user-login") {
-      //   // this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
-      // } else if (window?.location?.search === "") {
-      //   this.router.navigate(['/auth/change-passwords'], { relativeTo: this.route });
-      // }
+        }, 1000);
+      } catch (err:any) {
+        console.error('Login failed:', err);
+        this.showSpinner = false;
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      }
     }
   }
+
+  // signIn() {
+  //   this.showSpinner = true;
+  //   if (this.loginForm.valid) {
+  //     this.authService.loginAgendData(this.loginForm.value).subscribe({
+  //       next: (details: any) => {
+  //         // console.log("login response details>>>", details);
+  //         if (details?.token) {
+  //           try {
+  //             this.authService.setAgentToken(details?.token);
+  //             setTimeout(() => {
+  //               this.router.navigate(['/home/dashboard'], { relativeTo: this.route }).then(() => location?.reload());
+  //               this.showSpinner = false;
+  //               this.toast.setSuccessMessage('User is logged In Successfully');
+  //               this.snackbar.openFromComponent(ToastsComponent, {
+  //                 duration: 4000,
+  //                 verticalPosition: 'bottom',
+  //               });
+  //             }, 1000)
+  //           } catch (err: any) {
+  //             console.error('err>>>', err);
+  //           }
+  //         } else {
+  //           this.router.navigate(['/auth/change-passwords'], { relativeTo: this.route });
+  //         }
+  //       },
+  //       error: (err: any) => {
+  //         console.error("error>>>", err);
+  //         this.showSpinner = false;
+  //         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+  //         this.snackbar.openFromComponent(ToastsComponent, {
+  //           duration: 4000,
+  //           verticalPosition: 'bottom',
+  //         });
+  //       }
+  //     })
+  //     // if (window?.location?.search === "?route=user-login") {
+  //     //   // this.router.navigate(['/home/dashboard'], {relativeTo: this.route});
+  //     // } else if (window?.location?.search === "") {
+  //     //   this.router.navigate(['/auth/change-passwords'], { relativeTo: this.route });
+  //     // }
+  //   }
+  // }
 
   // routeToForgotPasswords(){
   //   this.router.navigate(['/auth/forgot-paswords'], {

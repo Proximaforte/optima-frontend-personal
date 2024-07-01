@@ -96,8 +96,8 @@
                             <span class="sr-only">Loading...</span>
                         </div>
                         Login
-                    </button> -->
-                    <button (click)="signIn()" type="submit" [disabled]="!loginForm.valid"
+                    </button> signIn()-->
+                    <button (click)="onLogin()" type="submit" [disabled]="!loginForm.valid"
                         [ngStyle]="{ 'background-color': !loginForm.valid ? '#B8B7C8' : '#109856' }"
                         class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
                         <div class="flex items-center justify-center"> 
