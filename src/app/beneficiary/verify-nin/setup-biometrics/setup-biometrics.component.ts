@@ -110,3 +110,5 @@ export class SetupBiometricsComponent {
     })
   }
 }
+
+///home/setup-biometrics?progress=setup_biometrics

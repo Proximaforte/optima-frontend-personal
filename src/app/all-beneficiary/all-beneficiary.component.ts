@@ -146,7 +146,7 @@ export class AllBeneficiaryComponent implements OnInit {
 
   listenToSearch(event: any){
     // console.log("event>>>", event);
-     console.log('filterString>>>', this.filterIncomplete);
+    // console.log('filterString>>>', this.filterIncomplete);
     this.showSpinner = true;
     this.getAllIncompleteBeneficiaries();
     this.getAllBeneficiaries();

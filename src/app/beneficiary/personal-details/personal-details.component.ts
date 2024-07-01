@@ -58,7 +58,9 @@ export class PersonalDetailsComponent implements OnInit {
     const getBeneficiaryNin: any = sessionStorage.getItem('NINDetails');
     this.ninDetails = JSON.parse(getBeneficiaryNin)
     var newDate:any = this.ninDetails.birthDate?.split('-');
+   // console.log("newDate>>", newDate);
     this.formattedDate = `${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;
+   // console.log("formattedDate>>", this.formattedDate);
    }else{
     console.log(null);
    }
