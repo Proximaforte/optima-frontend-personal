@@ -42,6 +42,8 @@ export class SetupBiometricsComponent {
         this.urlPath = urlPath?.['progress'];
         if(this.urlPath === 'finger_capture_done'){
           this.disabledBtn = false;
+        }else if(this.urlPath === 'face_capture_done'){
+          this.disabledBtn = false;
         }
       }
     });
