@@ -73,7 +73,7 @@ export class EmploymentComponent implements OnInit {
 
     this.beneficiaryService.getBusinessNatureDropdown().subscribe({
       next: (item: any) => {
-        console.log('business nature>>', item);
+       // console.log('business nature>>', item);
         this.option5 = new Set(["What is the nature of your business?*"].concat(item.data));
       }
     })

@@ -21,9 +21,9 @@ export class AuthService {
     private http: HttpClient,
     private interceptor: JwtInterceptorService
   ) {
-   if(this.getAgentData() !== null){
-    this.getRefreshToken();
-   }
+    if (this.getAgentData() !== null) {
+      this.getRefreshToken();
+    }
   }
 
   // public loginAgendData(user: AgentCredentials): Observable<any> {
@@ -41,78 +41,78 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<any> {
     try {
-        const response = await this.http.post<any>(`${environment?.baseUrl}/${endpoints?.login}`, { email, password }).toPromise();
-        return response; 
+      const response = await this.http.post<any>(`${environment?.baseUrl}/${endpoints?.login}`, { email, password }).toPromise();
+      return response;
     } catch (error) {
-        throw error; 
+      throw error;
     }
-}
+  }
 
- public getRefreshToken(){
+  public getRefreshToken() {
     const accessToken = this.getAgentData();
-    const splitToken:any = accessToken?.split('.')[1];
+    const splitToken: any = accessToken?.split('.')[1];
     const decodeToken = JSON.parse(atob(splitToken));  //decode the Token Body
     const expirationTime = decodeToken?.exp * 1000;
     const currentTime = new Date().getTime();
     const timeDifference = expirationTime - currentTime;
-   // console.log('time difference>>', timeDifference);
-    if(timeDifference === 10){  //once time diffrence equals 10secs, the refresh token is called
-     this.refreshToken();
+    // console.log('time difference>>', timeDifference);
+    if (timeDifference === 10) {  //once time diffrence equals 10secs, the refresh token is called
+      this.refreshToken();
     }
   }
 
-  public refreshToken():Observable<any>{
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.refreshToken}`, { headers: this.interceptor?.customHttpHeaders}).pipe(
-      map((res:any) => {
-      //  console.log('refresh token response>>>', res);
-        if(res?.responseCode === 200){
+  public refreshToken(): Observable<any> {
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.refreshToken}`, { headers: this.interceptor?.customHttpHeaders }).pipe(
+      map((res: any) => {
+        //  console.log('refresh token response>>>', res);
+        if (res?.responseCode === 200) {
           this.setAgentToken(res?.data);
         }
         return res;
       }),
-      catchError((err:any) => {
+      catchError((err: any) => {
         console.error('err from refresh token observable>>', err);
-       return throwError(() => err)
+        return throwError(() => err)
       })
     )
   }
 
-  public forgotPasswords(path: forgotPasswords): Observable<any>{
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.forgetPassword}/${path.identifier}`, { headers: this.interceptor?.customNoAuthHttpHeaders});
+  public forgotPasswords(path: forgotPasswords): Observable<any> {
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.forgetPassword}/${path.identifier}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
 
-  public validateOTP(path: forgotPasswords | any): Observable<any>{
-   // const params = new HttpParams().set('token', path?.token).set('identifier', path?.identifier);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.validateForgetPasswordToken}?token=${path.token}&identifier=${path.identifier}`, { headers: this.interceptor?.customNoAuthHttpHeaders});
+  public validateOTP(path: forgotPasswords | any): Observable<any> {
+    // const params = new HttpParams().set('token', path?.token).set('identifier', path?.identifier);
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.validateForgetPasswordToken}?token=${path.token}&identifier=${path.identifier}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
 
-  public changePasswords(path: changePassword): Observable<any>{
+  public changePasswords(path: changePassword): Observable<any> {
     const body = JSON.stringify(path);
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.changePassword}`, body , { headers: this.interceptor?.customHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.changePassword}`, body, { headers: this.interceptor?.customHttpHeaders });
   }
 
-  public resetPassword(param: resetAgentPassword): Observable<any>{
+  public resetPassword(param: resetAgentPassword): Observable<any> {
     const body = JSON.stringify(param)
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.resetPassword}`,body , { headers: this.interceptor?.customNoAuthHttpHeaders});
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.resetPassword}`, body, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
 
-  public getUserDetails():Observable<any>{
-    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getUserDetails}`, { headers: this.interceptor?.customHttpHeaders}).pipe(
-      map((res:any) => {
-       // console.log('user details response>>', res);
+  public getUserDetails(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getUserDetails}`, { headers: this.interceptor?.customHttpHeaders }).pipe(
+      map((res: any) => {
+        // console.log('user details response>>', res);
         localStorage.setItem('userDetails', JSON.stringify(res?.data));
         return res;
       }),
-      catchError((err:any) => {
+      catchError((err: any) => {
         return throwError(() => err);
       })
     )
   }
 
-  public logoutUser():Observable<any>{
-    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.logoutUser}`, {},{ headers: this.interceptor?.customHttpHeaders});
+  public logoutUser(): Observable<any> {
+    return this.http.post<any>(`${environment?.baseUrl}/${endpoints?.logoutUser}`, {}, { headers: this.interceptor?.customHttpHeaders });
   }
-  
+
 
   public setAgentLoginDetails({ email, password }: any): Observable<any> {
     if (email !== null && password !== null) {

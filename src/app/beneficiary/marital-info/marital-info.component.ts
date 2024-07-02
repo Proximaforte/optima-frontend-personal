@@ -48,6 +48,14 @@ export class MaritalInfoComponent implements OnInit {
   disableBtn:boolean = true;
 
   showWelcomeMsg:boolean = false;
+  dateOfBirth:string = "Input child's date of birth";
+
+  nameOfChildren: any[] = [];
+  ageOfChildren: any[] = [];
+  childrenEduStatus: any[] = [];
+  nameOfChildSchool: any[] = [];
+  childPhoneNumber: any[] = [];
+  dobOfChild: any[] = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -144,12 +152,7 @@ export class MaritalInfoComponent implements OnInit {
     await this.phoneNumberOfSpouses.splice(index - 1, 0, event?.target?.value);
   }
 
-  nameOfChildren: any[] = [];
-  ageOfChildren: any[] = [];
-  childrenEduStatus: any[] = [];
-  nameOfChildSchool: any[] = [];
-  childPhoneNumber: any[] = [];
-  dobOfChild: any[] = [];
+
 
   listen(event: any, position: number): any {
     if (event?.target?.value === 'yes') {
@@ -182,10 +185,10 @@ export class MaritalInfoComponent implements OnInit {
   }
   //dobOfChild
   pushDOBofChild(event: any, index: any) {
-    this.dobOfChild.splice(index - 1, 0, event?.target?.value);
+   // console.log('date>>>', event?.target?.value);
+    this.dobOfChild.splice(index - 1, 0, event);
+  //  console.log('array>>>', this.dobOfChild);
   }
-
-
 
 
   numbersArray(spouse: number): number[] {
@@ -196,6 +199,20 @@ export class MaritalInfoComponent implements OnInit {
   numbersArrayNext(children: number): number[] {
     this.childrenArray = Array(children);
     return Array(children).fill(0).map((x, i) => i + 1);
+  }
+
+  datePipe(event: any, index:any) {
+   // console.log('event>>', event);
+    var dateObject = new Date(event);
+    var day = dateObject.getDate();
+    var month = dateObject.getMonth() + 1;
+    var year = dateObject.getFullYear();
+    var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    var letDate = formattedDate.split('/');
+    var formattedDates = `${parseInt(letDate[0], 10)}/${parseInt(letDate[1], 10)}/${letDate[2]}`;
+    this.pushDOBofChild(formattedDates, index);
+    return formattedDates;
+
   }
 
   submitForm() {
@@ -240,7 +257,19 @@ export class MaritalInfoComponent implements OnInit {
     }
 
   //  console.log("marital payload>>>", payload);
-
+  if(this.nameOfChildren?.length === 0 && Number(this.maritalInfoForm.value.numberOfChildren) > 0){
+    this.toast.setErrorMessage("Name of child is an important field");
+    this.snackbar.openFromComponent(ToastsComponent, {
+      duration: 4000,
+      verticalPosition: 'bottom',
+    });
+  }else if(this.nameOfChildren?.length > 0 && this.dobOfChild?.length === 0){
+    this.toast.setErrorMessage("Date of Birth is a required field");
+    this.snackbar.openFromComponent(ToastsComponent, {
+      duration: 4000,
+      verticalPosition: 'bottom',
+    });
+  }else{
     this.beneficiarySerice.maritalDetails(payload).subscribe({
       next: (res: any) => {
         //console.log("res>>", res);
@@ -269,6 +298,11 @@ export class MaritalInfoComponent implements OnInit {
         });
       }
     })
+  }
+
+ 
+
+
   }
 
 }

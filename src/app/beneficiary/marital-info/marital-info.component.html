@@ -92,17 +92,38 @@
                             (ngModel)="nameOfChildren[i]" (name)="nameOfChildren[i]" (value)="nameOfChildren[i] === undefined ? '' : nameOfChildren[i]" (blur)="pushNameOfChildren($event, i)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Name of child*">
-                            <input type="number" id="child" aria-describedby="helper-text-explanation"
+                            <!-- <input type="number" id="child" aria-describedby="helper-text-explanation"
                             (ngModel)="ageOfChildren[i]" (name)="ageOfChildren[i]" (value)="ageOfChildren[i] === undefined ? '' : ageOfChildren[i]" (blur)="pushAgeOfChildren($event, i)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Age of Child*">
-                                <input type="text" id="child" aria-describedby="helper-text-explanation"
+                                placeholder="Age of Child*"> -->
+                                <!-- [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event)" -->
+                                <!-- [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event, i)" (blur)="pushDOBofChild($event, i)" -->
+                                <!-- (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i] === undefined ? '' : dobOfChild[i]" (blur)="pushDOBofChild($event, i)" (ngModelChange)="datePipe($event)" -->
+                               
+                                <mat-form-field class="relative max-w-sm mt-2 ml-[90px]" id="date-picker">
+                                    <input matInput [matDatepicker]="picker"
+                                    (ngModel)="dobOfChild[i]" [name]="dateOfBirth" (name)="dobOfChild[i]" (ngModelChange)="datePipe($event, i)"
+                                      id="datepicker-format" type="text"
+                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                      placeholder="Select date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </mat-form-field>
+                                  <!-- (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i]" (ngModelChange)="datePipe($event, i)" (blur)="pushDOBofChild($event, i)" -->
+                                  
+                                    <!-- <mat-form-field id="date-picker">
+                                        <mat-label class="text-sm">{{dateOfBirth }}</mat-label>
+                                        <input matInput [matDatepicker]="picker" [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event)">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field> -->
+
+                                <!-- <input type="text" id="child" aria-describedby="helper-text-explanation"
                                 (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i] === undefined ? '' : dobOfChild[i]" (blur)="pushDOBofChild($event, i)"
                                     class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Date of Birth*">
-                            <!-- <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Child's education status*"> -->
+                                    placeholder="Date of Birth*"> -->
+                           
+                               <div class="mt-[-20px]">
                                 <select  (input)="listen($event, i)" id="child"  (ngModel)="childrenEduStatus[i]" (name)="childrenEduStatus[i]" (value)="childrenEduStatus[i] === undefined ? '' : childrenEduStatus[i]" (blur)="pushIsChildInSchool($event, i)"
                                 class="bg-gray-50 border mt-2  border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">                            
                                 <option *ngFor="let option of options; let id=index">
@@ -117,6 +138,7 @@
                             (ngModel)="childPhoneNumber[i]" (name)="childPhoneNumber[i]" (value)="childPhoneNumber[i] === undefined ? '' : childPhoneNumber[i]" (blur)="pushChildPhoneNumber($event, i)"
                                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Phone number of child(Optional)">
+                               </div>
                             <br>
                             <hr class="w-[295px]" id="child"><br>
                         </div>
