@@ -35,9 +35,10 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
 
   profileImage: string = 'assets/images/profilepic.svg';
   beneficiaryProfile$!: Subscription;
-  beneficiary!: BeneficiaryProfile;
+  beneficiary!: BeneficiaryProfile | any;
   ssid: string = '';
   showSpinner: boolean = true;
+  capturedFingerprint: boolean = false;
 
   constructor(
     private beneficiaryService: BeneficiaryService,
@@ -80,7 +81,8 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
         this.profileImage = data?.data?.base64Image !== null ? `data:image/png;base64,${data?.data?.base64Image}` : 'assets/images/profilepic.svg'; // `data:image/png;base64,${data?.data?.base64Image}`;
         //https://base64.guru/converter/decode/image
         this.beneficiary = data?.data;
-        //  console.log("occupation data>>>", this.beneficiary?.occupation);
+        this.capturedFingerprint = this.beneficiary?.fingerprintCaptured;
+        // console.log("fingerprintCaptured>>>", this.beneficiary?.fingerprintCaptured);
         this.toast.setSuccessMessage("Data retrieved successfully!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,

@@ -1366,7 +1366,8 @@ export interface BeneficiaryProfile{
          spouseList: any[],
          occupation:any,
          ssid: any,
-         state: any
+         state: any,
+         fingerprintCaptured: boolean
 }
 
 export const mocks = [
