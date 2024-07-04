@@ -14,7 +14,7 @@ export class ProfileService {
   constructor() { }
 
   public encryptJSONPayload(payload: any){
-  //  console.log('payload to encypt>>', payload);
+  console.log('payload to encypt>>', payload);
     const encrypted = CryptoJS.AES.encrypt(JSON.stringify(payload), this.key, {
       keySize: 128 / 8,
       iv: CryptoJS.enc.Utf8.parse(this.initilizationVector.toString()),
@@ -22,10 +22,11 @@ export class ProfileService {
       padding: CryptoJS.pad.Pkcs7
     });
     this.encrypted = encrypted.toString();
-   // console.log('encypted data>>>', encrypted.toString());
+   console.log('encypted data>>>', encrypted.toString());
    let biometricsString:string = `${biometricsUrl}?data=${encrypted.toString()}`;
    window.open(biometricsString, '_blank');
-   //console.log('url to open>>>',biometricsString);
+   console.log('url to open>>>',biometricsString);
+    console.log('decrypt trial>>>', decryptJSONPayload());
   }
 
   public decryptJSONPayload(){
