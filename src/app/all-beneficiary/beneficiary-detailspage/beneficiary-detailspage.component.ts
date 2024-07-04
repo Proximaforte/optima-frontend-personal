@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
+import { ProfileService } from 'src/app/services/profile/profile.service';
 
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -47,7 +48,8 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
     private snackbar: MatSnackBar,
     private toast: ToastsService,
     private renderer: Renderer2,
-    private el: ElementRef
+    private el: ElementRef,
+    private profileService: ProfileService
   ) {
     const params = this.route.queryParams.subscribe({
       next: (param: any) => {
@@ -116,13 +118,14 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
 
   routeToCompleteBiometrics(beneficiary: any){
     let jwt:any = this.authService.getAgentData();
-    let payload = {
+    let payload:any = {
       token: jwt,
       name: beneficiary?.fullName,
       nin: beneficiary?.nin,
       dob: beneficiary?.dateOfBirth
     }
-   // console.log('payload>>', payload);
+   this.profileService.encryptJSONPayload(payload);
+   setTimeout(() => this.authService.agentLogout(), 2000);
   }
 
   ngOnInit(): void {

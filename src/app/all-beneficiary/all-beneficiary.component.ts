@@ -286,6 +286,12 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
+    this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
+    this.snackbar.openFromComponent(ToastsComponent, {
+      duration: 4000,
+      verticalPosition: 'bottom',
+    });
+
     sessionStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
     sessionStorage.setItem('incomplete', "Let's continue from where you've stopped!");
     this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
@@ -326,7 +332,7 @@ export class AllBeneficiaryComponent implements OnInit {
       //     progress: 'finger_capture_done'
       //   }
       // })
-    } else if (beneficiary?.formStage === "PERSONAL_DETAILS" || beneficiary?.formStage === "VERIFIED") {
+    } else if (beneficiary?.formStage === "PERSONAL_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("verification procedure");
       sessionStorage.setItem('verification', 'verification');
       this.router.navigate(['/home/beneficiary'], {
@@ -335,7 +341,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'verification_procedure'
         }
       })
-    } else if (beneficiary?.formStage === "BIO_VERIFICATION") {
+    } else if (beneficiary?.formStage === "BIO_VERIFICATION" || beneficiary?.formStage === "VERIFIED") {
       this.beneficiaryService.setRouteToDisplay("residential details");
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
