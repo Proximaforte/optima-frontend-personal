@@ -23,13 +23,13 @@ export class ProfileService {
     });
     this.encrypted = encrypted.toString();
    console.log('encypted data>>>', encrypted.toString());
-    const base64String = btoa(this.encrypted)
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
-   let biometricsString:string = `${biometricsUrl}?data=${base64String}`;
-   //window.open(biometricsString, '_blank');
-   window.location.href = biometricsString;
+    // const base64String = this.encrypted
+    // .replace(/\+/g, '-')
+    // .replace(/\//g, '_')
+    // .replace(/=+$/, '');
+   let biometricsString:string = `${biometricsUrl}?data=${this.encrypted}`;
+   window.open(biometricsString, '_blank');
+   //window.location.href = biometricsString;
    console.log('url to open>>>',biometricsString);
   }
 
