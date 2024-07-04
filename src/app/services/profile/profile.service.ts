@@ -23,7 +23,7 @@ export class ProfileService {
     });
     this.encrypted = encrypted.toString();
    console.log('encypted data>>>', encrypted.toString());
-    const base64String = btoa(encryptedData)
+    const base64String = btoa(this.encrypted)
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=+$/, '');
