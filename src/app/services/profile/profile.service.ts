@@ -23,7 +23,7 @@ export class ProfileService {
     });
     this.encrypted = encrypted.toString();
    console.log('encypted data>>>', encrypted.toString());
-   let biometricsString:string = `${biometricsUrl}?data=${encrypted.toString()}`;
+   let biometricsString:string = `${biometricsUrl}?data=${encodeURIComponent(base64String)}`;
    window.open(biometricsString, '_blank');
    console.log('url to open>>>',biometricsString);
     console.log('decrypt trial>>>', decryptJSONPayload());
