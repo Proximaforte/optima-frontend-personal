@@ -27,7 +27,7 @@ export class ProfileService {
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=+$/, '');
-   let biometricsString:string = `${biometricsUrl}?data=${base64string}`;
+   let biometricsString:string = `${biometricsUrl}?data=${base64String}`;
    window.open(biometricsString, '_blank');
    //window.location.href = biometricsString;
    console.log('url to open>>>',biometricsString);
