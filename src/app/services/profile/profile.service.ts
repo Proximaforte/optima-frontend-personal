@@ -23,11 +23,11 @@ export class ProfileService {
     });
     this.encrypted = encrypted.toString();
    console.log('encypted data>>>', encrypted.toString());
-    const base64String = "test"
+    const base64String = this.encrypted
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=+$/, '');
-   let biometricsString:string = `${biometricsUrl}?data=${this.encrypted}`;
+   let biometricsString:string = `${biometricsUrl}?data=${base64string}`;
    window.open(biometricsString, '_blank');
    //window.location.href = biometricsString;
    console.log('url to open>>>',biometricsString);
