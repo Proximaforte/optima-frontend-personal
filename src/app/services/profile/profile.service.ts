@@ -29,7 +29,7 @@ export class ProfileService {
     .replace(/=+$/, '');
    let biometricsString:string = `${biometricsUrl}?data=${encodeURIComponent(base64String)}`;
    //window.open(biometricsString, '_blank');
-   window.location.href = deepLink;
+   window.location.href = biometricsString;
    console.log('url to open>>>',biometricsString);
     console.log('decrypt trial>>>', decryptJSONPayload());
   }
