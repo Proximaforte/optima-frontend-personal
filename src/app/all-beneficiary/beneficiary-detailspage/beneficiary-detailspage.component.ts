@@ -125,7 +125,7 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
       dob: beneficiary?.dateOfBirth
     }
    this.profileService.encryptJSONPayload(payload);
-   setTimeout(() => this.authService.agentLogout(), 2000);
+   setTimeout(() => window.location.reload(), 2000)
   }
 
   ngOnInit(): void {
