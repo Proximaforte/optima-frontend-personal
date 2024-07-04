@@ -114,6 +114,17 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
     })
   }
 
+  routeToCompleteBiometrics(beneficiary: any){
+    let jwt:any = this.authService.getAgentData();
+    let payload = {
+      token: jwt,
+      name: beneficiary?.fullName,
+      nin: beneficiary?.nin,
+      dob: beneficiary?.dateOfBirth
+    }
+   // console.log('payload>>', payload);
+  }
+
   ngOnInit(): void {
     if (this.ssid === undefined) {
       this.getDummyData();

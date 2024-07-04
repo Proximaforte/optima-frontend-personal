@@ -95,6 +95,7 @@ export class AllBeneficiaryComponent implements OnInit {
     this.showIncompleteBeneficiaries = true;
     this.showCompleteBeneficiaries = false;
     this.getAllIncompleteBeneficiaries();
+    this.getAllIncompletedData();
   }
 
 
@@ -102,6 +103,7 @@ export class AllBeneficiaryComponent implements OnInit {
     this.showCompleteBeneficiaries = true;
     this.showIncompleteBeneficiaries = false;
     this.getAllBeneficiaries();
+    this.getAllCompletedData();
   }
 
   openModal(): void {
@@ -193,7 +195,6 @@ export class AllBeneficiaryComponent implements OnInit {
         })
       }
     })
-
   }
 
   getAllBeneficiaries() {
@@ -239,8 +240,35 @@ export class AllBeneficiaryComponent implements OnInit {
   
   }
 
+  getAllCompletedData(){
+    let pageSize:number = 500000000;
+    this.beneficiaryService.getFilteredBeneficiaries({}, {size: pageSize, page: 1}).subscribe({
+      next: (res:any) => {
+        let totalCount:number = res?.data?.totalCount;
+        let totalRecordArray = Array(Math.floor(totalCount / 10)).fill(totalCount / 10)?.length + 1;
+        let paginationToshow = Array.from({ length: totalRecordArray }, (_, index) => index + 1);
+        //console.log('totalRecordArray>>', paginationToshow);
+        this.paginationArrayToShow = paginationToshow;
+      }
+    });
+  }
+
+  getAllIncompletedData(){
+    let pageSize:number = 500000000;
+    this.beneficiaryService.getAllIncompleteBeneficiaries({}, {size: pageSize, page: 1}).subscribe({
+      next: (res:any) => {
+        let totalCount:number = res?.data?.totalCount;
+        let totalRecordArray = Array(Math.floor(totalCount / 10)).fill(totalCount / 10)?.length + 1;
+        let paginationToshow = Array.from({ length: totalRecordArray }, (_, index) => index + 1);
+        this.paginationArrayToShow = paginationToshow;
+      }
+    })
+  }
+
+
   ngOnInit(): void {
     this.getAllBeneficiaries();
+    this.getAllCompletedData();
     // this.getAllIncompleteBeneficiaries();
   }
 
@@ -417,12 +445,14 @@ export class AllBeneficiaryComponent implements OnInit {
   nextPage() {
     this.paginationParams.page++;
     this.getAllBeneficiaries();
+    this.getAllCompletedData();
   }
 
   prevPage() {
     if (this.paginationParams.page > 0) {
       this.paginationParams.page--
       this.getAllBeneficiaries();
+      this.getAllCompletedData();
     }
   }
 
@@ -430,18 +460,21 @@ export class AllBeneficiaryComponent implements OnInit {
     // console.log('current page>>', pageNoToPull);
     this.paginationParams.page = pageNoToPull;
     this.getAllBeneficiaries();
+    this.getAllCompletedData();
   }
 
 
   nextPage_() {
     this.paginationParams.page++;
     this.getAllIncompleteBeneficiaries();
+    this.getAllIncompletedData();
   }
 
   prevPage_() {
     if (this.paginationParams.page > 0) {
       this.paginationParams.page--
       this.getAllIncompleteBeneficiaries();
+      this.getAllIncompletedData();
     }
   }
 
@@ -449,5 +482,6 @@ export class AllBeneficiaryComponent implements OnInit {
     // console.log('current page>>', pageNoToPull);
     this.paginationParams.page = pageNoToPull;
     this.getAllIncompleteBeneficiaries();
+    this.getAllIncompletedData();
   }
 }
