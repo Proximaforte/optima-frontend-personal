@@ -31,7 +31,6 @@ export class ProfileService {
    //window.open(biometricsString, '_blank');
    window.location.href = biometricsString;
    console.log('url to open>>>',biometricsString);
-    console.log('decrypt trial>>>', decryptJSONPayload());
   }
 
   public decryptJSONPayload(){
