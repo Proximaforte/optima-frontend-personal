@@ -22,7 +22,7 @@
         <div class="row-span-1">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <select formControlName="occupation" id="funding_options"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of options; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -32,35 +32,35 @@
         <div class="row-span-1" *ngIf="showStudentsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <input type="text" formControlName="nameOfInstitution" id="text-input" aria-describedby="helper-text-explanation"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Name of institution*">
             </form>
         </div>
         <div class="row-span-1" *ngIf="showStudentsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <input type="text" formControlName="matriculationNumber" id="text-input" aria-describedby="helper-text-explanation"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Matriculation Number*">
             </form>
         </div>
         <div class="row-span-1" *ngIf="showStudentsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <input type="text" formControlName="faculty" id="text-input" aria-describedby="helper-text-explanation"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Name of Faculty*">
             </form>
         </div>
         <div class="row-span-1" *ngIf="showStudentsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <input type="text" formControlName="department" id="text-input" aria-describedby="helper-text-explanation"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Name of Department*">
             </form>
         </div>
         <div class="row-span-1" *ngIf="showStudentsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <select id="funding_options" formControlName="funding"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option3; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -70,7 +70,7 @@
         <div class="row-span-1" *ngIf="showStudentsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <select id="funding_options" formControlName="diplomaType"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option4; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -80,7 +80,7 @@
         <div class="row-span-1" *ngIf="showOthers === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <input type="text" formControlName="specifyDiplomaType" id="text-input" aria-describedby="helper-text-explanation"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Specify Diploma Type*">
             </form>
         </div>
@@ -88,7 +88,7 @@
         <div class="row-span-1" *ngIf="showOtherzz === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <input type="text" formControlName="otherOccupation" id="text-input" aria-describedby="helper-text-explanation"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Specify Occupation*">
             </form>
         </div>
@@ -114,7 +114,7 @@
         <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <select id="funding_options" formControlName="onTransfer"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option5; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -133,8 +133,22 @@
 
         <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
+                <!-- <input type="text" formControlName="highestQualification" id="text-input" aria-describedby="helper-text-explanation"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Highest Qualification*"> -->
+                    <select id="funding_options" formControlName="highestQualification"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option10; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+        <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
+            <form class="max-w-sm" [formGroup]="occupationForm">
                 <select id="funding_options" formControlName="cadre"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option6; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -144,16 +158,8 @@
 
         <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
-                <input type="text" formControlName="highestQualification" id="text-input" aria-describedby="helper-text-explanation"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Highest Qualification*">
-            </form>
-        </div>
-
-        <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
-            <form class="max-w-sm" [formGroup]="occupationForm">
                 <input type="text" formControlName="gradeLevel" id="text-input" aria-describedby="helper-text-explanation"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Grade Level/ Step*">
             </form>
         </div>
@@ -161,7 +167,7 @@
         <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <select id="funding_options" formControlName="onStudyLeave"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option7; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -178,7 +184,7 @@
         <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <select id="funding_options" formControlName="trained"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option8; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -189,7 +195,7 @@
         <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <select id="funding_options" formControlName="trainingType"
-                    class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
                     <option *ngFor="let option of option9; let id=index">
                         <span>{{ option }}</span>
                     </option>
@@ -247,7 +253,7 @@
       <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
         <form class="max-w-sm" [formGroup]="occupationForm">
             <input type="text" formControlName="psn" id="text-input" aria-describedby="helper-text-explanation"
-                class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter your PSN*">
         </form>
     </div>

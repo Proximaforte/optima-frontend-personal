@@ -44,12 +44,12 @@ export class ResidentialDetailsComponent implements OnInit {
     this.userDetails = JSON.parse(getUserData);
     //console.log("userData>>>", JSON.parse(getUserData)); //phoneNumber
 
-    const getMessage:any = sessionStorage.getItem('incomplete');
+    const getMessage:any = localStorage.getItem('incomplete');
     if(getMessage !== null){
       this.showWelcomeMsg = true;
       setTimeout(() => {
         this.showWelcomeMsg = false;
-        sessionStorage.removeItem('incomplete');
+        localStorage.removeItem('incomplete');
        }, 2500);
     }else{
        this.showWelcomeMsg = false;
@@ -70,11 +70,11 @@ export class ResidentialDetailsComponent implements OnInit {
     })
 
     this.residentialInfo.get('selectState')?.valueChanges.subscribe({
-      next: (item:any) => {
+      next: (item: any) => {
         this.disableBtn = false;
         for(var i=0; i< this.lga?.length; i++){
           if(item === this.lga[i].state){
-            this.selectedLGA = this.lga[i]?.localGovt;
+            this.selectedLGA.push(...this.lga[i]?.localGovt)
             break;
           }
         }
@@ -99,7 +99,7 @@ export class ResidentialDetailsComponent implements OnInit {
 
   submitForm(){
     this.showSpinner = true;
-    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
     const payload:any = {
       phoneNumber: getBeneficiaryPhoneNumber,
       houseOwner: this.residentialInfo.value.placeOfResidence === "Yes, a house owner" ? true : this.residentialInfo.value.placeOfResidence ===  "No, a tenant" ? false : null,
