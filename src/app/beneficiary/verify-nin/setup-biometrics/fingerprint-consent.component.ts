@@ -127,8 +127,8 @@ export class FingerPrintConsent {
       }
     });
   }
-  routeToCompleteBiometrics(beneficiary: any){
-    const beneficiaryDetails = JSON.parse(sessionStorage.getItem("NINDetails") as string) ?? {}
+  routeToCompleteBiometrics(_beneficiary: any){
+    const beneficiaryDetails = JSON.parse(localStorage.getItem("NINDetails") as string) ?? {}
     let jwt:any = this.auth.getAgentData();
     let payload:any = {
       token: jwt,
