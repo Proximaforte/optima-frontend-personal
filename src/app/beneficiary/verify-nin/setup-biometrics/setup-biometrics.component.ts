@@ -122,6 +122,7 @@ export class SetupBiometricsComponent {
 
   ngOnDestroy() {
     localStorage.removeItem("isFingerprintOk");
+    localStorage.removeItem("face_capture");
   }
 
   openFingerPrintModal(param: string, route: string) {
