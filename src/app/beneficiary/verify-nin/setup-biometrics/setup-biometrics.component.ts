@@ -79,7 +79,7 @@ export class SetupBiometricsComponent {
       'faceCapture_skipThumbPrints',
     );
     this.skipThumbprintPayload = JSON.parse(getImageSkipThumbprint);
-    // console.log('skip thumprint image>>>', this.skipThumbprintPayload);
+    
   }
 
   // const payload = {
