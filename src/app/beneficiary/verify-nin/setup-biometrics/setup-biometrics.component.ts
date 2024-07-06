@@ -57,11 +57,18 @@ export class SetupBiometricsComponent {
       },
     });
 
-    if (sessionStorage.getItem("face_capture")  && this.selectedReason) {
+    if (sessionStorage.getItem("face_capture")  && this.selectedReason && this.selectedReason !== "FAILED") {
       this.disabledBtn = false
     } else {
       
       this.disabledBtn = true
+    }
+
+    if (window.location.href?.includes("&status=true")) {
+      this.selectedReason = "SUCCESS"
+    }
+    if (window.location.href?.includes("&status=false")) {
+      this.selectedReason = "FAILED"
     }
 
     const getImageCaptured: any = sessionStorage.getItem('face_capture');
@@ -119,7 +126,6 @@ export class SetupBiometricsComponent {
       }
     });
   }
-
 
   proceed() {
     // this.selectedReason = this.stateService.getSelectedReason();

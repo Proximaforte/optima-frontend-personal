@@ -36,7 +36,7 @@
                       class="absolute top-0 right-0"
                       *ngIf="
                         urlPath === 'face_capture_done' ||
-                        urlPath === 'finger_capture_done'
+                        urlPath === 'finger_capture_done' || 'fingerprint_capturing'
                       "
                     >
                       <img [src]="marked" alt="checked" class="h-4 w-4" />
@@ -68,7 +68,7 @@
                     </span>
                     <span
                       class="absolute top-0 right-0"
-                      *ngIf="selectedReason && selectedReason !== 'PENDING'"
+                      *ngIf="selectedReason && selectedReason !== 'PENDING' && selectedReason !== 'FAILED'"
                     >
                       <img [src]="marked" alt="checked" class="h-4 w-4" />
                     </span>
@@ -78,7 +78,7 @@
                       selectedReason === 'PENDING'
                         ? 'bg-[#FFFAF0] text-[#E59600] font-semibold text-[12px] rounded-3xl p-2 px-5 flex items-center gap-2 mt-3 w-fit ml-6'
                         : selectedReason === 'FAILED'
-                          ? ''
+                          ? 'bg-[#FF82621A] text-[#ff0000] font-semibold text-[12px] rounded-3xl p-2 px-5 flex items-center gap-2 mt-3 w-fit ml-6'
                           : selectedReason === 'SUCCESS'
                           ? 'bg-[#ECFDF3] text-[#12B76A] font-semibold text-[12px] rounded-3xl p-2 px-5 flex items-center gap-2 mt-3 w-fit ml-6' : ''
                     "
@@ -137,7 +137,7 @@
                 </mat-card-content>
               </mat-card>
               <div
-                *ngIf="selectedReason && selectedReason !== 'PENDING' && selectedReason !== 'SUCCESS'" 
+                *ngIf="selectedReason && selectedReason !== 'PENDING' && selectedReason !== 'SUCCESS' && selectedReason !== 'FAILED'" 
                 class="h-5 mt-5 text-[12px] italic w-[95%] font-bold text-[#ff0000] flex items-center gap-2 rounded-3xl p-2"
               >
                 Note: Fingerprint has been skipped due to {{ selectedReason }}
