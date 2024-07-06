@@ -119,11 +119,12 @@ export class PersonalDetailsComponent implements OnInit {
     //var dateObject = new Date(this.ninDetails?.birthDate);
 
 
-    const getNin: any = localStorage.getItem('nin');
+    const getNin: any = localStorage.getItem('NINDetails');
     let newNin: any = JSON.parse(getNin);
 
     this.showSpinner = true;
     localStorage.setItem('beneficiaryPhoneNumber', this.personalDetailsForm.get('phoneNumber')?.value);
+    console.log(newNin)
     const payload: any = {
       nin: newNin?.nin,
       firstname: this.personalDetailsForm.value?.firstName,
@@ -137,7 +138,6 @@ export class PersonalDetailsComponent implements OnInit {
       placeOfBirth: this.personalDetailsForm.value?.placeOfBirth,
       religion: this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
     }
- //   console.log("zzzzz>>>", payload);
  
     this.beneficiaryService.personalDetails(payload).subscribe({
       next: (res: any) => {
