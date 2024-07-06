@@ -104,7 +104,7 @@ export class FingerPrintConsent {
   constructor(
     private dialogRef: MatDialogRef<FingerPrintConsent>,
     private dialog: MatDialog,
-    private fingerprintCaptureStatus: MatDialogRef<SetupBiometricsComponent>,
+    private fingerprintCaptureStatusRef: MatDialogRef<SetupBiometricsComponent>,
     private auth: AuthService,
     private profileService: ProfileService
   ) {}
@@ -113,7 +113,8 @@ export class FingerPrintConsent {
     this.dialogRef.close(this.selectedReason);
   }
   onContinue(fingerPrintBiometricStatus: "FAILED" | "PENDING" | "SUCCESS" | undefined) {
-    this.fingerprintCaptureStatus?.close(fingerPrintBiometricStatus)
+   this.fingerprintCaptureStatusRef?.close(fingerPrintBiometricStatus)
+
   }
   skipFingerprintConsentModal() {
     const dialogRef = this.dialog.open(SkipFingerprintConsentModal, {
@@ -127,12 +128,14 @@ export class FingerPrintConsent {
     });
   }
   routeToCompleteBiometrics(beneficiary: any){
+    const beneficiaryDetails = JSON.parse(sessionStorage.getItem("NINDetails") as string) ?? {}
     let jwt:any = this.auth.getAgentData();
     let payload:any = {
       token: jwt,
-      name: beneficiary?.fullName,
-      nin: beneficiary?.nin,
-      dob: beneficiary?.dateOfBirth
+      name: beneficiaryDetails?.firstName + " " + beneficiaryDetails?.lastName,
+      nin: beneficiaryDetails?.nin,
+      dob: beneficiaryDetails?.birthDate,
+      callbackUrl: window.location.href
     }
    this.profileService.encryptJSONPayload(payload);
   //  setTimeout(() => window.location.reload(), 2000)
