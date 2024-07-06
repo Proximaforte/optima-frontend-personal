@@ -23,7 +23,7 @@ export class SuccessfulBeneficiaryOnboardingComponent {
   ){}
 
   routeBeneficiaryTable(){
-    const beneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const beneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
     this.beneficiaryService.onboardingSubmitted(beneficiaryPhoneNumber).subscribe({
       next: (res:any) => {
        // console.log('res>>>', res);

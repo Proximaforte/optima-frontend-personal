@@ -76,7 +76,7 @@ export class SetupBiometricsComponent {
     this.imageCapturePayload = JSON.parse(getImageCaptured);
     //  console.log('image capture>>>', this.imageCapturePayload);
 
-    const getImageSkipThumbprint: any = sessionStorage.getItem(
+    const getImageSkipThumbprint: any = localStorage.getItem(
       'faceCapture_skipThumbPrints',
     );
     this.skipThumbprintPayload = JSON.parse(getImageSkipThumbprint);

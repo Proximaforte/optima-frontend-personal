@@ -142,7 +142,7 @@ export class AuthService {
 
   public agentLogout(): void {
     localStorage.clear();
-    sessionStorage.clear();
+    localStorage.clear();
     console.clear();
     this.router.navigate(['/auth/login'], { relativeTo: this.route });
   }

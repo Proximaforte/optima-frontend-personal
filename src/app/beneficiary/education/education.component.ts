@@ -41,12 +41,12 @@ export class EducationComponent implements OnInit {
     const getUserData:any = localStorage.getItem('userDetails');
      this.userDetails = JSON.parse(getUserData);
 
-     const getMessage:any = sessionStorage.getItem('incomplete');
+     const getMessage:any = localStorage.getItem('incomplete');
      if(getMessage !== null){
        this.showWelcomeMsg = true;
        setTimeout(() => {
         this.showWelcomeMsg = false;
-        sessionStorage.removeItem('incomplete');
+        localStorage.removeItem('incomplete');
        }, 2500);
      }else{
         this.showWelcomeMsg = false;
@@ -165,7 +165,7 @@ getDropDownTypes(){
 
   submit(){
     this.showSpinner = true;
-    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       phoneNumber:getBeneficiaryPhoneNumber ,
       level: this.educationForm.value?.eduLevel,
