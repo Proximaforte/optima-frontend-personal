@@ -102,7 +102,7 @@ export class SetupBiometricsComponent {
   // }
 
   updateDisabledBtn() {
-    if (sessionStorage.getItem('face_capture') && this.selectedReason && this.selectedReason !== 'FAILED' && this.selectedReason !== "PENDING") {
+    if (localStorage.getItem('face_capture') && this.selectedReason && this.selectedReason !== 'FAILED' && this.selectedReason !== "PENDING") {
       this.disabledBtn = false;
     } else {
       this.disabledBtn = true;

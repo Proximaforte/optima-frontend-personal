@@ -109,6 +109,7 @@ export class FaceCapturingComponent implements OnInit {
       image: this.photograph?.split(',')[1]
     }
     sessionStorage.setItem('face_capture', JSON.stringify(payload));
+    localStorage.setItem('face_capture', JSON.stringify(payload));
     this.router.navigate(['/home/setup-biometrics'], {
       relativeTo: this.route,
       queryParams: {
