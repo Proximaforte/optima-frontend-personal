@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  HttpClientModule } from '@angular/common/http';
 import { AddStyleToOtpInputDirective } from './directives/add-style-to-otp-input.directive';
 import { BeneficiaryFilterPipe } from './pipes/beneficiary-filter.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -19,7 +20,13 @@ import { BeneficiaryFilterPipe } from './pipes/beneficiary-filter.pipe';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
 
   ],
   bootstrap: [AppComponent]
