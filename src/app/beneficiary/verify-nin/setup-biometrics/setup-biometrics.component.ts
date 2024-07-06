@@ -53,11 +53,11 @@ export class SetupBiometricsComponent {
           this.disabledBtn = false;
         } else if (this.urlPath === 'face_capture_done') {
           this.disabledBtn = false;
-        }
+        } 
       },
     });
 
-    if (sessionStorage.getItem("face_capture")  && this.selectedReason && this.selectedReason !== "FAILED") {
+    if (sessionStorage.getItem("face_capture") && this.selectedReason && this.selectedReason !== "FAILED") {
       this.disabledBtn = false
     } else {
       
@@ -65,6 +65,11 @@ export class SetupBiometricsComponent {
     }
 
     if (window.location.href?.includes("&status=true")) {
+      localStorage.setItem("isFingerprintOk", "true")
+      this.selectedReason = "SUCCESS"
+    }
+    if (localStorage.getItem("isFingerprintOk")) {
+      
       this.selectedReason = "SUCCESS"
     }
     if (window.location.href?.includes("&status=false")) {
