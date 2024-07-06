@@ -22,7 +22,6 @@ export class ProfileService {
       padding: CryptoJS.pad.Pkcs7
     });
     this.encrypted = encrypted.toString();
-   console.log('encypted data>>>', encrypted.toString());
     const base64String = this.encrypted
     .replace(/\+/g, '-')
     .replace(/\//g, '_')

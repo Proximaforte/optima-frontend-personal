@@ -101,12 +101,17 @@ export class SetupBiometricsComponent {
     setTimeout(() => location.reload(), 300);
   }
 
-  openFingerPrintModal() {
+  openFingerPrintModal(param: string, route: string) {
     const dialogRef = this.dialog.open(FingerPrintConsent, {
       width: '25rem',
       data: {},
     });
-
+    this.router.navigate([route], {
+      relativeTo: this.route,
+      queryParams: {
+        progress: param,
+      },
+    });
     dialogRef.afterClosed().subscribe((selectedReason: string) => {
       if (selectedReason) {
         this.selectedReason = selectedReason;
