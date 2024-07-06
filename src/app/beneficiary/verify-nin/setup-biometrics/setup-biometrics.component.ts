@@ -72,7 +72,7 @@ export class SetupBiometricsComponent {
       this.selectedReason = "FAILED"
     }
 
-    const getImageCaptured: any = sessionStorage.getItem('face_capture');
+    const getImageCaptured: any = localStorage.getItem('face_capture');
     this.imageCapturePayload = JSON.parse(getImageCaptured);
     //  console.log('image capture>>>', this.imageCapturePayload);
 
@@ -81,7 +81,7 @@ export class SetupBiometricsComponent {
     );
     this.skipThumbprintPayload = JSON.parse(getImageSkipThumbprint);
     // console.log('skip thumprint image>>>', this.skipThumbprintPayload);
-    this.faceCaptureExists = !!sessionStorage.getItem("face_capture");
+    this.faceCaptureExists = !!localStorage.getItem("face_capture");
     this.updateDisabledBtn();
 
   }
