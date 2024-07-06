@@ -35,20 +35,20 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
     private toast: ToastsService,
     private auth: AuthService
   ) {
-    const getMessage: any = sessionStorage.getItem('incomplete');
+    const getMessage: any = localStorage.getItem('incomplete');
     if (getMessage !== null) {
       this.showWelcomeMsg = true;
       setTimeout(() => {
         this.showWelcomeMsg = false;
-        sessionStorage.removeItem('incomplete');
+        localStorage.removeItem('incomplete');
       }, 2500);
     } else {
       this.showWelcomeMsg = false;
     }
 
-   if(sessionStorage.getItem('beneficiaryPhoneNumber') !== null){
-    let getBeneficiaryNumber: any = sessionStorage.getItem('beneficiaryPhoneNumber');
-    this.rawPhoneNumber = sessionStorage.getItem('beneficiaryPhoneNumber');
+   if(localStorage.getItem('beneficiaryPhoneNumber') !== null){
+    let getBeneficiaryNumber: any = localStorage.getItem('beneficiaryPhoneNumber');
+    this.rawPhoneNumber = localStorage.getItem('beneficiaryPhoneNumber');
     let maskedPhoneNumber = getBeneficiaryNumber?.replace(/\d(?=\d{4})/g, '*'); // Replace all but the last 4 digits with '*'
     maskedPhoneNumber = maskedPhoneNumber?.slice(0, -2) + getBeneficiaryNumber?.slice(-2);
     this.maskedPhoneNumber = maskedPhoneNumber;
@@ -110,7 +110,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.startTimer();
 
-    let checkVerified = sessionStorage.getItem('verification');
+    let checkVerified = localStorage.getItem('verification');
     if(checkVerified === null){
      this.showVerificationStepper = true;
     }else{
@@ -139,8 +139,8 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
   submit() {
     //console.log("merged>>>", this.otpValue);
     this.showSpinner = true;
-    const getBeneficiaryPhoneNumber: any = sessionStorage.getItem('beneficiaryPhoneNumber');
-    const getNIN: any = sessionStorage.getItem('nin');
+    const getBeneficiaryPhoneNumber: any = localStorage.getItem('beneficiaryPhoneNumber');
+    const getNIN: any = localStorage.getItem('nin');
     const parseNIN = JSON.parse(getNIN);
     const OTPPayload:any = {
       nin: parseNIN?.nin,
@@ -164,7 +164,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
             progress: "setup_biometrics",
           }
         });
-        sessionStorage.removeItem('verification');
+        localStorage.removeItem('verification');
       },
       error: (err: any) => {
         console.error('err>>>', err);
