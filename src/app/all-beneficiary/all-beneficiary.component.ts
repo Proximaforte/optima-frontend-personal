@@ -298,6 +298,7 @@ export class AllBeneficiaryComponent implements OnInit {
       next: (details:any) => {
         const stringedData = JSON.stringify(details?.data);
         sessionStorage.setItem('NINDetails', stringedData);
+        localStorage.setItem('NINDetails', stringedData);
       }
     })
  
