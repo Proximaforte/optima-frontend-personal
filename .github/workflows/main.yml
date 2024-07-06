@@ -1,75 +1,75 @@
-# name: Optima Agent Frontend
+name: Optima Agent Frontend
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-#       - name: Install dependencies
-#         run: sudo apt update && sudo apt install -y openvpn nodejs npm traceroute
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y openvpn nodejs npm traceroute
 
-#       - name: Set up PEM file
-#         run: |
-#           echo "${{ secrets.SECRET_PEM }}" > vpn.pem
-#           sudo chmod 600 vpn.pem
+      - name: Set up PEM file
+        run: |
+          echo "${{ secrets.SECRET_PEM }}" > vpn.pem
+          sudo chmod 600 vpn.pem
 
-#       - name: Set up VPN credentials 
-#         run: |
-#           echo "${{ secrets.VPN_USERNAME }}" > vpn-credentials.txt
-#           echo "" >> vpn-credentials.txt
-#           sudo chmod 600 vpn-credentials.txt
-#           cat vpn-credentials.txt  # Debugging step to verify content   
+      - name: Set up VPN credentials 
+        run: |
+          echo "${{ secrets.VPN_USERNAME }}" > vpn-credentials.txt
+          echo "" >> vpn-credentials.txt
+          sudo chmod 600 vpn-credentials.txt
+          cat vpn-credentials.txt  # Debugging step to verify content   
 
-#       - name: Connect to VPN
-#         uses: "kota65535/github-openvpn-connect-action@v2"
-#         with:
-#           config_file: .github/workflows/proxima-gtw-vpn-UDP4-1194-tosyne-nobus-vpn-config.ovpn
-#           username: ${{ secrets.VPN_USERNAME }}
-#           password: ${{ secrets.VPN_PASSWORD }}
-#           client_key: ${{ secrets.USER_KEY }}
+      - name: Connect to VPN
+        uses: "kota65535/github-openvpn-connect-action@v2"
+        with:
+          config_file: .github/workflows/proxima-gtw-vpn-UDP4-1194-tosyne-nobus-vpn-config.ovpn
+          username: ${{ secrets.VPN_USERNAME }}
+          password: ${{ secrets.VPN_PASSWORD }}
+          client_key: ${{ secrets.USER_KEY }}
 
-#       - name: Verify VPN Connection
-#         run: |
-#           sudo ip a  # List network interfaces for debugging
-#           sudo netstat -rn  # Check routing table for debugging
-#           sudo traceroute 192.168.10.15  # Trace route to target server for debugging
+      - name: Verify VPN Connection
+        run: |
+          sudo ip a  # List network interfaces for debugging
+          sudo netstat -rn  # Check routing table for debugging
+          sudo traceroute 192.168.10.15  # Trace route to target server for debugging
 
-#       - name: Use SSH
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.SERVER_HOST }}
-#           username: ${{ secrets.SERVER_USERNAME }}
-#           key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Use SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-#       - name: Set up SSH key
-#         run: |
-#           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
-#           sudo chmod 600 private_key
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+          sudo chmod 600 private_key
 
-#       - name: Verify SSH Connection
-#         run: ssh -i private_key -o StrictHostKeyChecking=no ubuntu@192.168.10.15 "echo 'SSH Connection Established'"
+      - name: Verify SSH Connection
+        run: ssh -i private_key -o StrictHostKeyChecking=no ubuntu@192.168.10.15 "echo 'SSH Connection Established'"
         
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: '22'  # Use the correct version of Node.js here
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22'  # Use the correct version of Node.js here
 
-#       - name: Install dependencies
-#         run: npm install
+      - name: Install dependencies
+        run: npm install
 
-#       - name: Install Angular CLI
-#         run: npm install -g @angular/cli
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
 
-#       - name: Build the Angular app
-#         run: ng build --configuration=production
+      - name: Build the Angular app
+        run: ng build --configuration=production
 
-#       - name: Deploy to server
-#         run: |
-#           rsync -e "ssh -i private_key -o StrictHostKeyChecking=no" -rltgoDzvO --delete dist/ ubuntu@192.168.10.15:/var/www/optima-agent-frontend
+      - name: Deploy to server
+        run: |
+          rsync -e "ssh -i private_key -o StrictHostKeyChecking=no" -rltgoDzvO --delete dist/ ubuntu@192.168.10.15:/var/www/optima-agent-frontend
