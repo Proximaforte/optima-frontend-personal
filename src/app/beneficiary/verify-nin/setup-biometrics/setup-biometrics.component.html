@@ -36,7 +36,7 @@
                       class="absolute top-0 right-0"
                       *ngIf="
                         urlPath === 'face_capture_done' ||
-                        urlPath === 'finger_capture_done' || 'fingerprint_capturing'
+                        urlPath === 'finger_capture_done' || urlPath === 'fingerprint_capturing' && faceCaptureExists
                       "
                     >
                       <img [src]="marked" alt="checked" class="h-4 w-4" />
