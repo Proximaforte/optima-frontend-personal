@@ -10,6 +10,8 @@ import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { StateService } from 'src/app/state.service';
 import { SkipFingerprintConsentModal } from './onskip-consent.component';
 import { SuccesfulBiometricsComponent } from 'src/app/utilities/modals/succesful-biometrics/succesful-biometrics.component';
+import { BeneficiaryProfile } from 'src/app/models/beneficiary/beneficiary';
+import { ProfileService } from 'src/app/services/profile/profile.service';
 
 @Component({
   selector: 'app-setup-biometrics',
@@ -30,6 +32,8 @@ export class SetupBiometricsComponent {
   skipThumbprintPayload: any = {};
   showSpinner = false;
   selectedReason: string | null = null;
+  beneficiary!: BeneficiaryProfile | any;
+  fingerPrintBiometricStatus: "FAILED" | "PENDING" | "SUCCESS" | undefined = undefined
 
   constructor(
     private router: Router,
@@ -39,7 +43,6 @@ export class SetupBiometricsComponent {
     private snackbar: MatSnackBar,
     private toast: ToastsService,
     private auth: AuthService,
-    private stateService: StateService
 
   ) {
     const routePath = this.route.queryParams.subscribe({
@@ -60,7 +63,6 @@ export class SetupBiometricsComponent {
       
       this.disabledBtn = true
     }
-
 
     const getImageCaptured: any = sessionStorage.getItem('face_capture');
     this.imageCapturePayload = JSON.parse(getImageCaptured);
@@ -87,6 +89,7 @@ export class SetupBiometricsComponent {
   //   image: this.passport?.split(',')[1]
   // }
 
+
   procedureInterface(param: string, route: string) {
     // this.showOtp = true;
     this.router.navigate([route], {
@@ -111,6 +114,7 @@ export class SetupBiometricsComponent {
       }
     });
   }
+
 
   proceed() {
     // this.selectedReason = this.stateService.getSelectedReason();

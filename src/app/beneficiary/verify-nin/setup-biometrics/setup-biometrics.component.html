@@ -68,18 +68,79 @@
                     </span>
                     <span
                       class="absolute top-0 right-0"
-                      *ngIf="selectedReason"
+                      *ngIf="selectedReason && selectedReason !== 'PENDING'"
                     >
                       <img [src]="marked" alt="checked" class="h-4 w-4" />
                     </span>
                   </div>
+                  <div
+                    [className]="
+                      selectedReason === 'PENDING'
+                        ? 'bg-[#FFFAF0] text-[#E59600] font-semibold text-[12px] rounded-3xl p-2 px-5 flex items-center gap-2 mt-3 w-fit ml-6'
+                        : selectedReason === 'FAILED'
+                          ? ''
+                          : selectedReason === 'SUCCESS'
+                          ? 'bg-[#ECFDF3] text-[#12B76A] font-semibold text-[12px] rounded-3xl p-2 px-5 flex items-center gap-2 mt-3 w-fit ml-6' : ''
+                    "
+                  >
+                    <svg
+                      *ngIf="selectedReason && selectedReason === 'PENDING'"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z"
+                        stroke="#E69600"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M7.5 7.5H8V11H8.5"
+                        stroke="#E69600"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M7.875 5.75C8.15114 5.75 8.375 5.52614 8.375 5.25C8.375 4.97386 8.15114 4.75 7.875 4.75C7.59886 4.75 7.375 4.97386 7.375 5.25C7.375 5.52614 7.59886 5.75 7.875 5.75Z"
+                        fill="#E69600"
+                      />
+                    </svg>
+
+                    {{
+                      selectedReason === "PENDING"
+                        ? "Waiting to authenticate capture"
+                        : selectedReason === "FAILED"
+                          ? "Biometric capturing failed, please retry."
+                          : selectedReason === "SUCCESS"
+                          ? "Captured from third-party" : null
+                    }}
+                    <svg
+                      *ngIf="selectedReason && selectedReason === 'SUCCESS'"
+                      width="16"
+                      height="17"
+                      viewBox="0 0 16 17"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.00065 8.50065L7.00065 10.5007L11.0007 6.50065M14.6673 8.50065C14.6673 12.1826 11.6826 15.1673 8.00065 15.1673C4.31875 15.1673 1.33398 12.1826 1.33398 8.50065C1.33398 4.81875 4.31875 1.83398 8.00065 1.83398C11.6826 1.83398 14.6673 4.81875 14.6673 8.50065Z"
+                        stroke="#12B76A"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
                 </mat-card-content>
               </mat-card>
               <div
-                *ngIf="selectedReason"
+                *ngIf="selectedReason && selectedReason !== 'PENDING' && selectedReason !== 'SUCCESS'" 
                 class="h-5 mt-5 text-[12px] italic w-[95%] font-bold text-[#ff0000] flex items-center gap-2 rounded-3xl p-2"
               >
-               Note: Fingerprint has been skipped due to {{ selectedReason }}
+                Note: Fingerprint has been skipped due to {{ selectedReason }}
               </div>
             </div>
 
@@ -89,7 +150,7 @@
               type="submit"
               [disabled]="disabledBtn"
               [ngStyle]="{
-                'background-color': (disabledBtn) ? '#B8B7C8' : '#109856'
+                'background-color': disabledBtn ? '#B8B7C8' : '#109856'
               }"
               class="w-full bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600"
             >

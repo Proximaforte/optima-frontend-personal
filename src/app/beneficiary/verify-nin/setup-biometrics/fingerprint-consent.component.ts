@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SkipFingerprintConsentModal } from './onskip-consent.component';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { ProfileService } from 'src/app/services/profile/profile.service';
+import { BeneficiaryProfile } from 'src/app/models/beneficiary/beneficiary';
+import { SetupBiometricsComponent } from './setup-biometrics.component';
 
 @Component({
   selector: 'app-fingerprint-consent',
@@ -72,6 +76,7 @@ import { SkipFingerprintConsentModal } from './onskip-consent.component';
           [className]="
             'bg-[#109856] font-euclid w-full outline-none border-none p-3 text-white rounded-[4px]'
           "
+          (click)="routeToCompleteBiometrics(beneficiary)"
         >
           Continue
         </button>
@@ -90,12 +95,25 @@ import { SkipFingerprintConsentModal } from './onskip-consent.component';
   styles: [],
 })
 export class FingerPrintConsent {
+
   @Output() reasonSelected = new EventEmitter<string>();
   selectedReason: string | null = null;
-  constructor(private dialogRef: MatDialogRef<FingerPrintConsent>, private dialog: MatDialog) {}
+  fingerPrintBiometricStatus: "FAILED" | "PENDING" | "SUCCESS" | undefined = undefined
+ 
+  beneficiary!: BeneficiaryProfile | any;
+  constructor(
+    private dialogRef: MatDialogRef<FingerPrintConsent>,
+    private dialog: MatDialog,
+    private fingerprintCaptureStatus: MatDialogRef<SetupBiometricsComponent>,
+    private auth: AuthService,
+    private profileService: ProfileService
+  ) {}
 
   onClose(): void {
     this.dialogRef.close(this.selectedReason);
+  }
+  onContinue(fingerPrintBiometricStatus: "FAILED" | "PENDING" | "SUCCESS" | undefined) {
+    this.fingerprintCaptureStatus?.close(fingerPrintBiometricStatus)
   }
   skipFingerprintConsentModal() {
     const dialogRef = this.dialog.open(SkipFingerprintConsentModal, {
@@ -107,6 +125,18 @@ export class FingerPrintConsent {
         this.dialogRef.close(selectedReason); // Close the current modal and pass the reason
       }
     });
-
+  }
+  routeToCompleteBiometrics(beneficiary: any){
+    let jwt:any = this.auth.getAgentData();
+    let payload:any = {
+      token: jwt,
+      name: beneficiary?.fullName,
+      nin: beneficiary?.nin,
+      dob: beneficiary?.dateOfBirth
+    }
+   this.profileService.encryptJSONPayload(payload);
+  //  setTimeout(() => window.location.reload(), 2000)
+  this.fingerPrintBiometricStatus = "PENDING"
+  this.onContinue(this.fingerPrintBiometricStatus);
   }
 }
