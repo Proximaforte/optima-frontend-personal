@@ -127,14 +127,14 @@ export class PersonalDetailsComponent implements OnInit {
     console.log(newNin)
     const payload: any = {
       nin: newNin?.nin,
-      firstname: this.personalDetailsForm.value?.firstName,
-      lastname: this.personalDetailsForm.value?.lastName,
-      middleName: this.personalDetailsForm.value?.middleName,
+      // firstname: this.personalDetailsForm.value?.firstName,
+      // lastname: this.personalDetailsForm.value?.lastName,
+      // middleName: this.personalDetailsForm.value?.middleName,
       phoneNumber: this.personalDetailsForm.get('phoneNumber')?.value,
       bvn: this.personalDetailsForm.value?.bvn,
       email: this.personalDetailsForm.value?.email,
-      gender: this.personalDetailsForm.value?.gender,
-      dateOfBirth: this.formattedDate,
+      // gender: this.personalDetailsForm.value?.gender,
+      //dateOfBirth: this.formattedDate,
       placeOfBirth: this.personalDetailsForm.value?.placeOfBirth,
       religion: this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
     }

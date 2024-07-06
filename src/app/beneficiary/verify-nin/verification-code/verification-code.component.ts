@@ -140,7 +140,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
     //console.log("merged>>>", this.otpValue);
     this.showSpinner = true;
     const getBeneficiaryPhoneNumber: any = localStorage.getItem('beneficiaryPhoneNumber');
-    const getNIN: any = localStorage.getItem('nin');
+    const getNIN: any = localStorage.getItem('NINDetails');
     const parseNIN = JSON.parse(getNIN);
     const OTPPayload:any = {
       nin: parseNIN?.nin,
