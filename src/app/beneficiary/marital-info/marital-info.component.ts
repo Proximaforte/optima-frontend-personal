@@ -68,12 +68,12 @@ export class MaritalInfoComponent implements OnInit {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
 
-    const getMessage:any = sessionStorage.getItem('incomplete');
+    const getMessage:any = localStorage.getItem('incomplete');
     if(getMessage !== null){
       this.showWelcomeMsg = true;
       setTimeout(() => {
         this.showWelcomeMsg = false;
-        sessionStorage.removeItem('incomplete');
+        localStorage.removeItem('incomplete');
        }, 2500);
     }else{
        this.showWelcomeMsg = false;
@@ -248,7 +248,7 @@ export class MaritalInfoComponent implements OnInit {
       childrenArray.push(ChildrenObj);
       //  console.log("children form>>>", childrenArray);
     }
-    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       phoneNumber: getBeneficiaryPhoneNumber,
       maritalStatus: this.maritalInfoForm.get('maritalStatus')?.value,

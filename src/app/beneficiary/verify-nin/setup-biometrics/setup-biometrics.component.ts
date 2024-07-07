@@ -34,6 +34,8 @@ export class SetupBiometricsComponent {
   selectedReason: string | null = null;
   beneficiary!: BeneficiaryProfile | any;
   fingerPrintBiometricStatus: "FAILED" | "PENDING" | "SUCCESS" | undefined = undefined
+  faceCaptureExists: boolean = false;
+
 
   constructor(
     private router: Router,
@@ -53,34 +55,36 @@ export class SetupBiometricsComponent {
           this.disabledBtn = false;
         } else if (this.urlPath === 'face_capture_done') {
           this.disabledBtn = false;
-        }
+        } 
       },
     });
 
-    if (sessionStorage.getItem("face_capture")  && this.selectedReason && this.selectedReason !== "FAILED") {
-      this.disabledBtn = false
-    } else {
-      
-      this.disabledBtn = true
-    }
 
     if (window.location.href?.includes("&status=true")) {
+      localStorage.setItem("isFingerprintOk", "true")
+      this.selectedReason = "SUCCESS"
+    }
+    if (localStorage.getItem("isFingerprintOk")) {
+      
       this.selectedReason = "SUCCESS"
     }
     if (window.location.href?.includes("&status=false")) {
       this.selectedReason = "FAILED"
     }
 
-    const getImageCaptured: any = sessionStorage.getItem('face_capture');
+    const getImageCaptured: any = localStorage.getItem('face_capture');
     this.imageCapturePayload = JSON.parse(getImageCaptured);
     //  console.log('image capture>>>', this.imageCapturePayload);
 
-    const getImageSkipThumbprint: any = sessionStorage.getItem(
+    const getImageSkipThumbprint: any = localStorage.getItem(
       'faceCapture_skipThumbPrints',
     );
     this.skipThumbprintPayload = JSON.parse(getImageSkipThumbprint);
-    
+    // console.log('skip thumprint image>>>', this.skipThumbprintPayload);
+    this.faceCaptureExists = !!localStorage.getItem("face_capture");
+    this.updateDisabledBtn();
   }
+
 
   // const payload = {
   //   nin: this.nin?.nin,
@@ -96,6 +100,13 @@ export class SetupBiometricsComponent {
   //   image: this.passport?.split(',')[1]
   // }
 
+  updateDisabledBtn() {
+    if (localStorage.getItem('face_capture') && this.selectedReason && this.selectedReason !== 'FAILED' && this.selectedReason !== "PENDING") {
+      this.disabledBtn = false;
+    } else {
+      this.disabledBtn = true;
+    }
+  }
 
   procedureInterface(param: string, route: string) {
     // this.showOtp = true;
@@ -106,6 +117,11 @@ export class SetupBiometricsComponent {
       },
     });
     setTimeout(() => location.reload(), 300);
+  }
+
+  ngOnDestroy() {
+    localStorage.removeItem("isFingerprintOk");
+    localStorage.removeItem("face_capture");
   }
 
   openFingerPrintModal(param: string, route: string) {
@@ -122,7 +138,7 @@ export class SetupBiometricsComponent {
     dialogRef.afterClosed().subscribe((selectedReason: string) => {
       if (selectedReason) {
         this.selectedReason = selectedReason;
-        this.disabledBtn = false
+        // this.disabledBtn = false
       }
     });
   }

@@ -26,7 +26,7 @@ export class FingerCaptureCompleteComponent implements OnInit{
    const getUserData:any = localStorage.getItem('userDetails');
    this.userDetails = JSON.parse(getUserData);
 
-   const getNin:any = sessionStorage.getItem('nin');
+   const getNin:any = localStorage.getItem('nin');
    this.nin = JSON.parse(getNin);
 
   }
@@ -54,7 +54,7 @@ export class FingerCaptureCompleteComponent implements OnInit{
       image: this.passport,
       showLatest: true
     });
-    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       nin: this.nin?.nin,
       type: 'FACIAL_ID', //PHONE_NUMBER
@@ -62,7 +62,7 @@ export class FingerCaptureCompleteComponent implements OnInit{
       image: this.passport?.split(',')[1]
     }
   //  console.log("payload>>", payload);
-    sessionStorage.setItem('faceCapture_skipThumbPrints', JSON.stringify(payload));
+    localStorage.setItem('faceCapture_skipThumbPrints', JSON.stringify(payload));
     
     this.router.navigate(['/home/setup-biometrics'], {
       relativeTo: this.route,

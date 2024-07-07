@@ -27,12 +27,12 @@ export class VerifyNINComponent implements OnInit {
     private auth: AuthService
   ) {
     const getDetails: any = localStorage.getItem('userDetails');
-    const getMessage: any = sessionStorage.getItem('incomplete');
+    const getMessage: any = localStorage.getItem('incomplete');
     if (getMessage !== null) {
       this.showWelcomeMsg = true;
       setTimeout(() => {
         this.showWelcomeMsg = false;
-        sessionStorage.removeItem('incomplete');
+        localStorage.removeItem('incomplete');
       }, 2500);
     } else {
       this.showWelcomeMsg = false;
@@ -64,8 +64,8 @@ export class VerifyNINComponent implements OnInit {
           this.beneficiaryService.verifyNIN(value).subscribe({
             next: (response: any) => {
               if (response?.responseCode === 200) {
-                sessionStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
-                 sessionStorage.setItem('NINDetails',JSON.stringify(response?.data));
+                localStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
+                 localStorage.setItem('NINDetails',JSON.stringify(response?.data));
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
                 this.submit();
                 this.snackbar.openFromComponent(ToastsComponent, {
@@ -108,7 +108,7 @@ export class VerifyNINComponent implements OnInit {
     //   }});
     //personal_details
 
-    sessionStorage.setItem('nin', JSON.stringify(this.ninForm.value));
+    localStorage.setItem('nin', JSON.stringify(this.ninForm.value));
   }
 
 }

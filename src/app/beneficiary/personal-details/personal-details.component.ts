@@ -43,19 +43,19 @@ export class PersonalDetailsComponent implements OnInit {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
 
-    const getMessage: any = sessionStorage.getItem('incomplete');
+    const getMessage: any = localStorage.getItem('incomplete');
     if (getMessage !== null) {
       this.showWelcomeMsg = true;
       setTimeout(() => {
         this.showWelcomeMsg = false;
-        sessionStorage.removeItem('incomplete');
+        localStorage.removeItem('incomplete');
       }, 2500);
     } else {
       this.showWelcomeMsg = false;
     }
 
-   if(sessionStorage.getItem('NINDetails') !== null){
-    const getBeneficiaryNin: any = sessionStorage.getItem('NINDetails');
+   if(localStorage.getItem('NINDetails') !== null){
+    const getBeneficiaryNin: any = localStorage.getItem('NINDetails');
     this.ninDetails = JSON.parse(getBeneficiaryNin)
    // var newDate:any = this.ninDetails.birthDate?.split('-');
    // console.log("newDate>>", newDate);
@@ -119,25 +119,25 @@ export class PersonalDetailsComponent implements OnInit {
     //var dateObject = new Date(this.ninDetails?.birthDate);
 
 
-    const getNin: any = sessionStorage.getItem('nin');
+    const getNin: any = localStorage.getItem('NINDetails');
     let newNin: any = JSON.parse(getNin);
 
     this.showSpinner = true;
-    sessionStorage.setItem('beneficiaryPhoneNumber', this.personalDetailsForm.get('phoneNumber')?.value);
+    localStorage.setItem('beneficiaryPhoneNumber', this.personalDetailsForm.get('phoneNumber')?.value);
+    console.log(newNin)
     const payload: any = {
       nin: newNin?.nin,
-      firstname: this.personalDetailsForm.value?.firstName,
-      lastname: this.personalDetailsForm.value?.lastName,
-      middleName: this.personalDetailsForm.value?.middleName,
+      // firstname: this.personalDetailsForm.value?.firstName,
+      // lastname: this.personalDetailsForm.value?.lastName,
+      // middleName: this.personalDetailsForm.value?.middleName,
       phoneNumber: this.personalDetailsForm.get('phoneNumber')?.value,
       bvn: this.personalDetailsForm.value?.bvn,
       email: this.personalDetailsForm.value?.email,
-      gender: this.personalDetailsForm.value?.gender,
-      dateOfBirth: this.formattedDate,
+      // gender: this.personalDetailsForm.value?.gender,
+      //dateOfBirth: this.formattedDate,
       placeOfBirth: this.personalDetailsForm.value?.placeOfBirth,
       religion: this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
     }
- //   console.log("zzzzz>>>", payload);
  
     this.beneficiaryService.personalDetails(payload).subscribe({
       next: (res: any) => {
