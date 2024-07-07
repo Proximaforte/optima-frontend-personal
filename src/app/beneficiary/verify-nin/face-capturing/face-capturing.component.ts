@@ -50,8 +50,8 @@ export class FaceCapturingComponent implements OnInit {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
 
-   if(sessionStorage.getItem('NINDetails') !== null){
-    const getNin: any = sessionStorage.getItem('NINDetails');
+   if(localStorage.getItem('NINDetails') !== null){
+    const getNin: any = localStorage.getItem('NINDetails');
     // console.log("get NIN>>", JSON.parse(getNin));
     this.nin = JSON.parse(getNin);
    }
@@ -101,14 +101,15 @@ export class FaceCapturingComponent implements OnInit {
 
 
   submit() {
-    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       nin: this.nin?.nin,
       type: 'FACIAL_ID', //PHONE_NUMBER
       phoneNumber: getBeneficiaryPhoneNumber,
       image: this.photograph?.split(',')[1]
     }
-    sessionStorage.setItem('face_capture', JSON.stringify(payload));
+    localStorage.setItem('face_capture', JSON.stringify(payload));
+    localStorage.setItem('face_capture', JSON.stringify(payload));
     this.router.navigate(['/home/setup-biometrics'], {
       relativeTo: this.route,
       queryParams: {

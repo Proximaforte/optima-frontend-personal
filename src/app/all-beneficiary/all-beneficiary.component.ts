@@ -292,12 +292,13 @@ export class AllBeneficiaryComponent implements OnInit {
       verticalPosition: 'bottom',
     });
 
-    sessionStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
-    sessionStorage.setItem('incomplete', "Let's continue from where you've stopped!");
+    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    localStorage.setItem('incomplete', "Let's continue from where you've stopped!");
     this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
       next: (details:any) => {
         const stringedData = JSON.stringify(details?.data);
-        sessionStorage.setItem('NINDetails', stringedData);
+        localStorage.setItem('NINDetails', stringedData);
+        localStorage.setItem('NINDetails', stringedData);
       }
     })
  
@@ -319,7 +320,7 @@ export class AllBeneficiaryComponent implements OnInit {
       })
     } else if (beneficiary?.formStage === "OTP_VERIFICATION") {
       this.beneficiaryService.setRouteToDisplay("biometrics");
-      sessionStorage.setItem('biometrics', 'biometrics');
+      localStorage.setItem('biometrics', 'biometrics');
       this.router.navigate(['/home/setup-biometrics'], {
         relativeTo: this.route,
         queryParams: {
@@ -334,7 +335,7 @@ export class AllBeneficiaryComponent implements OnInit {
       // })
     } else if (beneficiary?.formStage === "PERSONAL_DETAILS") {
       this.beneficiaryService.setRouteToDisplay("verification procedure");
-      sessionStorage.setItem('verification', 'verification');
+      localStorage.setItem('verification', 'verification');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {

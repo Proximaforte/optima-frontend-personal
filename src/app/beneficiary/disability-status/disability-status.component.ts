@@ -123,7 +123,7 @@ export class DisabilityStatusComponent implements OnInit{
       specifyDisabled: this.disabilityForm.value?.disability 
     }
 
-    const getBeneficiaryPhoneNumber:any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
 
     const newHealthPayload: any = {
       phoneNumber: getBeneficiaryPhoneNumber,

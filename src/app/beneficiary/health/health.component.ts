@@ -35,12 +35,12 @@ export class HealthComponent implements OnInit {
   constructor(
     private router: Router, private route: ActivatedRoute, private beneficiaryService: BeneficiaryService
   ){
-    const getMessage:any = sessionStorage.getItem('incomplete');
+    const getMessage:any = localStorage.getItem('incomplete');
     if(getMessage !== null){
       this.showWelcomeMsg = true;
       setTimeout(() => {
         this.showWelcomeMsg = false;
-        sessionStorage.removeItem('incomplete');
+        localStorage.removeItem('incomplete');
        }, 2500);
     }else{
        this.showWelcomeMsg = false;
