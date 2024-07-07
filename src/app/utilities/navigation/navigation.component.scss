@@ -10,3 +10,17 @@ button:hover{
     background-color: green;
     color: white;
 }
+
+.custom-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.active-item .custom-icon {
+  color: #4CAF50; /* Green color for active item */
+  font-size: 36px; /* Increase the size for active item */
+}
+
+.active-item {
+  color: #4CAF50; /* Green color for active item text */
+}

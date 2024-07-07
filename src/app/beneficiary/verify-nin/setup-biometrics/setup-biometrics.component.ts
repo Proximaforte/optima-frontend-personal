@@ -83,7 +83,6 @@ export class SetupBiometricsComponent {
     // console.log('skip thumprint image>>>', this.skipThumbprintPayload);
     this.faceCaptureExists = !!localStorage.getItem("face_capture");
     this.updateDisabledBtn();
-
   }
 
 
