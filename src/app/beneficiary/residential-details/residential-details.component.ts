@@ -15,22 +15,22 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 })
 export class ResidentialDetailsComponent implements OnInit {
 
-  options: String[] = [
+  options: string[] = [
     "Does beneficiary own where he lives?*",
     "Yes, a house owner",
     "No, a tenant"
-  ]
+  ];
 
-  states:string[] = NigerianStates;
+  states: string[] = NigerianStates;
   lga: any[] = localGovt;
-  selectedState: string = '';
+  selectedState: string = NigerianStates[24]; // Default to the 24th state
   residentialInfo!: FormGroup;
-  selectedLGA: string[] = ["Select LGA*"];
+  selectedLGA: string[] = [];
   showOthers: boolean = false;
   userDetails: any = {};
   disableBtn: boolean = true;
   showSpinner: boolean = false;
-  showWelcomeMsg:boolean = false;
+  showWelcomeMsg: boolean = false;
 
   constructor(
     private router: Router,
@@ -39,105 +39,100 @@ export class ResidentialDetailsComponent implements OnInit {
     private snackbar: MatSnackBar,
     private toast: ToastsService,
     private auth: AuthService
-  ){
+  ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
-    //console.log("userData>>>", JSON.parse(getUserData)); //phoneNumber
 
-    const getMessage:any = localStorage.getItem('incomplete');
-    if(getMessage !== null){
+    const getMessage: any = sessionStorage.getItem('incomplete');
+    if (getMessage !== null) {
       this.showWelcomeMsg = true;
       setTimeout(() => {
         this.showWelcomeMsg = false;
-        localStorage.removeItem('incomplete');
-       }, 2500);
-    }else{
-       this.showWelcomeMsg = false;
+        sessionStorage.removeItem('incomplete');
+      }, 2500);
+    } else {
+      this.showWelcomeMsg = false;
     }
   }
 
-  selectState(value: any){
-   // console.log("selected state>>", this.selectedState);
+  selectState(value: any) {
+    this.selectedState = value;
+    this.updateLGA();
   }
 
-  residencyForm(){
+  updateLGA() {
+    const selectedStateLGA = this.lga.find(item => item.state === this.selectedState);
+    this.selectedLGA = selectedStateLGA ? selectedStateLGA.localGovt : [];
+    this.disableBtn = false;
+  }
+
+  residencyForm() {
     this.residentialInfo = new FormGroup({
-      placeOfResidence: new FormControl('',[Validators?.required]),
+      placeOfResidence: new FormControl('', [Validators.required]),
       annualPay: new FormControl('', [Validators.required]),
-      address: new FormControl('',[Validators?.required]),
-      selectState: new FormControl('',[Validators?.required]),
-      selectLga: new FormControl('',[Validators?.required]),
-    })
+      address: new FormControl('', [Validators.required]),
+      selectState: new FormControl(this.selectedState, [Validators.required]),
+      selectLga: new FormControl('', [Validators.required]),
+    });
 
     this.residentialInfo.get('selectState')?.valueChanges.subscribe({
       next: (item: any) => {
-        this.disableBtn = false;
-        for(var i=0; i< this.lga?.length; i++){
-          if(item === this.lga[i].state){
-            this.selectedLGA.push(...this.lga[i]?.localGovt)
-            break;
-          }
-        }
+        this.selectState(item);
       }
-    })
+    });
 
     this.residentialInfo.get('placeOfResidence')?.valueChanges.subscribe({
-      next: (value:any) => {
-        if(value === "No, a tenant"){
-            this.showOthers = true;
-          }else{
-            this.showOthers = false;
-          }
+      next: (value: any) => {
+        this.showOthers = value === "No, a tenant";
       }
-    })
-    
+    });
+
+    // Initialize the LGAs for the default state
+    this.updateLGA();
   }
 
   ngOnInit(): void {
     this.residencyForm();
   }
 
-  submitForm(){
+  submitForm() {
     this.showSpinner = true;
-    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
-    const payload:any = {
+    const getBeneficiaryPhoneNumber: any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const payload: any = {
       phoneNumber: getBeneficiaryPhoneNumber,
-      houseOwner: this.residentialInfo.value.placeOfResidence === "Yes, a house owner" ? true : this.residentialInfo.value.placeOfResidence ===  "No, a tenant" ? false : null,
+      houseOwner: this.residentialInfo.value.placeOfResidence === "Yes, a house owner",
       annualRent: Number(this.residentialInfo.value?.annualPay),
       address: this.residentialInfo.value?.address,
       state: this.residentialInfo.value?.selectState,
       lga: this.residentialInfo.value?.selectLga
-    }
+    };
 
-   //console.log("data>>>", payload);
     this.beneficiaryService.residentialDetails(payload).subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         this.showSpinner = false;
         this.beneficiaryService.setRouteToDisplay("marital info");
-        this.router.navigate(['/home/beneficiary'],{
+        this.router.navigate(['/home/beneficiary'], {
           relativeTo: this.route,
-          queryParams: {
-            progress: 'marital_info'
-          }
-        })
+          queryParams: { progress: 'marital_info' }
+        });
         this.toast.setSuccessMessage('Beneficiary Residential Details is onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
       },
-      error: (err:any) => {
+      error: (err: any) => {
         console.error("err>>", err);
         this.showSpinner = false;
-        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occurred!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        if(err?.status === 401){
-        this.auth.agentLogout();
+        if (err?.status === 401) {
+          this.auth.agentLogout();
         }
       }
-    })
+    });
   }
 }

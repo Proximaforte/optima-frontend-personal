@@ -825,6 +825,7 @@ export const localGovt = [
         id: 24,
         state: "Kwara",
         localGovt: [
+            "Select LGA",
             "Asa",
             "Baruten",
             "Edu",

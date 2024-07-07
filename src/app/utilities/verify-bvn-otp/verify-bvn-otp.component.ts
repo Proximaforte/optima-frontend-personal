@@ -16,7 +16,7 @@ export class VerifyBvnOtpComponent {
   @ViewChild('input6') input6!: ElementRef;
 
   otp: string = '';
-  constructor(){}
+  constructor() {}
 
   onKeyUp(event: any, index: number) {
     const target = event.target;
@@ -25,7 +25,6 @@ export class VerifyBvnOtpComponent {
       if (index === 1) this.input2.nativeElement.focus();
       if (index === 2) this.input3.nativeElement.focus();
       if (index === 3) this.input4.nativeElement.focus();
-
       if (index === 4) this.input5.nativeElement.focus();
       if (index === 5) this.input6.nativeElement.focus();
     }
@@ -33,7 +32,6 @@ export class VerifyBvnOtpComponent {
     if (length === 0 && index > 0) {
       if (index === 6) this.input5.nativeElement.focus();
       if (index === 5) this.input4.nativeElement.focus();
-
       if (index === 4) this.input3.nativeElement.focus();
       if (index === 3) this.input2.nativeElement.focus();
       if (index === 2) this.input1.nativeElement.focus();
@@ -41,12 +39,11 @@ export class VerifyBvnOtpComponent {
     this.updateOtp();
   }
 
-  
   updateOtp() {
     const otp = this.input1.nativeElement.value +
                 this.input2.nativeElement.value +
                 this.input3.nativeElement.value +
-                this.input4.nativeElement.value+
+                this.input4.nativeElement.value +
                 this.input5.nativeElement.value +
                 this.input6.nativeElement.value;
     this.otpChange.emit(otp);
