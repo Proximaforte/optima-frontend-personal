@@ -101,7 +101,7 @@ export class SetupBiometricsComponent {
   // }
 
   updateDisabledBtn() {
-    if (localStorage.getItem('face_capture') && this.selectedReason && this.selectedReason !== 'FAILED' && this.selectedReason !== "PENDING") {
+    if (localStorage.getItem('face_capture')  && this.selectedReason !== 'FAILED' && this.selectedReason !== "PENDING" && this.selectedReason) {
       this.disabledBtn = false;
     } else {
       this.disabledBtn = true;
@@ -138,7 +138,7 @@ export class SetupBiometricsComponent {
     dialogRef.afterClosed().subscribe((selectedReason: string) => {
       if (selectedReason) {
         this.selectedReason = selectedReason;
-        // this.disabledBtn = false
+         this.disabledBtn = false
       }
     });
   }
