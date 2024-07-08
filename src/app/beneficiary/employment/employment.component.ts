@@ -90,7 +90,7 @@ export class EmploymentComponent implements OnInit {
       employmentStatus: new FormControl('', [Validators.required]),
       nameOfEmployer: new FormControl('', [Validators.required]),
       employerOfficeAddress: new FormControl('', [Validators.required]),
-      otherSourcesOfIncome: new FormControl('none', [Validators.required]),
+      otherSourcesOfIncome: new FormControl('', ),
       nameOfBusiness: new FormControl('', [Validators.required]),
       natureOfBusiness: new FormControl('', [Validators.required]),
       pensionAccount: new FormControl('', [Validators.required]),
@@ -126,11 +126,7 @@ export class EmploymentComponent implements OnInit {
 
     this.employmentForm.get('otherSourcesOfIncome')?.valueChanges.subscribe({
       next: (item: any) => {
-        if(item?.length > 1){
           this.disableBtn = false;
-        }else{
-          this.disableBtn = true;
-        }
       }
     })
 

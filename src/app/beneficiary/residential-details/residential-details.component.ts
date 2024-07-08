@@ -42,6 +42,10 @@ export class ResidentialDetailsComponent implements OnInit {
   ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
+    console.log(this.userDetails);
+    
+      
+
 
     const getMessage: any = sessionStorage.getItem('incomplete');
     if (getMessage !== null) {
@@ -97,7 +101,7 @@ export class ResidentialDetailsComponent implements OnInit {
 
   submitForm() {
     this.showSpinner = true;
-    const getBeneficiaryPhoneNumber: any = sessionStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber: any = localStorage.getItem('beneficiaryPhoneNumber');
     const payload: any = {
       phoneNumber: getBeneficiaryPhoneNumber,
       houseOwner: this.residentialInfo.value.placeOfResidence === "Yes, a house owner",
