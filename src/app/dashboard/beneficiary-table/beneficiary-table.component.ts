@@ -1,5 +1,5 @@
-import { Component, OnInit , EventEmitter, Output} from '@angular/core';
-import { Router , ActivatedRoute} from '@angular/router';
+import { Component, OnInit, EventEmitter, Output, ViewChild, TemplateRef } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Beneficiary, PaginationParams, mocks } from 'src/app/models/beneficiary/beneficiary';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { TotalOnboarding } from 'src/app/models/beneficiary/beneficiary';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-beneficiary-table',
@@ -18,6 +19,9 @@ export class BeneficiaryTableComponent implements OnInit {
   beneficiary: Beneficiary[] = [];
   @Output() emitTotals$: EventEmitter<any> = new EventEmitter();
   noData: string = "/assets/images/emptydata.svg";
+  check: string = "/assets/images/mark-icon.png";
+  back: string = "/assets/images/arrow-left-circle.png";
+  privacy: string = "/assets/images/privacy.png";
   agents: any = [
     { text: 'Agent code', data: 'AG1023', icon: 'assets/images/agentcode.svg' },
     {
@@ -41,37 +45,44 @@ export class BeneficiaryTableComponent implements OnInit {
     completed: 0,
     incompleted: 0
   }
+
+  @ViewChild('consentModal') consentModal!: TemplateRef<any>;
+
+  showConsent: boolean = true; // Flag to toggle between consent and privacy policy
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private beneficiaryService: BeneficiaryService,
     private authService: AuthService,
     private snackbar: MatSnackBar,
-    private toast: ToastsService
-  ){}
+    private toast: ToastsService,
+    private dialog: MatDialog // Inject MatDialog
+  ) {}
 
+  addBeneficiary() {
+    const dialogRef = this.dialog.open(this.consentModal);
 
-  addBeneficiary(){
-    this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
-    this.router.navigate(['/home/beneficiary'],{
-      relativeTo: this.route,
-      queryParams: {
-        progress: 'verify_NIN'
+    dialogRef.afterClosed().subscribe(result => {
+      this.showConsent = true; // Reset to consent view when modal is closed
+      if (result === 'accept') {
+        this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
+        this.router.navigate(['/home/beneficiary'], {
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'verify_NIN'
+          }
+        });
       }
-    })
-   // this.router.navigate(["/home/beneficiary"],{relativeTo: this.route});
+    });
   }
 
-  getAllBeneficiries(){
+  getAllBeneficiries() {
     this.beneficiaryService.getFilteredBeneficiaries(this.beneficiaryService.getFilterParams(), this.paginationParams).subscribe({
       next: (res: any) => {
-      //  console.log('complete>>>', res?.data?.beneficiaries);
         this.beneficiary = res?.data?.beneficiaries;
         this.totals.completed = res?.data?.beneficiaries?.length;
         this.emitTotals$.emit(this.totals);
-        // if(this.beneficiary?.length === 0){
-        //   this.beneficiary = mocks;
-        // }
       },
       error: (err: any) => {
         console.error("err>>", err);
@@ -80,21 +91,16 @@ export class BeneficiaryTableComponent implements OnInit {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-       if(err?.status === 401) this.authService.agentLogout();
+        if (err?.status === 401) this.authService.agentLogout();
       }
-    })
+    });
   }
 
-  getAllIncompletedBeneficiaries(){
-    this.beneficiaryService.getAllIncompleteBeneficiaries(this.beneficiaryService.getFilterParams(),this.paginationParams).subscribe({
+  getAllIncompletedBeneficiaries() {
+    this.beneficiaryService.getAllIncompleteBeneficiaries(this.beneficiaryService.getFilterParams(), this.paginationParams).subscribe({
       next: (res: any) => {
-      //  console.log('complete>>>', res?.data?.beneficiaries);
-        //this.beneficiary = res?.data?.beneficiaries;
         this.totals.incompleted = res?.data?.beneficiaries?.length;
         this.emitTotals$.emit(this.totals);
-        // if(this.beneficiary?.length === 0){
-        //   this.beneficiary = mocks;
-        // }
       },
       error: (err: any) => {
         console.error("err>>", err);
@@ -103,19 +109,36 @@ export class BeneficiaryTableComponent implements OnInit {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        if(err?.status === 401) this.authService.agentLogout();
+        if (err?.status === 401) this.authService.agentLogout();
       }
-    })
+    });
   }
-
-  // emitTotalArrays(tables:TotalOnboarding){
-  //   this.emitTotals$.emit(tables);
-  // }
 
   ngOnInit(): void {
     this.getAllBeneficiries();
     this.getAllIncompletedBeneficiaries();
   }
 
+  onCancel(): void {
+    this.dialog.closeAll();
+  }
 
+  onAccept(): void {
+    this.dialog.closeAll();
+    this.router.navigate(['../beneficiary'], {
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'verify_NIN'
+      }
+    });
+  }
+
+  toggleModalContent(): void {
+    this.showConsent = !this.showConsent;
+  }
+
+  closePrivacyPolicy(): void {
+    this.showConsent = true;
+    this.dialog.closeAll();
+  }
 }

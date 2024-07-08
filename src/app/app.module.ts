@@ -9,14 +9,26 @@ import { AddStyleToOtpInputDirective } from './directives/add-style-to-otp-input
 import { BeneficiaryFilterPipe } from './pipes/beneficiary-filter.pipe';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
+    
     AppComponent,
     AddStyleToOtpInputDirective,
     BeneficiaryFilterPipe
   ],
   imports: [
+
+    MatDialogModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+
+
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
