@@ -8,15 +8,39 @@
   "start_url": "./",
   "icons": [
     {
-      "src": "assets/icons/Icon-dark.svg",
+      "src": "assets/icons/raw_icon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     },
     {
-      "src": "assets/icons/Icon-dark.svg",
+      "src": "assets/icons/raw_icon.svg",
       "sizes": "128x128",
       "type": "image/svg+xml"
       
+    },
+    {
+      "src": "assets/icons/raw_icon.svg",
+      "sizes": "72x72",
+      "type": "image/png"
+      
+    },
+    {
+      "src": "assets/icons/raw_icon.svg",
+      "sizes": "96x96",
+      "type": "image/png"
+      
+    },
+   
+    {
+      "src": "assets/icons/raw_icon_384.svg",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/raw_icon_512.svg",
+      "sizes": "512x512",
+      "type": "image/png"
+     
     }
    
   ]
