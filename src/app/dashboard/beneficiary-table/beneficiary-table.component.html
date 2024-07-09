@@ -114,17 +114,17 @@
           <div class="consent-icon mb-4">
             <img [src]="check" alt="check">
           </div>
-          <h2 class="text-xl font-semibold">We need your consent!</h2>
-          <p class="text-gray-700 text-sm mt-2">
+          <h2 class="text-[32px] font-semibold">We need your consent!</h2>
+          <p class="text-gray-700 text-sm mt-2 leading-6">
             To add you as a beneficiary, we require some personal information. Rest assured, your data privacy is our top priority. All data will be handled in accordance with our strict 
             <a  class="text-[#4caf50] underline" (click)="toggleModalContent()">privacy policies</a>
             and applicable regulations to protect your information from unauthorized access and ensure it remains confidential.
           </p>
-          <p class="text-gray-700 text-sm mt-4">
+          <p class="text-gray-700 text-sm pt-5">
             Please accept this permission to continue.
           </p>
 
-          <p  class="text-[#4caf50]  mt-4" (click)="toggleModalContent()">privacy policies</p>
+          <p  class="text-[#4caf50]  py-6 leading-[20px]" (click)="toggleModalContent()">privacy policies</p>
 
           <div class="flex justify-between w-full mt-4">
             <button mat-button class="cancel-button" (click)="onCancel()">Cancel</button>
@@ -133,7 +133,7 @@
         </div>
         <ng-template #privacyPolicyTemplate>
           <div class="text-start">
-            <div class=" flex privacy-icon justify-start mb-4 w-[191px] h-[36px] gap-[8]">
+            <div class=" flex privacy-icon justify-start items-center mb-4 w-[191px] h-[36px] gap-[8]">
               <img [src]="back" alt="back" (click)="toggleModalContent()" class="w-[31px] h-[31px]">
               <div class=" small-div flex flex-row justify-start items-center ml-3 bg-[#e4f2da]">
                 <img [src]="privacy" class="privacy-img" alt="privacy">
@@ -143,10 +143,9 @@
             <div class="scrollable-content">
 
               <h2 class="text-xl font-semibold">Privacy Policy</h2>
-              <p class="text-gray-700 text-sm mt-2">
-                At Proximaforte Limited (“Proximaforte”), a data processing firm duly incorporated under the Laws of the Federal Republic of Nigeria, we acknowledge that we process personal information for a variety of entities (Click here for a variety of entities we process data for), we understand the intricacies of personal information management and we are dedicated to safeguarding the privacy and security of personal information processed on behalf of these entities ("our Clients"). 
-                To ensure the privacy and security of Personal Data, we have established a privacy policy that outlines our practices concerning personal information entrusted to us by our clients through our website/portal/system or any of our other customised online platforms (“our Platforms”), how we protect that information, and articulating the rights of the owners of the personal information we collect (“the Data Subjects”), in accordance with applicable data protection laws and regulations (“the Privacy Policy”). This Privacy policy may be amended from time to time.            </p>
-            
+              <p class="text-gray-700 text-base mt-2 text-justify leading-7">
+                At Proximaforte Limited (“Proximaforte”), a data processing firm duly incorporated under the Laws of the Federal Republic of Nigeria, we acknowledge that we process personal information for a variety of entities (Click here for a variety of entities we process data for), we understand the intricacies of personal information management and we are dedicated to safeguarding the privacy and security of personal information processed on behalf of these entities ("our Clients").  </p>
+            <p class="text-gray-700 text-base pt-5 text-justify leading-7"> To ensure the privacy and security of Personal Data, we have established a privacy policy that outlines our practices concerning personal information entrusted to us by our clients through our website/portal/system or any of our other customised online platforms (“our Platforms”), how we protect that information, and articulating the rights of the owners of the personal information we collect (“the Data Subjects”), in accordance with applicable data protection laws and regulations (“the Privacy Policy”). This Privacy policy may be amended from time to time.  </p>
             </div>
            
           </div>

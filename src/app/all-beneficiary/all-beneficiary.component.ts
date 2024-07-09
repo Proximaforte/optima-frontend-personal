@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterBoxComponent } from '../utilities/filter-box/filter-box.component';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,6 +9,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from '../services/alert/toasts.service';
 import { ToastsComponent } from '../utilities/toasts/toasts.component';
 import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';  // Import Location
+
+
 
 
 @Component({
@@ -17,6 +20,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./all-beneficiary.component.scss'],
 })
 export class AllBeneficiaryComponent implements OnInit {
+
+  @ViewChild('consentModal') consentModal!: TemplateRef<any>;
+  showConsent: boolean = true;
+
+  check: string = "/assets/images/mark-icon.png";
+  back: string = "/assets/images/arrow-left-circle.png";
+  privacy: string = "/assets/images/privacy.png";
+
 
   lastpage!: number;
   currentPage: number = 1;
@@ -87,7 +98,8 @@ export class AllBeneficiaryComponent implements OnInit {
     private beneficiaryService: BeneficiaryService,
     private authService: AuthService,
     private snackbar: MatSnackBar,
-    private toast: ToastsService
+    private toast: ToastsService,
+    private location: Location  // Inject Location
   ) {}
 
   showInCompleteBeneficiaries() {
@@ -491,4 +503,46 @@ export class AllBeneficiaryComponent implements OnInit {
     this.getAllIncompleteBeneficiaries();
     this.getAllIncompletedData();
   }
+
+  addBeneficiary() {
+    const dialogRef = this.dialog.open(this.consentModal);
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.showConsent = true; // Reset to consent view when modal is closed
+    //   if (result === 'accept') {
+    //     this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
+    //     this.router.navigate(['/home/beneficiary'], {
+    //       relativeTo: this.route,
+    //       queryParams: {
+    //         progress: 'verify_NIN'
+    //       }
+    //     });
+    //   }
+    // });
+  }
+
+  onCancel(): void {
+    this.dialog.closeAll();
+    this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
+  }
+
+  onAccept(): void {
+    this.dialog.closeAll();
+    this.router.navigate(['../beneficiary'], {
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'verify_NIN'
+      }
+    });
+  }
+
+  toggleModalContent(): void {
+    this.showConsent = !this.showConsent;
+  }
+
+  closePrivacyPolicy(): void {
+    this.showConsent = true;
+    this.dialog.closeAll();
+  }
+
+
 }
