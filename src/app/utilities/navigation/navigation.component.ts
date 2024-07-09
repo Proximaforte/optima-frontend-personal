@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MenuItem } from '../interface/u.i';
-import { AuthService } from 'src/app/services/authentication/auth.service';
-import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToastsService } from 'src/app/services/alert/toasts.service';
-import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { LogoutComponent } from '../modals/logout/logout.component';
