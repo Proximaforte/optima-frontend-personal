@@ -8,6 +8,7 @@ import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { TotalOnboarding } from 'src/app/models/beneficiary/beneficiary';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Location } from '@angular/common';  // Import Location
 
 @Component({
   selector: 'app-beneficiary-table',
@@ -57,7 +58,8 @@ export class BeneficiaryTableComponent implements OnInit {
     private authService: AuthService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private dialog: MatDialog // Inject MatDialog
+    private dialog: MatDialog, // Inject MatDialog
+    private location: Location  // Inject Location
   ) {}
 
   addBeneficiary() {
@@ -121,6 +123,7 @@ export class BeneficiaryTableComponent implements OnInit {
 
   onCancel(): void {
     this.dialog.closeAll();
+    this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
   }
 
   onAccept(): void {

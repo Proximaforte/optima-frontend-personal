@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MenuItem } from '../interface/u.i';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { LogoutComponent } from '../modals/logout/logout.component';
-
+import { Location } from '@angular/common';  // Import Location
 
 @Component({
   selector: 'app-navigation',
@@ -16,6 +21,9 @@ export class NavigationComponent {
   bankLogo: any;
   hovered?: boolean;
   client: string = 'zest';
+  check: string = "/assets/images/mark-icon.png";
+  back: string = "/assets/images/arrow-left-circle.png";
+  privacy: string = "/assets/images/privacy.png";
   menuItems: MenuItem[] | any = [
     {
       icon: 'assets/images/dashboard.svg',
@@ -44,7 +52,9 @@ export class NavigationComponent {
     },
   ];
 
+  @ViewChild('consentModal') consentModal!: TemplateRef<any>;
 
+  showConsent: boolean = true; // Flag to toggle between consent and privacy policy
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -55,7 +65,8 @@ export class NavigationComponent {
     private routeService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private location: Location  
   ) {
     this.bankLogo = this.sanitizer.bypassSecurityTrustUrl(
       `assets/images/info.svg`
@@ -76,46 +87,23 @@ export class NavigationComponent {
   }
 
   onLogout(item: any) {
-    if (item?.name === "logout") {
-      this.dialog.open(LogoutComponent,{
+    if (item?.name === 'logout') {
+      this.dialog.open(LogoutComponent, {
         height: '200px',
-        width: '500px'
+        width: '500px',
+        
       });
-      // this.authService.logoutUser().subscribe({
-      //   next: (res: any) => {
-      //     //  console.log("logout res>>>", res)
-      //     this.toast.setSuccessMessage('User is logged Out Successfully');
-      //     this.snackbar.openFromComponent(ToastsComponent, {
-      //       duration: 4000,
-      //       verticalPosition: 'bottom',
-      //     });
-      //   },
-      //   error: (err: any) => {
-      //     console.error("logout error>>>", err);
-      //   }
-      // })
-      // this.authService.agentLogout();
-    } else if (item?.name === "beneficiary") {
-      this.routeService.setRouteToDisplay("verify beneficiary nin");
-      this.router.navigate(['/home/beneficiary'], {
-        relativeTo: this.route,
-        queryParams: {
-          progress: 'verify_NIN'
-        }
+    } else if (item?.name === 'beneficiary') {
+      this.routeService.setRouteToDisplay('verify beneficiary nin');
+      this.dialog.open(this.consentModal, {
+        width: '762px',
       });
-      localStorage.removeItem('verification');
+    } else if (item?.name === 'dashboard') {
+      this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
       setTimeout(() => location?.reload(), 300);
-    } else if (item?.name === "dashboard") {
-      this.router.navigate(["/home/dashboard"], { relativeTo: this.route });
-      setTimeout(() => location?.reload(), 300);
-    } else if (item?.name === "all-beneficiary") {
-      this.router.navigate(["/home/all-beneficiary"], { relativeTo: this.route });
-     // setTimeout(() => location?.reload(), 300);
-    } 
-    // else if (item?.name === "profile") {
-    //   this.router.navigate(["/home/profile"], { relativeTo: this.route });
-    //   setTimeout(() => location?.reload(), 1100);
-    // }
+    } else if (item?.name === 'all-beneficiary') {
+      this.router.navigate(['/home/all-beneficiary'], { relativeTo: this.route });
+    }
   }
 
 
@@ -133,4 +121,30 @@ export class NavigationComponent {
 
 
   // https://chat.openai.com/c/140447e6-5ce5-416a-a70f-675c8380df52
+
+  onCancel(): void {
+    this.dialog.closeAll();
+    this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
+  }
+
+  onAccept(): void {
+    this.dialog.closeAll();
+    this.router.navigate(['./beneficiary'], {
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'verify_NIN'
+      }
+    });
+  }
+
+  toggleModalContent(): void {
+    this.showConsent = !this.showConsent;
+  }
+
+  closePrivacyPolicy(): void {
+    this.showConsent = true;
+    this.dialog.closeAll();
+  }
+
+
 }
