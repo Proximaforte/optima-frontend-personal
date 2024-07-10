@@ -36,10 +36,10 @@ export class NextOfKinComponent implements OnInit {
     private toast: ToastsService,
     private auth: AuthService
   ) {
-    const getUserData: any = localStorage.getItem('userDetails');
+    const getUserData: any = localStorage.getItem('NINDetails');
     this.userDetails = JSON.parse(getUserData);
 
-    console.log(this.userDetails);
+    
     
 
     const getMessage:any = localStorage.getItem('incomplete');
@@ -122,7 +122,7 @@ export class NextOfKinComponent implements OnInit {
       nokSsid: this.nextOfKinForm.value?.ssid,
       phoneNumber: this.nextOfKinForm.value?.phoneNumber,
       email: this.nextOfKinForm.value?.email,
-      address: this.sameResidence === true ? this.userDetails?.address : this.nextOfKinForm.value?.address,
+      address: this.sameResidence === true ? this.userDetails?.residence : this.nextOfKinForm.value?.address,
       specifyRelationship: this.nextOfKinForm.value.relationship === 'OTHERS' ? this.nextOfKinForm.value?.specifyRelationship : null,
     }
 
