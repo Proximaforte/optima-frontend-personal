@@ -19,11 +19,11 @@
             <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
           </svg>
         </div>
-        <button (click)="addBeneficiary()" class="w-[20rem] bg-green-700  hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold p-2 px-4 rounded flex  items-center  ">
-          
-            <mat-icon>person_add</mat-icon> 
-            <p class="mb-2">Add New Beneficiary</p>
-        
+        <button (click)="routeToOnboarding()" class="w-[19rem] lg:w-fit bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded ml-2">
+          <div class="flex items-center">
+            <mat-icon>person_add</mat-icon> &nbsp;
+            Add New Beneficiary
+          </div>
         </button>
         <button (click)="openModal()" class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
           <mat-icon class="mr-1">filter_list</mat-icon>
@@ -197,8 +197,8 @@
 
 
       <!-- visible only on large screens -->
-    <div class="grid grid-cols-3 gap-4 p-4 md:flex">
-      <div class="col-span-2 flex justify-start items-center">
+      <div class=" flex items-center justify-between gap-5  p-4 overflow-auto">
+        <div class="col-span-2 flex justify-start items-center">
         <button (click)="showcompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded">Completed</button>
         <button (click)="showInCompleteBeneficiaries()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white  hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
         <button (click)="refreshPage()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">Refresh</button>
@@ -257,9 +257,9 @@
       </div>
     </div> -->
   
- <div *ngIf="showSpinner === false && showNoData === false" class="overflow-auto">
+ <div *ngIf="showSpinner === false && showNoData === false">
   <div>
-    <table class="w-full">
+    <table class="w-full overflow-auto">
       <thead class="bg-grey">
         <tr>
           <th
