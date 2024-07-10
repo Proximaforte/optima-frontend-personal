@@ -46,7 +46,7 @@ export class NavigationComponent {
     //   route: '/home/profile',
     // },
     {
-      icon: 'assets/images/Logout.svg',
+      icon: 'assets/images/UserList.svg',
       name: 'logout',
       route: '/auth/login',
     },
