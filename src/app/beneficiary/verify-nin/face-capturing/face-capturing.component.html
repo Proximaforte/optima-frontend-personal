@@ -1,13 +1,13 @@
 <body>
-  <div class="grid grid-cols-5 gap-4 ">
-    <div class="hidden sm:block">
+  <div class="w-full h-screen  flex flex-col justify-center items-center ">
+    <div *ngIf="isDesktop" class="hidden sm:block">
       <app-sidebar-helper></app-sidebar-helper>
     </div>
 
-    <div class="grid grid-rows-11 gap-8 max-w-md max-h-screen mx-auto overflow-hidden col-span-4 ">
+    <div class=" flex flex-col h-full gap-8  max-w-lg mt-10  mx-auto overflow-hidden col-span-4">
       <!-- Increased gap to 8 -->
       <div style="display: flex; align-items: center; margin-top: 2px;">
-        <img (click)="routeToPrevious()" [src]="routeBack" alt="routeBack" height="25" width="25" style="margin-right: 10px;  cursor: pointer;">
+        <img (click)="routeToPrevious()" [src]="routeBack" alt="routeBack" height="25" width="25" style="margin-right: 10px; cursor: pointer;">
         <p class="text-xl font-bold" style="margin: 0;">Face Capturing</p>
       </div>
       <div class="flex items-start">
@@ -28,13 +28,11 @@
       </div>
       <br>
       <div class="flex items-start mb-4 ml-3">
-        
-        <img  *ngIf="!showLatest" [src]="passport" alt="routeBack" class="mr-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <img  *ngIf="!showLatest" (click)="toggleWebcam()" [src]="upload" alt="routeBack" class="mr-8 cursor-pointer">
-           <div  *ngIf="!showLatest" (click)="captureImage()">
-            <webcam *ngIf="showWebcam" [height]="webcamHeight" [width]="webcamWidth" [trigger]="triggerObservable" (imageCapture)="handleImageCapture($event)" class="fullscreen"></webcam>
-           </div>
-
+        <img *ngIf="!showLatest" [src]="passport" alt="routeBack" class="mr-4">
+        <img *ngIf="!showLatest" (click)="toggleWebcam()" [src]="upload" alt="routeBack" class="mr-8 cursor-pointer">
+        <div *ngIf="!showLatest" (click)="captureImage()">
+          <webcam *ngIf="showWebcam" [height]="webcamHeight" [width]="webcamWidth" [trigger]="triggerObservable" (imageCapture)="handleImageCapture($event)" class="fullscreen"></webcam>
+        </div>
 
         <div *ngIf="showLatest" class="relative w-48 h-48 rounded-full overflow-visible border-4 border-green-100" id="dashed-circle">
           <img [src]="photograph" alt="Person" class="w-full h-full object-cover rounded-full" />
@@ -44,35 +42,23 @@
             </div>
           </div>
           <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -mb-6">
-            <div class="w-4 h-4 bg-green-500 rounded-full flex justify-center items-center border-2 border-white"
-              style="background-color: #34AA44;" id="mark-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+            <div class="w-4 h-4 bg-green-500 rounded-full flex justify-center items-center border-2 border-white" style="background-color: #34AA44;" id="mark-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-           
-              <div class="flex items-center cursor-pointer  mt-16" id="retake-caption" (click)="retake()">
+              <div class="flex items-center cursor-pointer mt-16" id="retake-caption" (click)="retake()">
                 <mat-icon class="text-gray-500" id="retake-caption">autorenew</mat-icon>
                 <span class="text-xs">Retake</span>
               </div>
             </div>
           </div>
-        </div> 
-
-
+        </div>
       </div>
       <div class="row-span-1 p-4" id="align-btn">
-        <button type="submit" [disabled]="disabledBtn" (click)="submit()"
-          [ngStyle]="{ 'background-color': disabledBtn ? '#B8B7C8' : '#109856' }"
-          class="bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600 w-full border-r-2">
+        <button type="submit" [disabled]="disabledBtn" (click)="submit()" [ngStyle]="{ 'background-color': disabledBtn ? '#B8B7C8' : '#109856' }" class="bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600 w-full border-r-2">
           Proceed
         </button>
       </div>
-
     </div>
-  
-  
-  
-
   </div>
 </body>

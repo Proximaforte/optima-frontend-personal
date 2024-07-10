@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, OnInit , AfterViewInit} from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, AfterViewInit, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { Subscription } from 'rxjs';
@@ -28,10 +28,11 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     "employment",
     "occupation",
     "other details"
-  ]
+  ];
   selectedItemIndex: number | null = null;
   selectedItemName: string | null = null;
   isLinear = false;
+  isDesktop: boolean = window.innerWidth >= 1024;
 
   constructor(
     private router: Router,
@@ -43,28 +44,29 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     }
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isDesktop = event.target.innerWidth >= 1024;
+  }
+
   goToStep(stepIndex: number) {
     for (let i = stepIndex; i >= 0; i--) {
-     // console.log(`Going to step ${i}`);
       this.stepper.selectedIndex = i;
       this.selectedItemIndex = stepIndex + 1;
-     // console.log("stepIndex>>", stepIndex);
     }
   }
 
   ngAfterViewInit(): void {
     if (this.stepper) {
-     // console.log('Stepper is initialized and available.');
       this.getRouteToDiplay();
     }
   }
 
-
   ngOnInit(): void {
+    this.isDesktop = window.innerWidth >= 1024;
     this.route.queryParams.subscribe({
       next: (params: Params) => {
         const sectionToScrollTo = params['progress'];
-        //  console.log('params>>', sectionToScrollTo);
         if (sectionToScrollTo === 'personal_details') {
           this.scrollToSection(sectionToScrollTo);
         }
@@ -76,16 +78,14 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     this.routeSubscription$ = this.routeService.getRouteToDisplay().subscribe({
       next: (route: any) => {
         this.selectedItemName = route;
-        const loopedRoute = this.beneficiaryItems?.forEach((path: any, index: number) => {
+        this.beneficiaryItems?.forEach((path: any, index: number) => {
           if (route === path) {
             this.goToStep(index - 1);
           }
-        })
+        });
       }
-    })
+    });
   }
-
-
 
   scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);
@@ -98,65 +98,8 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     return this.selectedItemIndex === index;
   }
 
-
-
   itemClicked(index: number, selectedItemName: string) {
-    this.selectedItemIndex = index; 
-    // if (index + 1 === 1) {
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "verify_NIN" } });
-    //   this.selectedItemName = selectedItemName;
-    //   localStorage.removeItem('biometrics');
-    // } else if (index + 1 === 2) {
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "personal_details" } });
-    //   this.selectedItemName = selectedItemName;
-    //   localStorage.removeItem('biometrics');
-    // }else if (index + 1 === 3) {
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "enter_verification_code" } });
-    //   this.selectedItemName = selectedItemName;
-    //   localStorage.removeItem('biometrics');
-    // } else if (index + 1 === 4) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "residential_details" } });
-    //   this.selectedItemName = selectedItemName;
-    // } else if (index + 1 === 5) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "marital_info" } });
-    //   this.selectedItemName = selectedItemName;
-    // } else if (index + 1 === 6) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "education" } });
-    //   this.selectedItemName = selectedItemName;
-    // } else if (index + 1 === 7) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "health" } });
-    //   this.selectedItemName = selectedItemName;
-    // } else if (index + 1 === 8) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "financial" } });
-    //   this.selectedItemName = selectedItemName;
-    // } else if (index + 1 === 9) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "next_of_kin" } });
-    //   this.selectedItemName = selectedItemName;
-    // } else if (index + 1 === 10) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "employment" } });
-    //   this.selectedItemName = selectedItemName;
-    // } else if (index + 1 === 11) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "occupation" } });
-    //   this.selectedItemName = selectedItemName;
-    // }  else if (index + 1 === 12) {
-    //   localStorage.removeItem('biometrics');
-    //   this.router.navigate([window?.location?.pathname], { relativeTo: this.route, queryParams: { progress: "other_details" } });
-    //   this.selectedItemName = selectedItemName;
-    // }else if(localStorage.getItem('biometrics') === 'biometrics'){
-    //   this.router.navigate(['/home/face-capturing'], { relativeTo: this.route, queryParams: { progress: "face_capturing" } });
-    //   this.selectedItemName = 'biometrics';
-    // }
-
-
+    this.selectedItemIndex = index;
   }
-
 
 }

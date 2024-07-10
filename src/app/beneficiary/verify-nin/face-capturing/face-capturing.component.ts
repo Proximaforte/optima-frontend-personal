@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { WebcamImage } from 'ngx-webcam';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CaptureCompleteComponent } from '../capture-complete/capture-complete.component';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
-import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -25,8 +24,6 @@ export class FaceCapturingComponent implements OnInit {
   capture: string = "/assets/images/capture.svg";
   disabledBtn: boolean = true;
   acceptImage$!: Subscription;
-
-  // @ViewChild('webcam') webcam!: WebcamComponent | any;
   webcam: WebcamImage | any = null;
   showWebcam: boolean = false;
   capturedImage: string | any = null;
@@ -34,9 +31,10 @@ export class FaceCapturingComponent implements OnInit {
   triggerObservable: Observable<void> = this.trigger.asObservable();
   webcamHeight: number = 0;
   webcamWidth: number = 0;
-  showLatest: boolean = false; //original === true
+  showLatest: boolean = false;
   nin: any = {};
   userDetails: any = {};
+  isDesktop: boolean = window.innerWidth >= 1024;
 
   constructor(
     private dialog: MatDialog,
@@ -50,17 +48,20 @@ export class FaceCapturingComponent implements OnInit {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
 
-   if(localStorage.getItem('NINDetails') !== null){
-    const getNin: any = localStorage.getItem('NINDetails');
-    // console.log("get NIN>>", JSON.parse(getNin));
-    this.nin = JSON.parse(getNin);
-   }
+    if (localStorage.getItem('NINDetails') !== null) {
+      const getNin: any = localStorage.getItem('NINDetails');
+      this.nin = JSON.parse(getNin);
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isDesktop = event.target.innerWidth >= 1024;
   }
 
   routeToPrevious() {
     window.history.go(-1);
   }
-
 
   handleImageCapture(webcamImage: WebcamImage) {
     this.webcam = webcamImage;
@@ -71,7 +72,6 @@ export class FaceCapturingComponent implements OnInit {
     this.service.setImageUrl(this.webcam.imageAsDataUrl);
     this.dialog.open(CaptureCompleteComponent, {
       width: `${window.innerWidth}px`,
-      // data: JSON.stringify(this.nin)
     });
     this.showWebcam = false;
   }
@@ -90,7 +90,7 @@ export class FaceCapturingComponent implements OnInit {
           this.disabledBtn = false;
         }
       }
-    })
+    });
   }
 
   retake() {
@@ -98,16 +98,14 @@ export class FaceCapturingComponent implements OnInit {
     this.disabledBtn = true;
   }
 
-
-
   submit() {
-    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber: any = localStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       nin: this.nin?.nin,
-      type: 'FACIAL_ID', //PHONE_NUMBER
+      type: 'FACIAL_ID',
       phoneNumber: getBeneficiaryPhoneNumber,
       image: this.photograph?.split(',')[1]
-    }
+    };
     localStorage.setItem('face_capture', JSON.stringify(payload));
     localStorage.setItem('face_capture', JSON.stringify(payload));
     this.router.navigate(['/home/setup-biometrics'], {
@@ -117,6 +115,4 @@ export class FaceCapturingComponent implements OnInit {
       }
     });
   }
-
-
 }

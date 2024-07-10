@@ -3,10 +3,15 @@ body {
     font-family: 'Euclid Circular A';
 }
 
-#first-column-items {
-    margin-top: 200px;
-    margin-left: 250px;
-}
+// #first-column-items {
+//     margin-top: 150px;
+//     margin-left: 180px;
+// }
+
+// #personal-details #verification-procedure {
+//     margin-top: 150px;
+//     margin-left: 180px;
+// }
 
 .lemonish-text {
     color: #109856;
@@ -46,4 +51,17 @@ body {
   }
 
 
- 
+  .centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.col-span-4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+  

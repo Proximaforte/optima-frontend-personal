@@ -31,12 +31,12 @@ export class NavigationComponent {
       route: '/home/dashboard',
     },
     {
-      icon: 'assets/images/onboarding.svg',
+      icon: 'assets/images/user.svg',
       name: 'beneficiary',
       route: '/home/beneficiary',
     },
     {
-      icon: 'assets/images/beneficiaries.svg',
+      icon: 'assets/images/UserList.svg',
       name: 'all-beneficiary',
       route: '/home/all-beneficiary',
     },
@@ -46,7 +46,7 @@ export class NavigationComponent {
     //   route: '/home/profile',
     // },
     {
-      icon: 'assets/images/logout.svg',
+      icon: 'assets/images/Logout.svg',
       name: 'logout',
       route: '/auth/login',
     },
@@ -69,7 +69,7 @@ export class NavigationComponent {
     private location: Location  
   ) {
     this.bankLogo = this.sanitizer.bypassSecurityTrustUrl(
-      `assets/images/info.svg`
+      `assets/images/homelogo.svg`
     );
     this.menuItems.forEach((item: any) => {
       this.iconRegistry.addSvgIcon(
