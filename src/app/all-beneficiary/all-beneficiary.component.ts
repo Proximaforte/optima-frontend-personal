@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild,EventEmitter, Output, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterBoxComponent } from '../utilities/filter-box/filter-box.component';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -47,6 +47,7 @@ export class AllBeneficiaryComponent implements OnInit {
   showIncompleteBeneficiaries: boolean = false;
   showCompleteBeneficiaries: boolean = true;
   beneficiaryFilterSubscription$!: Subscription;
+  
   routeArray: any = [
     {
       routeToDiaplay: 'verify beneficiary nin',
@@ -90,6 +91,7 @@ export class AllBeneficiaryComponent implements OnInit {
     },
   ]
   // | beneficiaryFilter: filterString;
+
 
   constructor(
     public dialog: MatDialog,
@@ -261,6 +263,23 @@ export class AllBeneficiaryComponent implements OnInit {
         let paginationToshow = Array.from({ length: totalRecordArray }, (_, index) => index + 1);
         //console.log('totalRecordArray>>', paginationToshow);
         this.paginationArrayToShow = paginationToshow;
+      }
+    });
+  }
+//1
+  addBeneficiary() {
+    const dialogRef = this.dialog.open(this.consentModal);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.showConsent = true; // Reset to consent view when modal is closed
+      if (result === 'accept') {
+        this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
+        this.router.navigate(['/home/beneficiary'], {
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'verify_NIN'
+          }
+        });
       }
     });
   }
@@ -503,22 +522,8 @@ export class AllBeneficiaryComponent implements OnInit {
     this.getAllIncompleteBeneficiaries();
     this.getAllIncompletedData();
   }
-
-  addBeneficiary() {
-    const dialogRef = this.dialog.open(this.consentModal);
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.showConsent = true; // Reset to consent view when modal is closed
-    //   if (result === 'accept') {
-    //     this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
-    //     this.router.navigate(['/home/beneficiary'], {
-    //       relativeTo: this.route,
-    //       queryParams: {
-    //         progress: 'verify_NIN'
-    //       }
-    //     });
-    //   }
-    // });
-  }
+//2
+ 
 
   onCancel(): void {
     this.dialog.closeAll();
