@@ -19,12 +19,10 @@
             <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
           </svg>
         </div>
-        <button (click)="addBeneficiary()" class="w-[20rem] bg-green-700  hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold p-2 px-4 rounded flex  items-center  ">
-          
-            <mat-icon>person_add</mat-icon> 
-            <p class="mb-2">Add New Beneficiary</p>
-        
-        </button>
+        <button (click)="addBeneficiary()" class="w-[20rem] bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold p-1 px-4 rounded flex items-center justify-center">
+          <mat-icon class="mr-2">person_add</mat-icon>
+          <p class="pt-2">Add New Beneficiary</p>
+      </button>
         <button (click)="openModal()" class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
           <mat-icon class="mr-1">filter_list</mat-icon>
           Filter

@@ -1,7 +1,7 @@
-<body>
+<body class="w-full overflow-hidden">
   <!-- Agents Data Display -->
   <div *ngIf="agents?.length > 0" class="rounded-xl border border-tableGray mt-10 py-4">
-    <div class="flex justify-between items-center px-4">
+    <div class="flex justify-between items-center px-4 overflow-hidden">
       <mat-card class="text-sm relative rounded-xl px-6 py-3 shadow-lg text-gray-700 font-bold text-3xl">
         Recent Onboarding
       </mat-card>
@@ -15,8 +15,8 @@
       </button>
     </div>
     <br>
-    <div>
-      <table class="w-full">
+    <div class=" overflow-auto">
+      <table class="w-full overflow-auto">
         <thead class="bg-grey">
           <tr>
             <th
