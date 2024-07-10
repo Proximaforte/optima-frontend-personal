@@ -1,29 +1,29 @@
 <body>
 
        <!-- For Complete Beneficiaries -->
-<div *ngIf="showCompleteBeneficiaries === true">
-  <div class="rounded-xl border border-tableGray ml-4 py-4">
+<div *ngIf="showCompleteBeneficiaries === true" >
+  <div class="rounded-xl border border-tableGray ml-4 py-4" >
    
       <!-- visible only on large screens -->
-    <div class="grid grid-cols-3 gap-4 p-4 hidden md:flex">
+    <div class=" flex items-center justify-between gap-5  p-4 overflow-auto">
       <div class="col-span-2 flex justify-start items-center">
         <button (click)="showcompleteBeneficiaries()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded">Completed</button>
         <button (click)="showInCompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">Incompleted</button>
         <button (click)="refreshPage()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">Refresh</button>
       </div>
 
-      <div class="col-span-1 flex justify-end items-center" style="margin-left: 280px;">
-        <div class="relative" style="margin-left: -120px;">
+      <div class=" flex justify-end items-center" >
+        <div class="relative">
           <input type="text" [(ngModel)]="filterString" name="filterString" (ngModelChange)="listenToSearch($event)" class="border border-gray-300 rounded-md px-4 py-2 pl-10 w-full" placeholder="Search...">
           <svg class="absolute left-3 top-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M9 2a7 7 0 015.602 11.274l5.256 5.255-1.414 1.414-5.255-5.256A7 7 0 119 2zm0 2a5 5 0 100 10A5 5 0 009 4z" clip-rule="evenodd"/>
           </svg>
         </div>
-        <button (click)="addBeneficiary()" class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded ml-2">
-          <div class="flex items-center">
-            <mat-icon>person_add</mat-icon> &nbsp;
-            <b>Add New Beneficiary</b>
-          </div>
+        <button (click)="addBeneficiary()" class="w-[20rem] bg-green-700  hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold p-2 px-4 rounded flex  items-center  ">
+          
+            <mat-icon>person_add</mat-icon> 
+            <p class="mb-2">Add New Beneficiary</p>
+        
         </button>
         <button (click)="openModal()" class="flex items-center bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2">
           <mat-icon class="mr-1">filter_list</mat-icon>
@@ -33,7 +33,7 @@
     </div>
 
        <!-- visible only on small screens -->
-    <div class="grid grid-rows-3 grid-cols-1 gap-4 block md:hidden">
+    <div class="grid grid-rows-3 grid-cols-1 gap-4 md:hidden">
       <!-- First Row -->
       <div class="flex justify-between">
         <button (click)="showcompleteBeneficiaries()" class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-4">Completed</button>
@@ -69,7 +69,7 @@
       
     </div>
     
- <div *ngIf="showSpinner === false && showNoData === false">
+ <div *ngIf="showSpinner === false && showNoData === false" class="overflow-auto">
   <div>
     <table class="w-full">
       <thead class="bg-grey">
