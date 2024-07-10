@@ -1,10 +1,10 @@
 <body>
   <div class="grid grid-cols-5 gap-4">
-    <div class="hidden sm:block">
+    <div *ngIf="isDesktop" class="hidden sm:block">
       <app-sidebar-helper></app-sidebar-helper>
     </div>
 
-    <div class="col-span-4 h-full max-w-md mx-auto" id="first-column-items ">
+    <div class="col-span-5 lg:col-span-4 h-full max-w-md mx-auto" id="first-column-items">
       <div class="bg-white p-8 rounded-lg max-w-md">
         <p class="text-2xl font-bold mb-4">Setup Biometrics</p>
         <div>
@@ -14,9 +14,7 @@
               <mat-card
                 id="mat-card"
                 class="relative cursor-pointer"
-                (click)="
-                  procedureInterface('face_capturing', '/home/face-capturing')
-                "
+                (click)="procedureInterface('face_capturing', '/home/face-capturing')"
               >
                 <mat-card-content>
                   <div class="flex justify-between items-center">
@@ -24,9 +22,7 @@
                       <img [src]="face" alt="phone" class="w-6 h-6 mr-2" />
                       <div class="flex flex-col">
                         <span class="m-0 text-xs" id="theme">Face Capture</span>
-                        <span class="m-0 text-xs">
-                          Select to capture customer's face
-                        </span>
+                        <span class="m-0 text-xs">Select to capture customer's face</span>
                       </div>
                     </div>
                     <span>
@@ -34,10 +30,7 @@
                     </span>
                     <span
                       class="absolute top-0 right-0"
-                      *ngIf="
-                        urlPath === 'face_capture_done' ||
-                        urlPath === 'finger_capture_done' || urlPath === 'fingerprint_capturing' && faceCaptureExists
-                      "
+                      *ngIf="urlPath === 'face_capture_done' || urlPath === 'finger_capture_done' || urlPath === 'fingerprint_capturing' && faceCaptureExists"
                     >
                       <img [src]="marked" alt="checked" class="h-4 w-4" />
                     </span>
@@ -57,9 +50,7 @@
                       <img [src]="finger" alt="phone" class="w-6 h-6 mr-2" />
                       <div class="flex flex-col">
                         <span class="m-0 text-xs" id="theme">Fingerprints</span>
-                        <span class="m-0 text-xs"
-                          >Setup beneficiary fingerprints to</span
-                        >
+                        <span class="m-0 text-xs">Setup beneficiary fingerprints to</span>
                         <span class="m-0 text-xs">complete biometrics</span>
                       </div>
                     </div>

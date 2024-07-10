@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,HostListener  } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FingerPrintConsent } from './fingerprint-consent.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -99,6 +99,13 @@ export class SetupBiometricsComponent {
   //   phoneNumber: getBeneficiaryPhoneNumber,
   //   image: this.passport?.split(',')[1]
   // }
+
+  isDesktop: boolean = window.innerWidth >= 1024;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.isDesktop = window.innerWidth >= 1024;
+  }
 
   updateDisabledBtn() {
     if (localStorage.getItem('face_capture')  && this.selectedReason !== 'FAILED' && this.selectedReason !== "PENDING" && this.selectedReason) {

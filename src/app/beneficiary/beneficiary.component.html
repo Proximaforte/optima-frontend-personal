@@ -1,29 +1,27 @@
 <div class="grid grid-cols-5 gap-4">
     <div class="col-span-1 h-full hidden lg:block w-[300px]">
-        <!-- hidden sm:block -->
-          <mat-stepper orientation="vertical" [linear]="isLinear" #stepper >
-            <mat-step *ngFor="let item of beneficiaryItems; let i = index" >
+        <!-- Stepper visible only on desktop view -->
+        <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+            <mat-step *ngFor="let item of beneficiaryItems; let i = index">
                 <ng-template matStepperIcon="edit">
                     <mat-icon>done</mat-icon>
                 </ng-template>
                 <ng-template matStepLabel>
-                    <span id="step-label" class="text-xs text-black"  (click)="itemClicked(i, item)" [ngClass]="{'lemonish-text': selectedItemIndex === i, 'step-label': selectedItemIndex !== i}">{{item | uppercase }}</span>
+                    <span id="step-label" class="text-xs text-black" (click)="itemClicked(i, item)" [ngClass]="{'lemonish-text': selectedItemIndex === i, 'step-label': selectedItemIndex !== i}">{{item | uppercase}}</span>
                 </ng-template>
             </mat-step>
-          </mat-stepper>
-          <!-- <button (click)="goToStep(2)">hjhjh</button>  'verification procedure' -->
+        </mat-stepper>
     </div>
-    
-    
-    <div class="col-span-4  h-full">
-        <div *ngIf="selectedItemName">
-            <div id="first-column-items" *ngIf=" selectedItemName === 'verify beneficiary nin'">
+
+    <div class="col-span-5 lg:col-span-4 w-full h-full justify-center flex flex-row items-center">
+        <div *ngIf="selectedItemName" class="w-[80%] mt-10 flex flex-col mx-auto">
+            <div id="first-column-items" *ngIf="selectedItemName === 'verify beneficiary nin'">
                 <app-verify-nin></app-verify-nin>
             </div>
             <div *ngIf="selectedItemName === 'personal details'" id="personal-details">
                 <app-personal-details></app-personal-details>
             </div>
-            <div *ngIf="selectedItemName === 'verification procedure'">
+            <div *ngIf="selectedItemName === 'verification procedure'" id="verification-procedure">
                 <app-verification-code></app-verification-code>
             </div>
             <div *ngIf="selectedItemName === 'residential details'">

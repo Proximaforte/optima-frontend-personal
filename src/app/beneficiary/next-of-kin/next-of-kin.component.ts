@@ -39,6 +39,9 @@ export class NextOfKinComponent implements OnInit {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
 
+    console.log(this.userDetails);
+    
+
     const getMessage:any = localStorage.getItem('incomplete');
     if(getMessage !== null){
       this.showWelcomeMsg = true;
