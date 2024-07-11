@@ -1,14 +1,13 @@
 #move-items {
-    margin-top: 100px;
+  margin-top: 100px;
 }
 
-
-mat-icon:hover{
-    color: green;
+mat-icon:hover {
+  color: green;
 }
-button:hover{
-    background-color: green;
-    color: white;
+button:hover {
+  background-color: green;
+  color: white;
 }
 
 .custom-icon {
@@ -17,22 +16,20 @@ button:hover{
 }
 
 .active-item .custom-icon {
-  color: #4CAF50; /* Green color for active item */
+  color: #4caf50; /* Green color for active item */
   font-size: 36px; /* Increase the size for active item */
 }
 
 .active-item {
-  color: #4CAF50; /* Green color for active item text */
+  color: #4caf50; /* Green color for active item text */
 }
 
- /* Button styling */
- button {
+/* Button styling */
+button {
   cursor: pointer;
   transition: background-color 0.3s;
   color: white;
 }
-
-
 
 /* Modal styles */
 //   #consent-card {
@@ -47,8 +44,8 @@ button:hover{
   width: 762px;
   max-width: 100%;
   margin: auto;
-   padding: 32px;
-   border-radius: 24px;
+  padding: 32px;
+  border-radius: 24px;
 }
 
 .mat-card-content .consent-icon {
@@ -60,26 +57,26 @@ button:hover{
   margin-top: 0.5rem;
   font-size: 1.5rem;
   font-weight: 800;
-  font-family: 'Euclid Circular A';
+  font-family: "Euclid Circular A";
 }
 
 .mat-card-content p {
   margin: 0.5rem 0;
-  font-family: 'Euclid Circular A';
+  font-family: "Euclid Circular A";
 }
 
 .mat-card-content a {
-  color:#28a745 ;
+  color: #28a745;
   text-decoration: none;
-  font-family: 'Euclid Circular A';
+  font-family: "Euclid Circular A";
 }
 
 .mat-card-content a:hover {
   text-decoration: underline;
 }
 
-.mat-card-content .cancel-button, .mat-card-content .accept-button {
- 
+.mat-card-content .cancel-button,
+.mat-card-content .accept-button {
   padding: 0.5rem 1.5rem;
   font-size: 1rem;
 }
@@ -89,14 +86,13 @@ button:hover{
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;
-  width:  170px;
-height:44px;
-padding: 10px 18px 10px 18px;
-gap: 8px;
-border-radius: 8px;
-border: 1px;
-opacity: 0px;
-
+  width: 170px;
+  height: 44px;
+  padding: 10px 18px 10px 18px;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px;
+  opacity: 0px;
 }
 
 .accept-button {
@@ -104,17 +100,17 @@ opacity: 0px;
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;
-  width:  170px;
-height:44px;
-padding: 10px 18px 10px 18px;
-gap: 8px;
-border-radius: 8px;
-border: 1px;
-opacity: 0px;
-
+  width: 170px;
+  height: 44px;
+  padding: 10px 18px 10px 18px;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px;
+  opacity: 0px;
 }
 
-.cancel-button:hover, .accept-button:hover {
+.cancel-button:hover,
+.accept-button:hover {
   opacity: 0.9;
 }
 
@@ -136,7 +132,8 @@ opacity: 0px;
     font-size: 0.875rem;
   }
 
-  .mat-card-content .cancel-button, .mat-card-content .accept-button {
+  .mat-card-content .cancel-button,
+  .mat-card-content .accept-button {
     margin: 0.5rem;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
@@ -148,7 +145,7 @@ opacity: 0px;
   overflow-y: auto;
   padding-right: 10px;
   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 .scrollable-content::-webkit-scrollbar {
@@ -157,7 +154,7 @@ opacity: 0px;
 }
 
 .small-div {
-  width: 9.5rem; 
+  width: 9.5rem;
   height: 2.25rem;
   padding: 0.375rem 0.625rem 0.375rem 0.375rem;
   gap: 0.5rem;
@@ -166,19 +163,17 @@ opacity: 0px;
 }
 
 .privacy {
-  font-family: 'Euclid Circular A';
-  font-size: 1rem; 
+  font-family: "Euclid Circular A";
+  font-size: 1rem;
   font-weight: 500;
-  line-height: 0.9625rem; 
-  letter-spacing: -0.00875rem; 
+  line-height: 0.9625rem;
+  letter-spacing: -0.00875rem;
   text-align: center;
 }
-.privacy-img{
+.privacy-img {
   width: 20px;
-height: 20px;
-
+  height: 20px;
 }
-
 
 /* Custom button styles */
 .custom-button {
@@ -229,7 +224,7 @@ height: 20px;
   justify-content: space-between;
   z-index: 10;
   padding: 0 1.25rem; /* Adjust padding to ensure the content is not touching the edges */
-  max-width: 33.6667rem; 
+  max-width: 33.6667rem;
   gap: 0.5625rem; /* 8.97px to rem */
   opacity: 1; /* Set to 1 for visibility */
 }
@@ -238,7 +233,7 @@ height: 20px;
 @media (max-width: 640px) {
   .navigation {
     width: 90%; /* Adjust width for mobile view */
-  
+
     padding-left: 1rem; /* Adjust padding for mobile view */
     padding-right: 1rem;
   }

@@ -2,9 +2,6 @@ html, body, .h-full, .flex {
     height: 100%;
   }
   
-  .container-fluid {
-    overflow-y: auto;
-  }
   
   .fixed {
     position: fixed;
@@ -16,17 +13,13 @@ html, body, .h-full, .flex {
     justify-content: center;
   }
   
-  .page-fluid {
-    padding-bottom: 60px; // Adjust this to match the height of your fixed navigation
-  }
+  // .page-fluid {
+  //   padding-bottom: 60px; 
+  // }
   html, body, .h-full, .flex {
     height: 100%;
   }
   
-  .container-fluid {
-    overflow-y: auto;
-  }
-  
   .fixed {
     position: fixed;
     bottom: 0;
@@ -37,9 +30,9 @@ html, body, .h-full, .flex {
     justify-content: center;
   }
   
-  .page-fluid {
-    padding-bottom: 60px; // Adjust this to match the height of your fixed navigation
-  }
+  // .page-fluid {
+  //   padding-bottom: 60px;
+  // }
     
 
 
@@ -47,11 +40,11 @@ html, body, .h-full, .flex {
     height: 100%;
   }
   
-  .container-fluid {
-    overflow-y: auto;
-  }
+  // .container-fluid {
+  //   overflow-y: auto;
+  // }
   
-  .page-fluid {
-    padding-bottom: 100px; // Adjust this to match or slightly exceed the height of your fixed navigation
-  }
+  // .page-fluid {
+  //   padding-bottom: 100px; 
+  // }
    
