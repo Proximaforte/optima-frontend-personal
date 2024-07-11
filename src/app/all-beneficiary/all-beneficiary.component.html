@@ -204,10 +204,10 @@
       </div>
 
       <div role="status" id="image" *ngIf="showNoData === true">
-        <img [src]="emptyTable" alt="No data Found" height="500" width="500" />
+        <img [src]="emptyTable" alt="No data Found" class="mx-auto" height="500" width="500" />
       </div>
 
-      <div role="status" id="spinner" *ngIf="showSpinner === true">
+      <div role="status" id="spinner" class="mx-auto" *ngIf="showSpinner === true">
         <svg
           aria-hidden="true"
           class="w-8 h-8 hidden md:flex text-gray-200 animate-spin dark:text-gray-600 fill-green-600"
@@ -516,10 +516,10 @@
       </div>
 
       <div role="status" id="image" *ngIf="showNoData === true">
-        <img [src]="emptyTable" alt="No data Found" height="500" width="500" />
+        <img [src]="emptyTable" alt="No data Found" class="mx-auto" height="500" width="500" />
       </div>
 
-      <div role="status" id="spinner" *ngIf="showSpinner === true">
+      <div role="status" id="spinner" class="mx-auto" *ngIf="showSpinner === true">
         <svg
           aria-hidden="true"
           class="w-8 h-8 hidden md:flex text-gray-200 animate-spin dark:text-gray-600 fill-green-600"
@@ -664,6 +664,7 @@
                 mat-button
                 class="accept-button text-white"
                 (click)="onAccept()"
+                style="color: white;"
               >
                 Accept
               </button>
@@ -761,6 +762,7 @@
                 mat-button
                 class="accept-button text-white"
                 (click)="onAccept()"
+                style="color: white;"
               >
                 Accept
               </button>
