@@ -1,8 +1,8 @@
-<body class="w-full">
+<body>
   <!-- Agents Data Display -->
-  <div *ngIf="agents?.length > 0" class="rounded-xl border border-tableGray mt-10 py-4">
+  <div *ngIf="agents?.length > 0" class="rounded-xl border border-tableGray overflow-x-auto mt-10 py-4">
     <div class="flex justify-between items-center px-4 ">
-      <mat-card class="text-sm relative rounded-xl px-6 py-3 shadow-lg text-gray-700 font-bold text-3xl">
+      <mat-card class="text-sm relative rounded-xl px-6 py-3 shadow-lg text-gray-700 font-bold">
         Recent Onboarding
       </mat-card>
 
@@ -15,8 +15,8 @@
       </button>
     </div>
     <br>
-    <div>
-      <table class="w-full overflow-auto">
+    <div class="overflow-x-auto">
+      <table>
         <thead class="bg-grey">
           <tr>
             <th
@@ -27,7 +27,7 @@
             </th>
             <th
               scope="col"
-              class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              class="px-1 py-3.5 text-left text-[0.8rem] font-semibold text-gray-900"
             >
               Date of Birth
             </th>
@@ -60,9 +60,9 @@
             </th>
           </tr>
         </thead>
-        <tbody class=" divide-gray-200 bg-white overflow-y-auto">
+        <tbody class=" divide-gray-200 bg-white">
           <tr class="text-left" *ngFor="let beneficiary of beneficiary; let i = index">
-            <td class="py-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center">
+            <td class="py-4 pr-3 text-sm font-medium text-gray-900 pl-6 flex items-center">
               {{ beneficiary.firstname }} {{ beneficiary.lastname }}
             </td>
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
