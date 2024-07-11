@@ -47,6 +47,7 @@ export class OtherDetailsComponent implements OnInit {
     }else{
        this.showWelcomeMsg = false;
     }
+    this.dialog.open(SuccessfulBeneficiaryOnboardingComponent);
   }
 
 
