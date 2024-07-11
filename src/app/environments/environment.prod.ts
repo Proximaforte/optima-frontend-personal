@@ -1,5 +1,5 @@
 export const environment = {
-   baseUrl: 'https://api.optima.com.ng'
+   baseUrl: 'https://api.optima.com.ng',
    //baseUrl: 'https://optimu-api.onrender.com',
    production: true
     //bashlaw007@gmail.com Password123@
