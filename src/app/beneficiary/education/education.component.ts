@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,6 +22,13 @@ export class EducationComponent implements OnInit {
     "Who is your sponsor?*" , "Parents", "Self-Funded", "Scholarship", "Free Government Support / Subsidized Education"
   ]
 
+ 
+  showAdditionalFields: boolean = false;
+  options1 = ['Option 1', 'Option 2', 'Option 3']; // Replace with your actual options
+  fundingOptions1 = ['Funding Option 1', 'Funding Option 2', 'Funding Option 3']; // Replace with your actual funding options
+
+
+
   checked:boolean |any = false;
   showOthers:boolean = false;
   educationForm!: FormGroup;
@@ -36,8 +43,16 @@ export class EducationComponent implements OnInit {
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private auth:AuthService
+    private auth:AuthService,
+    private fb: FormBuilder
+
   ){
+
+    
+
+
+
+
     const getUserData:any = localStorage.getItem('userDetails');
      this.userDetails = JSON.parse(getUserData);
 
@@ -54,6 +69,54 @@ export class EducationComponent implements OnInit {
   }
 
  
+  ngOnInit() {
+    this.educationForm = this.fb.group({
+      eduLevel: ['', Validators.required],
+      funding: ['']
+    });
+
+    this.educationForm.get('eduLevel')?.valueChanges.subscribe(value => {
+      if (value === 'Yes') {
+        this.educationForm.get('funding')?.setValidators(Validators.required);
+      } else {
+        this.educationForm.get('funding')?.clearValidators();
+      }
+      this.educationForm.get('funding')?.updateValueAndValidity();
+    });
+  }
+
+  isProceedDisabled() {
+    if (this.educationForm.get('eduLevel')?.value === 'Yes') {
+      return !this.educationForm.valid;
+    } else {
+      return this.educationForm.get('eduLevel')?.invalid;
+    }
+  }
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  proceed() {
+    if (this.educationForm.get('canReadWrite')?.value === 'yes') {
+      this.showAdditionalFields = true;
+    }
+  }
+
+  options2 = ['Can you read and write?*','Yes', 'No'];
+
 
   toggleChecked(event:any){
   //  console.log("event>>", event);
@@ -106,10 +169,10 @@ getDropDownTypes(){
 }
 
 
-  ngOnInit(): void {
-    this.getEduForm();
-    this.getDropDownTypes();
-  }
+  // ngOnInit(): void {
+  //   this.getEduForm();
+  //   this.getDropDownTypes();
+  // }
 
   getEduForm(){
     this.educationForm = new FormGroup({

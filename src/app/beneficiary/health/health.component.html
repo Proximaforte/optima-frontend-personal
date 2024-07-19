@@ -10,7 +10,7 @@
     </div>
     <div class="grid grid-rows-11 gap-4 max-w-md mx-auto">
         <div class="row-span-1">
-            <p class="text-xl font-bold">Other Health Information</p>
+            <p class="text-[32px] leading-[32px] font-[600]">Health Information </p>
             <!-- <p>Enter beneficiary resident details below</p> -->
         </div>
         <div class="row-span-1">
@@ -50,6 +50,10 @@
             <input formControlName="specifyHMO" type="text" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="If you have, please specify which HMO?">
          </form>
         </div>
+
+
+
+        
         <div class="row-span-1">
             <form class="max-w-sm" [formGroup]="healthForm">
                 <select formControlName="receivingTreatmentQuestion" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
@@ -59,12 +63,44 @@
                 </select>
             </form>
         </div>
-        <div class="row-span-1">
+        <div class="row-span-1"  *ngIf="showSpecifyHospital === true">
            <form [formGroup]="healthForm">
-            <input formControlName="publicHospitalQuestion" type="text" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Which state public hospital are you enrolled in, if any?">
+            <input formControlName="publicHospitalQuestion" type="text" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="What State public hospital are you enrolled in ( If any)">
            </form>
         </div>
+
+        <div class="row-span-1" *ngIf="showSpecifyHospital === true" >
+            <form [formGroup]="healthForm">
+             <input formControlName="publicHospitalQuestion" type="text" id="text-input" aria-describedby="helper-text-explanation" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="What are the common health issues in your household?">
+            </form>
+         </div>
        
+
+
+
+         <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="healthForm">
+                <select formControlName="receivingTreatmentQuestion" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of optiond; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="healthForm">
+                <select formControlName="receivingTreatmentQuestion" id="funding_options" class="w-full  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of optiondis; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+
+
         <div class="row-span-1 w-full mt-2">
             <button (click)="routeToNext()" id="btn" type="submit" [disabled]="disableBtn" [ngStyle]="{ 'background-color': disableBtn ? '#B8B7C8' : '#109856' }"
                 class="h-12 w-[400px] px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">

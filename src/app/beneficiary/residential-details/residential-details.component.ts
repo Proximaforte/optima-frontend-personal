@@ -21,6 +21,11 @@ export class ResidentialDetailsComponent implements OnInit {
     "No, a tenant"
   ];
 
+  conditionoptions: string[] = [
+   " What are the conditions of your housing?*",
+   "Good",
+   "Bad"
+  ];
   states: string[] = NigerianStates;
   lga: any[] = localGovt;
   selectedState: string = NigerianStates[24]; // Default to the 24th state

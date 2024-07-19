@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     
     AppComponent,
     AddStyleToOtpInputDirective,
-    BeneficiaryFilterPipe
+    BeneficiaryFilterPipe,
   ],
   imports: [
 

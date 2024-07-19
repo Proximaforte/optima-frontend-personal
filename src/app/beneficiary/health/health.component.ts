@@ -19,17 +19,21 @@ export class HealthComponent implements OnInit {
   ailments: string[] | any = ["Are you currently suffering from any of the following?*","High Blood Pressure", "Low Blood Pressure", "Diabetes", "Asthma", "Eye Issues", "Ear Issues","Heart Issues", "Kidney Issues","Others", "None of the above, Others"
   ]
 
-  hmo: string[] | any = ["Do you have an health insurance?*","yes", "no"]
+  hmo: string[] | any = ["Do you have an HMO?","yes", "no"]
 
   optionz: string[] | any = ["Are you currently receiving treatment?*","yes", "no"]
 
+  optiond: string[] | any = ["Do you have access to a healthcare facility within a reasonable distance?","yes","no"]
+
+  optiondis: string[] | any = ["How far is the nearest healthcare facility from your home?","Less than 1km","1km - 5km","5km - 10km","10km - 20km","Greater than 20km"]
 
 
   healthForm!:FormGroup;
   showSpecifyAiment: boolean = false;
   showSpecifyHMO: boolean = false;
+  showSpecifyHospital: boolean = false;
   disableBtn: boolean = true;
-
+  
   showWelcomeMsg:boolean = false;
 
   constructor(
@@ -61,10 +65,20 @@ export class HealthComponent implements OnInit {
 
     this.healthForm.get('healthQuestion')?.valueChanges.subscribe({
       next: (value:any) => {
-        if(value === 'None of the above, Others'){
+        if(value === 'Others'){
           this.showSpecifyAiment = true;
         }else{
           this.showSpecifyAiment = false;
+        }
+      }
+    });
+
+    this.healthForm.get('receivingTreatmentQuestion')?.valueChanges.subscribe({
+      next: (value:any) => {
+        if(value === 'yes'){
+          this.showSpecifyHospital = true;
+        }else{
+          this.showSpecifyHospital = false;
         }
       }
     });
