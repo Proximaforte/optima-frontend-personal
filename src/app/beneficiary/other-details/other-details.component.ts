@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SuccessfulBeneficiaryOnboardingComponent } from 'src/app/utilities/modals/successful-beneficiary-onboarding/successful-beneficiary-onboarding.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup,FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
@@ -14,11 +14,43 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./other-details.component.scss']
 })
 export class OtherDetailsComponent implements OnInit {
-  options: string[] | any = ["If yes, for what offence?*", "Theft", "Assault", "Drug", "Fraud", "Drug-related offenses", "Traffic violation", "Others"];
-  option2:  string[] | any = ["what is your regular means of transportation?*", "Own car", "Public transport", "Okada", "Rail"];
+  options: string[] | any = ["If yes, please specify the type of crime*", "Theft", "Assault", "Drug", "Fraud", "Drug-related offenses", "Traffic violation", "Others"];
+  option2:  string[] | any = ["What modes of transportation are available to you?*", "Own car", "Public transport", "Bicycle", "Walking","Motorcycle","Others"];
   option3: string[]|any = ["What is your political view?*","active", "passive"];
+  
+  option4: string[]|any = ["How often do you vote?*","Always", "Sometimes","Rarely","Never",];
+  option5: string[]|any = ["How engaged are you in political activities?*","Very Engaged", "Moderately Engaged","Not Engaged",];
+  option6: string[]|any = ["Which political party do you prefer?*","APC (All Progressive Party)", "Labour Party","PDP (People Democratic Party)","Others","None","Prefer not to say"];
+  option7: string[]|any = ["If yes, please select*","APC (All Progressive Party)", "Labour Party","PDP (People Democratic Party)","Others"];
+  option8: string[]|any = ["Do you participate in community meetings or political rallies?*","YES","NO"];
+  option9: string[]|any = ["How would you rate the crime rate in your area?*","Low","Medium","High"];
+  option10: string[]|any = ["What are your main sources of drinking water?*","Piped water","Borehole","Well","River/Stream","Bottled water","Others"];
+  option11: string[]|any = ["How far is the water source from your home? (Specify distance)*","Less than 1km","1km - 5km","5km - 10km","10km - 20km","Greater than 20km",];
+  option12: string[]|any = ["What is the quality of the water?*","Very Good","Good","Fair","Poor","Very Poor",];
+  option13: string[]|any = ["How many hours per day do you have electricity? (Specify)*","Less than 1hr","1hr - 4hrs","4hrs - 8hrs","8hrs - 16hrs","16hrs - 20hrs","20hrs - 24hrs"];
+  option14: string[]|any = ["What is the quality of roads in your area?*","Very Good","Good","Fair","Poor","Very Poor",];
+  option15:  string[] | any = ["what is your regular means of transportation?*", "Own car", "Public transport", "Bicycle", "Walking","Motorcycle",];
+
+
+
+
+  showAdditionalFields: boolean = false;
+  showAdditionalFields1: boolean = false;
   checked1:boolean | any;
   checked2:boolean | any;
+  checked3:boolean | any;
+  checked4:boolean | any;
+  checked5:boolean | any;
+  checked6:boolean | any;
+  checked7:boolean | any;
+  checked8:boolean | any;
+  checked9:boolean | any;
+  checked10:boolean | any;
+  checked11:boolean | any;
+  checked12:boolean | any;
+  checked13:boolean | any;
+  checked14:boolean | any;
+
   othersForm!: FormGroup;
   showSpecifyCrime: boolean = false;
   userDetails:any = {};
@@ -27,12 +59,15 @@ export class OtherDetailsComponent implements OnInit {
   showOwnCar: boolean = false;
 
   showWelcomeMsg:boolean = false;
+  
   constructor(
     private dialog: MatDialog,
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private auth:AuthService
+    private auth:AuthService,
+    private fb: FormBuilder
+    
   ){
     const getUserData:any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
@@ -48,8 +83,54 @@ export class OtherDetailsComponent implements OnInit {
        this.showWelcomeMsg = false;
     }
     
+    this.othersForm = this.fb.group({
+      politicalView: [''],
+      otherPoliticalView: [''],
+      waterSupply: [''],
+      otherWaterSupply: [''],
+      transportMeans: [''],
+      otherTransportMeans:['']
+    });
   }
 
+  get politicalView() {
+    return this.othersForm.get('politicalView')?.value;
+  }
+
+  get waterSupply(){
+    return this.othersForm.get('waterSupply')?.value;
+  }
+
+  get transportMeans(){
+    return this.othersForm.get('transportMeans')?.value;
+  }
+
+  proceed() {
+    if (this.othersForm.get('politicalView')?.value === 'others') {
+      this.showAdditionalFields = true;
+    } else {
+      this.showAdditionalFields = false;
+    }
+  }
+
+  proceed2() {
+    if (this.othersForm.get('transportMeans')?.value === 'others') {
+      this.showAdditionalFields = true;
+    } else {
+      this.showAdditionalFields = false;
+    }
+  }
+
+  proceed1() {
+    if (this.othersForm.get('waterSupply')?.value === 'others') {
+      this.showAdditionalFields = true;
+    } else {
+      this.showAdditionalFields = false;
+    }
+  }
+
+
+  
 
   detectTouched(radioType: string){
     if(radioType === 'radio1'){
@@ -58,6 +139,67 @@ export class OtherDetailsComponent implements OnInit {
     }else if(radioType === 'radio2'){
       this.checked1 = false;
       this.checked2 = true;
+    }
+  }
+
+  detectTouched1(radioType: string){
+    if(radioType === 'radio3'){
+      this.checked4 = false;
+      this.checked3 = true;
+    }else if(radioType === 'radio4'){
+      this.checked3 = false;
+      this.checked4 = true;
+    }
+  }
+
+  detectTouched2(radioType: string){
+    if(radioType === 'radio5'){
+      this.checked6 = false;
+      this.checked5 = true;
+    }else if(radioType === 'radio6'){
+      this.checked5 = false;
+      this.checked6 = true;
+    }
+  }
+
+  detectTouched3(radioType: string){
+    if(radioType === 'radio7'){
+      this.checked8 = false;
+      this.checked7 = true;
+    }else if(radioType === 'radio8'){
+      this.checked7 = false;
+      this.checked8 = true;
+    }
+  }
+
+  detectTouched4(radioType: string){
+    if(radioType === 'radio9'){
+      this.checked10 = false;
+      this.checked9 = true;
+    }else if(radioType === 'radio10'){
+      this.checked9 = false;
+      this.checked10 = true;
+    }
+  }
+
+
+  detectTouched5(radioType: string){
+    if(radioType === 'radio11'){
+      this.checked12 = false;
+      this.checked11 = true;
+    }else if(radioType === 'radio12'){
+      this.checked11 = false;
+      this.checked12 = true;
+    }
+  }
+
+  detectTouched6(radioType: string){
+    if(radioType === 'radio13'){
+      this.checked13 = false;
+      this.checked14 = true;
+    }else if(radioType === 'radio14'){
+      this.checked13 = false;
+      this.checked14 = true;
     }
   }
 

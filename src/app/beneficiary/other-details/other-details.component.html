@@ -20,7 +20,7 @@
         </div>
 
         <div class="row-span-1">
-            <p class="text-xl font-bold text-gray-400">Political View</p>
+            <p class="text-[24px] font-[600] text-gray-400">Political Engagement/Affiliation</p>
             <!-- <p>Almost there enter your next of kin information.</p> -->
         </div>
 
@@ -40,6 +40,114 @@
                 </select>
             </form>
         </div>
+
+
+        <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Have you voted in recent elections?</p>
+                
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched('radio1')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched('radio2')">No</mat-radio-button>
+                      </mat-radio-group>
+                
+
+                </div>
+
+            </form>
+        </div>
+
+
+        <div class="row-span-1">
+           
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options" formControlName="politicalView"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option4; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+        <div class="row-span-1">
+           
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options"  formControlName="politicalView"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option5; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="othersForm">
+              <select id="funding_options" formControlName="politicalView"
+                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                <option *ngFor="let option of option6; let id=index">
+                  <span>{{ option }}</span>
+                </option>
+              </select>
+            </form>
+          </div>
+          
+          <div class="row-span-1" *ngIf="politicalView === 'Others'">
+            <form [formGroup]="othersForm">
+              <input formControlName="otherPoliticalView" type="text" id="text-input" aria-describedby="helper-text-explanation"
+                class="w-[85%] rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="If others, please specify*">
+            </form>
+          </div>
+          
+
+
+        <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Are you a member of any political party?</p>
+                
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched1('radio3')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched1('radio4')">No</mat-radio-button>
+                      </mat-radio-group>       
+                </div>
+            </form>
+        </div>
+       
+        <div class="row-span-1" *ngIf="checked3 === true">
+           
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options"  formControlName="politicalView"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option7; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+        <div class="row-span-1" >
+           
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options"  formControlName="politicalView"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option8; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+
+
+<!-- Security Information -->
+
         <div class="row-span-1">
             <p class="text-xl font-bold text-gray-400">Security Information</p>
         </div>
@@ -85,7 +193,265 @@
                 </select>
             </form>
         </div>
+
+
+       
+
+
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options" formControlName="crimeType"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option9; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+
+
+        
+        <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Have you or anyone in your household been a victim of crime recently?*</p>
+               
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched2('radio5')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched2('radio6')">No</mat-radio-button>
+                      </mat-radio-group>
+                   
+                </div>
+
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="checked5 === true">
+            <form [formGroup]="othersForm">
+                <input formControlName="politicalView" type="text" id="text-input" aria-describedby="helper-text-explanation" class="  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="If yes, please specify the type of crime*">
+               </form>
+        </div>
+
+
+        <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Are there any community disputes or conflicts?</p>
+               
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched3('radio7')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched3('radio8')">No</mat-radio-button>
+                      </mat-radio-group>
+                   
+                </div>
+
+            </form>
+        </div>
+        <div class="row-span-1" *ngIf="checked7 === true">
+            <form [formGroup]="othersForm">
+                <input formControlName="politicalView" type="text" id="text-input" aria-describedby="helper-text-explanation" class="w-[85%]  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="If yes, please specify the type of crime*">
+               </form>
+        </div>
+
+        <!-- Population Control -->
+
+        <div class="row-span-1">
+            <p class="text-xl font-bold text-gray-400">Population Control</p>
+        </div>
+
+        <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Are you aware of family planning methods?*</p>
+               
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched4('radio9')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched4('radio10')">No</mat-radio-button>
+                      </mat-radio-group>
+                   
+                </div>
+
+            </form>
+        </div>
+        <div class="row-span-1">
+            <form [formGroup]="othersForm">
+                <input formControlName="politicalView" type="text" id="text-input" aria-describedby="helper-text-explanation" class="w-[85%]  rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="How many children do you have?*">
+               </form>
+        </div>
  
+
+        <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Do you have access to family planning services?</p>
+               
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched('radio1')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched('radio2')">No</mat-radio-button>
+                      </mat-radio-group>
+                   
+                </div>
+
+            </form>
+        </div>
+
+
+        <!-- Sanitation Facilities -->
+        <div class="row-span-1">
+            <p class="text-xl font-bold text-gray-400">Sanitation Facilities</p>
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Do you have access to proper sanitation facilities?*</p>
+               
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched4('radio9')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched4('radio10')">No</mat-radio-button>
+                      </mat-radio-group>
+                   
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Water Supply -->
+        <div class="row-span-1">
+            <p class="text-xl font-bold text-gray-400">Water Supply</p>
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="othersForm">
+              <select id="funding_options1" formControlName="waterSupply"
+              (change)="proceed1()" 
+              class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                <option *ngFor="let option of option10; let id=index">
+                  <span>{{ option }}</span>
+                </option>
+              </select>
+            </form>
+          </div>
+          
+          <div class="row-span-1" *ngIf="waterSupply === 'Others'">
+            <form [formGroup]="othersForm">
+              <input formControlName="otherWaterSupply" type="text" id="text-input" aria-describedby="helper-text-explanation"
+                class="w-[85%] rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="If others, please specify*">
+            </form>
+          </div>
+          
+          <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Do you have access to clean drinking water?*</p>
+             
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched5('radio11')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched5('radio12')">No</mat-radio-button>
+                      </mat-radio-group>
+                   
+                </div>
+
+            </form>
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options" formControlName="crimeType"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option11; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options" formControlName="crimeType"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option12; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+          
+
+        <!-- Electricity -->
+        <div class="row-span-1">
+            <p class="text-xl font-bold text-gray-400">Electricity</p>
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm">
+                <p>Do you have reliable access to electricity?*</p>
+             
+                <div class="flex items-center me-4">
+
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button  (click)="detectTouched6('radio11')">Yes</mat-radio-button>
+                        <mat-radio-button  (click)="detectTouched6('radio12')">No</mat-radio-button>
+                      </mat-radio-group>
+                   
+                </div>
+
+            </form>
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options" formControlName="crimeType"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option13; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+
+        <!-- Transportation -->
+
+        <div class="row-span-1">
+            <p class="text-xl font-bold text-gray-400">Transportation</p>
+        </div>
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options" formControlName="crimeType"
+                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option14; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+        <div class="row-span-1">
+            <form class="max-w-sm" [formGroup]="othersForm">
+                <select id="funding_options" formControlName="transportMeans"
+                (change)="proceed2()"    
+                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option2; let id=index">
+                        <span>{{ option }}</span>
+                    </option>
+                </select>
+            </form>
+        </div>
+
+          <div class="row-span-1" *ngIf="transportMeans === 'Others'">
+            <form [formGroup]="othersForm">
+              <input formControlName="otherTransportMeans" type="text" id="text-input" aria-describedby="helper-text-explanation"
+                class="w-[85%] rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="If others, please specify*">
+            </form>
+          </div>
+
+
+
+
+
         <div class="row-span-1" *ngIf="showSpecifyCrime === true" >
             <form class="max-w-sm" [formGroup]="othersForm">
                 <input type="text" id="text-input" formControlName="specifyCrimeType"
@@ -95,16 +461,22 @@
             </form>
         </div>
         
+        
+        
+
         <div class="row-span-1">
             <form class="max-w-sm" [formGroup]="othersForm">
-                <select id="funding_options" formControlName="transportMeans"
-                    class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
-                    <option *ngFor="let option of option2; let id=index">
+                <select id="funding_options" formControlName="transportMeans"  
+                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
+                    <option *ngFor="let option of option15; let id=index">
                         <span>{{ option }}</span>
                     </option>
                 </select>
             </form>
         </div>
+
+
+
         <div class="row-span-1" *ngIf="showOwnCar === true">
             <form class="max-w-sm" [formGroup]="othersForm">
                 <input type="number" formControlName="numberOfCar" id="text-input"
@@ -113,6 +485,10 @@
                     placeholder="How many cars do you have?*">
             </form>
         </div>
+
+
+
+        
         <div class="row-span-1 w-full mt-2">
             <button (click)="succesfulOboarding()" id="btn" type="submit" [disabled]="disableBtn"
                 [ngStyle]="{ 'background-color': disableBtn ? '#B8B7C8' : '#109856' }"
