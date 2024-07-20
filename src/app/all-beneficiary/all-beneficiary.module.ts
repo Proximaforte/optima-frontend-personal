@@ -10,7 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { IncompletePipe } from './pipes/incomplete.pipe';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
-
+import {ConsentModalComponent} from '../consent-modal/consent-modal.component';
 const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
 
 @NgModule({
@@ -18,13 +18,19 @@ const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
     AllBeneficiaryComponent,
     BeneficiaryDetailspageComponent,
     BeneficiaryFilterPipe,
-    IncompletePipe
+    IncompletePipe,
+    ConsentModalComponent
   ],
   imports: [
     CommonModule,
     AllBeneficiaryRoutingModule,
     UtilitiesModule,
-    materialModules
+    materialModules,
+   
+  ],
+
+  exports: [
+    ConsentModalComponent  // Export the component
   ]
 })
 export class AllBeneficiaryModule { }

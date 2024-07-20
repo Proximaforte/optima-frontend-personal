@@ -10,6 +10,7 @@ import { ToastsService } from '../services/alert/toasts.service';
 import { ToastsComponent } from '../utilities/toasts/toasts.component';
 import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';  // Import Location
+import {ConsentModalComponent} from '../consent-modal/consent-modal.component';
 
 
 
@@ -24,9 +25,7 @@ export class AllBeneficiaryComponent implements OnInit {
   @ViewChild('consentModal') consentModal!: TemplateRef<any>;
   showConsent: boolean = true;
 
-  check: string = "/assets/images/mark-icon.png";
-  back: string = "/assets/images/arrow-left-circle.png";
-  privacy: string = "/assets/images/privacy.png";
+
 
 
   lastpage!: number;
@@ -103,6 +102,11 @@ export class AllBeneficiaryComponent implements OnInit {
     private toast: ToastsService,
     private location: Location  // Inject Location
   ) {}
+
+
+  openConsentModal() {
+    this.dialog.open(ConsentModalComponent, );
+  }
 
   showInCompleteBeneficiaries() {
     this.showNoData = false;
@@ -524,30 +528,13 @@ export class AllBeneficiaryComponent implements OnInit {
   }
 //2
  
+onCancel() {
+  // Handle cancel action
+}
 
-  onCancel(): void {
-    this.dialog.closeAll();
-    this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
-  }
-
-  onAccept(): void {
-    this.dialog.closeAll();
-    this.router.navigate(['../beneficiary'], {
-      relativeTo: this.route,
-      queryParams: {
-        progress: 'verify_NIN'
-      }
-    });
-  }
-
-  toggleModalContent(): void {
-    this.showConsent = !this.showConsent;
-  }
-
-  closePrivacyPolicy(): void {
-    this.showConsent = true;
-    this.dialog.closeAll();
-  }
-
+onAccept() {
+  // Handle accept action
+}
+ 
 
 }

@@ -11,6 +11,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { LogoutComponent } from '../modals/logout/logout.component';
 import { Location } from '@angular/common';  // Import Location
+import {ConsentModalComponent} from '../../consent-modal/consent-modal.component'
+
+
+
 
 @Component({
   selector: 'app-navigation',
@@ -21,7 +25,7 @@ export class NavigationComponent {
   bankLogo: any;
   hovered?: boolean;
   client: string = 'zest';
-  check: string = "/assets/images/mark-icon.png";
+  warn: string = "/assets/images/warn.svg";
   back: string = "/assets/images/arrow-left-circle.png";
   privacy: string = "/assets/images/privacy.png";
   menuItems: MenuItem[] | any = [
@@ -79,7 +83,7 @@ export class NavigationComponent {
     });
   }
 
-
+ 
 
   ngOnInit(): void { }
   isActive(route: string | undefined): boolean {
@@ -95,9 +99,7 @@ export class NavigationComponent {
       });
     } else if (item?.name === 'beneficiary') {
       this.routeService.setRouteToDisplay('verify beneficiary nin');
-      this.dialog.open(this.consentModal, {
-        width: '762px',
-      });
+      this.dialog.open(ConsentModalComponent, );
     } else if (item?.name === 'dashboard') {
       this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
       setTimeout(() => location?.reload(), 300);
@@ -122,29 +124,10 @@ export class NavigationComponent {
 
   // https://chat.openai.com/c/140447e6-5ce5-416a-a70f-675c8380df52
 
-  onCancel(): void {
-    this.dialog.closeAll();
-    this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
-  }
+ 
 
-  onAccept(): void {
-    this.dialog.closeAll();
-    this.router.navigate(['./beneficiary'], {
-      relativeTo: this.route,
-      queryParams: {
-        progress: 'verify_NIN'
-      }
-    });
-  }
-
-  toggleModalContent(): void {
-    this.showConsent = !this.showConsent;
-  }
-
-  closePrivacyPolicy(): void {
-    this.showConsent = true;
-    this.dialog.closeAll();
-  }
+ 
+ 
 
 
 }

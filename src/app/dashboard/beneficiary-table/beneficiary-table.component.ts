@@ -9,6 +9,9 @@ import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { TotalOnboarding } from 'src/app/models/beneficiary/beneficiary';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Location } from '@angular/common';  // Import Location
+import {ConsentModalComponent} from 'src/app/consent-modal/consent-modal.component';
+
+
 
 @Component({
   selector: 'app-beneficiary-table',
@@ -20,7 +23,7 @@ export class BeneficiaryTableComponent implements OnInit {
   beneficiary: Beneficiary[] = [];
   @Output() emitTotals$: EventEmitter<any> = new EventEmitter();
   noData: string = "/assets/images/emptydata.svg";
-  check: string = "/assets/images/mark-icon.png";
+  warn: string = "/assets/images/warn.svg";
   back: string = "/assets/images/arrow-left-circle.png";
   privacy: string = "/assets/images/privacy.png";
   agents: any = [
@@ -62,6 +65,10 @@ export class BeneficiaryTableComponent implements OnInit {
     private location: Location  // Inject Location
   ) {}
 
+  openConsentModal() {
+    this.dialog.open(ConsentModalComponent, );
+  }
+  
   addBeneficiary() {
     const dialogRef = this.dialog.open(this.consentModal);
 

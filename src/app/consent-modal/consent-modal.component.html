@@ -1,0 +1,324 @@
+
+    <mat-card id="consent-card" class=" rounded-[24px]">
+      <mat-card-content class="mat-card-content rounded-[24px]">
+        <div class="flex flex-col items-start p-4">
+          <div
+            *ngIf="showConsent; else privacyPolicyTemplate"
+            class="text-start"
+          >
+            <div class="consent-icon mb-4">
+              <img [src]="'/assets/images/warn.svg'" alt="check" />
+            </div>
+            <h2 class="text-[24px] font-[600] leading-[28.8px] font-[Euclid Circular A]">Consent and Privacy policy</h2>
+  
+            <p class="text-[14] font-[500] leading-[16.8px] font-[Euclid Circular A]">Kwara State Residents’ Registration Agency</p>
+            <p class=" text-gray-500 text-[14px] mt-2 leading-6">
+              To add you as a beneficiary, we require some personal information.
+              Rest assured, your data privacy is our top priority. All data will
+              be handled in accordance with our strict
+              <a class="text-[#4caf50]  underline" (click)="toggleModalContent()"
+                >privacy policies</a
+              >
+              and applicable regulations to protect your information from
+              unauthorized access and ensure it remains confidential.
+            </p>
+           
+  
+            <p
+              class="text-[#4caf50] py-6 leading-[20px]"
+              (click)="toggleModalContent()"
+            >
+              To view our Privacy Policy click here
+            </p>
+  
+            <p class="text-gray-700 text-sm pt-5">
+              Please accept this permission to continue.
+            </p>
+            <div class="flex justify-end gap-4 w-full mt-4">
+              <button mat-button class="cancel-button" (click)="onCancel()">
+                Cancel
+              </button>
+              <button
+                mat-button
+                class="accept-button text-white"
+                (click)="onAccept()"
+                style="color: white;"
+              >
+                Accept
+              </button>
+            </div>
+          </div>
+          <ng-template #privacyPolicyTemplate>
+            <div class="text-start">
+              <div
+                class="flex privacy-icon justify-start items-center mb-4 w-[350px] h-[36px] gap-[8]"
+              >
+                <img
+                  [src]="'/assets/images/arrow-left-circle.png'"
+                  alt="back"
+                  (click)="toggleModalContent()"
+                  class="w-[31px] h-[31px]"
+                />
+                <div
+                  class="small-div w-[252px] flex flex-row justify-start items-center ml-3 bg-[#e4f2da]"
+                >
+                  <img [src]="'/assets/images/privacy.png'" class="privacy-img" alt="privacy" />
+                  <span class="privacy">KWASRRA Privacy Policy</span>
+                </div>
+              </div>
+              <div class="scrollable-content">
+                <h2 class=" text-[32px] font-[700] leading-[44.8px] font-sora text-[#101828]">Privacy Policy</h2>
+  
+              <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]"> 1. Introduction</span>
+              <p class="text-[20px] font-[400] font-[Euclid Circular A]  text-justify leading-[30px]"> We are committed to protecting your personal information which we collect, process, and disclose on behalf of Kwara State Government of Nigeria, through the Kwara State Resident Registration Agency, a body corporate duly established by the Kwara State House of Assembly.  We are committed to ensuring that data collected is handled in a safe and responsible manner. This Privacy Policy outlines the types of personal information we collect on our portal/system, how we protect that information, and your rights regarding your  personal information, in accordance with applicable data protection laws and regulations. This privacy policy describes how the  Kwara State Resident Registration Agency <span class="font-[600] text-[20px] leading-[30px]">(“KWASRRA/the Agency”)</span> collects, uses, and discloses your personal information. This privacy policy may be amended from time to time.</p>
+           
+              <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">2. Purpose</span>
+              <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> Kwara State <span class="font-[600] text-[20px] leading-[30px]">(“the State”)</span> is one of the 36 (Thirty-six) States and a federating unit of the Federal Republic of Nigeria duly established by the Constitution of the Federal Republic of Nigeria, 1999 (as amended) <span class="font-[600] text-[20px] leading-[30px]">(“the Constitution”)</span>. The State is bound by the provisions of Chapter 2 of the Constitution (Fundamental Objectives and Directive Principles of State Policy) which imposes economic, and socio-political obligations on the federating states of Nigeria.</p>
+           <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">Thus, Kwara State Government <span class="font-[600] text-[20px] leading-[30px]">(“kwsg”)</span> is committed to the provision of socio-economic services such as education, sanitation, healthcare, etc to the residents of the State particularly those in disadvantaged and rural areas. The KWSG is also determined to escalate its role in addressing poverty, social injustice, inequality, etc through dedicated policies and programs. To actualize these objectives, the KWSG established the Agency which has identified the need to collect, and process the personal information  of the residents of the State as one of the strategies to be deployed to carry out the mandate of the KWSG as articulated above, as this would enable the KWSG identify the areas of greatest need and allocate resources accordingly, in a more effective and optimal manner.</p>
+  
+  
+  
+        <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">3. Expected Outcomes</span>
+        <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> 
+          The collection of personal information of the residents of the State  aims to achieve several key outcomes which will enable the State to achieve its obligations to the residents of Kwara State and these include:
+          </p>
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]">3.1  Economic Planning and Development:</span> Support for economic planning and development initiatives through data-driven insights, promoting sustainable growth and development.</p> 
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]"> 3.2  Efficient Resource Allocation:</span>   Better allocation of resources and services based on accurate demographic and geographic data, which ensures that community needs are met effectively.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]">  3.3  Informed Policy Making: </span> Development of evidence-based policies and programs that address the specific needs and challenges of the residents of the State.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]"> 3.4  Security and Law Enforcement:</span>  Strengthened security and law enforcement efforts by maintaining accurate records, facilitating investigations, and ensuring public safety.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]"> 3.5  Enhanced Public Services:</span> Improved delivery of public services such as education, social services, and public safety through accurate and up-to-date information.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]"> 3.6  Improved Public Health:</span>Enhanced ability to monitor and respond to health crises, manage epidemics, pandemics such as Covid-19, and implement effective public health interventions.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]"> 3.7  Emergency Preparedness and Response:</span> Enhanced capacity to respond to emergencies and disasters, providing timely assistance and support to affected individuals.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]"> 3.8  Compliance with Legal Requirements:</span> Fulfilment of legal obligations and regulatory requirements, ensuring that government operations are transparent and accountable.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]">3.9  Civic Engagement:</span> Better management of civic activities such as elections, enabling fair and efficient electoral processes and enhancing citizens’ participation.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> <span class="font-[500] text-[20px] leading-[30px]"> 3.10  Social Equity:</span> Promotion of social equity by identifying and addressing disparities in access to services and resources among different population groups.</p> 
+  
+         <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"> By achieving these outcomes, the State can improve the overall quality of life for its citizens, ensure equitable access to resources and services, and enhance the effectiveness and efficiency of its operations.</p>
+    
+  
+  
+  
+     <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">4. Definitions and Interpretations</span>
+     <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]" >In this policy, the following terms have the meanings set against them:</p>
+     <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.1 Anonymization:</span> means the process of protecting private or sensitive data by erasing or encrypting identifiers that connect the owner of the personal information to data stored in regard to that person.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.2 Biometrics:</span> means biological information about a person to create a detailed record of their personal characteristics.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.3 Data:</span> means information, facts, and figures collected for reference, analysis, and processing.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.4 Data Controller:</span> means a natural or legal person, public authority, agency, or any other body, which alone or jointly with others, determines the purposes and means of the processing of personal data. For the purposes of this policy, the Kwara State Resident Registration Agency is the Data Controller.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.5 Data Processor:</span> means a natural or legal person, public authority, agency, or other body which processes personal data on behalf of the controller. Proximaforte Limited is our Data Processor.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.6 Data Subject:</span> means an individual whose personal data is collected, held, or processed. In the context of data protection laws like the Nigerian Data Protection Act 2023, the data subject is the person to whom the personal information collected pertains.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.7 Nigeria Data Protection Act 2023 ("NDPA/the Act"):</span> Enhanced ability to monitor and respond to health crises, manage epidemics, pandemics such as Covid-19, and implement effective public health interventions.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.8 Personal Information:</span> means any data that can identify an individual, either directly or indirectly. This includes details such as name, address, email address, phone number, date of birth, passport number, financial information, medical records, biometric data, IP address.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.9 Processing:</span> means any operation or set of operations performed on personal data, whether or not by automated means, such as the collection, recording, organization, storage, adaptation or alteration, retrieval, gathering, use, disclosure by transmission, dissemination or otherwise making information available, alignment or combination, blocking, erasure or destruction.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.10 Profiling:</span> means the use of data to evaluate certain aspects related to a Data Subject. The purpose is to predict the Data Subject's behavior and take decisions regarding him or her.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">4.11 Sensitive Personal Information:</span> means genetic and biometric personal information of an individual for the purpose of uniquely identifying a person’s race or ethnic origin, religious or similar beliefs, such as those reflecting conscience or philosophy, health status, political opinions or affiliations, and trade union membership.</p>
+  
+  <span class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">
+    <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">4.12 Legal Framework:</span> Sharing personal information is governed by relevant data protection laws and regulations, such as:
+    <br>
+    <ul class="list-disc list-inside my-5  mx-3">
+      <li>Section 37 of the Constitution of the Federal Republic of Nigeria, 1999 which guarantees the right to private and family life;</li>
+      <li>The Nigeria Data Protection Act (NDPA) 2023 (‘the Act’), provides a legal framework for the protection of Personal Information and establishes the Nigeria Data Protection Commission (“the Commission”) as its supervisory body.</li>
+      <li>Other data protection laws and regulations, which dictate how data can be shared and the safeguards required.</li>
+    </ul>
+    These laws and regulations ensure that Personal Information is shared in a manner that respects privacy rights, complies with legal obligations, and serves the public interest.
+  </span>        
+             
+  
+  
+  
+  
+  <p class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">5. Personal Information</p>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">You may be required to provide certain Personal Information that can be used to contact or identify you. Personal Information may include, but is not limited to:</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">5.1 Contact details:</span> email address, name, phone number, address, state of origin, local government area, city/town.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">5.2 Demographic Information:</span> date of birth, age, occupation, profession.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">5.3 Sensitive Personal Information:</span> gender, biometric data, religious or similar beliefs.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">5.4 Financial Information:</span> income and salary information, tax identification numbers, insurance policy information, loan and debt information and other similar information, which may be required to open a bank account for you with a Central Bank of Nigeria-licensed bank in order to enable you access any financial support you may be eligible for from the KWSG and/or other third-party financial institutions or support groups.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">5.5 Other information:</span> National Identification Number (NIN), image of a government-issued identity document, international passport, driving license, permanent voter card, photograph etc.</p>
+  
+  
+  
+  <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">6. How Personal Information Collected is Shared</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">Personal Information collected is shared under specific conditions as approved by the Data Controller to ensure it is used responsibly and in accordance with legal and ethical standards. Specifically, your Personal Information may be shared in the following circumstances:</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">6.1 With Government Agencies:</span></p>
+  <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Interagency Collaboration:</span> Personal Information may be shared with other government departments or agencies to facilitate public services, policy implementation, and law enforcement.</li>
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Public Health Management:</span> Data may be shared with health departments to track and manage public health issues, such as during epidemics and pandemics.</li>
+  </ul>
+  
+  <p><span class="font-[500] text-[20px] leading-[30px]">6.2 With Third-Party Service Providers:</span></p>
+  <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Service Delivery:</span> Third-party providers may process data on behalf of the State to deliver services, such as IT support, personal data storage, and healthcare services.</li>
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Data Analysis:</span> Specialized firms may be engaged to analyze personal data to improve public services and inform policy decisions.</li>
+  </ul>
+  
+  <p><span class="font-[500] text-[20px] leading-[30px]">6.3 For Legal Compliance:</span></p>
+  <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Law Enforcement:</span> Personal Information may be shared with law enforcement agencies to comply with legal investigations, court orders, and subpoenas.</li>
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Regulatory Requirements:</span> Personal data sharing may occur to comply with regulatory obligations and audits.</li>
+  </ul>
+  
+  <p><span class="font-[500] text-[20px] leading-[30px]">6.4 With Researchers and Academics:</span></p>
+  <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Public Health and Social Research:</span> Personal data may be provided to researchers and academic institutions for studies that aim to improve public health, social services, and policy outcomes.</li>
+  </ul>
+  
+  <p><span class="font-[500] text-[20px] leading-[30px]">6.5 Anonymized Data:</span></p>
+  <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Whenever possible, personal data is anonymized or aggregated to protect the privacy of an individual.</span></li>
+  </ul>
+  
+  <p><span class="font-[500] text-[20px] leading-[30px]">6.6 In Emergency Situations:</span></p>
+  <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Disaster Response:</span> Personal Information may be shared to coordinate emergency response efforts and provide timely assistance to those affected by any form of disaster.</li>
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Public Safety:</span> Sharing data to ensure public safety and manage crises, such as during a pandemic or natural disaster.</li>
+  </ul>
+  
+  <p><span class="font-[500] text-[20px] leading-[30px]">6.7 With Consent of Data Subject:</span></p>
+  <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Personal information may be shared with other entities if the Data Subject has given explicit consent for such sharing.</span></li>
+  </ul>
+  
+  <p><span class="font-[500] text-[20px] leading-[30px]">6.8 Public Interest and Statistical Purposes:</span></p>
+  <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Statistical Analysis:</span> Personal data may be used for statistical purposes to inform government planning and policy-making.</li>
+    <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">Public Reports:</span> Aggregated and anonymized personal data may be published in public reports to provide transparency and inform citizens.</li>
+  </ul>
+  
+  
+  
+  
+  <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">7. Prohibited Use</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">Personal information may be shared with other entities if the Data Subject has given explicit consent for such sharing. However, there are prohibited uses where sharing may not be permitted:</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">7.1 Necessary for entering into or for the performance of a contract between the Data Subject and a Data Controller;</p>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">7.2 Authorized by a written law, which establishes suitable measures to safeguard fundamental rights and freedoms;</p>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">7.3 In the interest of the Data Subject; or</p>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">7.4 Authorized by the consent of the Data Subject.</p>
+  
+  
+  
+  
+  <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">8. Safeguards and Protections</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">To ensure Personal Information is shared responsibly, we implement several safeguards, which include the following:</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">8.1 Data Protection Agreements: Ensuring third parties comply with data protection standards through contractual agreements.</p>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">8.2 Encryption and Security Measures: Utilizing encryption and other security measures to protect data during transmission and storage.</p>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">8.3 Access Controls: Restricting access to personal data to authorized personnel only.</p>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">8.4 Audits and Monitoring: Regularly auditing data sharing practices and monitoring compliance with privacy laws, policies, and regulations.</p>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">8.5 Anonymization and Aggregation: Anonymizing personal data wherever necessary and possible, in order to minimize the risk of identifying the Data Subject.</p>
+  
+  
+  
+  <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">9.Rights of Data Subjects</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">Data Controllers and Data Processors are obligated under the Act to implement appropriate technical and organizational measures to ensure the security, integrity, and confidentiality of personal data. Your rights as a Data Subject under the Act are as follows:</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">9.1 Right to be informed:</span> The Data Controller is to inform the Data Subject about the Processing and the purpose for Processing of personal data in a clear, concise, transparent, and intelligible manner.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">9.2 Right of access:</span> As a Data Subject, you have the right to access your personal data and obtain a copy of your personal data, and other supplementary information from the Data Processor.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">9.3 Right to correction of your personal data:</span> This right ensures that the Data Controller or Data Processor shall ensure that personal data is accurate, complete, not misleading, and where necessary, kept up to date.</p>
+  
+  <span class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]" ><span class="font-[500] text-[20px] leading-[30px]">9.4 Right to erasure/deletion:</span> You have the right to have your personal data removed from our records if:
+    <ul class="list-disc list-inside my-5 leading-[28.8px] ml-4">
+      <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">The personal data is no longer necessary in relation to the purposes for which it was collected or processed, or</li>
+      <li class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">The Data Controller has no other lawful basis to retain the personal data.</li>
+    </ul>
+  </span>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">9.5 Right to restriction of Processing:</span> You have the right to restrict the Processing of your personal data under certain circumstances.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">9.6 Right to withdraw consent:</span> You have the right to withdraw your consent to the Processing of your personal data at any time.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">9.7 Right to object to Processing:</span> This is an absolute right that allows you to object to the processing of your personal data, as long as the exercise of this right to object is not exempted by law.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">9.8 Right to lodge a complaint with the Commission:</span> You have the right to lodge a complaint with the Commission if you believe the Data Controller has violated your rights under the Act.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]"><span class="font-[500] text-[20px] leading-[30px]">9.9 Right to Data Portability:</span> You have the right to receive your personal data in a structured, commonly used, and machine-readable format, and to transmit this data to another Data Controller without hindrance, where technically feasible.</p>
+  
+  
+  
+  <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">10.Data Security Measures</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">We have implemented appropriate, reasonable technical and organizational security measures designed to protect the security of any personal information we process. However, despite our safeguards and efforts to secure your personal information, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure. Therefore, we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your personal data. Although we will do our best to protect your personal data, transmission of personal data to and from our services is at your own risk.</p>
+  
+  
+  
+  
+  <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">11. Data Retention Policies</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">We will only keep your personal information for as long as it is necessary for the purposes set out in this privacy notice, unless a longer retention period is required or permitted by law (such as tax, accounting, or other legal requirements). When we or the State have no ongoing legitimate business need to process your personal information, we will either delete or anonymize such personal information, or, if this is not possible (for example, because your personal information has been stored in backup archives), then we will securely store your personal information and isolate it from any further processing until deletion is possible.</p>
+  
+  
+  <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">12. Intellectual Property</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">All contents, features, and functionality on our system, including but not limited to texts, graphics, logos, icons, images, audio clips, and software, are the exclusive property of Proximaforte Limited, our Data Processor, or its licensors and are protected by current intellectual property laws and regulations. You agree not to use, reproduce, or distribute any content from our system without our express written permission.</p>
+  
+  
+  
+  
+  <span class="font-[500] text-[24px] leading-[30px] font-[Euclid Circular A] text-[#101828]">13. Disclaimers and Limitations of Liability</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">All information on our system is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the completeness of any information on the system.</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of the system or reliance on any information provided on or through, or by the system.</p>
+  
+  <span class="font-[500] text-[20px] leading-[30px] mt-4">13.1 Limitations of Liability:</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">To the fullest extent permitted by applicable law, we, our affiliates, and respective officers, directors, employees, agents, licensors, representatives, and third-party providers will not be liable for any direct, indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) any conduct or content of any third party on the system; (ii) any content obtained from the system; and (iii) unauthorized access, use, or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence), or any other legal theory, whether or not we have been informed of the possibility of such damage, and even if a remedy set forth herein is found to have failed of its essential purpose.</p>
+  
+  <span class="font-[500] text-[20px] leading-[30px] mt-4">13.2 Disclaimer:</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">The system and our services are provided "as is" and "as available" without any warranties of any kind, either express or implied, including but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement, or course of performance.</p>
+  
+  <span class="font-[500] text-[20px] leading-[30px] mt-4">13.3 Indemnification:</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">You agree to defend, indemnify, and hold us, our affiliates, and respective officers, directors, employees, agents, licensors, representatives, and third-party providers harmless from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) resulting from any violation of the terms contained in this notice or the use of the system.</p>
+  
+  <span class="font-[500] text-[20px] leading-[30px] mt-4">13.4 Severability:</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">If any provision of this disclaimer and limitations of liability clause is found to be invalid under any applicable law, such provisions shall be deleted without affecting the remaining provisions herein.</p>
+  
+  <span class="font-[500] text-[20px] leading-[30px] mt-4">13.5 Changes:</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">We reserve the right to update or change the contents of this notice, our disclaimer and limitations of liability clause at any time. Your continued permission to retain your personal information on our system after we post any modifications to this notice or the disclaimer on this page will constitute your acknowledgment of the modifications and your consent to abide and be bound by the modified disclaimer and limitations of liability clause.</p>
+  
+  
+  <span class="font-[500] text-[20px] leading-[30px] mt-4">13.6 Contact Us:</span>
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">If you have any questions about our privacy policy or data handling protocols, please contact us at:</p>
+  
+  <p class="text-[20px] font-[400] font-[Euclid Circular A]  mt-2 text-justify leading-[30px]">The General Manager<br>
+  Kwara State Resident Registration Agency<br>
+  Harmony Hub, Fate Road,<br>
+  Ilorin, Kwara State.<br>
+  Nigeria.<br>
+  Cell No: +234-803-808-8125</p>
+  
+  
+  
+  
+         
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
+  

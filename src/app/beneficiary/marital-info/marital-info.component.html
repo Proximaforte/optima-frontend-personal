@@ -100,15 +100,12 @@
                                 <!-- [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event, i)" (blur)="pushDOBofChild($event, i)" -->
                                 <!-- (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i] === undefined ? '' : dobOfChild[i]" (blur)="pushDOBofChild($event, i)" (ngModelChange)="datePipe($event)" -->
                                
-                                <mat-form-field class="relative max-w-sm mt-2 ml-[90px]" id="date-picker">
-                                    <input matInput [matDatepicker]="picker"
-                                    (ngModel)="dobOfChild[i]" [name]="dateOfBirth" (name)="dobOfChild[i]" (ngModelChange)="datePipe($event, i)"
-                                      id="datepicker-format" type="text"
-                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                      placeholder="Date of Birth">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                  </mat-form-field>
+                                <input type="text" id="child" aria-describedby="helper-text-explanation"
+                                (ngModel)="nameOfChildren[i]" (name)="nameOfChildren[i]" (value)="nameOfChildren[i] === undefined ? '' : nameOfChildren[i]" (blur)="pushNameOfChildren($event, i)"
+                                    class="w-[295px] my-8 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Age of child*">
+
+                                 
                                   <!-- (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i]" (ngModelChange)="datePipe($event, i)" (blur)="pushDOBofChild($event, i)" -->
                                   
                                     <!-- <mat-form-field id="date-picker">
