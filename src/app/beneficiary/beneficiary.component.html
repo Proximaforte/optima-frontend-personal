@@ -16,8 +16,7 @@
     <div class="col-span-5 lg:col-span-4 w-full h-full justify-center flex flex-row items-center">
         <div *ngIf="selectedItemName" class="w-[80%] mt-10 flex flex-col mx-auto">
             <div id="first-column-items" *ngIf="selectedItemName === 'verify beneficiary nin'">
-                <!-- <app-verify-nin></app-verify-nin> -->
-                <app-other-details></app-other-details>
+                <app-verify-nin></app-verify-nin>
             </div>
             <div *ngIf="selectedItemName === 'personal details'" id="personal-details">
                 <app-personal-details></app-personal-details>
