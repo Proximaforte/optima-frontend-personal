@@ -17,6 +17,7 @@
         <div *ngIf="selectedItemName" class="w-[80%] mt-10 flex flex-col mx-auto">
             <div id="first-column-items" *ngIf="selectedItemName === 'verify beneficiary nin'">
                 <app-verify-nin></app-verify-nin>
+                <!-- <app-education></app-education> -->
             </div>
             <div *ngIf="selectedItemName === 'personal details'" id="personal-details">
                 <app-personal-details></app-personal-details>
@@ -32,6 +33,9 @@
             </div>
             <div *ngIf="selectedItemName === 'education'">
                 <app-education></app-education>
+            </div>
+            <div *ngIf="selectedItemName === 'education second'">
+                <app-educationSecond></app-educationSecond>
             </div>
             <div *ngIf="selectedItemName === 'health'">
                 <app-health></app-health>

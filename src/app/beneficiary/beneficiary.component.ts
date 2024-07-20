@@ -22,6 +22,7 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     "residential details",
     "marital info",
     "education",
+    "education second",
     "health",
     "financial",
     "next of kin",
@@ -77,6 +78,7 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
   getRouteToDiplay() {
     this.routeSubscription$ = this.routeService.getRouteToDisplay().subscribe({
       next: (route: any) => {
+        console.log(route)
         this.selectedItemName = route;
         this.beneficiaryItems?.forEach((path: any, index: number) => {
           if (route === path) {

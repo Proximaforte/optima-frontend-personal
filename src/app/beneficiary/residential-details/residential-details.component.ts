@@ -23,18 +23,14 @@ export class ResidentialDetailsComponent implements OnInit {
     'No, a tenant',
   ];
 
-  conditionoptions: string[] = [
-   " What are the conditions of your housing?*",
-   "Good",
-   "Bad"
-  ];
+  conditionoptions: string[] = [''];
 
   states: string[] = NigerianStates;
   lga: any[] = localGovt;
   selectedState: string = NigerianStates[24]; // Default to the 24th state
   residentialInfo!: FormGroup;
   selectedLGA: string[] = [];
-  selectedWard: string[] = [];
+  selectedWard: string[] = ['Select Ward'];
   showOthers: boolean = false;
   userDetails: any = {};
   disableBtn: boolean = true;
@@ -74,18 +70,23 @@ export class ResidentialDetailsComponent implements OnInit {
       (item) => item.state === this.selectedState,
     );
     this.selectedLGA = selectedStateLGA ? selectedStateLGA.localGovt : [];
-    this.disableBtn = false;
   }
 
   residencyForm() {
     this.residentialInfo = new FormGroup({
       placeOfResidence: new FormControl('', [Validators.required]),
-      annualPay: new FormControl('', [Validators.required]),
+      noOfRooms: new FormControl('', [Validators.required]),
+      // ownershipStatus: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
+      annualPay: new FormControl('', this.showOthers ? [Validators.required] : null),
       selectState: new FormControl(this.selectedState, [Validators.required]),
       selectLga: new FormControl('', [Validators.required]),
       selectWard: new FormControl('', [Validators.required]),
+      community: new FormControl('', [Validators.required]),
+      houseCondition: new FormControl('', [Validators.required]),
     });
+
+    this.residentialInfo.valueChanges.subscribe(() => this.updateDisabledBtn());
 
     this.residentialInfo.get('selectState')?.valueChanges.subscribe({
       next: (item: any) => {
@@ -100,11 +101,71 @@ export class ResidentialDetailsComponent implements OnInit {
     });
 
     // Initialize the LGAs for the default state
+    this.updateDisabledBtn();
     this.updateLGA();
+    this.getQualityRating();
+    this.residentialInfo.get('selectLga')?.valueChanges.subscribe({
+      next: (value: any) => {
+        if (value) {
+          this.getWards(value);
+        }
+      },
+    });
+  }
+
+  updateDisabledBtn() {
+    this.disableBtn = !this.residentialInfo.valid;
   }
 
   ngOnInit(): void {
     this.residencyForm();
+    this.updateDisabledBtn();
+  }
+
+  getQualityRating() {
+    this.beneficiaryService.getAllQualityRatings().subscribe({
+      next: (data: any) => {
+        this.conditionoptions = Array.isArray(data?.data)
+          ? ['What are the conditions of your housing?*', ...data?.data]
+          : [];
+      },
+      error: (err: any) => {
+        this.showSpinner = false;
+        this.toast.setErrorMessage(
+          err?.error?.failureReason ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      },
+    });
+  }
+
+  getWards(lga: string) {
+    this.beneficiaryService.getAllWardList(lga).subscribe({
+      next: (data: any) => {
+        this.selectedWard = Array.isArray(data?.data)
+          ? ['Select Ward', ...data?.data]
+          : [];
+      },
+      error: (err: any) => {
+        this.showSpinner = false;
+        this.toast.setErrorMessage(
+          err?.error?.failureReason ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      },
+    });
   }
 
   submitForm() {
@@ -114,6 +175,10 @@ export class ResidentialDetailsComponent implements OnInit {
     );
     const payload: any = {
       phoneNumber: getBeneficiaryPhoneNumber,
+      community: this.residentialInfo.value.community,
+      ward: this.residentialInfo.value.selectWard,
+      numberOfRoomInHouse: this.residentialInfo.value.noRooms,
+      houseCondition: this.residentialInfo.value.houseCondition,
       houseOwner:
         this.residentialInfo.value.placeOfResidence === 'Yes, a house owner',
       annualRent: Number(this.residentialInfo.value?.annualPay),
