@@ -124,25 +124,23 @@ export class PersonalDetailsComponent implements OnInit {
 
     this.showSpinner = true;
     localStorage.setItem('beneficiaryPhoneNumber', this.personalDetailsForm.get('phoneNumber')?.value);
-    console.log(newNin)
     const payload: any = {
       nin: newNin?.nin,
       // firstname: this.personalDetailsForm.value?.firstName,
       // lastname: this.personalDetailsForm.value?.lastName,
       // middleName: this.personalDetailsForm.value?.middleName,
       phoneNumber: this.personalDetailsForm.get('phoneNumber')?.value,
-      bvn: this.personalDetailsForm.value?.bvn,
-      email: this.personalDetailsForm.value?.email,
+      bvn: this.personalDetailsForm.value?.bvn ?? null,
+      email: this.personalDetailsForm.value?.email ?? null,
       // gender: this.personalDetailsForm.value?.gender,
-      //dateOfBirth: this.formattedDate,
+      // dateOfBirth: this.formattedDate,
       placeOfBirth: this.personalDetailsForm.value?.placeOfBirth,
-      religion: this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
+      religion: this.personalDetailsForm.value?.religion,
+      otherReligion: this.personalDetailsForm.value?.others  ?? null,
     }
  
     this.beneficiaryService.personalDetails(payload).subscribe({
       next: (res: any) => {
-        //   console.log("response>>>", res);
-       // this.beneficiaryService.setPersonalDetails(payload);
         this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
@@ -169,9 +167,8 @@ export class PersonalDetailsComponent implements OnInit {
       },
       error: (err: any) => {
         this.showSpinner = false;
-        console.error("personal details error>>", err);
         // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
