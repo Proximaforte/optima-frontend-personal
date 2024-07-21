@@ -31,7 +31,9 @@ export const endpoints = {
     getBeneficiaryProfile: 'api/v1/beneficiary/getBeneficiary',
     getIncompleteBeneficiaries: 'api/v1/beneficiary/getIncompleteOnboardedBeneficiaries',
     getFilteredBeneficiaries: 'api/v1/beneficiary/getFilteredBeneficiaries',
-
+    getQualityRating: 'api/v1/enums/qualityRatings',
+    getWards: 'api/v1/residency/wardList/',
+    getDistanceRanges: 'api/v1/enums/distanceRanges',
 
     //enums
 

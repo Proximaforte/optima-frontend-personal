@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 
 
 @Component({
@@ -33,11 +36,13 @@ export class HealthComponent implements OnInit {
   showSpecifyHMO: boolean = false;
   showSpecifyHospital: boolean = false;
   disableBtn: boolean = true;
-  
+  distanceRanges: string[] = ["How far is the nearest healthcare facility from your home?*"]
   showWelcomeMsg:boolean = false;
 
   constructor(
-    private router: Router, private route: ActivatedRoute, private beneficiaryService: BeneficiaryService
+    private router: Router, private route: ActivatedRoute, private beneficiaryService: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
   ){
     const getMessage:any = localStorage.getItem('incomplete');
     if(getMessage !== null){
@@ -56,11 +61,14 @@ export class HealthComponent implements OnInit {
     this.healthForm = new FormGroup({
       healthCondition: new FormControl('', [Validators.required]),
       healthQuestion: new FormControl('', [Validators.required]),
-      specifyAilment: new FormControl('', [Validators.required]),
+      specifyAilment: new FormControl('', this.showSpecifyAiment ? [Validators.required] : null),
       HMOQuestion: new FormControl('', [Validators.required]),
-      specifyHMO: new FormControl('', [Validators.required]),
+      specifyHMO: new FormControl('', this.showSpecifyHMO ? [Validators.required] : null),
       receivingTreatmentQuestion: new FormControl('', [Validators.required]),
-      publicHospitalQuestion: new FormControl('', [Validators.required])
+      access_to_healthcare: new FormControl('', [Validators.required]),
+      distance_to_healthcare: new FormControl('', [Validators.required]),
+      household_health_issues: new FormControl('', [Validators.required]),
+      publicHospitalQuestion: new FormControl('', this.showSpecifyHospital ? [Validators.required] : null)
     });
 
     this.healthForm.get('healthQuestion')?.valueChanges.subscribe({
@@ -94,14 +102,33 @@ export class HealthComponent implements OnInit {
     });
 
 
-    this.healthForm.get('publicHospitalQuestion')?.valueChanges.subscribe({
-      next: (value:any) => {
-        this.disableBtn = false;
-      }
-    });
   }
 
+  updateDisabledBtn() {
+    this.disableBtn = !this.healthForm.valid;
+  }
 
+  getDistanceRanges() {
+    this.beneficiaryService.getDistanceRanges().subscribe({
+      next: (data: any) => {
+        this.distanceRanges = Array.isArray(data?.data)
+          ? ['How far is the nearest healthcare facility from your home?*', ...data?.data]
+          : [];
+      },
+      error: (err: any) => {
+        this.toast.setErrorMessage(
+          err?.error?.failureReason ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      },
+    });
+  }
   getHealthConditions(){
     this.beneficiaryService.getHealthCondtionsDropdown().subscribe({
       next: (item: any) => {
@@ -120,6 +147,11 @@ export class HealthComponent implements OnInit {
   ngOnInit(): void {
     this.getHealthForm();
     this.getHealthConditions();
+    this.getDistanceRanges();
+
+    this.healthForm.valueChanges.subscribe(() =>
+      this.updateDisabledBtn(),
+    );
   }
 
 

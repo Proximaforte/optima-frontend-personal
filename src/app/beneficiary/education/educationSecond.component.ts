@@ -1,270 +1,239 @@
 import { Component, OnInit } from '@angular/core';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { StateService } from 'src/app/state.service';
 
 @Component({
   selector: 'app-educationSecond',
   templateUrl: './educationSecond.component.html',
-  styleUrls: ['./education.component.scss']
+  styleUrls: ['./education.component.scss'],
 })
 export class EducationSecondComponent implements OnInit {
-
-  options: string[] | any = [
-    "Level of Education*","SSCE", "OND", "HND", "B.Sc", "B.Tech", "B.Eng", "MSc", "Phd","Others", "None of the above, others"
-  ]
-
-  fundingOptions: string[] |any = [
-    "Who is your sponsor?*" , "Parents", "Self-Funded", "Scholarship", "Free Government Support / Subsidized Education"
-  ]
-
- 
   showAdditionalFields: boolean = false;
-  options1 = ['Option 1', 'Option 2', 'Option 3']; // Replace with your actual options
-  fundingOptions1 = ['Funding Option 1', 'Funding Option 2', 'Funding Option 3']; // Replace with your actual funding options
 
-
-
-  checked:boolean |any = false;
-  showOthers:boolean = false;
-  educationForm!: FormGroup;
+  checked: boolean | any = false;
+  showOthers: boolean = false;
+  educationSecondForm!: FormGroup;
   disableBtn: boolean = true;
-  userDetails:any = {};
-  showSpinner:boolean = false;
-  showWelcomeMsg:boolean = false;
+  userDetails: any = {};
+  showSpinner: boolean = false;
+  dataLoading: boolean = false;
+  showWelcomeMsg: boolean = false;
   showOtherLevel: boolean = false;
+  educationFormData: any = {};
+  distanceRanges: string[] = ['How far is the nearest school from your home?*'];
+  conditionoptions: string[] = [
+    'What is the quality of the educational facilities?*',
+  ];
+  options2: string[] = [
+    'Can other members of your household read and write?*',
+    'Yes',
+    'No',
+  ];
+  options3: string[] = ['Do you have access to a nearby school?*', 'Yes', 'No'];
+  options4: string[] = [
+    'Are there any educational programs in your community?*',
+    'Yes',
+    'No',
+  ];
+  options5: string[] = [
+    'Do you receive any educational support or scholarships?*',
+    'Yes',
+    'No',
+  ];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private auth:AuthService,
-    private fb: FormBuilder
+    private auth: AuthService,
+    private fb: FormBuilder,
+    private stateService: StateService, // Inject StateService
+  ) {
+    const getUserData: any = localStorage.getItem('userDetails');
+    this.userDetails = JSON.parse(getUserData);
 
-  ){
-
-    
-
-
-
-
-    const getUserData:any = localStorage.getItem('userDetails');
-     this.userDetails = JSON.parse(getUserData);
-
-     const getMessage:any = localStorage.getItem('incomplete');
-     if(getMessage !== null){
-       this.showWelcomeMsg = true;
-       setTimeout(() => {
+    const getMessage: any = localStorage.getItem('incomplete');
+    if (getMessage !== null) {
+      this.showWelcomeMsg = true;
+      setTimeout(() => {
         this.showWelcomeMsg = false;
         localStorage.removeItem('incomplete');
-       }, 2500);
-     }else{
-        this.showWelcomeMsg = false;
-     }
+      }, 2500);
+    } else {
+      this.showWelcomeMsg = false;
+    }
   }
 
- 
   ngOnInit() {
-    this.educationForm = this.fb.group({
-      eduLevel: ['', Validators.required],
-      funding: ['']
+    // Retrieve the state from shared service
+    this.educationFormData = this.stateService.getState('educationForm');
+
+    this.dataLoading = true;
+
+    this.getDistanceRanges();
+    this.getQualityRating();
+    this.educationSecondFormGrp();
+  }
+
+  updateDisabledBtn() {
+    this.disableBtn = !this.educationSecondForm.valid;
+  }
+
+  educationSecondFormGrp() {
+    this.educationSecondForm = new FormGroup({
+      can_read_write: new FormControl('', [Validators.required]),
+      have_access_to_nearby_school: new FormControl('', [Validators.required]),
+      school_distance: new FormControl('', [Validators.required]),
+      education_quality: new FormControl(
+        '',
+        this.showOthers ? [Validators.required] : null,
+      ),
+      educational_program: new FormControl('', [Validators.required]),
+      educational_support: new FormControl('', [Validators.required]),
     });
 
-    this.educationForm.get('eduLevel')?.valueChanges.subscribe(value => {
-      if (value === 'Yes') {
-        this.educationForm.get('funding')?.setValidators(Validators.required);
-      } else {
-        this.educationForm.get('funding')?.clearValidators();
-      }
-      this.educationForm.get('funding')?.updateValueAndValidity();
+    this.educationSecondForm.valueChanges.subscribe(() =>
+      this.updateDisabledBtn(),
+    );
+  }
+
+  getDistanceRanges() {
+    this.beneficiaryService.getDistanceRanges().subscribe({
+      next: (data: any) => {
+        this.dataLoading = false;
+        this.distanceRanges = Array.isArray(data?.data)
+          ? ['How far is the nearest school from your home?*', ...data?.data]
+          : [];
+      },
+      error: (err: any) => {
+        this.dataLoading = false;
+        this.toast.setErrorMessage(
+          err?.error?.failureReason ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      },
     });
   }
 
-  isProceedDisabled() {
-    if (this.educationForm.get('eduLevel')?.value === 'Yes') {
-      return !this.educationForm.valid;
-    } else {
-      return this.educationForm.get('eduLevel')?.invalid;
-    }
+  getQualityRating() {
+    this.beneficiaryService.getAllQualityRatings().subscribe({
+      next: (data: any) => {
+        this.dataLoading = false;
+        this.conditionoptions = Array.isArray(data?.data)
+          ? [
+              'What is the quality of the educational facilities?*',
+              ...data?.data,
+            ]
+          : [];
+      },
+      error: (err: any) => {
+        this.dataLoading = false;
+        this.toast.setErrorMessage(
+          err?.error?.failureReason ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      },
+    });
   }
 
- 
-  proceed() {
-    if (this.educationForm.get('canReadWrite')?.value === 'yes') {
-      this.showAdditionalFields = true;
-    }
-  }
+  submit() {
+    this.showSpinner = true;
+    const getBeneficiaryPhoneNumber: any = localStorage.getItem(
+      'beneficiaryPhoneNumber',
+    );
+    const payload = {
+      phoneNumber: getBeneficiaryPhoneNumber,
+      level: this.educationFormData.level_of_edu,
+      otherLevel: this.educationFormData.otherLevel ?? '',
+      certification: this.educationFormData.certifications,
+      primarySchool: this.educationFormData.primarySchAttended,
+      primarySchoolAddress: this.educationFormData.primarySchLocation,
+      secondarySchool: this.educationFormData.secSchAttended,
+      secondarySchoolAddress: this.educationFormData.secSchLocation,
+      tertiarySchool: this.educationFormData.tertiaryInstitutionAttended,
+      tertiarySchoolAddress:
+        this.educationFormData.tertiaryInstitutionLocation,
+      inSchool: this.showOthers,
+      currentLevel: this.educationFormData.currentLevel,
+      funding: this.educationFormData.funding,
+      canReadWrite:
+        this.educationFormData.eduLevel?.toLowerCase() === 'yes',
+      canFamilyMemberReadWrite:
+        this.educationSecondForm.value.can_read_write?.toLowerCase() === 'yes',
+      accessToSchool:
+        this.educationSecondForm.value.have_access_to_nearby_school?.toLowerCase() ===
+        'yes',
+      distanceToSchool: this.educationSecondForm.value.school_distance,
+      educationQualityRating: this.educationSecondForm.value.education_quality,
+      hasEducationProgram:
+        this.educationSecondForm.value.educational_program?.toLowerCase() ===
+        'yes',
+      hasEducationSupport:
+        this.educationSecondForm.value.educational_support?.toLowerCase() ===
+        'yes',
+    };
+    this.beneficiaryService.educationDetails(payload).subscribe({
+      next: (res: any) => {
+        //console.log("res>>", res);
+        this.showSpinner = false;
+        this.toast.setSuccessMessage(
+          'Beneficiary Education data onboarded successfully!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        this.beneficiaryService.setRouteToDisplay('health');
+        this.router.navigate(['/home/beneficiary'], {
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'health',
+          },
+        });
+      },
+      error: (err: any) => {
+        console.error('err>>>', err);
+        this.showSpinner = false;
+        this.toast.setErrorMessage(
+          err?.error?.responseMessage ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
 
-  options2 = ['Can you read and write?*','Yes', 'No'];
-
-
-  toggleChecked(event:any){
-  //  console.log("event>>", event);
-    if(event === true){
-      this.showOthers = true;
-      this.disableBtn = true;
-      this.cheeckIfEductionDetailsAreFilled();
-    }else{
-      this.showOthers = false; 
-      this.disableBtn = true;
-    }
-  }
-
-
-  cheeckIfEductionDetailsAreFilled(){
-    if( this.showOthers === true && this.educationForm?.get('funding')?.value?.length === 0){
-      this.toast.setSuccessMessage("Educational Funding is required");
-      this.snackbar.openFromComponent(ToastsComponent, {
-        duration: 4000,
-        verticalPosition: 'bottom',
-      });
-    }else if(this.showOthers === true && this.educationForm?.get('currentLevel')?.value?.length === 0){
-      this.toast.setSuccessMessage("Educational Current Level is required");
-      this.snackbar.openFromComponent(ToastsComponent, {
-        duration: 4000,
-        verticalPosition: 'bottom',
-      });
-    }else{
-      this.disableBtn = false;
-    }
-
-  } 
-
-getDropDownTypes(){
-  this.beneficiaryService.getEducationDropdown().subscribe({
-    next: (item: any) => {
-      this.options = new Set(["Level of Education*","SSCE", "OND", "HND", "B.Sc", "B.Tech", "B.Eng", "MSc", "Phd","Others", "None of the above, others"].concat(item.data));
-    }
-  })
-
-
-  this.beneficiaryService.getEducationSponsorDropdown().subscribe({
-    next: (item: any) => {
-      this.fundingOptions = new Set(["Who is your sponsor?*" , "Parents", "Self-Funded", "Scholarship", "Free Government Support / Subsidized Education"].concat(item.data));
-    }
-  })
-}
-
-
-  // ngOnInit(): void {
-  //   this.getEduForm();
-  //   this.getDropDownTypes();
-  // }
-
-  getEduForm(){
-    this.educationForm = new FormGroup({
-      eduLevel: new FormControl('', [Validators.required]),
-      certifications: new FormControl('', [Validators.required]),
-      primarySchAttended: new FormControl('', [Validators.required]),
-      primarySchLocation: new FormControl('', [Validators.required]),
-      secSchAttended: new FormControl('', [Validators.required]),
-      secSchLocation: new FormControl('', [Validators.required]),
-      tertiaryInstitutionAttended: new FormControl('', [Validators.required]),
-      tertiaryInstitutionLocation: new FormControl('', [Validators.required]),
-      currentLevel: new FormControl('', [Validators.required]),
-      funding: new FormControl('', [Validators.required]),
-      otherLevel:  new FormControl('', [Validators.required])
-    })
-
-    this.educationForm.get('tertiaryInstitutionLocation')?.valueChanges.subscribe({
-      next: (value:any) => {
-        this.disableBtn = false;
-      }
-    })
-
-
-    this.educationForm.get('funding')?.valueChanges?.subscribe({
-      next: (value:any) => {
-        if(value?.length > 1){
-          this.disableBtn = false;
+        if (err?.status === 401) {
+          this.auth.agentLogout();
         }
-      }
+      },
     });
-
-    this.educationForm.get('eduLevel')?.valueChanges.subscribe({
-      next: (value: any) => {
-        if(value === "Others" || value === "None of the above, others"){
-          this.showOtherLevel = true;
-        }else{
-          this.showOtherLevel = false;
-        }
-      }
-    })
-  }
-
-
-  skip(){
-    this.beneficiaryService.setRouteToDisplay("health");
-    this.router.navigate(['/home/beneficiary'],{
-      relativeTo: this.route,
-      queryParams: {
-        progress: 'health'
-      }
-    })
-  }
-
-  submit(){
-    if (this.educationForm.value.eduLevel?.toLowerCase() === "no") {
-      this.beneficiaryService.setRouteToDisplay("health");
-    this.router.navigate(['/home/beneficiary'], {
-      relativeTo: this.route,
-      queryParams: { progress: 'health' }
-    });
-    } else {
-      this.showSpinner = true;
-      const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
-      const payload = {
-        phoneNumber:getBeneficiaryPhoneNumber ,
-        level: this.educationForm.value?.eduLevel,
-        otherLevel: this.educationForm.value?.eduLevel === 'Others' ? this.educationForm.value?.otherLevel: this.educationForm.value?.eduLevel === 'None of the above, others' ? this.educationForm.value?.otherLevel : null,
-        certification: this.educationForm.value?.certifications,
-        primarySchool: this.educationForm.value?.primarySchAttended,
-        primarySchoolAddress: this.educationForm.value?.primarySchLocation,
-        secondarySchool: this.educationForm.value?.secSchAttended,
-        secondarySchoolAddress: this.educationForm.value?.secSchLocation,
-        tertiarySchool: this.educationForm.value?.tertiaryInstitutionAttended,
-        tertiarySchoolAddress: this.educationForm.value?.tertiaryInstitutionLocation,
-        inSchool: this.showOthers,
-        currentLevel: this.educationForm.value?.currentLevel,
-        funding: this.educationForm.value?.funding
-      }
-      this.beneficiaryService.educationDetails(payload).subscribe({
-        next: (res:any) => {
-          //console.log("res>>", res);
-          this.showSpinner = false;
-          this.toast.setSuccessMessage('Beneficiary Education data onboarded successfully!');
-          this.snackbar.openFromComponent(ToastsComponent, {
-            duration: 4000,
-            verticalPosition: 'bottom',
-          });
-          this.beneficiaryService.setRouteToDisplay("health");
-          this.router.navigate(['/home/beneficiary'],{
-            relativeTo: this.route,
-            queryParams: {
-              progress: 'health'
-            }
-          })
-        },
-        error: (err:any) => {
-          console.error("err>>>", err);
-          this.showSpinner = false;
-          this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-          this.snackbar.openFromComponent(ToastsComponent, {
-            duration: 4000,
-            verticalPosition: 'bottom',
-          });
-  
-          if(err?.status === 401){
-            this.auth.agentLogout();
-            }
-        }
-      });
-      
-    }
   }
 }

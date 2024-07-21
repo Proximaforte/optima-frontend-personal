@@ -11,6 +11,7 @@ import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { StateService } from 'src/app/state.service';
 
 @Component({
   selector: 'app-education',
@@ -29,7 +30,7 @@ export class EducationComponent implements OnInit {
     'MSc',
     'Phd',
     'Others',
-    'None of the above, others',
+    'None of the above',
   ];
 
   fundingOptions: string[] | any = [
@@ -64,6 +65,7 @@ export class EducationComponent implements OnInit {
     private toast: ToastsService,
     private auth: AuthService,
     private fb: FormBuilder,
+    private stateService: StateService // Inject StateService
   ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
@@ -81,19 +83,8 @@ export class EducationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.educationForm = this.fb.group({
-      eduLevel: ['', Validators.required],
-      funding: [''],
-    });
-
-    this.educationForm.get('eduLevel')?.valueChanges.subscribe((value) => {
-      if (value === 'Yes') {
-        this.educationForm.get('funding')?.setValidators(Validators.required);
-      } else {
-        this.educationForm.get('funding')?.clearValidators();
-      }
-      this.educationForm.get('funding')?.updateValueAndValidity();
-    });
+    this.getEduForm();
+    this.getDropDownTypes();
   }
 
   isProceedDisabled() {
@@ -113,7 +104,6 @@ export class EducationComponent implements OnInit {
   options2 = ['Can you read and write?*', 'Yes', 'No'];
 
   toggleChecked(event: any) {
-    //  console.log("event>>", event);
     if (event === true) {
       this.showOthers = true;
       this.disableBtn = true;
@@ -163,7 +153,7 @@ export class EducationComponent implements OnInit {
             'MSc',
             'Phd',
             'Others',
-            'None of the above, others',
+            'None of the above',
           ].concat(item.data),
         );
       },
@@ -184,50 +174,66 @@ export class EducationComponent implements OnInit {
     });
   }
 
-  // ngOnInit(): void {
-  //   this.getEduForm();
-  //   this.getDropDownTypes();
-  // }
-
   getEduForm() {
     this.educationForm = new FormGroup({
       eduLevel: new FormControl('', [Validators.required]),
-      certifications: new FormControl('', [Validators.required]),
-      primarySchAttended: new FormControl('', [Validators.required]),
-      primarySchLocation: new FormControl('', [Validators.required]),
-      secSchAttended: new FormControl('', [Validators.required]),
-      secSchLocation: new FormControl('', [Validators.required]),
-      tertiaryInstitutionAttended: new FormControl('', [Validators.required]),
-      tertiaryInstitutionLocation: new FormControl('', [Validators.required]),
-      currentLevel: new FormControl('', [Validators.required]),
-      funding: new FormControl('', [Validators.required]),
-      otherLevel: new FormControl('', [Validators.required]),
+      certifications: new FormControl(''),
+      level_of_edu: new FormControl(''),
+      primarySchAttended: new FormControl(''),
+      primarySchLocation: new FormControl(''),
+      secSchAttended: new FormControl(''),
+      secSchLocation: new FormControl(''),
+      tertiaryInstitutionAttended: new FormControl(''),
+      tertiaryInstitutionLocation: new FormControl(''),
+      currentLevel: new FormControl(''),
+      funding: new FormControl(''),
+      otherLevel: new FormControl(''),
     });
 
-    this.educationForm
-      .get('tertiaryInstitutionLocation')
-      ?.valueChanges.subscribe({
-        next: (value: any) => {
-          this.disableBtn = false;
-        },
-      });
-
-    this.educationForm.get('funding')?.valueChanges?.subscribe({
+    this.educationForm.get('level_of_edu')?.valueChanges.subscribe({
       next: (value: any) => {
-        if (value?.length > 1) {
-          this.disableBtn = false;
+        if (value === 'Others' || value === 'None of the above') {
+          this.showOtherLevel = true;
+          this.educationForm.get('otherLevel')?.setValidators(Validators.required);
+        } else {
+          this.showOtherLevel = false;
+          this.educationForm.get('otherLevel')?.clearValidators();
         }
+        this.educationForm.get('otherLevel')?.updateValueAndValidity();
       },
     });
 
     this.educationForm.get('eduLevel')?.valueChanges.subscribe({
       next: (value: any) => {
-        if (value === 'Others' || value === 'None of the above, others') {
-          this.showOtherLevel = true;
+        if (value === 'Yes') {
+          this.educationForm.get('certifications')?.setValidators(Validators.required);
+          this.educationForm.get('primarySchAttended')?.setValidators(Validators.required);
+          this.educationForm.get('primarySchLocation')?.setValidators(Validators.required);
+          this.educationForm.get('level_of_edu')?.setValidators(Validators.required);
+          this.educationForm.get('secSchAttended')?.setValidators(Validators.required);
+          this.educationForm.get('secSchLocation')?.setValidators(Validators.required);
+          this.educationForm.get('tertiaryInstitutionAttended')?.setValidators(Validators.required);
+          this.educationForm.get('tertiaryInstitutionLocation')?.setValidators(Validators.required);
+          this.educationForm.get('currentLevel')?.setValidators(this.educationForm.value.currently_in_school && Validators.required);
+          this.educationForm.get('funding')?.setValidators(this.educationForm.value.currently_in_school && Validators.required);
         } else {
-          this.showOtherLevel = false;
+          this.educationForm.get('certifications')?.clearValidators();
+          this.educationForm.get('primarySchAttended')?.clearValidators();
+          this.educationForm.get('primarySchLocation')?.clearValidators();
+          this.educationForm.get('level_of_edu')?.clearValidators();
+          this.educationForm.get('secSchAttended')?.clearValidators();
+          this.educationForm.get('secSchLocation')?.clearValidators();
+          this.educationForm.get('tertiaryInstitutionAttended')?.clearValidators();
+          this.educationForm.get('tertiaryInstitutionLocation')?.clearValidators();
+          this.educationForm.get('currentLevel')?.clearValidators();
+          this.educationForm.get('funding')?.clearValidators();
         }
+        this.educationForm.updateValueAndValidity();
       },
+    });
+
+    this.educationForm.valueChanges.subscribe(() => {
+      this.disableBtn = this.isProceedDisabled() as boolean;
     });
   }
 
@@ -242,76 +248,11 @@ export class EducationComponent implements OnInit {
   }
 
   submit() {
-    if (this.educationForm.value.eduLevel?.toLowerCase() === 'no') {
-      this.beneficiaryService.setRouteToDisplay('education-second');
-      this.router.navigate(['/home/beneficiary'], {
-        relativeTo: this.route,
-        queryParams: { progress: 'education-second' },
-      });
-    } else {
-      this.showSpinner = true;
-      const getBeneficiaryPhoneNumber: any = localStorage.getItem(
-        'beneficiaryPhoneNumber',
-      );
-      const payload = {
-        phoneNumber: getBeneficiaryPhoneNumber,
-        level: this.educationForm.value?.eduLevel,
-        otherLevel:
-          this.educationForm.value?.eduLevel === 'Others'
-            ? this.educationForm.value?.otherLevel
-            : this.educationForm.value?.eduLevel === 'None of the above, others'
-              ? this.educationForm.value?.otherLevel
-              : null,
-        certification: this.educationForm.value?.certifications,
-        primarySchool: this.educationForm.value?.primarySchAttended,
-        primarySchoolAddress: this.educationForm.value?.primarySchLocation,
-        secondarySchool: this.educationForm.value?.secSchAttended,
-        secondarySchoolAddress: this.educationForm.value?.secSchLocation,
-        tertiarySchool: this.educationForm.value?.tertiaryInstitutionAttended,
-        tertiarySchoolAddress:
-          this.educationForm.value?.tertiaryInstitutionLocation,
-        inSchool: this.showOthers,
-        currentLevel: this.educationForm.value?.currentLevel,
-        funding: this.educationForm.value?.funding,
-      };
-      this.beneficiaryService.educationDetails(payload).subscribe({
-        next: (res: any) => {
-          //console.log("res>>", res);
-          this.showSpinner = false;
-          this.toast.setSuccessMessage(
-            'Beneficiary Education data onboarded successfully!',
-          );
-          this.snackbar.openFromComponent(ToastsComponent, {
-            duration: 4000,
-            verticalPosition: 'bottom',
-          });
-          this.beneficiaryService.setRouteToDisplay('health');
-          this.router.navigate(['/home/beneficiary'], {
-            relativeTo: this.route,
-            queryParams: {
-              progress: 'health',
-            },
-          });
-        },
-        error: (err: any) => {
-          console.error('err>>>', err);
-          this.showSpinner = false;
-          this.toast.setErrorMessage(
-            err?.error?.responseMessage ||
-              err?.error?.responseMessage ||
-              err?.statusText ||
-              'Oops an error occured!',
-          );
-          this.snackbar.openFromComponent(ToastsComponent, {
-            duration: 4000,
-            verticalPosition: 'bottom',
-          });
-
-          if (err?.status === 401) {
-            this.auth.agentLogout();
-          }
-        },
-      });
-    }
+    this.beneficiaryService.setRouteToDisplay('education-second');
+    this.stateService.setState('educationForm', this.educationForm.value);
+    this.router.navigate(['/home/beneficiary'], {
+      relativeTo: this.route,
+      queryParams: { progress: 'education-second' },
+    });
   }
 }

@@ -10,27 +10,36 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-disability-status',
   templateUrl: './disability-status.component.html',
-  styleUrls: ['./disability-status.component.scss']
+  styleUrls: ['./disability-status.component.scss'],
 })
-export class DisabilityStatusComponent implements OnInit{
-
-  hovered: string = "/assets/images/btn_hover.svg";
-  disabled: string = "/assets/images/disabled_btn.svg";
-  yes: string = "/assets/images/yes_btn.svg";
+export class DisabilityStatusComponent implements OnInit {
+  hovered: string = '/assets/images/btn_hover.svg';
+  disabled: string = '/assets/images/disabled_btn.svg';
+  yes: string = '/assets/images/yes_btn.svg';
   showActive: boolean = false;
   disabilityForm!: FormGroup;
   showInputBox: boolean = false;
 
   options: string[] | any = [
-    "Beneficiary Disability type*","Vision impairment", "Deaf or hard of hearing", 
-    "Dumb or speaking challenge", "Mental health conditions", "Intellectual disability", 
-    "Acquired brain injury", "Physical disability", "Autism spectrum disorder",
-     "Cerebral palsy","Stroke", "Spina bifida",
-    "Arthritis", "Spinal cord injury", "Others"
-  ]
+    'Beneficiary Disability type*',
+    'Vision impairment',
+    'Deaf or hard of hearing',
+    'Dumb or speaking challenge',
+    'Mental health conditions',
+    'Intellectual disability',
+    'Acquired brain injury',
+    'Physical disability',
+    'Autism spectrum disorder',
+    'Cerebral palsy',
+    'Stroke',
+    'Spina bifida',
+    'Arthritis',
+    'Spinal cord injury',
+    'Others',
+  ];
   previousHealthData: any = {};
-  userDetails:any = {};
-  showSpinner:boolean = false;
+  userDetails: any = {};
+  showSpinner: boolean = false;
   disableBtn: boolean = true;
 
   constructor(
@@ -39,38 +48,40 @@ export class DisabilityStatusComponent implements OnInit{
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private auth:AuthService
-  ){
+    private auth: AuthService,
+  ) {
     const getParams = this.route.queryParams.subscribe({
       next: (params: any) => {
-       // console.log("query params>>>", JSON.parse(params?.data));
+        // console.log("query params>>>", JSON.parse(params?.data));
         this.previousHealthData = JSON.parse(params?.data);
-      }
+      },
     });
 
-    const getUserData:any = localStorage.getItem('userDetails');
-     this.userDetails = JSON.parse(getUserData);
+    const getUserData: any = localStorage.getItem('userDetails');
+    this.userDetails = JSON.parse(getUserData);
   }
 
-  showYes(){
+  showYes() {
     this.showActive = true;
   }
 
-  showNull(){
-   if(this.showActive === true){
-    this.showActive = false;
-   }else{
-    this.submit();
-   }
+  showNull() {
+    if (this.showActive === true) {
+      this.showActive = false;
+    } else {
+      this.submit();
+    }
   }
 
-  getDropdownEnums(){
+  getDropdownEnums() {
     this.beneficiaryService.getDisabilityTypesDropdown().subscribe({
       next: (item: any) => {
-        this.options = new Set(["Beneficiary Disability type*"].concat(item.data));
-       // console.log('options sets>>', this.options);
-      }
-    })
+        this.options = new Set(
+          ['Beneficiary Disability type*'].concat(item.data),
+        );
+        // console.log('options sets>>', this.options);
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -78,102 +89,126 @@ export class DisabilityStatusComponent implements OnInit{
     this.getDropdownEnums();
   }
 
-  getDisabilityForm(){
+  getDisabilityForm() {
     this.disabilityForm = new FormGroup({
       disabilityType: new FormControl('', [Validators.required]),
-      disability: new FormControl(this.showInputBox === true ? '' : null, [Validators.required])
-    })
+      disability: new FormControl(this.showInputBox === true ? '' : null, [
+        Validators.required,
+      ]),
+    });
 
     this.disabilityForm?.get('disabilityType')?.valueChanges.subscribe({
       next: (value: string) => {
-      //  console.log("innerValue>>", value);
-       this.disableBtn = false;
-        if(value === 'Others'){
+        //  console.log("innerValue>>", value);
+        this.disableBtn = false;
+        if (value === 'Others') {
           this.showInputBox = true;
           this.disableBtn = true;
-        }else{
+        } else {
           this.showInputBox = false;
-        //  this.disableBtn = true;
+          //  this.disableBtn = true;
         }
 
         this.disabilityForm.get('disability')?.valueChanges?.subscribe({
           next: (value: any) => {
-            if(value?.length > 0){
+            if (value?.length > 0) {
               this.disableBtn = false;
-            }else{
+            } else {
               this.disableBtn = true;
             }
-          }
-        })
-
-     
-
-
-      }
-    })
+          },
+        });
+      },
+    });
   }
-  
 
-  submit(){
+  submit() {
     this.showSpinner = true;
     const healthPayload = {
       ...this.previousHealthData,
       idDisabled: this.showActive,
       disableType: this.disabilityForm.value?.disabilityType,
-      specifyDisabled: this.disabilityForm.value?.disability 
-    }
+      specifyDisabled: this.disabilityForm.value?.disability,
+    };
 
-    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
+    const getBeneficiaryPhoneNumber: any = localStorage.getItem(
+      'beneficiaryPhoneNumber',
+    );
 
     const newHealthPayload: any = {
       phoneNumber: getBeneficiaryPhoneNumber,
       healthCondition: healthPayload?.healthCondition,
       healthAilment: healthPayload?.healthQuestion,
       specifyAilment: healthPayload?.specifyAilment,
-      hasHMO: healthPayload?.HMOQuestion === 'no' ? false : healthPayload?.HMOQuestion === 'yes' ? true : null,
-      hmoName:healthPayload?.specifyHMO,
+      hasHMO:
+        healthPayload?.HMOQuestion === 'no'
+          ? false
+          : healthPayload?.HMOQuestion === 'yes'
+            ? true
+            : null,
+      hmoName: healthPayload?.specifyHMO,
       hospitalEnrolled: healthPayload?.publicHospitalQuestion,
-      receivingTreatment: healthPayload?.receivingTreatmentQuestion === 'no' ? false : healthPayload?.receivingTreatmentQuestion === 'yes' ? true : null,
+      receivingTreatment:
+        healthPayload?.receivingTreatmentQuestion === 'no'
+          ? false
+          : healthPayload?.receivingTreatmentQuestion === 'yes'
+            ? true
+            : null,
       disabled: healthPayload?.idDisabled,
       disableType: healthPayload?.disableType,
-      specifyDisabled: this.disabilityForm.value?.disabilityType === 'Others' ? healthPayload?.specifyDisabled : null
-    }
+      specifyDisabled:
+        this.disabilityForm.value?.disabilityType === 'Others'
+          ? healthPayload?.specifyDisabled
+          : null,
+      householdHealthIssue: healthPayload.household_health_issues,
+      hasAccessToHealthCare: healthPayload.access_to_healthcare?.toLowerCase() === "yes",
+      distanceToHealthCare: healthPayload.distance_to_healthcare,
+    };
 
- //  console.log('health payload>>>', newHealthPayload);
+    //  console.log('health payload>>>', newHealthPayload);
     this.beneficiaryService.healthDetails(newHealthPayload).subscribe({
       next: (res: any) => {
         //console.log("res>>", res);
         this.showSpinner = false;
-        this.toast.setSuccessMessage('Beneficiary Health data is onboarded successfully!');
+        this.toast.setSuccessMessage(
+          'Beneficiary Health data is onboarded successfully!',
+        );
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        this.beneficiaryService.setRouteToDisplay("financial");
-        this.router.navigate(['/home/beneficiary'], { 
+        this.beneficiaryService.setRouteToDisplay('financial');
+        this.router.navigate(['/home/beneficiary'], {
           relativeTo: this.route,
           queryParams: {
-            progress: "financial"
-          }
+            progress: 'financial',
+          },
         });
       },
       error: (err: any) => {
-        console.error("err123>>>", err);
+        console.error('err123>>>', err);
         this.showSpinner = false;
-        this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.failureReason || err?.statusText || "Oops an error occured!");
-        this.toast.setSuccessMessage( err?.error?.responseMessage || err?.error?.failureReason || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(
+          err?.error?.responseMessage ||
+            err?.error?.failureReason ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        // this.toast.setSuccessMessage(
+        //   err?.error?.responseMessage ||
+        //     err?.error?.failureReason ||
+        //     err?.statusText ||
+        //     'Oops an error occured!',
+        // );
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
         });
 
-        if(err?.status === 401){
+        if (err?.status === 401) {
           this.auth.agentLogout();
-          }
-      }
-    })
-  
+        }
+      },
+    });
   }
-
-
 }

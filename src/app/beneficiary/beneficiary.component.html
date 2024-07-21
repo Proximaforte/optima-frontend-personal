@@ -1,63 +1,85 @@
 <div class="grid grid-cols-5 gap-4">
-    <!-- <div class="col-span-1 h-full hidden lg:block w-[300px]">
-        Stepper visible only on desktop view 
-        <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
-            <mat-step *ngFor="let item of beneficiaryItems; let i = index">
-                <ng-template matStepperIcon="edit">
-                    <mat-icon>done</mat-icon>
-                </ng-template>
-                <ng-template matStepLabel>
-                    <span id="step-label" class="text-xs text-black" (click)="itemClicked(i, item)" [ngClass]="{'lemonish-text': selectedItemIndex === i, 'step-label': selectedItemIndex !== i}">{{item | uppercase}}</span>
-                </ng-template>
-            </mat-step>
-        </mat-stepper>
-    </div> -->
+  <div class="col-span-1 h-full hidden w-[300px]">
+    Stepper visible only on desktop view
+    <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+      <mat-step *ngFor="let item of beneficiaryItems; let i = index">
+        <ng-template matStepperIcon="edit">
+          <mat-icon>done</mat-icon>
+        </ng-template>
+        <ng-template matStepLabel>
+          <span
+            id="step-label"
+            class="text-xs text-black"
+            (click)="itemClicked(i, item)"
+            [ngClass]="{
+              'lemonish-text': selectedItemIndex === i,
+              'step-label': selectedItemIndex !== i
+            }"
+            >{{ item | uppercase }}</span
+          >
+        </ng-template>
+      </mat-step>
+    </mat-stepper>
+  </div>
 
-    <div class="col-span-5 lg:col-span-4 w-full h-full justify-center flex flex-row items-center">
-        <div *ngIf="selectedItemName" class="w-[80%] mt-10 flex flex-col mx-auto">
-            <div id="first-column-items" *ngIf="selectedItemName === 'verify beneficiary nin'">
-                <app-verify-nin></app-verify-nin>
-                <!-- <app-education></app-education> -->
-            </div>
-            <div *ngIf="selectedItemName === 'personal details'" id="personal-details">
-                <app-personal-details></app-personal-details>
-            </div>
-            <div *ngIf="selectedItemName === 'verification procedure'" id="verification-procedure">
-                <app-verification-code></app-verification-code>
-            </div>
-            <div *ngIf="selectedItemName === 'residential details'">
-                <app-residential-details></app-residential-details>
-            </div>
-            <div *ngIf="selectedItemName === 'marital info'">
-                <app-marital-info></app-marital-info>
-            </div>
-            <div *ngIf="selectedItemName === 'education'">
-                <app-education></app-education>
-            </div>
-            <div *ngIf="selectedItemName === 'education second'">
-                <app-educationSecond></app-educationSecond>
-            </div>
-            <div *ngIf="selectedItemName === 'health'">
-                <app-health></app-health>
-            </div>
-            <div *ngIf="selectedItemName === 'financial'">
-                <app-financial></app-financial>
-            </div>
-            <div *ngIf="selectedItemName === 'next of kin'">
-                <app-next-of-kin></app-next-of-kin>
-            </div>
-            <div *ngIf="selectedItemName === 'employment'">
-                <app-employment></app-employment>
-            </div>
-            <div *ngIf="selectedItemName === 'occupation'">
-                <app-occupation></app-occupation>
-            </div>
-            <div *ngIf="selectedItemName === 'other details'">
-                <app-other-details></app-other-details>
-            </div>
-            <div *ngIf="selectedItemName === 'biometrics'">
-                <app-setup-biometrics></app-setup-biometrics>
-            </div>
-        </div>
+  <div
+    class="col-span-5 lg:col-span-4 w-full h-full justify-center flex items-center"
+  >
+    <div *ngIf="selectedItemName" class="w-[80%] mt-10 flex flex-col mx-auto">
+      <div
+        id="first-column-items"
+        class="mx-auto"
+        *ngIf="selectedItemName === 'verify beneficiary nin'"
+      >
+        <app-verify-nin></app-verify-nin>
+      </div>
+      <div
+        *ngIf="selectedItemName === 'personal details'"
+        class="mx-auto"
+        id="personal-details"
+      >
+        <app-personal-details></app-personal-details>
+      </div>
+      <div
+        *ngIf="selectedItemName === 'verification procedure'"
+        class="mx-auto"
+        id="verification-procedure"
+      >
+        <app-verification-code></app-verification-code>
+      </div>
+      <div *ngIf="selectedItemName === 'residential details'" class="mx-auto">
+        <app-residential-details></app-residential-details>
+      </div>
+      <div *ngIf="selectedItemName === 'marital info'" class="mx-auto">
+        <app-marital-info></app-marital-info>
+      </div>
+      <div *ngIf="selectedItemName === 'education'" class="mx-auto">
+        <app-education></app-education>
+      </div>
+      <div *ngIf="selectedItemName === 'education-second'" class="mx-auto">
+        <app-educationSecond></app-educationSecond>
+      </div>
+      <div *ngIf="selectedItemName === 'health'" class="mx-auto">
+        <app-health></app-health>
+      </div>
+      <div *ngIf="selectedItemName === 'financial'" class="mx-auto">
+        <app-financial></app-financial>
+      </div>
+      <div *ngIf="selectedItemName === 'next of kin'" class="mx-auto">
+        <app-next-of-kin></app-next-of-kin>
+      </div>
+      <div *ngIf="selectedItemName === 'employment'" class="mx-auto">
+        <app-employment></app-employment>
+      </div>
+      <div *ngIf="selectedItemName === 'occupation'" class="mx-auto">
+        <app-occupation></app-occupation>
+      </div>
+      <div *ngIf="selectedItemName === 'other details'" class="mx-auto">
+        <app-other-details></app-other-details>
+      </div>
+      <div *ngIf="selectedItemName === 'biometrics'" class="mx-auto">
+        <app-setup-biometrics></app-setup-biometrics>
+      </div>
     </div>
+  </div>
 </div>
