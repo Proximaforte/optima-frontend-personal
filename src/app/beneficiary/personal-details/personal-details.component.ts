@@ -76,22 +76,21 @@ export class PersonalDetailsComponent implements OnInit {
 
   getPersonalForm() {
     this.personalDetailsForm = new FormGroup({
-      firstName: new FormControl(this.ninDetails.firstName, [Validators.required]),
-      lastName: new FormControl(this.ninDetails.lastName, [Validators.required]),
-      middleName: new FormControl(this.ninDetails.middleName, [Validators.required]),
-      phoneNumber: new FormControl(this.ninDetails.phone, [Validators.required]),
-      bvn: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      gender: new FormControl(this.ninDetails?.gender, [Validators.required]),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,
-      dateOfBirth: new FormControl(this.formattedDate, [Validators.required]),
+      firstName: new FormControl(this.ninDetails.firstName as string, null),
+      lastName: new FormControl(this.ninDetails.lastName as string, null),
+      middleName: new FormControl(this.ninDetails.middleName as string, null),
+      phoneNumber: new FormControl(this.ninDetails.phone as string, [Validators.required]),
+      bvn: new FormControl('', null),
+      email: new FormControl('', null),
+      gender: new FormControl(this.ninDetails?.gender as string, null),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,
+      dateOfBirth: new FormControl(this.formattedDate as string, null),
       placeOfBirth: new FormControl('', [Validators.required]),
       religion: new FormControl('', [Validators.required]),
-      others: new FormControl(''),
+      others: new FormControl('', null),
     })
 
     this.personalDetailsForm.get('religion')?.valueChanges.subscribe({
       next: (value: any) => {
-        this.disableBtn = false;
         if (value === 'OTHERS') {
           this.showOthers = true;
         } else {
@@ -99,6 +98,14 @@ export class PersonalDetailsComponent implements OnInit {
         }
       }
     })
+    // Listen for changes on the entire form
+    this.personalDetailsForm.valueChanges.subscribe(() => {
+      this.updateDisabledBtn();
+    });
+  }
+
+  updateDisabledBtn() {
+    this.disableBtn = !this.personalDetailsForm.valid;
   }
 
   getDropDowns(){

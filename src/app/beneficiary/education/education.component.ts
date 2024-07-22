@@ -65,7 +65,7 @@ export class EducationComponent implements OnInit {
     private toast: ToastsService,
     private auth: AuthService,
     private fb: FormBuilder,
-    private stateService: StateService // Inject StateService
+    private stateService: StateService, // Inject StateService
   ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
@@ -90,6 +90,10 @@ export class EducationComponent implements OnInit {
   isProceedDisabled() {
     if (this.educationForm.get('eduLevel')?.value === 'Yes') {
       return !this.educationForm.valid;
+    } else if (
+      this.educationForm.get('eduLevel')?.value === 'Can you read and write?*'
+    ) {
+      return (this.disableBtn = true);
     } else {
       return this.educationForm.get('eduLevel')?.invalid;
     }
@@ -194,7 +198,9 @@ export class EducationComponent implements OnInit {
       next: (value: any) => {
         if (value === 'Others' || value === 'None of the above') {
           this.showOtherLevel = true;
-          this.educationForm.get('otherLevel')?.setValidators(Validators.required);
+          this.educationForm
+            .get('otherLevel')
+            ?.setValidators(Validators.required);
         } else {
           this.showOtherLevel = false;
           this.educationForm.get('otherLevel')?.clearValidators();
@@ -206,25 +212,55 @@ export class EducationComponent implements OnInit {
     this.educationForm.get('eduLevel')?.valueChanges.subscribe({
       next: (value: any) => {
         if (value === 'Yes') {
-          this.educationForm.get('certifications')?.setValidators(Validators.required);
-          this.educationForm.get('primarySchAttended')?.setValidators(Validators.required);
-          this.educationForm.get('primarySchLocation')?.setValidators(Validators.required);
-          this.educationForm.get('level_of_edu')?.setValidators(Validators.required);
-          this.educationForm.get('secSchAttended')?.setValidators(Validators.required);
-          this.educationForm.get('secSchLocation')?.setValidators(Validators.required);
-          this.educationForm.get('tertiaryInstitutionAttended')?.setValidators(Validators.required);
-          this.educationForm.get('tertiaryInstitutionLocation')?.setValidators(Validators.required);
-          this.educationForm.get('currentLevel')?.setValidators(this.educationForm.value.currently_in_school && Validators.required);
-          this.educationForm.get('funding')?.setValidators(this.educationForm.value.currently_in_school && Validators.required);
-        } else {
+          this.educationForm
+            .get('certifications')
+            ?.setValidators(Validators.required);
+          this.educationForm
+            .get('primarySchAttended')
+            ?.setValidators(Validators.required);
+          this.educationForm
+            .get('primarySchLocation')
+            ?.setValidators(Validators.required);
+          this.educationForm
+            .get('level_of_edu')
+            ?.setValidators(Validators.required);
+          this.educationForm
+            .get('secSchAttended')
+            ?.setValidators(Validators.required);
+          this.educationForm
+            .get('secSchLocation')
+            ?.setValidators(Validators.required);
+          this.educationForm
+            .get('tertiaryInstitutionAttended')
+            ?.setValidators(Validators.required);
+          this.educationForm
+            .get('tertiaryInstitutionLocation')
+            ?.setValidators(Validators.required);
+          this.educationForm
+            .get('currentLevel')
+            ?.setValidators(
+              this.educationForm.value.currently_in_school &&
+                Validators.required,
+            );
+          this.educationForm
+            .get('funding')
+            ?.setValidators(
+              this.educationForm.value.currently_in_school &&
+                Validators.required,
+            );
+        } else if (value === 'No') {
           this.educationForm.get('certifications')?.clearValidators();
           this.educationForm.get('primarySchAttended')?.clearValidators();
           this.educationForm.get('primarySchLocation')?.clearValidators();
           this.educationForm.get('level_of_edu')?.clearValidators();
           this.educationForm.get('secSchAttended')?.clearValidators();
           this.educationForm.get('secSchLocation')?.clearValidators();
-          this.educationForm.get('tertiaryInstitutionAttended')?.clearValidators();
-          this.educationForm.get('tertiaryInstitutionLocation')?.clearValidators();
+          this.educationForm
+            .get('tertiaryInstitutionAttended')
+            ?.clearValidators();
+          this.educationForm
+            .get('tertiaryInstitutionLocation')
+            ?.clearValidators();
           this.educationForm.get('currentLevel')?.clearValidators();
           this.educationForm.get('funding')?.clearValidators();
         }

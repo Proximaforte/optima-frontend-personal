@@ -100,8 +100,8 @@ export class FinancialComponent implements OnInit{
       houseHoldIncome: new FormControl('', [Validators.required]),
       averageAmtSpent: new FormControl('', [Validators.required]),
       financialAid: new FormControl('', [Validators.required]),
-      ifYes: new FormControl('', [Validators.required]),
-      otherAidType: new FormControl('', [Validators.required]),
+      ifYes: new FormControl(''),
+      otherAidType: new FormControl(''),
       have_bank_account: new FormControl('', [Validators.required]),
       access_to_credit: new FormControl('', [Validators.required]),
       mobile_money: new FormControl('', [Validators.required])
@@ -110,10 +110,13 @@ export class FinancialComponent implements OnInit{
     this.financialInfoForm.get('financialAid')?.valueChanges.subscribe({
       next: (value: string) => {
       //  console.log("item>>>", value);
-        if(value === "yes"){
+        if(value.toLowerCase() === "yes"){
           this.showOthers = true;
           this.disableBtn = true;
           this.showOtherAide = false; 
+          this.financialInfoForm
+            .get('ifYes')
+            ?.setValidators(Validators.required);
         }else{
           this.showOthers = false;
           this.disableBtn = false;
@@ -127,6 +130,9 @@ export class FinancialComponent implements OnInit{
         if(value === 'None of the above, others'){
           this.showOtherAide = true;
           this.disableBtn = true;
+          this.financialInfoForm
+            .get('otherAidType')
+            ?.setValidators(Validators.required);
         }else{
           this.showOtherAide = false; 
           this.disableBtn = false;

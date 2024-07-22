@@ -100,7 +100,11 @@ export class MaritalInfoComponent implements OnInit {
           this.showOthers = false;
           this.disableBtn = false;
         }
-
+        
+        if (value === "Marital Status") {
+          this.disableBtn = true;
+          
+        }
 
         if(value === "MARRIED" && this.maritalInfoForm?.get('numberOfSpouse')?.value?.length === 0){
           this.disableBtn = true;
