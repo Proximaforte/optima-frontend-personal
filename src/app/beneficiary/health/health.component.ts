@@ -22,7 +22,7 @@ export class HealthComponent implements OnInit {
   ailments: string[] | any = ["Are you currently suffering from any of the following?*","High Blood Pressure", "Low Blood Pressure", "Diabetes", "Asthma", "Eye Issues", "Ear Issues","Heart Issues", "Kidney Issues","Others", "None of the above, Others"
   ]
 
-  hmo: string[] | any = ["Do you have an HMO?","yes", "no"]
+  hmo: string[] | any = ["Do you have an health insurance?","yes", "no"]
 
   optionz: string[] | any = ["Are you currently receiving treatment?*","yes", "no"]
 
@@ -93,8 +93,11 @@ export class HealthComponent implements OnInit {
 
     this.healthForm.get('HMOQuestion')?.valueChanges.subscribe({
       next: (value:any) => {
-        if(value === 'yes'){
+        if(value.toLowerCase() === 'yes'){
           this.showSpecifyHMO = true;
+          this.healthForm
+            .get('specifyHMO')
+            ?.setValidators(Validators.required);
         }else{
           this.showSpecifyHMO = false;
         }
