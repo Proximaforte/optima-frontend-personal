@@ -168,19 +168,19 @@ export class EducationSecondComponent implements OnInit {
     );
     const payload = {
       phoneNumber: getBeneficiaryPhoneNumber,
-      level: this.educationFormData.level_of_edu,
-      otherLevel: this.educationFormData.otherLevel ?? '',
-      certification: this.educationFormData.certifications,
-      primarySchool: this.educationFormData.primarySchAttended,
-      primarySchoolAddress: this.educationFormData.primarySchLocation,
-      secondarySchool: this.educationFormData.secSchAttended,
-      secondarySchoolAddress: this.educationFormData.secSchLocation,
-      tertiarySchool: this.educationFormData.tertiaryInstitutionAttended,
+      level: this.educationFormData.level_of_edu ? this.educationFormData.level_of_edu : null,
+      otherLevel: this.educationFormData.otherLevel ? this.educationFormData.otherLevel : null,
+      certification: this.educationFormData.certifications ? this.educationFormData.certifications : null,
+      primarySchool: this.educationFormData.primarySchAttended ? this.educationFormData.primarySchAttended : null,
+      primarySchoolAddress: this.educationFormData.primarySchLocation ? this.educationFormData.primarySchLocation : null,
+      secondarySchool: this.educationFormData.secSchAttended ? this.educationFormData.secSchAttended : null,
+      secondarySchoolAddress: this.educationFormData.secSchLocation ? this.educationFormData.secSchLocation : null,
+      tertiarySchool: this.educationFormData.tertiaryInstitutionAttended ? this.educationFormData.tertiaryInstitutionAttended : null,
       tertiarySchoolAddress:
-        this.educationFormData.tertiaryInstitutionLocation,
+        this.educationFormData.tertiaryInstitutionLocation ? this.educationFormData.tertiaryInstitutionLocation : null,
       inSchool: this.showOthers,
-      currentLevel: this.educationFormData.currentLevel,
-      funding: this.educationFormData.funding,
+      currentLevel: this.educationFormData.currentLevel ? this.educationFormData.currentLevel : null,
+      funding: this.educationFormData.funding ? this.educationFormData.funding : null,
       canReadWrite:
         this.educationFormData.eduLevel?.toLowerCase() === 'yes',
       canFamilyMemberReadWrite:
@@ -188,8 +188,8 @@ export class EducationSecondComponent implements OnInit {
       accessToSchool:
         this.educationSecondForm.value.have_access_to_nearby_school?.toLowerCase() ===
         'yes',
-      distanceToSchool: this.educationSecondForm.value.school_distance,
-      educationQualityRating: this.educationSecondForm.value.education_quality,
+      distanceToSchool: this.educationSecondForm.value.school_distance ? this.educationSecondForm.value.school_distance : null,
+      educationQualityRating: this.educationSecondForm.value.education_quality ?  this.educationSecondForm.value.education_quality : null,
       hasEducationProgram:
         this.educationSecondForm.value.educational_program?.toLowerCase() ===
         'yes',
