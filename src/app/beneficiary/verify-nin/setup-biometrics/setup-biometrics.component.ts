@@ -132,22 +132,7 @@ export class SetupBiometricsComponent {
     localStorage.removeItem('face_capture');
   }
   ngOnInit() {
-    window.onload = function () {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth',
-      });
-    };
-    // Scroll to top on component initialization
-    window.scrollTo(0, 0);
-
-    // Scroll to top on navigation end
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        window.scrollTo(0, 0);
-      }
-    });
+   
   }
 
   openFingerPrintModal(param: string, route: string) {
@@ -162,6 +147,7 @@ export class SetupBiometricsComponent {
       },
     });
     dialogRef.afterClosed().subscribe((selectedReason: string) => {
+      console.log(selectedReason)
       if (selectedReason) {
         this.selectedReason = selectedReason;
         this.disabledBtn = false;
