@@ -157,11 +157,12 @@ export class MaritalInfoComponent implements OnInit {
   listen(event: any, position: number): any {
     if (event?.target?.value === 'yes') {
       this.showNameOfChildSch = true;
-    } else if (event?.target?.value === 'not yet') {
-      this.showNameOfChildSch = false;
-    } else {
-      this.showNameOfChildSch = null;
-    }
+    } 
+    // else if (event?.target?.value === 'not yet') {
+    //   this.showNameOfChildSch = false;
+    // } else {
+    //   this.showNameOfChildSch = null;
+    // }
   }
 
   pushNameOfChildren(event: any, index: any) {
@@ -291,7 +292,7 @@ export class MaritalInfoComponent implements OnInit {
         console.error("err>>", err);
         this.showSpinner = false;
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

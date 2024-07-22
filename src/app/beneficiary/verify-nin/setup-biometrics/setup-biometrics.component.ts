@@ -1,5 +1,5 @@
-import { Component,HostListener  } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, HostListener } from '@angular/core';
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { FingerPrintConsent } from './fingerprint-consent.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
@@ -33,9 +33,9 @@ export class SetupBiometricsComponent {
   showSpinner = false;
   selectedReason: string | null = null;
   beneficiary!: BeneficiaryProfile | any;
-  fingerPrintBiometricStatus: "FAILED" | "PENDING" | "SUCCESS" | undefined = undefined
+  fingerPrintBiometricStatus: 'FAILED' | 'PENDING' | 'SUCCESS' | undefined =
+    undefined;
   faceCaptureExists: boolean = false;
-
 
   constructor(
     private router: Router,
@@ -45,7 +45,6 @@ export class SetupBiometricsComponent {
     private snackbar: MatSnackBar,
     private toast: ToastsService,
     private auth: AuthService,
-
   ) {
     const routePath = this.route.queryParams.subscribe({
       next: (urlPath: Params) => {
@@ -55,21 +54,19 @@ export class SetupBiometricsComponent {
           this.disabledBtn = false;
         } else if (this.urlPath === 'face_capture_done') {
           this.disabledBtn = false;
-        } 
+        }
       },
     });
 
-
-    if (window.location.href?.includes("&status=true")) {
-      localStorage.setItem("isFingerprintOk", "true")
-      this.selectedReason = "SUCCESS"
+    if (window.location.href?.includes('&status=true')) {
+      localStorage.setItem('isFingerprintOk', 'true');
+      this.selectedReason = 'SUCCESS';
     }
-    if (localStorage.getItem("isFingerprintOk")) {
-      
-      this.selectedReason = "SUCCESS"
+    if (localStorage.getItem('isFingerprintOk')) {
+      this.selectedReason = 'SUCCESS';
     }
-    if (window.location.href?.includes("&status=false")) {
-      this.selectedReason = "FAILED"
+    if (window.location.href?.includes('&status=false')) {
+      this.selectedReason = 'FAILED';
     }
 
     const getImageCaptured: any = localStorage.getItem('face_capture');
@@ -81,10 +78,9 @@ export class SetupBiometricsComponent {
     );
     this.skipThumbprintPayload = JSON.parse(getImageSkipThumbprint);
     // console.log('skip thumprint image>>>', this.skipThumbprintPayload);
-    this.faceCaptureExists = !!localStorage.getItem("face_capture");
+    this.faceCaptureExists = !!localStorage.getItem('face_capture');
     this.updateDisabledBtn();
   }
-
 
   // const payload = {
   //   nin: this.nin?.nin,
@@ -108,7 +104,12 @@ export class SetupBiometricsComponent {
   }
 
   updateDisabledBtn() {
-    if (localStorage.getItem('face_capture')  && this.selectedReason !== 'FAILED' && this.selectedReason !== "PENDING" && this.selectedReason) {
+    if (
+      localStorage.getItem('face_capture') &&
+      this.selectedReason !== 'FAILED' &&
+      this.selectedReason !== 'PENDING' &&
+      this.selectedReason
+    ) {
       this.disabledBtn = false;
     } else {
       this.disabledBtn = true;
@@ -127,8 +128,26 @@ export class SetupBiometricsComponent {
   }
 
   ngOnDestroy() {
-    localStorage.removeItem("isFingerprintOk");
-    localStorage.removeItem("face_capture");
+    localStorage.removeItem('isFingerprintOk');
+    localStorage.removeItem('face_capture');
+  }
+  ngOnInit() {
+    window.onload = function () {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    };
+    // Scroll to top on component initialization
+    window.scrollTo(0, 0);
+
+    // Scroll to top on navigation end
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
   }
 
   openFingerPrintModal(param: string, route: string) {
@@ -145,7 +164,7 @@ export class SetupBiometricsComponent {
     dialogRef.afterClosed().subscribe((selectedReason: string) => {
       if (selectedReason) {
         this.selectedReason = selectedReason;
-         this.disabledBtn = false
+        this.disabledBtn = false;
       }
     });
   }
@@ -157,10 +176,8 @@ export class SetupBiometricsComponent {
       next: (res: any) => {
         // console.log('res>>>', res);
         this.showSpinner = false;
-        if(res?.responseCode === 200){
-          
-           this.dialog.open(SuccesfulBiometricsComponent);
-          
+        if (res?.responseCode === 200) {
+          this.dialog.open(SuccesfulBiometricsComponent);
         }
       },
       error: (err: any) => {

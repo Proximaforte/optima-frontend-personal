@@ -40,6 +40,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OccupationComponent } from './occupation/occupation.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { EducationSecondComponent } from './education/educationSecond.component';
 
 
 
@@ -59,6 +60,7 @@ const materialModules = [
     ResidentialDetailsComponent,
     MaritalInfoComponent,
     EducationComponent,
+    EducationSecondComponent,
     HealthComponent,
     FinancialComponent,
     NextOfKinComponent,

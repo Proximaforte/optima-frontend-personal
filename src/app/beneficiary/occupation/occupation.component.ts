@@ -205,6 +205,7 @@ export class OccupationComponent implements OnInit {
       diplomaType: new FormControl('', [Validators.required]),
       specifyDiplomaType: new FormControl('', [Validators.required]),
       otherOccupation: new FormControl('', [Validators.required]),
+      dateOfTransfer: new FormControl('', [Validators.required]),
 
       onTransfer: new FormControl('', [Validators.required]),
       cadre: new FormControl('', [Validators.required]),
@@ -214,6 +215,7 @@ export class OccupationComponent implements OnInit {
       trained: new FormControl('', [Validators.required]),
       trainingType: new FormControl('', [Validators.required]),
       psn: new FormControl('', [Validators.required]),
+      tin: new FormControl('', [Validators.required]),
     })
 
 
@@ -330,7 +332,8 @@ export class OccupationComponent implements OnInit {
       trained:  this.occupationForm.value.trained === "Yes" ? true : this.occupationForm.value.trained === "No" ? false : null,
       trainingType: this.occupationForm.value.trainingType,
       professionalQualifications: this.occupationEnums.professionalQualifications,
-      psn: this.occupationForm.value.psn,
+      psn: this.occupationForm.value.psn ?? "",
+      tin: this.occupationForm.value.tin ?? "",
     }
    // console.log("totals>>>", totalPayload);
     this.beneficiaryService.occupationDetails(totalPayload).subscribe({
@@ -353,7 +356,7 @@ export class OccupationComponent implements OnInit {
       error: (err: any) => {
         console.error("err>>>", err);
         this.showSpinner = false;
-        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
