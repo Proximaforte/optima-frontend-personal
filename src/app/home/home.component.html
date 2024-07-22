@@ -1,9 +1,10 @@
-<div class="min-h-[100%] max-w-[50rem] mx-auto px-5 flex flex-col">
-  <div class="">
+<div class="relative max-w-[50rem] mx-auto px-5 overflow-hidden">
+  <div class=" overflow-auto h-full pb-36">
     <app-header></app-header>
+    <div class="-mt-3">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-  <div class="-mt-3 flex-grow overflow-y-auto" id="page-content">
-    <router-outlet></router-outlet>
-  </div>
-    <app-navigation></app-navigation>
+  <div class=" min-h-800"></div>
+  <app-navigation></app-navigation>
 </div>

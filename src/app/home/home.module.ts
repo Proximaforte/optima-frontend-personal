@@ -15,7 +15,5 @@ import { UtilitiesModule } from '../utilities/utilities.module';
     UtilitiesModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-  ]
 })
 export class HomeModule { }
