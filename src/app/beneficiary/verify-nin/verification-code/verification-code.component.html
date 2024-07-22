@@ -1,4 +1,4 @@
-<body>
+<div>
     <div *ngIf="showWelcomeMsg === true" class="fixed top-0 left-0 w-full bg-gray-200 text-black p-4">
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
             <strong class="font-bold">Welcome back!</strong> &nbsp;&nbsp;
@@ -8,13 +8,13 @@
             </span>
           </div>
     </div>
-    <div class="grid grid-cols-5 gap-4">
+    <div class="grid grid-cols-5 gap-4 my-auto">
         <!-- <div class="hidden sm:block" *ngIf="showVerificationStepper === true">
             <app-sidebar-helper></app-sidebar-helper>
            </div> -->
     
     
-        <div class="col-span-4 h-full" id="first-column-items">
+        <div class="col-span-4 h-full  my-auto" id="first-column-items">
                 <div class="grid grid-rows-3 gap-4 justify-items-start">
         <div class="row-span-1">
             <p class="text-lg font-semibold" id="align-header">
@@ -94,4 +94,4 @@
     </div>
         </div>
     </div>
-</body>
+</div>

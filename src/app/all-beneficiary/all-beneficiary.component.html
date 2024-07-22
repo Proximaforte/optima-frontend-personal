@@ -1,7 +1,7 @@
 <body class="max-w-full">
   <!-- For Complete Beneficiaries -->
   <div *ngIf="showCompleteBeneficiaries === true">
-    <div class="rounded-xl border border-tableGray ml-4 py-4 overflow-x-auto">
+    <div class="rounded-xl border border-tableGray py-4 overflow-x-auto">
       <!-- visible only on large screens -->
       <div class="flex items-center justify-between gap-5 p-4 w-full overflow-x-auto">
         <div class="col-span-2 flex justify-start items-center">
@@ -161,7 +161,7 @@
               >
                 <td
                   (click)="viewBeneficiaryProfile(beneficiary)"
-                  class="py-4 pr-3 text-sm font-medium text-gray-900 pl-6 flex items-center"
+                  class="py-4 pr-3 whitespace-nowrap text-sm font-medium text-gray-900 pl-6 flex items-center"
                 >
                   {{ beneficiary?.firstname || "N/A" }}
                   {{ beneficiary?.lastname || "N/A" }}
@@ -304,7 +304,7 @@
   <!-- For Incomplete Beneficiaries -->
 
   <div *ngIf="showIncompleteBeneficiaries === true">
-    <div class="rounded-xl border border-tableGray ml-4 py-4">
+    <div class="rounded-xl border border-tableGray py-4">
       <!-- visible only on large screens -->
       <div class="flex items-center justify-between gap-5 p-4 overflow-auto">
         <div class="col-span-2 flex justify-start items-center">
@@ -458,7 +458,7 @@
                 "
               >
                 <td
-                  class="py-4 pr-3 text-sm font-medium text-gray-900 pl-6 flex items-center"
+                  class="py-4 pr-3 whitespace-nowrap text-sm font-medium text-gray-900 pl-6 flex items-center"
                 >
                   <span
                     >{{ beneficiary?.firstname || "N/A" }}
