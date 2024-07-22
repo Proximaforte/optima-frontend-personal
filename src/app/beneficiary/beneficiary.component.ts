@@ -67,6 +67,7 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     }
 
   }
+  
 
   ngOnInit(): void {
 
