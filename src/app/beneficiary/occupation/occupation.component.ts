@@ -205,6 +205,7 @@ export class OccupationComponent implements OnInit {
       diplomaType: new FormControl('', [Validators.required]),
       specifyDiplomaType: new FormControl('', [Validators.required]),
       otherOccupation: new FormControl('', [Validators.required]),
+      dateOfTransfer: new FormControl('', [Validators.required]),
 
       onTransfer: new FormControl('', [Validators.required]),
       cadre: new FormControl('', [Validators.required]),

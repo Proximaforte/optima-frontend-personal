@@ -12,6 +12,8 @@ import { AuthService } from 'src/app/services/authentication/auth.service';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { endpoints } from 'src/app/models/APIs/endpoints';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-other-details',
@@ -31,19 +33,18 @@ export class OtherDetailsComponent implements OnInit {
   ];
   option2: string[] | any = [
     'What modes of transportation are available to you?*',
-    'Own car',
-    'Public transport',
-    'Bicycle',
-    'Walking',
-    'Motorcycle',
-    'Others',
+    "Car",
+    "Bicycle",
+    "Motorcycle",
+    "Walking",
+    "Public transportation",
+    "Other, please specify",
   ];
   option3: string[] | any = [
     'What is your political view?*',
     'active',
     'passive',
   ];
-
   option4: string[] | any = [
     'How often do you vote?*',
     'Always',
@@ -59,19 +60,23 @@ export class OtherDetailsComponent implements OnInit {
   ];
   option6: string[] | any = [
     'Which political party do you prefer?*',
-    'APC (All Progressive Party)',
-    'Labour Party',
-    'PDP (People Democratic Party)',
-    'Others',
-    'None',
-    'Prefer not to say',
+    "All Progressives Congress",
+    "Labour Party",
+    "People's Democratic Party",
+    "Social Democratic Party",
+    "Others, please specify",
+    "None of the above",
+    "Prefer not to say"
   ];
   option7: string[] | any = [
     'If yes, please select*',
-    'APC (All Progressive Party)',
-    'Labour Party',
-    'PDP (People Democratic Party)',
-    'Others',
+    "All Progressives Congress",
+    "Labour Party",
+    "People's Democratic Party",
+    "Social Democratic Party",
+    "Others, please specify",
+    "None of the above",
+    "Prefer not to say"
   ];
   option8: string[] | any = [
     'Do you participate in community meetings or political rallies?*',
@@ -95,11 +100,11 @@ export class OtherDetailsComponent implements OnInit {
   ];
   option11: string[] | any = [
     'How far is the water source from your home? (Specify distance)*',
-    'Less than 1km',
-    '1km - 5km',
-    '5km - 10km',
-    '10km - 20km',
-    'Greater than 20km',
+    "< 1km",
+    "1 - 5km",
+    "5 - 10km",
+    "10 - 20km",
+    "20km & above"
   ];
   option12: string[] | any = [
     'What is the quality of the water?*',
@@ -111,12 +116,12 @@ export class OtherDetailsComponent implements OnInit {
   ];
   option13: string[] | any = [
     'How many hours per day do you have electricity? (Specify)*',
-    'Less than 1hr',
-    '1hr - 4hrs',
-    '4hrs - 8hrs',
-    '8hrs - 16hrs',
-    '16hrs - 20hrs',
-    '20hrs - 24hrs',
+    "< 1hr",
+    "1 - 4hr",
+    "4 - 8hr",
+    "8 - 12hr",
+    "12 - 16hr",
+    "16hr & above"
   ];
   option14: string[] | any = [
     'What is the quality of roads in your area?*',
@@ -128,12 +133,36 @@ export class OtherDetailsComponent implements OnInit {
   ];
   option15: string[] | any = [
     'what is your regular means of transportation?*',
-    'Own car',
-    'Public transport',
-    'Bicycle',
-    'Walking',
-    'Motorcycle',
+    "Car",
+    "Bicycle",
+    "Motorcycle",
+    "Walking",
+    "Public transportation",
+    "Other, please specify",
   ];
+
+waterSources: string[] = ['What are your main sources of drinking water?*'];
+votingPeriod: string[] = ['How often do you vote?*'];
+votingEngagements: string[] = ['How engaged are you in political activities?*']
+politicalParties: string[] = ['Which political party do you prefer?*'];
+crimeRatings: string[] = ['How would you rate the crime rate in your area?*'];
+waterDistance: string[] = ['How far is the water source from your home? (Specify distance)*'];
+waterQualityRating: string[] = ['What is the quality of the water?*'];
+electricityHour: string[] = ['How many hours per day do you have electricity? (Specify)*'];
+roadQuality: string[] = ['What is the quality of roads in your area?*'];
+modesOfTransportation: string[] = ['What modes of transportation are available to you?*'];
+meansOfTransportation: string[] = ['what is your regular means of transportation?*'];
+
+waterSourceEndpoint: string = endpoints.waterSources;
+votingPeriodEndpoint: string = endpoints.periods;
+votingEngagementEndpoint: string = endpoints.engagements;
+politicalPartiesEndpoint: string = endpoints.politicalParties;
+crimeTypeEndpoint: string = endpoints.criminalTypes;
+waterDistanceEndpoint: string = endpoints.getDistanceRanges;
+qualityRating: string = endpoints.getQualityRating;
+electricityHourEndpoint: string = endpoints.HourRanges;
+modeOfTransportationEndpoint: string = endpoints.transportationModes
+meansOfTransportationEndpoint: string = endpoints.transportTypes
 
   showAdditionalFields: boolean = false;
   showAdditionalFields1: boolean = false;
@@ -177,6 +206,8 @@ export class OtherDetailsComponent implements OnInit {
     private toast: ToastsService,
     private auth: AuthService,
     private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
@@ -215,35 +246,60 @@ export class OtherDetailsComponent implements OnInit {
   }
 
   proceed() {
-    if (this.othersForm.get('waterSource')?.value === 'others') {
+    if (this.othersForm.get('waterSource')?.value?.toLowerCase().includes("others")) {
       this.showAdditionalFields = true;
     } else {
       this.showAdditionalFields = false;
     }
+  }
+
+  getEnumValue(dataPoint: Array<string>, defaultParam: string, endpoint: string) {
+    this.beneficiaryService.getEnum(endpoint).subscribe({
+      next: (data: any) => {
+        if (data.data) {
+          const resultArray = Array.isArray(data?.data) ? [defaultParam, ...data.data] : [];
+          for (let i = 0; i < resultArray.length; i++) {
+            dataPoint[i] = resultArray[i];
+          }
+        } else {
+          dataPoint = []
+        }
+      },
+      error: (err: any) => {
+        this.showSpinner = false;
+        this.toast.setErrorMessage(
+          err?.error?.failureReason ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+      },
+    });
   }
 
   proceed2() {
-    if (this.othersForm.get('transportationModes')?.value === 'others') {
+    if (this.othersForm.get('transportationModes')?.value?.toLowerCase().includes("others")) {
       this.showAdditionalFields = true;
     } else {
       this.showAdditionalFields = false;
     }
   }
-
   proceed1() {
-    if (this.othersForm.get('waterSupply')?.value === 'others') {
+    if (this.othersForm.get('waterSupply')?.value?.toLowerCase().includes("others")) {
       this.showAdditionalFields = true;
     } else {
       this.showAdditionalFields = false;
     }
   }
-
   onSelectionChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const selectedOptions = Array.from(selectElement.selectedOptions).map(option => option.value);
     this.othersForm.get('transportationModes')?.setValue(selectedOptions);
   }
-
   detectTouched(radioType: string) {
     if (radioType === 'radio1') {
       this.checked2 = false;
@@ -253,7 +309,6 @@ export class OtherDetailsComponent implements OnInit {
       this.checked2 = true;
     }
   }
-
   detectTouched1(radioType: string) {
     if (radioType === 'radio3') {
       this.checked4 = false;
@@ -263,7 +318,6 @@ export class OtherDetailsComponent implements OnInit {
       this.checked4 = true;
     }
   }
-
   detectTouched2(radioType: string) {
     if (radioType === 'radio5') {
       this.checked6 = false;
@@ -273,7 +327,6 @@ export class OtherDetailsComponent implements OnInit {
       this.checked6 = true;
     }
   }
-
   detectTouched3(radioType: string) {
     if (radioType === 'radio7') {
       this.checked8 = false;
@@ -283,7 +336,6 @@ export class OtherDetailsComponent implements OnInit {
       this.checked8 = true;
     }
   }
-
   detectTouched4(radioType: string) {
     if (radioType === 'radio9') {
       this.checked10 = false;
@@ -293,7 +345,6 @@ export class OtherDetailsComponent implements OnInit {
       this.checked10 = true;
     }
   }
-
   detectTouched5(radioType: string) {
     if (radioType === 'radio11') {
       this.checked12 = false;
@@ -303,7 +354,6 @@ export class OtherDetailsComponent implements OnInit {
       this.checked12 = true;
     }
   }
-
   detectTouched6(radioType: string) {
     if (radioType === 'radio13') {
       this.checked13 = false;
@@ -398,7 +448,7 @@ export class OtherDetailsComponent implements OnInit {
 
     this.othersForm.get('transportMeans')?.valueChanges.subscribe({
       next: (value: any) => {
-        if (value.toLowerCase() === 'own car') {
+        if (value.toLowerCase().includes('car')) {
           this.showOwnCar = true;
           this.disableBtn = true;
         } else {
@@ -420,36 +470,38 @@ export class OtherDetailsComponent implements OnInit {
   }
 
   getDropdownItems() {
-    this.beneficiaryService.getTransportDropdown().subscribe({
-      next: (item: any) => {
-        this.option2 = new Set(
-          [
-            'what is your regular means of transportation?*',
-            'Own car',
-            'Public transport',
-            'Okada',
-            'Rail',
-          ].concat(item.data),
-        );
-      },
-    });
+    // this.beneficiaryService.getTransportDropdown().subscribe({
+    //   next: (item: any) => {
+    //     this.option2 = new Set(
+    //       [
+    //         'what is your regular means of transportation?*',
+    //         "Car",
+    //         "Bicycle",
+    //         "Motorcycle",
+    //         "Walking",
+    //         "Public transportation",
+    //         "Other, please specify",
+    //       ].concat(item.data),
+    //     );
+    //   },
+    // });
 
-    this.beneficiaryService.getCriminalTypesDropdown().subscribe({
-      next: (item: any) => {
-        this.options = new Set(
-          [
-            'If yes, for what offence?*',
-            'Theft',
-            'Assault',
-            'Drug',
-            'Fraud',
-            'Drug-related offenses',
-            'Traffic violation',
-            'Others',
-          ].concat(item.data),
-        );
-      },
-    });
+    // this.beneficiaryService.getCriminalTypesDropdown().subscribe({
+    //   next: (item: any) => {
+    //     this.options = new Set(
+    //       [
+    //         'If yes, for what offence?*',
+    //         'Theft',
+    //         'Assault',
+    //         'Drug',
+    //         'Fraud',
+    //         'Drug-related offenses',
+    //         'Traffic violation',
+    //         'Others',
+    //       ].concat(item.data),
+    //     );
+    //   },
+    // });
   }
 
   ngOnInit(): void {
@@ -506,7 +558,25 @@ export class OtherDetailsComponent implements OnInit {
       next: (res: any) => {
         // console.log("res>>>", res);
         this.showSpinner = false;
-        this.dialog.open(SuccessfulBeneficiaryOnboardingComponent);
+        this.beneficiaryService.onboardingSubmitted(getBeneficiaryPhoneNumber).subscribe({
+          next: (res:any) => {
+           // console.log('res>>>', res);
+           this.dialog.open(SuccessfulBeneficiaryOnboardingComponent);
+          },
+          error: (err: any) => {
+            console.error('err>>>', err);
+            this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
+            this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
+            if(err?.status === 401){
+            this.auth.agentLogout();
+            }
+          }
+        })
+        
       },
       error: (err: any) => {
         console.error('err>>>', err);

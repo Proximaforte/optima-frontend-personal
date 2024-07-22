@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild,EventEmitter, Output, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterBoxComponent } from '../utilities/filter-box/filter-box.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { BeneficiaryService } from '../services/beneficiary/beneficiary.service';
 import { Beneficiary, IncompleteBeneficiary, mocks, PaginationParams, BeneficiaryProfile } from '../models/beneficiary/beneficiary';
 import { AuthService } from '../services/authentication/auth.service';
@@ -305,6 +305,7 @@ export class AllBeneficiaryComponent implements OnInit {
     this.getAllBeneficiaries();
     this.getAllCompletedData();
     // this.getAllIncompleteBeneficiaries();
+
   }
 
   viewBeneficiaryProfile(beneficiary: BeneficiaryProfile | any): any {
@@ -321,11 +322,11 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
-    this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
-    this.snackbar.openFromComponent(ToastsComponent, {
-      duration: 4000,
-      verticalPosition: 'bottom',
-    });
+    // this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
+    // this.snackbar.openFromComponent(ToastsComponent, {
+    //   duration: 4000,
+    //   verticalPosition: 'bottom',
+    // });
 
     localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
     localStorage.setItem('incomplete', "Let's continue from where you've stopped!");
@@ -333,7 +334,7 @@ export class AllBeneficiaryComponent implements OnInit {
       next: (details:any) => {
         const stringedData = JSON.stringify(details?.data);
         localStorage.setItem('NINDetails', stringedData);
-        localStorage.setItem('NINDetails', stringedData);
+        // localStorage.setItem('NINDetails', stringedData);
       }
     })
  

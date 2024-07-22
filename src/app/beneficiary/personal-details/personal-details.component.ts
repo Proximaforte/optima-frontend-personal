@@ -130,13 +130,13 @@ export class PersonalDetailsComponent implements OnInit {
       // lastname: this.personalDetailsForm.value?.lastName,
       // middleName: this.personalDetailsForm.value?.middleName,
       phoneNumber: this.personalDetailsForm.get('phoneNumber')?.value,
-      bvn: this.personalDetailsForm.value?.bvn ?? null,
-      email: this.personalDetailsForm.value?.email ?? null,
+      bvn: this.personalDetailsForm.value?.bvn ? this.personalDetailsForm.value?.bvn : null,
+      email: this.personalDetailsForm.value?.email ? this.personalDetailsForm.value?.email : null,
       // gender: this.personalDetailsForm.value?.gender,
       // dateOfBirth: this.formattedDate,
       placeOfBirth: this.personalDetailsForm.value?.placeOfBirth,
       religion: this.personalDetailsForm.value?.religion,
-      otherReligion: this.personalDetailsForm.value?.others  ?? null,
+      otherReligion: this.personalDetailsForm.value?.others ? this.personalDetailsForm.value?.others : null,
     }
  
     this.beneficiaryService.personalDetails(payload).subscribe({
@@ -168,7 +168,7 @@ export class PersonalDetailsComponent implements OnInit {
       error: (err: any) => {
         this.showSpinner = false;
         // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage ?? err?.statusText ?? "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

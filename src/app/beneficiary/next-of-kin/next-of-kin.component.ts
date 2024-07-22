@@ -53,7 +53,7 @@ export class NextOfKinComponent implements OnInit {
   toggleChecked(event: any) {
     if (event) {
       this.sameResidence = true;
-      this.nextOfKinForm.patchValue({ "address": "my address" });
+      this.nextOfKinForm.patchValue({ "address": this.userDetails?.residence });
     } else {
       this.sameResidence = false;
       this.nextOfKinForm.patchValue({ "address": "" });
@@ -118,9 +118,9 @@ export class NextOfKinComponent implements OnInit {
       firstname: this.nextOfKinForm.value?.firstname,
       lastname: this.nextOfKinForm.value?.lastname,
       relationship: this.nextOfKinForm.value.relationship,
-      nokNin: this.nextOfKinForm.value?.nin,
-      nokSsid: this.nextOfKinForm.value?.ssid,
-      phoneNumber: this.nextOfKinForm.value?.phoneNumber,
+      nokNin: String(this.nextOfKinForm.value?.nin),
+      nokSsid: String(this.nextOfKinForm.value?.ssid),
+      phoneNumber: String(this.nextOfKinForm.value?.phoneNumber),
       email: this.nextOfKinForm.value?.email,
       address: this.sameResidence === true ? this.userDetails?.residence : this.nextOfKinForm.value?.address,
       specifyRelationship: this.nextOfKinForm.value?.specifyRelationship ?? "",

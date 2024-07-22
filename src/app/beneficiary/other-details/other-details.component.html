@@ -81,9 +81,10 @@
         <select
           id="funding_options"
           formControlName="voteFrequency"
+          (click)="getEnumValue(votingPeriod, 'How often do you vote?*', votingPeriodEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option4; let id = index">
+          <option *ngFor="let option of votingPeriod; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -95,9 +96,10 @@
         <select
           id="funding_options"
           formControlName="politicalActivityEngagement"
+          (click)="getEnumValue(votingEngagements, 'How engaged are you in political activities?*', votingEngagementEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option5; let id = index">
+          <option *ngFor="let option of votingEngagements; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -109,9 +111,10 @@
         <select
           id="funding_options"
           formControlName="preferredPoliticalParty"
+          (click)="getEnumValue(politicalParties, 'Which political party do you prefer?*', politicalPartiesEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option6; let id = index">
+          <option *ngFor="let option of politicalParties; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -204,9 +207,10 @@
         <select
           id="funding_options"
           formControlName="crimeType"
+          (click)="getEnumValue(crimeRatings, 'How would you rate the crime rate in your area?*', crimeTypeEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of options; let id = index">
+          <option *ngFor="let option of crimeRatings; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -393,9 +397,10 @@
           id="funding_options1"
           formControlName="waterSupply"
           (change)="proceed1()"
+          (click)="getEnumValue(waterSources, 'What are your main sources of drinking water?*', waterSourceEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option10; let id = index">
+          <option *ngFor="let option of waterSources; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -436,9 +441,10 @@
         <select
           id="funding_options"
           formControlName="distanceToWater"
+          (click)="getEnumValue(waterDistance, 'How far is the water source from your home? (Specify distance)*', waterDistanceEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option11; let id = index">
+          <option *ngFor="let option of waterDistance; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -449,9 +455,10 @@
         <select
           id="funding_options"
           formControlName="waterQuality"
+          (click)="getEnumValue(waterQualityRating, 'What is the quality of the water?*', qualityRating)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option12; let id = index">
+          <option *ngFor="let option of waterQualityRating; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -483,9 +490,10 @@
         <select
           id="funding_options"
           formControlName="timeOfAccessToElectricity"
+          (click)="getEnumValue(electricityHour, 'How many hours per day do you have electricity? (Specify)*', electricityHourEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option13; let id = index">
+          <option *ngFor="let option of electricityHour; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -502,9 +510,10 @@
         <select
           id="funding_options"
           formControlName="roadQuality"
+          (click)="getEnumValue(roadQuality, 'What is the quality of roads in your area?*', qualityRating)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option14; let id = index">
+          <option *ngFor="let option of roadQuality; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -517,9 +526,10 @@
           id="funding_options"
           formControlName="transportationModes"
           (change)="proceed2()"
+          (click)="getEnumValue(modesOfTransportation, 'What modes of transportation are available to you?*', modeOfTransportationEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option2; let id = index">
+          <option *ngFor="let option of modesOfTransportation; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -544,9 +554,10 @@
         <select
           id="funding_options"
           formControlName="transportMeans"
+          (click)="getEnumValue(meansOfTransportation, 'what is your regular means of transportation?*', meansOfTransportationEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of option15; let id = index">
+          <option *ngFor="let option of meansOfTransportation; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>

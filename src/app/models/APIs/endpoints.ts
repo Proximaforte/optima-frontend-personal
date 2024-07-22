@@ -53,10 +53,31 @@ export const endpoints = {
     transportTypes: 'api/v1/enums/transportMeans',
     criminalTypes: 'api/v1/enums/crimeType',
     reportRanges: 'api/v1/enums/reportRanges',
+    periods: 'api/v1/enums/periods',
+    engagements: 'api/v1/enums/engagements',
+    waterSources: 'api/v1/enums/waterSources',
+    transportationModes: 'api/v1/enums/transportationModes',
+    trainingTypes: 'api/v1/enums/trainingTypes',
+    ratings: 'api/v1/enums/ratings',
+    politicalParties: 'api/v1/enums/politicalParties',
+    plans: 'api/v1/enums/plans',
+    palliativeTypes: 'api/v1/enums/palliativeTypes',
+    palliativeStatus: 'api/v1/enums/palliativeStatus',
+    occupationTypes: 'api/v1/enums/occupationTypes',
+    maritalStatus: 'api/v1/enums/maritalStatus',
+    gender: 'api/v1/enums/gender',
+    formStage: 'api/v1/enums/formStage',
+    benefitPartners: 'api/v1/enums/benefitPartners',
+    benefitCategories: 'api/v1/enums/benefitCategories',
+    ageRange: 'api/v1/enums/ageRange',
+    HourRanges: 'api/v1/enums/HourRanges',
 
     //dashboard statistics
     
-    dashboardStats: 'api/v1/dashboard/agent/statistics'
+    dashboardStats: 'api/v1/dashboard/agent/statistics',
+
+    // fingerprint
+    fingerPrintSkip: 'api/v1/fingerprints/'
 }
 
 export interface ErrorMessage{

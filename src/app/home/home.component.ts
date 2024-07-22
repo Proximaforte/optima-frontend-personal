@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  ngAfterViewChecked() {
+  window.scrollTo(0, 0);
+  document.body.scrollTop = 0;
 
+}
 }

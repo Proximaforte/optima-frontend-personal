@@ -232,6 +232,12 @@ export class BeneficiaryService {
   public getDistanceRanges(): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.getDistanceRanges}`, { headers: this.interceptor?.customHttpHeaders });
   }
+  public getEnum(endpoint: string): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoint}`, { headers: this.interceptor?.customHttpHeaders });
+  }
+  public skipFingerPrint(nin: string, reason: string): Observable<any> {
+    return this.http.put<any>(`${environment?.baseUrl}/${endpoints.fingerPrintSkip}${nin}?reason=${reason}`, null, { headers: this.interceptor?.customHttpHeaders });
+  }
 
   public getFilteredBeneficiaries(filterParams: filterParams | any, paginationParams: PaginationParams): Observable<any> {
    // console.log('completed filterParams>>', filterParams);

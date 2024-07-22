@@ -157,11 +157,12 @@ export class MaritalInfoComponent implements OnInit {
   listen(event: any, position: number): any {
     if (event?.target?.value === 'yes') {
       this.showNameOfChildSch = true;
-    } else if (event?.target?.value === 'not yet') {
-      this.showNameOfChildSch = false;
-    } else {
-      this.showNameOfChildSch = null;
-    }
+    } 
+    // else if (event?.target?.value === 'not yet') {
+    //   this.showNameOfChildSch = false;
+    // } else {
+    //   this.showNameOfChildSch = null;
+    // }
   }
 
   pushNameOfChildren(event: any, index: any) {
