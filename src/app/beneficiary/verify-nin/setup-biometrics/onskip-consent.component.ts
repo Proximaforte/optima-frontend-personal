@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { SetupBiometricsComponent } from './setup-biometrics.component';
 
 @Component({
   selector: 'app-fingerprint-consent',
@@ -127,7 +128,7 @@ export class SkipFingerprintConsentModal {
   showSpinner: boolean = false;
   constructor(
     private dialogRef: MatDialogRef<SkipFingerprintConsentModal>,
-    private dialog: MatDialog,
+    private dialog: MatDialogRef<SetupBiometricsComponent>,
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
@@ -142,23 +143,31 @@ export class SkipFingerprintConsentModal {
   }
 
   onClose(): void {
+    if (!this.selectedReason) {
+      this.toast.setErrorMessage("Please select a reason to proceed.");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+      return;
+    }
     this.showSpinner = true;
     const getNin: any = localStorage.getItem('NINDetails');
     let newNin: any = JSON.parse(getNin);
     this.beneficiaryService.skipFingerPrint(newNin?.nin, this.selectedReason as string).subscribe({
       next: (res: any) => {
-        this.toast.setSuccessMessage('Fingerprint skipped successfully!');
-        this.snackbar.openFromComponent(ToastsComponent, {
-          duration: 4000,
-          verticalPosition: 'bottom',
-        });
+        // this.toast.setSuccessMessage('Fingerprint skipped successfully!');
+        // this.snackbar.openFromComponent(ToastsComponent, {
+        //   duration: 4000,
+        //   verticalPosition: 'bottom',
+        // });
         this.showSpinner = false;
         this.dialogRef.close(this.selectedReason);
-        this.dialog.closeAll()
+        this.dialog.close(this.selectedReason)
       },
       error: (err: any) => {
-        this.dialogRef.close();
-        this.dialog.closeAll()
+        this.dialogRef.close(this.selectedReason);
+        this.dialog.close(this.selectedReason)
         this.showSpinner = false;
         this.toast.setErrorMessage(
           err?.error?.responseMessage ??
