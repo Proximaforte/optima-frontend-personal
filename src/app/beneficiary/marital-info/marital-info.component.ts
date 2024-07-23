@@ -87,7 +87,7 @@ export class MaritalInfoComponent implements OnInit {
   getMaritalForm() {
     this.maritalInfoForm = new FormGroup({
       maritalStatus: new FormControl('Marital Status', [Validators.required]),
-      numberOfSpouse: new FormControl('', [Validators.required]),
+      numberOfSpouse: new FormControl('', null),
       numberOfChildren: new FormControl('', null),
       nameOfSpouses: new FormControl('', null),
       phoneNumberOfSpouses: new FormControl('', null)
@@ -97,6 +97,7 @@ export class MaritalInfoComponent implements OnInit {
       next: (value: string) => {
         if (value === "MARRIED") {
           this.showOthers = true;
+          this.disableBtn = true
         } else {
           this.showOthers = false;
         }
@@ -106,7 +107,24 @@ export class MaritalInfoComponent implements OnInit {
           
         }
 
-        if(value === "MARRIED" && this.maritalInfoForm?.get('numberOfSpouse')?.value?.length === 0){
+        if (value === "SINGLE") {
+          this.disableBtn = false
+          this.maritalInfoForm.patchValue({"numberOfSpouse": ''})
+        }
+        if (value === "DIVORCED") {
+          this.disableBtn = false
+          this.maritalInfoForm.patchValue({"numberOfSpouse": ''})
+        }
+        if (value === "WIDOW") {
+          this.disableBtn = false
+          this.maritalInfoForm.patchValue({"numberOfSpouse": ''})
+        }
+        if (value === "WIDOWER") {
+          this.disableBtn = false
+          this.maritalInfoForm.patchValue({"numberOfSpouse": ''})
+        }
+
+        if(value === "MARRIED" || value === "MARRIED" && this.maritalInfoForm?.get('numberOfSpouse')?.value?.length === 0){
           this.disableBtn = true;
         }
       }
