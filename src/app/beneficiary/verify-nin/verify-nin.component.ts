@@ -58,7 +58,6 @@ export class VerifyNINComponent implements OnInit {
 
     this.ninForm.get('nin')?.valueChanges.subscribe({
       next: (value: string) => {
-       // console.log('NIN value>>', value)
        if (value.length === 11) {
         this.showBtn = true;
           this.beneficiaryService.verifyNIN(value).subscribe({

@@ -129,7 +129,7 @@ export class NextOfKinComponent implements OnInit {
     this.beneficiaryService.nextOfKinDetails(payload).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
-        this.toast.setSuccessMessage(res.responseMessage ?? 'Successful');
+        this.toast.setSuccessMessage('Beneficiary Next of Kin data onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

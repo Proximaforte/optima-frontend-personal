@@ -207,10 +207,10 @@
         <select
           id="funding_options"
           formControlName="crimeType"
-          (click)="getEnumValue(crimeRatings, 'How would you rate the crime rate in your area?*', crimeTypeEndpoint)"
+          (click)="getEnumValue(crimeType, 'If yes, for what offence?*', crimeTypeEndpoint)"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option *ngFor="let option of crimeRatings; let id = index">
+          <option *ngFor="let option of crimeType; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
@@ -279,7 +279,7 @@
           type="text"
           id="text-input"
           aria-describedby="helper-text-explanation"
-          class="rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="rounded-none bg-gray-50 w-full border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="If yes, please specify the type of crime*"
         />
       </form>
@@ -309,7 +309,7 @@
           id="text-input"
           aria-describedby="helper-text-explanation"
           class="w-[85%] rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="If yes, please specify the type of crime*"
+          placeholder="If yes, please specify*"
         />
       </form>
     </div>
@@ -407,14 +407,14 @@
       </form>
     </div>
 
-    <div class="row-span-1" *ngIf="waterSupply === 'Others'">
+    <div class="row-span-1" *ngIf="waterSupply.toLowerCase().includes('other')">
       <form [formGroup]="othersForm">
         <input
           formControlName="specifyWaterSource"
           type="text"
           id="text-input"
           aria-describedby="helper-text-explanation"
-          class="w-[85%] rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="w-full rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="If others, please specify*"
         />
       </form>
@@ -536,14 +536,14 @@
       </form>
     </div>
 
-    <div class="row-span-1" *ngIf="transportationModes === 'Others'">
+    <div class="row-span-1" *ngIf="transportationModes.toLowerCase().includes('other')">
       <form [formGroup]="othersForm">
         <input
           formControlName="specifyTransportationMode"
           type="text"
           id="text-input"
           aria-describedby="helper-text-explanation"
-          class="w-[85%] rounded-none bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          class="rounded-none w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="If others, please specify*"
         />
       </form>

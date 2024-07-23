@@ -6,6 +6,7 @@ import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-personal-details',
@@ -61,9 +62,7 @@ export class PersonalDetailsComponent implements OnInit {
    // console.log("newDate>>", newDate);
     this.formattedDate = this.ninDetails.birthDate; //`${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;
    // console.log("formattedDate>>", this.formattedDate);
-   }else{
-    console.log(null);
-   }
+   } 
   }
 
 
@@ -73,7 +72,7 @@ export class PersonalDetailsComponent implements OnInit {
   onInputBlur() {
     this.emailPlaceHolder = '';
   }
-
+  
   getPersonalForm() {
     this.personalDetailsForm = new FormGroup({
       firstName: new FormControl(this.ninDetails.firstName as string, null),
@@ -86,16 +85,19 @@ export class PersonalDetailsComponent implements OnInit {
       dateOfBirth: new FormControl(this.formattedDate as string, null),
       placeOfBirth: new FormControl('', [Validators.required]),
       religion: new FormControl('', [Validators.required]),
-      others: new FormControl('', null),
+      others: new FormControl('', this.showOthers ? [Validators.required] : null),
     })
 
-    this.personalDetailsForm.get('religion')?.valueChanges.subscribe({
-      next: (value: any) => {
-        if (value === 'OTHERS') {
-          this.showOthers = true;
-        } else {
-          this.showOthers = false;
-        }
+
+    this.personalDetailsForm.get('religion')?.valueChanges.subscribe((value) => {
+      if (value === 'OTHERS') {
+        this.showOthers = true;
+        this.disableBtn = true;
+        this.personalDetailsForm
+          .get('others')
+          ?.setValidators(Validators.required);
+      } else {
+        this.showOthers = false;
       }
     })
     // Listen for changes on the entire form
@@ -105,7 +107,7 @@ export class PersonalDetailsComponent implements OnInit {
   }
 
   updateDisabledBtn() {
-    this.disableBtn = !this.personalDetailsForm.valid;
+      this.disableBtn = !this.personalDetailsForm.valid;
   }
 
   getDropDowns(){
@@ -146,7 +148,7 @@ export class PersonalDetailsComponent implements OnInit {
       otherReligion: this.personalDetailsForm.value?.others ? this.personalDetailsForm.value?.others : null,
     }
  
-    this.beneficiaryService.personalDetails(payload).subscribe({
+    this.beneficiaryService.personalDetails(payload).pipe(first()).subscribe({
       next: (res: any) => {
         this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
@@ -184,7 +186,7 @@ export class PersonalDetailsComponent implements OnInit {
         if (err?.status === 401) {
           this.auth.agentLogout();
         }
-      }
+      },
     })
   }
 
