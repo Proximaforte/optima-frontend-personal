@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class StateService {
   private selectedReason: string = '';
+  private state: any = {};
 
   constructor() { }
   setSelectedReason(reason: string): void {
@@ -13,5 +14,17 @@ export class StateService {
 
   getSelectedReason(): string {
     return this.selectedReason;
+  }
+
+  setState(key: string, value: any) {
+    this.state[key] = value;
+  }
+
+  getState(key: string): any {
+    return this.state[key];
+  }
+
+  clearState(key: string) {
+    delete this.state[key];
   }
 }

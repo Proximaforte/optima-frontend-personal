@@ -169,7 +169,7 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
       error: (err: any) => {
         console.error('err>>>', err);
         this.showSpinner = false;
-        this.toast.setSuccessMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText);
+        // this.toast.setSuccessMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText);
         this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText);
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,

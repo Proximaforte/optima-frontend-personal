@@ -176,11 +176,11 @@ export class EmploymentComponent implements OnInit {
       status: this.employmentForm.value?.employmentStatus,
       employer: this.employmentForm.value?.nameOfEmployer,
       employerAddress: this.employmentForm.value?.employerOfficeAddress,
-      otherSourceOfIncome: this.employmentForm.value?.otherSourcesOfIncome,
+      otherSourceOfIncome: this.employmentForm.value?.otherSourcesOfIncome ?? "",
       businessName: this.employmentForm.value?.nameOfBusiness,
       businessNature: this.employmentForm.value?.natureOfBusiness,
-      otherBusinessNature: this.employmentForm.value?.natureOfBusiness === "Others" ? this.employmentForm.get('otherBusinessNature')?.value : null,
-      hasPensionAccount: this.employmentForm.value?.pensionAccount === 'yes' ? true : this.employmentForm.value?.pensionAccount === 'no' ? false : null
+      otherBusinessNature: this.employmentForm.value?.natureOfBusiness === "Others" ? this.employmentForm.get('otherBusinessNature')?.value : "",
+      hasPensionAccount: this.employmentForm.value?.pensionAccount?.toLowerCase() === 'yes'
     }
 
     // console.log("values>>", payload);
@@ -204,7 +204,7 @@ export class EmploymentComponent implements OnInit {
       error: (err: any) => {
         this.showSpinner = false;
         console.error("err from employment details>>", err);
-        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,

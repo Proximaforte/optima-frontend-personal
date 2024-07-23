@@ -1,173 +1,306 @@
 <body>
-
-    <div *ngIf="showWelcomeMsg === true" class="fixed top-0 left-0 w-full bg-gray-200 text-black p-4">
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Welcome back!</strong> &nbsp;&nbsp;
-            <span class="block sm:inline">Let's continue from where we stopped!...</span>
-            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-              <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-            </span>
-          </div>
+  <div
+    *ngIf="showWelcomeMsg === true"
+    class="fixed top-0 left-0 w-full bg-gray-200 text-black p-4"
+  >
+    <div
+      class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <strong class="font-bold">Welcome back!</strong> &nbsp;&nbsp;
+      <span class="block sm:inline"
+        >Let's continue from where we stopped!...</span
+      >
+      <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+        <svg
+          class="fill-current h-6 w-6 text-green-500"
+          role="button"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <title>Close</title>
+          <path
+            d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"
+          />
+        </svg>
+      </span>
     </div>
-    <div class="min-h-screen flex items-center justify-center">
-        <div class="w-full max-w-md">
-            <div class="grid grid-rows-4 gap-4">
-                <!-- Third Row: Input Boxes -->
-                <div class="row-span-1 flex flex-col p-4">
-                    <div class="row-span-1">
-                        <p class="text-xl font-bold">Marital Information</p>
-                        <p>Kindly input your marital details below</p>
-                    </div>
-                    <br><br>
-                    <div class="row-span-1" id="row-one">
-                        <form class="max-w-sm" [formGroup]="maritalInfoForm">
-                            <select id="countries" formControlName="maritalStatus"
-                                class="bg-gray-50 border  rounded-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
-                                <option value="Marital Status">Marital Status</option>
-                                <option value="SINGLE">SINGLE</option>
-                                <option value="MARRIED">MARRIED</option>
-                                <option value="DIVORCED">DIVORCED</option>
-                                <option value="WIDOW">WIDOW</option>
-                                <option value="WIDOWER">WIDOWER</option>
-                                <!-- <option *ngFor="let option of options; let id=index" >
+  </div>
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md">
+      <div class="grid grid-rows-4 gap-4">
+        <!-- Third Row: Input Boxes -->
+        <div class="row-span-1 flex flex-col p-4">
+          <div class="row-span-1">
+            <p class="text-xl font-bold">Marital Information</p>
+            <p>Kindly input your marital details below</p>
+          </div>
+          <br /><br />
+          <div class="row-span-1" id="row-one">
+            <form class="max-w-sm" [formGroup]="maritalInfoForm">
+              <select
+                id="countries"
+                formControlName="maritalStatus"
+                class="bg-gray-50 border rounded-none border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+              >
+                <option value="Marital Status">Marital Status</option>
+                <option value="SINGLE">SINGLE</option>
+                <option value="MARRIED">MARRIED</option>
+                <option value="DIVORCED">DIVORCED</option>
+                <option value="WIDOW">WIDOW</option>
+                <option value="WIDOWER">WIDOWER</option>
+                <!-- <option *ngFor="let option of options; let id=index" >
                                 <span> {{ option }}</span>
                             </option> -->
-                            </select>
-                        </form>
-                    </div>
-                    <br><br>
+              </select>
+            </form>
+          </div>
+          <br /><br />
 
-                    <form *ngIf="showOthers === true" class="max-w-sm flex" [formGroup]="maritalInfoForm">
-                        <div class="relative w-full min-w-[200px] h-10">
-                            <!-- <div
+          <form
+            *ngIf="showOthers === true"
+            class="max-w-sm flex"
+            [formGroup]="maritalInfoForm"
+          >
+            <div class="relative w-full min-w-[200px] h-10">
+              <!-- <div
                                 class="absolute cursor-pointer grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4">
                                 <mat-icon>unfold_more</mat-icon>
                             </div> -->
-                            <input #passwordInput type="text" [placeholder]="emailPlaceHolder" (blur)="onInputBlur()"
-                                (click)="detectClicked()" formControlName="numberOfSpouse"
-                                class="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900" />
-                            <label
-                                class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">
-                                Number of Spouse(s)
-                            </label>
-                        </div>
-                    </form>
-                    <br>
-                    <form  *ngIf="showOthers === true" >
-                        <div *ngFor="let i of numbersArray(spouse)">
-                            <input type="text" id="child" aria-describedby="helper-text-explanation"
-                               (ngModel)="nameOfSpouses[i]" (name)="nameOfSpouses[i]" (value)="nameOfSpouses[i] === undefined ? '': nameOfSpouses[i]" (blur)="pushNameOfSpouses($event, i)"
-                                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Name of Spouse">
-                            <input type="text" id="child" aria-describedby="helper-text-explanation"
-                            (ngModel)="phoneNumberOfSpouses[i]" (name)="phoneNumberOfSpouses[i]" (value)="phoneNumberOfSpouses[i] === undefined ? '' : phoneNumberOfSpouses[i]" (blur)="pushPhoneNumberOfSpouses($event, i)"
-                                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Phone number of spouse" >
-                            <br>
-                            <hr class="w-[295px]" id="child"><br>
-                        </div>
-                    </form>
-
-                    <!-- sdfgsfdgsdfgsdd i+1 === nArray?.length-->
-                    <br><br>
-                    <form  *ngIf="showOthers === true"  class="max-w-sm flex" [formGroup]="maritalInfoForm">
-                        <div class="relative w-full min-w-[200px] h-10">
-                            <div
-                                class="absolute cursor-pointer grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4">
-                                <mat-icon>unfold_more</mat-icon>
-                            </div>
-                            <input #passwordInput formControlName="numberOfChildren" [placeholder]="otherPlaceHolder"
-                                (blur)="onInputBlur_()" (click)="detectClicked_()"
-                                class="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900" />
-                            <label
-                                class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">
-                                Number of child/children
-                            </label>
-                        </div>
-                    </form>
-                    <br>
-                    <form  *ngIf="showOthers === true"  >
-                        <div *ngFor="let i of numbersArrayNext(children)">
-                            <input type="text" id="child" aria-describedby="helper-text-explanation"
-                            (ngModel)="nameOfChildren[i]" (name)="nameOfChildren[i]" (value)="nameOfChildren[i] === undefined ? '' : nameOfChildren[i]" (blur)="pushNameOfChildren($event, i)"
-                                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Name of child*">
-                            <!-- <input type="number" id="child" aria-describedby="helper-text-explanation"
-                            (ngModel)="ageOfChildren[i]" (name)="ageOfChildren[i]" (value)="ageOfChildren[i] === undefined ? '' : ageOfChildren[i]" (blur)="pushAgeOfChildren($event, i)"
-                                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Age of Child*"> -->
-                                <!-- [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event)" -->
-                                <!-- [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event, i)" (blur)="pushDOBofChild($event, i)" -->
-                                <!-- (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i] === undefined ? '' : dobOfChild[i]" (blur)="pushDOBofChild($event, i)" (ngModelChange)="datePipe($event)" -->
-                               
-                                <mat-form-field class="relative max-w-sm mt-2 ml-[90px]" id="date-picker">
-                                    <input matInput [matDatepicker]="picker"
-                                    (ngModel)="dobOfChild[i]" [name]="dateOfBirth" (name)="dobOfChild[i]" (ngModelChange)="datePipe($event, i)"
-                                      id="datepicker-format" type="text"
-                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                      placeholder="Date of Birth">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                  </mat-form-field>
-                                  <!-- (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i]" (ngModelChange)="datePipe($event, i)" (blur)="pushDOBofChild($event, i)" -->
-                                  
-                                    <!-- <mat-form-field id="date-picker">
-                                        <mat-label class="text-sm">{{dateOfBirth }}</mat-label>
-                                        <input matInput [matDatepicker]="picker" [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event)">
-                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                    </mat-form-field> -->
-
-                                <!-- <input type="text" id="child" aria-describedby="helper-text-explanation"
-                                (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i] === undefined ? '' : dobOfChild[i]" (blur)="pushDOBofChild($event, i)"
-                                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="Date of Birth*"> -->
-                           
-                               <div class="mt-[-20px]">
-                                <select  (input)="listen($event, i)" id="child"  (ngModel)="childrenEduStatus[i]" (name)="childrenEduStatus[i]" (value)="childrenEduStatus[i] === undefined ? '' : childrenEduStatus[i]" (blur)="pushIsChildInSchool($event, i)"
-                                class="bg-gray-50 border mt-2  border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">                            
-                                <option *ngFor="let option of options; let id=index">
-                                <span> {{ option }}</span>
-                            </option>
-                            </select>
-                            <input *ngIf="showNameOfChildSch === true" type="text" id="child" aria-describedby="helper-text-explanation"
-                            (ngModel)="nameOfChildSchool[i]" (name)="nameOfChildSchool[i]" (value)="nameOfChildSchool[i] === undefined ? '' : nameOfChildSchool[i]" (blur)="pushNameOfChildSchool($event, i)"
-                                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="If in school, name of child's school*">
-                            <input type="text" id="child" aria-describedby="helper-text-explanation"
-                            (ngModel)="childPhoneNumber[i]" (name)="childPhoneNumber[i]" (value)="childPhoneNumber[i] === undefined ? '' : childPhoneNumber[i]" (blur)="pushChildPhoneNumber($event, i)"
-                                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Phone number of child(Optional)">
-                               </div>
-                            <br>
-                            <hr class="w-[295px]" id="child"><br>
-                        </div>
-                    </form>
-
-                    <br>
-                    <button (click)="submitForm()" type="submit" [disabled]="disableBtn"
-                        [ngStyle]="{ 'background-color': disableBtn ? '#B8B7C8' : '#109856' }"
-                        class="w-full h-12 px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-500 focus:outline-none focus:bg-green-600">
-                        <div class="flex items-center justify-center"> 
-                            <span class="mr-2">Proceed</span> 
-                            <div role="status" class="ml-2" *ngIf="showSpinner === true">
-                                <svg aria-hidden="true"
-                                    class="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
-                                    viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                                        fill="currentColor" />
-                                    <path
-                                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                                        fill="currentFill" />
-                                </svg>
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </div>
-                    </button>
-                </div>
+              <input
+                #passwordInput
+                type="text"
+                [placeholder]="emailPlaceHolder"
+                (blur)="onInputBlur()"
+                (click)="detectClicked()"
+                formControlName="numberOfSpouse"
+                class="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900"
+              />
+              <label
+                class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900"
+              >
+                Number of Spouse(s)
+              </label>
             </div>
-        </div>
-    </div>
+          </form>
+          <br />
+          <form *ngIf="showOthers === true">
+            <div *ngFor="let i of numbersArray(spouse)">
+              <input
+                type="text"
+                id="child"
+                aria-describedby="helper-text-explanation"
+                (ngModel)="(nameOfSpouses[i])"
+                (name)="(nameOfSpouses[i])"
+                (value)="
+                  (nameOfSpouses[i] === undefined ? '' : nameOfSpouses[i])
+                "
+                (input)="pushNameOfSpouses($event, i)"
+                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Name of Spouse"
+              />
+              <input
+                type="text"
+                id="child"
+                aria-describedby="helper-text-explanation"
+                (ngModel)="(phoneNumberOfSpouses[i])"
+                (name)="(phoneNumberOfSpouses[i])"
+                (value)="
+                  (phoneNumberOfSpouses[i] === undefined
+                    ? ''
+                    : phoneNumberOfSpouses[i])
+                "
+                (input)="pushPhoneNumberOfSpouses($event, i)"
+                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Phone number of spouse"
+              />
+              <br />
+              <hr class="w-[295px]" id="child" />
+              <br />
+            </div>
+          </form>
 
+          <!-- sdfgsfdgsdfgsdd i+1 === nArray?.length-->
+          <br /><br />
+          <form
+            *ngIf="showOthers === true"
+            class="max-w-sm flex"
+            [formGroup]="maritalInfoForm"
+          >
+            <div class="relative w-full min-w-[200px] h-10">
+              <div
+                class="absolute cursor-pointer grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4"
+              >
+                <mat-icon>unfold_more</mat-icon>
+              </div>
+              <input
+                #passwordInput
+                formControlName="numberOfChildren"
+                [placeholder]="otherPlaceHolder"
+                (blur)="onInputBlur_()"
+                (click)="detectClicked_()"
+                class="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] !pr-9 border-blue-gray-200 focus:border-gray-900"
+              />
+              <label
+                class="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900"
+              >
+                Number of child/children
+              </label>
+            </div>
+          </form>
+          <br />
+          <form *ngIf="showOthers === true">
+            <div *ngFor="let i of numbersArrayNext(children)">
+              <input
+                type="text"
+                id="child"
+                aria-describedby="helper-text-explanation"
+                (ngModel)="(nameOfChildren[i])"
+                (name)="(nameOfChildren[i])"
+                (value)="
+                  (nameOfChildren[i] === undefined ? '' : nameOfChildren[i])
+                "
+                (blur)="pushNameOfChildren($event, i)"
+                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Name of child*"
+              />
+              <!-- <input type="number" id="child" aria-describedby="helper-text-explanation"
+                            (ngModel)="ageOfChildren[i]" (name)="ageOfChildren[i]" (value)="ageOfChildren[i] === undefined ? '' : ageOfChildren[i]" (blur)="pushAgeOfChildren($event, i)"
+                                class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Age of Child*"> -->
+              <!-- [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event)" -->
+              <!-- [(ngModel)]="dateOfBirth" [name]="dateOfBirth" (ngModelChange)="datePipe($event, i)" (blur)="pushDOBofChild($event, i)" -->
+              <!-- (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i] === undefined ? '' : dobOfChild[i]" (blur)="pushDOBofChild($event, i)" (ngModelChange)="datePipe($event)" -->
+
+              <!-- <input
+                type="text"
+                id="child"
+                aria-describedby="helper-text-explanation"
+                (ngModel)="(nameOfChildren[i])"
+                (name)="(nameOfChildren[i])"
+                (value)="
+                  (nameOfChildren[i] === undefined ? '' : nameOfChildren[i])
+                "
+                (blur)="pushNameOfChildren($event, i)"
+                class="w-[295px] my-8 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Age of child*"
+              /> -->
+
+              <!-- (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i]" (ngModelChange)="datePipe($event, i)" (blur)="pushDOBofChild($event, i)" -->
+
+              <mat-form-field id="date-picker">
+                <mat-label class="text-sm">{{ dateOfBirth }}</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [(ngModel)]="dateOfBirth"
+                  class="w-full"
+                  [name]="dateOfBirth"
+                  (ngModelChange)="datePipe($event, i)"
+                />
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <!-- <input type="date" id="child" aria-describedby="helper-text-explanation"
+                                (ngModel)="dobOfChild[i]" (name)="dobOfChild[i]" (value)="dobOfChild[i] === undefined ? '' : dobOfChild[i]" (blur)="pushDOBofChild($event, i)"
+                                    class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Date of Birth*"> -->
+
+              <div class="mt-[-20px]">
+                <select
+                  (input)="listen($event, i)"
+                  id="child"
+                  (ngModel)="(childrenEduStatus[i])"
+                  (name)="(childrenEduStatus[i])"
+                  (value)="
+                    (childrenEduStatus[i] === undefined
+                      ? ''
+                      : childrenEduStatus[i])
+                  "
+                  (blur)="pushIsChildInSchool($event, i)"
+                  class="bg-gray-50 border mt-2 border-gray-300 text-gray-500 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+                >
+                  <option *ngFor="let option of options; let id = index">
+                    <span> {{ option }}</span>
+                  </option>
+                </select>
+                <input
+                  *ngIf="showNameOfChildSch === true"
+                  type="text"
+                  id="child"
+                  aria-describedby="helper-text-explanation"
+                  (ngModel)="(nameOfChildSchool[i])"
+                  (name)="(nameOfChildSchool[i])"
+                  (value)="
+                    (nameOfChildSchool[i] === undefined
+                      ? ''
+                      : nameOfChildSchool[i])
+                  "
+                  (blur)="pushNameOfChildSchool($event, i)"
+                  class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 blockp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="If in school, name of child's school*"
+                />
+                <input
+                  type="text"
+                  id="child"
+                  aria-describedby="helper-text-explanation"
+                  (ngModel)="(childPhoneNumber[i])"
+                  (name)="(childPhoneNumber[i])"
+                  (value)="
+                    (childPhoneNumber[i] === undefined
+                      ? ''
+                      : childPhoneNumber[i])
+                  "
+                  (blur)="pushChildPhoneNumber($event, i)"
+                  class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Phone number of child(Optional)"
+                />
+              </div>
+              <br />
+              <hr class="w-[295px]" id="child" />
+              <br />
+            </div>
+          </form>
+
+          <br />
+          <button
+            (click)="submitForm()"
+            type="submit"
+            [disabled]="disableBtn"
+            [ngStyle]="{
+              'background-color': disableBtn ? '#B8B7C8' : '#109856'
+            }"
+            class="w-full h-12 px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-500 focus:outline-none focus:bg-green-600"
+          >
+            <div class="flex items-center justify-center">
+              <span class="mr-2">Proceed</span>
+              <div role="status" class="ml-2" *ngIf="showSpinner === true">
+                <svg
+                  aria-hidden="true"
+                  class="inline w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
+                  viewBox="0 0 100 101"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill"
+                  />
+                </svg>
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>

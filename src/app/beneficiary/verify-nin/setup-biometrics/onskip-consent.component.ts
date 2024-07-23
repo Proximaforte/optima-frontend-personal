@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { StateService } from '../../../state.service';
+import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastsService } from 'src/app/services/alert/toasts.service';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
+import { AuthService } from 'src/app/services/authentication/auth.service';
+import { SetupBiometricsComponent } from './setup-biometrics.component';
 
 @Component({
   selector: 'app-fingerprint-consent',
@@ -45,7 +51,7 @@ import { StateService } from '../../../state.service';
               [type]="'radio'"
               name="reasonForSkipping"
               [id]="'cutoff'"
-              value="Beneficiary thumbs are cut-off"
+              value="Fingers are cutoff"
               [className]="'checked:bg-[#109856] rounded-[4px]'"
             />
             <label
@@ -59,7 +65,7 @@ import { StateService } from '../../../state.service';
               [type]="'radio'"
               name="reasonForSkipping"
               [id]="'burnt'"
-              value="Thumbs are burnt"
+              value="Fingers are burnt"
               [className]="'checked:bg-[#109856] rounded-[4px]'"
             />
             <label
@@ -74,7 +80,7 @@ import { StateService } from '../../../state.service';
               name="reasonForSkipping"
               [id]="'injuries'"
               [id]="'injuries'"
-              value="Temporary injuries"
+              value="Fingers are injured"
               [className]="'checked:bg-[#109856] rounded-[4px]'"
             />
             <label
@@ -107,26 +113,76 @@ import { StateService } from '../../../state.service';
           "
           (click)="onClose()"
         >
-          Proceed to skip
+          <span class="mr-2">Proceed to skip</span>
+          <div role="status" class="ml-2" *ngIf="showSpinner">
+          <span class="loader"></span>
+          </div>
         </button>
       </div>
     </div>
   `,
-  styles: [],
+  styleUrls: ['./setup-biometrics.component.scss'],
 })
 export class SkipFingerprintConsentModal {
-    selectedReason: string | null = null;
-  
-    constructor(private dialogRef: MatDialogRef<SkipFingerprintConsentModal>) {}
-  
-    onSelectionChange(event: Event): void {
-      const target = event.target as HTMLInputElement;
-      if (target.checked) {
-        this.selectedReason = target.value;
-      }
-    }
-  
-    onClose(): void {
-      this.dialogRef.close(this.selectedReason);
+  selectedReason: string | null = null;
+  showSpinner: boolean = false;
+  constructor(
+    private dialogRef: MatDialogRef<SkipFingerprintConsentModal>,
+    private dialog: MatDialogRef<SetupBiometricsComponent>,
+    private beneficiaryService: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService,
+    private auth: AuthService,
+  ) {}
+
+  onSelectionChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.checked) {
+      this.selectedReason = target.value;
     }
   }
+
+  onClose(): void {
+    if (!this.selectedReason) {
+      this.toast.setErrorMessage("Please select a reason to proceed.");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+      return;
+    }
+    this.showSpinner = true;
+    const getNin: any = localStorage.getItem('NINDetails');
+    let newNin: any = JSON.parse(getNin);
+    this.beneficiaryService.skipFingerPrint(newNin?.nin, this.selectedReason as string).subscribe({
+      next: (res: any) => {
+        // this.toast.setSuccessMessage('Fingerprint skipped successfully!');
+        // this.snackbar.openFromComponent(ToastsComponent, {
+        //   duration: 4000,
+        //   verticalPosition: 'bottom',
+        // });
+        this.showSpinner = false;
+        this.dialogRef.close(this.selectedReason);
+        this.dialog.close(this.selectedReason)
+      },
+      error: (err: any) => {
+        this.dialogRef.close(this.selectedReason);
+        this.dialog.close(this.selectedReason)
+        this.showSpinner = false;
+        this.toast.setErrorMessage(
+          err?.error?.responseMessage ??
+            err?.statusText ??
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+          politeness: 'polite',
+        });
+        if (err?.status === 401) {
+          this.auth.agentLogout();
+        }
+      },
+    });
+  }
+}

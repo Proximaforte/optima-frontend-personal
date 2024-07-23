@@ -24,23 +24,30 @@ export class SuccessfulBeneficiaryOnboardingComponent {
 
   routeBeneficiaryTable(){
     const beneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
-    this.beneficiaryService.onboardingSubmitted(beneficiaryPhoneNumber).subscribe({
-      next: (res:any) => {
-       // console.log('res>>>', res);
-        this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
-      },
-      error: (err: any) => {
-        console.error('err>>>', err);
-        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.snackbar.openFromComponent(ToastsComponent, {
-          duration: 4000,
-          verticalPosition: 'bottom',
-        });
-        if(err?.status === 401){
-        this.auth.agentLogout();
-        }
-      }
-    })
+    this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
+    localStorage.removeItem("NINDetails")
+    localStorage.removeItem("beneficiaryPhoneNumber")
+    localStorage.removeItem("biometrics")
+    localStorage.removeItem("incomplete")
+    localStorage.removeItem("verification")
+    localStorage.removeItem("nin")
+    localStorage.removeItem("faceCapture_skipThumPrints")
+    localStorage.removeItem("isFingerprintOk")
+    // this.beneficiaryService.onboardingSubmitted(beneficiaryPhoneNumber).subscribe({
+    //   next: (res:any) => {
+    //   },
+    //   error: (err: any) => {
+    //     console.error('err>>>', err);
+    //     this.toast.setSuccessMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+    //     this.toast.setErrorMessage(err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+    //     this.snackbar.openFromComponent(ToastsComponent, {
+    //       duration: 4000,
+    //       verticalPosition: 'bottom',
+    //     });
+    //     if(err?.status === 401){
+    //     this.auth.agentLogout();
+    //     }
+    //   }
+    // })
   }
 }

@@ -35,6 +35,15 @@ export class FinancialComponent implements OnInit{
   option5: string[] | any = [
     "If yes, please specify*",  "Education",  "Medical",  "Financial",  "Transportation", "None of the above, others"
   ]
+  option6: string[] = [
+    "Do you have a bank account?*",  "yes",  "no"
+  ]
+  option7: string[] = [
+    "Do you have access to credit or loans?*",  "yes",  "no"
+  ]
+  option8: string[] = [
+    "Do you use mobile money services?*",  "yes",  "no"
+  ]
   showOthers: boolean = false;
   disableBtn: boolean = true;
   userDetails:any = {};
@@ -91,17 +100,23 @@ export class FinancialComponent implements OnInit{
       houseHoldIncome: new FormControl('', [Validators.required]),
       averageAmtSpent: new FormControl('', [Validators.required]),
       financialAid: new FormControl('', [Validators.required]),
-      ifYes: new FormControl('', [Validators.required]),
-      otherAidType: new FormControl('', [Validators.required])
+      ifYes: new FormControl(''),
+      otherAidType: new FormControl(''),
+      have_bank_account: new FormControl('', [Validators.required]),
+      access_to_credit: new FormControl('', [Validators.required]),
+      mobile_money: new FormControl('', [Validators.required])
     })
 
     this.financialInfoForm.get('financialAid')?.valueChanges.subscribe({
       next: (value: string) => {
       //  console.log("item>>>", value);
-        if(value === "yes"){
+        if(value.toLowerCase() === "yes"){
           this.showOthers = true;
           this.disableBtn = true;
           this.showOtherAide = false; 
+          this.financialInfoForm
+            .get('ifYes')
+            ?.setValidators(Validators.required);
         }else{
           this.showOthers = false;
           this.disableBtn = false;
@@ -115,6 +130,9 @@ export class FinancialComponent implements OnInit{
         if(value === 'None of the above, others'){
           this.showOtherAide = true;
           this.disableBtn = true;
+          this.financialInfoForm
+            .get('otherAidType')
+            ?.setValidators(Validators.required);
         }else{
           this.showOtherAide = false; 
           this.disableBtn = false;
@@ -132,6 +150,13 @@ export class FinancialComponent implements OnInit{
       }
     })
 
+    this.financialInfoForm.valueChanges.subscribe(() =>
+      this.updateDisabledBtn(),
+    );
+  }
+
+  updateDisabledBtn() {
+    this.disableBtn = !this.financialInfoForm.valid;
   }
 
   submit(){
@@ -142,9 +167,12 @@ export class FinancialComponent implements OnInit{
       breadwinner: this.financialInfoForm.value?.breadWinner === 'yes' ? true : this.financialInfoForm.value?.breadWinner === 'no' ? false : null,
       monthlyIncome: this.financialInfoForm.value?.houseHoldIncome,
       monthlyExpenses: this.financialInfoForm.value?.averageAmtSpent,
-      receivedAid: this.financialInfoForm.value?.financialAid === 'yes' ? true : this.financialInfoForm.value?.financialAid === 'no' ? false : null,
+      receivedAid: this.financialInfoForm.value?.financialAid === 'yes',
       specifyAid: this.financialInfoForm.value?.ifYes,
-      otherAidType: this.financialInfoForm.value?.ifYes === 'None of the above, others' ? this.financialInfoForm.value?.otherAidType : null
+      otherAidType: this.financialInfoForm.value?.ifYes === 'None of the above, others' ? this.financialInfoForm.value?.otherAidType : null,
+      hasBankAccount: this.financialInfoForm.value.have_bank_account?.toLowerCase() === "yes",
+      hasAccessToLoan: this.financialInfoForm.value.access_to_credit?.toLowerCase() === "yes",
+      hasMobileMoney: this.financialInfoForm.value.mobile_money?.toLowerCase() === "yes"
     }
 
     //console.log('data>>', payload);
@@ -169,7 +197,7 @@ export class FinancialComponent implements OnInit{
         console.error('err from financial details onbording>>', err);
         this.showSpinner = false;
         this.toast.setErrorMessage( err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',

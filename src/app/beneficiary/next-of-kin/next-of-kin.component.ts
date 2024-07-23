@@ -13,7 +13,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./next-of-kin.component.scss']
 })
 export class NextOfKinComponent implements OnInit {
-
   options: string[] = ["State of residence"];
   option2: string[] = ["Local government of residence"];
   nextOfKinForm!: FormGroup;
@@ -26,8 +25,8 @@ export class NextOfKinComponent implements OnInit {
   userDetails: any = {};
   disableBtn: boolean = true;
   showSpinner: boolean = false;
-
   showWelcomeMsg:boolean = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -36,11 +35,8 @@ export class NextOfKinComponent implements OnInit {
     private toast: ToastsService,
     private auth: AuthService
   ) {
-    const getUserData: any = localStorage.getItem('NINDetails');
-    this.userDetails = JSON.parse(getUserData);
-
-    
-    
+    const address: any = localStorage.getItem('userAddress');
+    this.userDetails = typeof address === "string" ? address : JSON.parse(address);
 
     const getMessage:any = localStorage.getItem('incomplete');
     if(getMessage !== null){
@@ -48,20 +44,19 @@ export class NextOfKinComponent implements OnInit {
       setTimeout(() => {
         this.showWelcomeMsg = false;
         localStorage.removeItem('incomplete');
-       }, 2500);
-    }else{
-       this.showWelcomeMsg = false;
+      }, 2500);
+    } else {
+      this.showWelcomeMsg = false;
     }
   }
 
-
-
   toggleChecked(event: any) {
-    this.disableBtn = false;
-    if (event === true) {
+    if (event) {
       this.sameResidence = true;
+      this.nextOfKinForm.patchValue({ "address": this.userDetails });
     } else {
       this.sameResidence = false;
+      this.nextOfKinForm.patchValue({ "address": "" });
     }
   }
 
@@ -69,40 +64,43 @@ export class NextOfKinComponent implements OnInit {
     this.nextOfKinForm = new FormGroup({
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
-      nin: new FormControl('', [Validators.required]),
+      nin: new FormControl(''),
       phoneNumber: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      ssid: new FormControl('', [Validators.required]),
+      email: new FormControl('', null),
+      ssid: new FormControl('', null),
       relationship: new FormControl('', [Validators.required]),
-      specifyRelationship: new FormControl('', [Validators.required]),
+      specifyRelationship: new FormControl('', this.showOthers ? [Validators.required] : null),
       address: new FormControl('', [Validators.required])
-    })
+    });
+
+    this.nextOfKinForm.valueChanges.subscribe(() => {
+      this.updateDisabledBtn();
+    });
 
     this.nextOfKinForm.get('relationship')?.valueChanges.subscribe({
       next: (value: any) => {
-        if (value === 'OTHERS') {
-          this.showOthers = true;
-        } else {
-          this.showOthers = false;
-        }
+        this.showOthers = value === 'OTHERS';
+        this.nextOfKinForm.get('specifyRelationship')?.setValidators(
+          value === 'OTHERS' ? [Validators.required] : null
+        );
+        this.nextOfKinForm.get('specifyRelationship')?.updateValueAndValidity();
       }
-    })
-
-
-    this.nextOfKinForm.get('address')?.valueChanges.subscribe({
-      next: (value: any) => {
-        this.disableBtn = false;
-      }
-
-    })
+    });
   }
 
-  getDropdownItems(){
+  updateDisabledBtn() {
+    this.disableBtn = !this.nextOfKinForm.valid;
+
+  }
+
+  getDropdownItems() {
     this.beneficiaryService.getRelationshipDropdown().subscribe({
       next: (item: any) => {
-        this.option5 = new Set([ "Relationship*", "FATHER", "MOTHER", "SPOUSE", "CHILD", "GRAND_PARENT", "GRAND_SPOUSE"].concat(item.data));
+        this.option5 = new Set([
+          "Relationship*", "FATHER", "MOTHER", "SPOUSE", "CHILD", "GRAND_PARENT", "GRAND_SPOUSE"
+        ].concat(item.data));
       }
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -111,6 +109,8 @@ export class NextOfKinComponent implements OnInit {
   }
 
   submit() {
+    if (this.disableBtn) return;
+
     this.showSpinner = true;
     const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber' || null);
     const payload:any = {
@@ -118,17 +118,16 @@ export class NextOfKinComponent implements OnInit {
       firstname: this.nextOfKinForm.value?.firstname,
       lastname: this.nextOfKinForm.value?.lastname,
       relationship: this.nextOfKinForm.value.relationship,
-      nokNin: this.nextOfKinForm.value?.nin,
-      nokSsid: this.nextOfKinForm.value?.ssid,
+      nokNin: String(this.nextOfKinForm.value?.nin),
+      nokSsid: String(this.nextOfKinForm.value?.ssid),
       phoneNumber: this.nextOfKinForm.value?.phoneNumber,
       email: this.nextOfKinForm.value?.email,
-      address: this.sameResidence === true ? this.userDetails?.residence : this.nextOfKinForm.value?.address,
-      specifyRelationship: this.nextOfKinForm.value.relationship === 'OTHERS' ? this.nextOfKinForm.value?.specifyRelationship : null,
-    }
+      address: this.sameResidence === true ? this.userDetails : this.nextOfKinForm.value?.address,
+      specifyRelationship: this.nextOfKinForm.value?.specifyRelationship ?? "",
+    };
 
     this.beneficiaryService.nextOfKinDetails(payload).subscribe({
       next: (res: any) => {
-       // console.log("res>>>", res);
         this.showSpinner = false;
         this.toast.setSuccessMessage('Beneficiary Next of Kin data onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
@@ -141,13 +140,12 @@ export class NextOfKinComponent implements OnInit {
           queryParams: {
             progress: 'employment'
           }
-        })
+        });
       },
       error: (err: any) => {
         console.error("err>>", err);
         this.showSpinner = false;
         this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
@@ -156,7 +154,6 @@ export class NextOfKinComponent implements OnInit {
           this.auth.agentLogout();
         }
       }
-    })
+    });
   }
-
 }

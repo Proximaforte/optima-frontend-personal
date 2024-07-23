@@ -1,8 +1,11 @@
 import { Component, ElementRef, ViewChild, OnInit, AfterViewInit, HostListener } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { MatStepper } from '@angular/material/stepper';
 import { Subscription } from 'rxjs';
 import { BeneficiaryService } from '../services/beneficiary/beneficiary.service';
+import { filter } from 'rxjs/operators';
+import { ViewportScroller } from '@angular/common';
+
 
 @Component({
   selector: 'app-beneficiary',
@@ -22,6 +25,7 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     "residential details",
     "marital info",
     "education",
+    "education-second",
     "health",
     "financial",
     "next of kin",
@@ -33,9 +37,10 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
   selectedItemName: string | null = null;
   isLinear = false;
   isDesktop: boolean = window.innerWidth >= 1024;
-
+  
   constructor(
     private router: Router,
+    private viewportScroller: ViewportScroller,
     private route: ActivatedRoute,
     private routeService: BeneficiaryService
   ) {
@@ -60,16 +65,19 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     if (this.stepper) {
       this.getRouteToDiplay();
     }
+
   }
+  
 
   ngOnInit(): void {
+
     this.isDesktop = window.innerWidth >= 1024;
     this.route.queryParams.subscribe({
       next: (params: Params) => {
         const sectionToScrollTo = params['progress'];
-        if (sectionToScrollTo === 'personal_details') {
+        // if (sectionToScrollTo === 'personal_details') {
           this.scrollToSection(sectionToScrollTo);
-        }
+        // }
       }
     });
   }
@@ -91,6 +99,8 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollTop = 0
+      element.scrollTo(0, 0)
     }
   }
 

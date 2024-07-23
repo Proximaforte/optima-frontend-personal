@@ -6,6 +6,7 @@ import { ToastsService } from 'src/app/services/alert/toasts.service';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/authentication/auth.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-personal-details',
@@ -61,9 +62,7 @@ export class PersonalDetailsComponent implements OnInit {
    // console.log("newDate>>", newDate);
     this.formattedDate = this.ninDetails.birthDate; //`${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;
    // console.log("formattedDate>>", this.formattedDate);
-   }else{
-    console.log(null);
-   }
+   } 
   }
 
 
@@ -73,32 +72,42 @@ export class PersonalDetailsComponent implements OnInit {
   onInputBlur() {
     this.emailPlaceHolder = '';
   }
-
+  
   getPersonalForm() {
     this.personalDetailsForm = new FormGroup({
-      firstName: new FormControl(this.ninDetails.firstName, [Validators.required]),
-      lastName: new FormControl(this.ninDetails.lastName, [Validators.required]),
-      middleName: new FormControl(this.ninDetails.middleName, [Validators.required]),
-      phoneNumber: new FormControl(this.ninDetails.phone, [Validators.required]),
-      bvn: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      gender: new FormControl(this.ninDetails?.gender, [Validators.required]),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,
-      dateOfBirth: new FormControl(this.formattedDate, [Validators.required]),
+      firstName: new FormControl(this.ninDetails.firstName as string, null),
+      lastName: new FormControl(this.ninDetails.lastName as string, null),
+      middleName: new FormControl(this.ninDetails.middleName as string, null),
+      phoneNumber: new FormControl(this.ninDetails.phone as string, [Validators.required]),
+      bvn: new FormControl('', null),
+      email: new FormControl('', null),
+      gender: new FormControl(this.ninDetails?.gender as string, null),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,
+      dateOfBirth: new FormControl(this.formattedDate as string, null),
       placeOfBirth: new FormControl('', [Validators.required]),
       religion: new FormControl('', [Validators.required]),
-      others: new FormControl(''),
+      others: new FormControl('', this.showOthers ? [Validators.required] : null),
     })
 
-    this.personalDetailsForm.get('religion')?.valueChanges.subscribe({
-      next: (value: any) => {
-        this.disableBtn = false;
-        if (value === 'OTHERS') {
-          this.showOthers = true;
-        } else {
-          this.showOthers = false;
-        }
+
+    this.personalDetailsForm.get('religion')?.valueChanges.subscribe((value) => {
+      if (value === 'OTHERS') {
+        this.showOthers = true;
+        this.disableBtn = true;
+        this.personalDetailsForm
+          .get('others')
+          ?.setValidators(Validators.required);
+      } else {
+        this.showOthers = false;
       }
     })
+    // Listen for changes on the entire form
+    this.personalDetailsForm.valueChanges.subscribe(() => {
+      this.updateDisabledBtn();
+    });
+  }
+
+  updateDisabledBtn() {
+      this.disableBtn = !this.personalDetailsForm.valid;
   }
 
   getDropDowns(){
@@ -124,25 +133,23 @@ export class PersonalDetailsComponent implements OnInit {
 
     this.showSpinner = true;
     localStorage.setItem('beneficiaryPhoneNumber', this.personalDetailsForm.get('phoneNumber')?.value);
-    console.log(newNin)
     const payload: any = {
       nin: newNin?.nin,
       // firstname: this.personalDetailsForm.value?.firstName,
       // lastname: this.personalDetailsForm.value?.lastName,
       // middleName: this.personalDetailsForm.value?.middleName,
       phoneNumber: this.personalDetailsForm.get('phoneNumber')?.value,
-      bvn: this.personalDetailsForm.value?.bvn,
-      email: this.personalDetailsForm.value?.email,
+      bvn: this.personalDetailsForm.value?.bvn ? this.personalDetailsForm.value?.bvn : null,
+      email: this.personalDetailsForm.value?.email ? this.personalDetailsForm.value?.email : null,
       // gender: this.personalDetailsForm.value?.gender,
-      //dateOfBirth: this.formattedDate,
+      // dateOfBirth: this.formattedDate,
       placeOfBirth: this.personalDetailsForm.value?.placeOfBirth,
-      religion: this.personalDetailsForm.value.religion === 'OTHERS' ? this.personalDetailsForm.value?.others : this.personalDetailsForm.value?.religion
+      religion: this.personalDetailsForm.value?.religion,
+      otherReligion: this.personalDetailsForm.value?.others ? this.personalDetailsForm.value?.others : null,
     }
  
-    this.beneficiaryService.personalDetails(payload).subscribe({
+    this.beneficiaryService.personalDetails(payload).pipe(first()).subscribe({
       next: (res: any) => {
-        //   console.log("response>>>", res);
-       // this.beneficiaryService.setPersonalDetails(payload);
         this.toast.setSuccessMessage('Beneficiary Personal Details is onboarded successfully!');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
@@ -169,9 +176,8 @@ export class PersonalDetailsComponent implements OnInit {
       },
       error: (err: any) => {
         this.showSpinner = false;
-        console.error("personal details error>>", err);
-        this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(err?.error?.responseMessage ?? err?.statusText ?? "Oops an error occured!");
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
@@ -180,7 +186,7 @@ export class PersonalDetailsComponent implements OnInit {
         if (err?.status === 401) {
           this.auth.agentLogout();
         }
-      }
+      },
     })
   }
 

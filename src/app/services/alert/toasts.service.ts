@@ -1,42 +1,51 @@
 import { Injectable } from '@angular/core';
 import { ErrorMessage, SuccessMessage } from 'src/app/models/APIs/endpoints';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, BehaviorSubject, filter } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToastsService {
-
   errorMessage: ErrorMessage = {
-    message: ''
+    message: '',
   };
 
   successMessage: SuccessMessage = {
-    message: ''
+    message: '',
   };
 
-  successMsg$: ReplaySubject<any> = new ReplaySubject<any>();
-  error$: ReplaySubject<any> = new ReplaySubject<any>();
+  successMsg$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  error$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor() { }
-
-  //success
-  public setSuccessMessage(message: string){
-   return this.successMsg$.next(message);
+  constructor() {}
+  private clearMessages() {
+    this.successMsg$.next(null);
+    this.error$.next(null);
   }
 
-  public getSuccessMessage(){
-    return this.successMsg$.asObservable();
+  // success
+  public setSuccessMessage(message: string) {
+    this.clearMessages();
+    this.successMsg$.next(message);
   }
 
-  //catch errs
-  public setErrorMessage(message: string){
+  public getSuccessMessage(): Observable<any> {
+    // Filter out the initial null value or any other unwanted values
+    return this.successMsg$
+      .asObservable()
+      .pipe(filter((message) => message !== null));
+  }
+
+  // catch errors
+  public setErrorMessage(message: string) {
+    this.clearMessages();
     this.error$.next(message);
   }
 
-  public getErrorMessage(){
-    return this.error$.asObservable();
+  public getErrorMessage(): Observable<any> {
+    // Filter out the initial null value or any other unwanted values
+    return this.error$
+      .asObservable()
+      .pipe(filter((message) => message !== null));
   }
-
-
 }
