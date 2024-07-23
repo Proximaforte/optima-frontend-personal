@@ -64,7 +64,7 @@ export class NextOfKinComponent implements OnInit {
     this.nextOfKinForm = new FormGroup({
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
-      nin: new FormControl('', [Validators.required]),
+      nin: new FormControl(''),
       phoneNumber: new FormControl('', [Validators.required]),
       email: new FormControl('', null),
       ssid: new FormControl('', null),
@@ -120,7 +120,7 @@ export class NextOfKinComponent implements OnInit {
       relationship: this.nextOfKinForm.value.relationship,
       nokNin: String(this.nextOfKinForm.value?.nin),
       nokSsid: String(this.nextOfKinForm.value?.ssid),
-      phoneNumber: String(this.nextOfKinForm.value?.phoneNumber),
+      phoneNumber: this.nextOfKinForm.value?.phoneNumber,
       email: this.nextOfKinForm.value?.email,
       address: this.sameResidence === true ? this.userDetails?.residence : this.nextOfKinForm.value?.address,
       specifyRelationship: this.nextOfKinForm.value?.specifyRelationship ?? "",
@@ -129,7 +129,7 @@ export class NextOfKinComponent implements OnInit {
     this.beneficiaryService.nextOfKinDetails(payload).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
-        this.toast.setSuccessMessage('Beneficiary Next of Kin data onboarded successfully!');
+        this.toast.setSuccessMessage(res.responseMessage ?? 'Successful');
         this.snackbar.openFromComponent(ToastsComponent, {
           duration: 4000,
           verticalPosition: 'bottom',
