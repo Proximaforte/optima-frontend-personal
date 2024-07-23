@@ -189,6 +189,7 @@ export class ResidentialDetailsComponent implements OnInit {
 
     this.beneficiaryService.residentialDetails(payload).subscribe({
       next: (res: any) => {
+        localStorage.setItem("userAddress", res.data.address)
         this.showSpinner = false;
         this.beneficiaryService.setRouteToDisplay('marital info');
         this.router.navigate(['/home/beneficiary'], {

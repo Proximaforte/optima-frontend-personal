@@ -88,17 +88,17 @@ export class MaritalInfoComponent implements OnInit {
     this.maritalInfoForm = new FormGroup({
       maritalStatus: new FormControl('Marital Status', [Validators.required]),
       numberOfSpouse: new FormControl('', [Validators.required]),
-      numberOfChildren: new FormControl('', [Validators.required]),
+      numberOfChildren: new FormControl('', null),
+      nameOfSpouses: new FormControl('', null),
+      phoneNumberOfSpouses: new FormControl('', null)
     });
 
     this.maritalInfoForm.get('maritalStatus')?.valueChanges?.subscribe({
       next: (value: string) => {
         if (value === "MARRIED") {
           this.showOthers = true;
-          this.disableBtn = false;
         } else {
           this.showOthers = false;
-          this.disableBtn = false;
         }
         
         if (value === "Marital Status") {
@@ -125,15 +125,32 @@ export class MaritalInfoComponent implements OnInit {
         this.children = Number(value);
       }
     })
+
+    this.maritalInfoForm.valueChanges.subscribe(() => this.updateDisabledBtn());
   }
+  updateDisabledBtn() {
+    const numberOfSpouse = this.maritalInfoForm.get('numberOfSpouse')?.value;
+
+    if (numberOfSpouse > 0) {
+      for (let i = 0; i < numberOfSpouse; i++) {
+        if (!this.nameOfSpouses[i] || !this.phoneNumberOfSpouses[i]) {
+          this.disableBtn = true;
+          return;
+        }
+      }
+    }
+
+    this.disableBtn = !this.maritalInfoForm.valid;
+  }
+
 
   detectClicked() {
     this.emailPlaceHolder = 'Input number of spouse(s)';
-    this.disableBtn = false;
+    // this.disableBtn = false;
   }
   onInputBlur() {
     this.emailPlaceHolder = '';
-    this.disableBtn = false;
+    // this.disableBtn = false;
   }
 
   detectClicked_() {
@@ -150,10 +167,12 @@ export class MaritalInfoComponent implements OnInit {
 
   async pushNameOfSpouses(event: any, index: any): Promise<any> {
     await this.nameOfSpouses.splice(index - 1, 0, event?.target?.value);
+    this.updateDisabledBtn();
   }
 
   async pushPhoneNumberOfSpouses(event: any, index: any): Promise<any> {
     await this.phoneNumberOfSpouses.splice(index - 1, 0, event?.target?.value);
+    this.updateDisabledBtn();
   }
 
 
