@@ -95,6 +95,8 @@ export class AuthComponent implements OnInit {
     this.getBrowserEye();
     this.formInput();
     this.agentLogoutBeforeLeaving();
+    localStorage.removeItem('user')
+    localStorage.removeItem('userDetails')
   }
 
   //email: judeomosehin@gmail.com,  passwords: Password123@

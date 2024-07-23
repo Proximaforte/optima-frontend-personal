@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest , HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 
 @Injectable({
@@ -8,8 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class JwtInterceptorService implements HttpInterceptor{
 
-  constructor() {
+  constructor(private auth: AuthService) {
     this.getAgentData();
+    
   }
 
   getAgentData(): string | null {
@@ -25,7 +27,7 @@ export class JwtInterceptorService implements HttpInterceptor{
     let token:any = this.getAgentData();
     let jwToken = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token ? token : this.auth.token}`
       }
     })
     return next.handle(jwToken);
@@ -44,19 +46,19 @@ export class JwtInterceptorService implements HttpInterceptor{
   public customHttpHeaders:any = new HttpHeaders({
     'Content-Type': 'application/json',
     'accept': '*/*',
-    'Authorization': `Bearer ${this.getAgentData()}`
+    'Authorization': `Bearer ${this.getAgentData() ? this.getAgentData() : this.auth.token}`
   })
 
   public customHttpHeadersNoBearer:any = new HttpHeaders({
     'Content-Type': 'application/json',
     'accept': '*/*',
-    'Authorization': `${this.getAgentData()}`
+    'Authorization': `${this.getAgentData() ? this.getAgentData() : this.auth.token}`
   })
 
   public customFormDataHttpHeaders = new HttpHeaders({
     'Content-Type': 'multipart/form-data',
     'accept': '*/*',
-    'Authorization': `Bearer ${this.getAgentData()}`
+    'Authorization': `Bearer ${this.getAgentData() ? this.getAgentData() : this.auth.token}`
   })
   
 
