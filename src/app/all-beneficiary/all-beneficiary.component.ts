@@ -329,6 +329,7 @@ export class AllBeneficiaryComponent implements OnInit {
     // });
 
     localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    localStorage.setItem("userAddress", beneficiary?.address)
     localStorage.setItem('incomplete', "Let's continue from where you've stopped!");
     this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
       next: (details:any) => {

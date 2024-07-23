@@ -36,7 +36,7 @@ export class NextOfKinComponent implements OnInit {
     private auth: AuthService
   ) {
     const address: any = localStorage.getItem('userAddress');
-    this.userDetails = JSON.parse(address);
+    this.userDetails = typeof address === "string" ? address : JSON.parse(address);
 
     const getMessage:any = localStorage.getItem('incomplete');
     if(getMessage !== null){
@@ -53,7 +53,7 @@ export class NextOfKinComponent implements OnInit {
   toggleChecked(event: any) {
     if (event) {
       this.sameResidence = true;
-      this.nextOfKinForm.patchValue({ "address": this.userDetails?.residence });
+      this.nextOfKinForm.patchValue({ "address": this.userDetails });
     } else {
       this.sameResidence = false;
       this.nextOfKinForm.patchValue({ "address": "" });
