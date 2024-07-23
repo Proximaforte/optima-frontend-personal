@@ -13,7 +13,7 @@
             </span>
         </div>
     </div>
-    <div class="grid grid-rows-11 gap-4 max-w-md mx-auto">
+    <div class="grid grid-rows-11 gap-4 max-w-md mx-auto mb-20">
         <div class="row-span-1">
             <p class="text-xl font-bold">Occupation</p>
             <!-- <p>Almost there enter your next of kin information.</p> -->
@@ -164,7 +164,7 @@
             </form>
         </div>
 
-        <div class="row-span-1" *ngIf="showCivilServerntsInfo === true">
+        <div class="row-span-1 -mt-5" *ngIf="showCivilServerntsInfo === true">
             <form class="max-w-sm" [formGroup]="occupationForm">
                 <select id="funding_options" formControlName="onStudyLeave"
                     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer">
@@ -203,8 +203,7 @@
             </form>
         </div>
 
-        <br>
-        <div class="row-span-1"  *ngIf="showCivilServerntsInfo === true">
+        <div class="row-span-1 "  *ngIf="showCivilServerntsInfo === true">
               <div>
                 <small class="text-xs mb-4">What are your professional qualifications?*</small>
                 <div class="input-container">
@@ -226,8 +225,8 @@
 
               </div>
         </div>
-<br>
-        <div class="row-span-1"  *ngIf="showCivilServerntsInfo === true">
+
+        <div class="row-span-1 "  *ngIf="showCivilServerntsInfo === true">
             <div>
               <small class="text-xs mb-4">What training needs do you require to perform optimally?*</small>
               <div class="input-container">
@@ -249,12 +248,12 @@
             
             </div>
       </div>
-<br>
+
       <div class="row-span-1" *ngIf="showCivilServerntsInfo">
         <form class="max-w-sm" [formGroup]="occupationForm">
             <input type="text" formControlName="psn" id="text-input" aria-describedby="helper-text-explanation"
                 class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter your PSN*">
+                placeholder="Enter your PSN(Personal Sub-Head Number)*">
         </form>
     </div>
 

@@ -222,6 +222,7 @@ export class MaritalInfoComponent implements OnInit {
 
   submitForm() {
     this.showSpinner = true;
+  
     const spousalArray: any[] = [];
     for (let i = 0; i < Math.min(this.nameOfSpouses?.length, this.phoneNumberOfSpouses?.length); i++) {
       const spousalObj = {
@@ -230,84 +231,82 @@ export class MaritalInfoComponent implements OnInit {
       }
       spousalArray.push(spousalObj);
     }
-    //  console.log("spousal form>>>", spousalArray);
-
-
+  
+    // Ensure all child-related arrays have the same length
+    const maxLength = Math.max(
+      this.nameOfChildren.length,
+      this.ageOfChildren.length,
+      this.childrenEduStatus.length,
+      this.childPhoneNumber.length,
+      this.nameOfChildSchool.length,
+      this.dobOfChild.length
+    );
+  
     const childrenArray: any[] = [];
-    for (let i = 0; i < Math.max(
-      this.nameOfChildren?.length,
-      this.ageOfChildren?.length,
-      this.childrenEduStatus?.length,
-      this.childPhoneNumber?.length,
-      this.nameOfChildSchool?.length,
-      this.dobOfChild?.length
-    ); i++) {
-      const ChildrenObj = {
-        name: this.nameOfChildren[i],
-        age: this.ageOfChildren[i],
-        inSchool: this.childrenEduStatus[i],
-        phoneNumber: this.childPhoneNumber[i],
-        schoolName: this.nameOfChildSchool[i],
-        dob: this.dobOfChild[i]
+    for (let i = 0; i < maxLength; i++) {
+      // Check if the current index in each array has a valid value
+      if (this.nameOfChildren[i] && this.ageOfChildren[i] !== undefined && this.childrenEduStatus[i] !== undefined && this.childPhoneNumber[i] && this.nameOfChildSchool[i] && this.dobOfChild[i]) {
+        const ChildrenObj = {
+          name: this.nameOfChildren[i],
+          age: this.ageOfChildren[i],
+          inSchool: this.childrenEduStatus[i],
+          phoneNumber: this.childPhoneNumber[i],
+          schoolName: this.nameOfChildSchool[i],
+          dob: this.dobOfChild[i]
+        };
+        childrenArray.push(ChildrenObj);
       }
-      childrenArray.push(ChildrenObj);
-      //  console.log("children form>>>", childrenArray);
     }
-    const getBeneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
+  
+    const getBeneficiaryPhoneNumber: any = localStorage.getItem('beneficiaryPhoneNumber');
     const payload = {
       phoneNumber: getBeneficiaryPhoneNumber,
       maritalStatus: this.maritalInfoForm.get('maritalStatus')?.value,
       spouseList: spousalArray,
       childList: childrenArray
+    };
+  
+    if (this.nameOfChildren?.length === 0 && Number(this.maritalInfoForm.value.numberOfChildren) > 0) {
+      this.toast.setErrorMessage("Name of child is an important field");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+    } else if (this.nameOfChildren?.length > 0 && this.dobOfChild?.length === 0) {
+      this.toast.setErrorMessage("Date of Birth is a required field");
+      this.snackbar.openFromComponent(ToastsComponent, {
+        duration: 4000,
+        verticalPosition: 'bottom',
+      });
+    } else {
+      this.beneficiarySerice.maritalDetails(payload).subscribe({
+        next: (res: any) => {
+          this.showSpinner = false;
+          this.toast.setSuccessMessage('Beneficiary Marital Status is onboarded successfully!');
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+          this.beneficiarySerice.setRouteToDisplay("education");
+          this.router.navigate(['/home/beneficiary'], {
+            relativeTo: this.route,
+            queryParams: {
+              progress: 'education'
+            }
+          });
+        },
+        error: (err: any) => {
+          console.error("err>>", err);
+          this.showSpinner = false;
+          this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occurred!");
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+        }
+      });
     }
-
-  //  console.log("marital payload>>>", payload);
-  if(this.nameOfChildren?.length === 0 && Number(this.maritalInfoForm.value.numberOfChildren) > 0){
-    this.toast.setErrorMessage("Name of child is an important field");
-    this.snackbar.openFromComponent(ToastsComponent, {
-      duration: 4000,
-      verticalPosition: 'bottom',
-    });
-  }else if(this.nameOfChildren?.length > 0 && this.dobOfChild?.length === 0){
-    this.toast.setErrorMessage("Date of Birth is a required field");
-    this.snackbar.openFromComponent(ToastsComponent, {
-      duration: 4000,
-      verticalPosition: 'bottom',
-    });
-  }else{
-    this.beneficiarySerice.maritalDetails(payload).subscribe({
-      next: (res: any) => {
-        //console.log("res>>", res);
-        this.showSpinner = false;
-        this.toast.setSuccessMessage('Beneficiary Marital Status is onboarded successfully!');
-        this.snackbar.openFromComponent(ToastsComponent, {
-          duration: 4000,
-          verticalPosition: 'bottom',
-        });
-        this.beneficiarySerice.setRouteToDisplay("education");
-        this.router.navigate(['/home/beneficiary'], {
-          relativeTo: this.route,
-          queryParams: {
-            progress: 'education'
-          }
-        })
-      },
-      error: (err: any) => {
-        console.error("err>>", err);
-        this.showSpinner = false;
-        this.toast.setErrorMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
-        this.snackbar.openFromComponent(ToastsComponent, {
-          duration: 4000,
-          verticalPosition: 'bottom',
-        });
-      }
-    })
   }
-
- 
-
-
-  }
+  
 
 }

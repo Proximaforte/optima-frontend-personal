@@ -25,6 +25,14 @@ export class SuccessfulBeneficiaryOnboardingComponent {
   routeBeneficiaryTable(){
     const beneficiaryPhoneNumber:any = localStorage.getItem('beneficiaryPhoneNumber');
     this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
+    localStorage.removeItem("NINDetails")
+    localStorage.removeItem("beneficiaryPhoneNumber")
+    localStorage.removeItem("biometrics")
+    localStorage.removeItem("incomplete")
+    localStorage.removeItem("verification")
+    localStorage.removeItem("nin")
+    localStorage.removeItem("faceCapture_skipThumPrints")
+    localStorage.removeItem("isFingerprintOk")
     // this.beneficiaryService.onboardingSubmitted(beneficiaryPhoneNumber).subscribe({
     //   next: (res:any) => {
     //   },
