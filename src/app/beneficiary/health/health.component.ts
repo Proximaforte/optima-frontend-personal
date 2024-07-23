@@ -61,20 +61,23 @@ export class HealthComponent implements OnInit {
     this.healthForm = new FormGroup({
       healthCondition: new FormControl('', [Validators.required]),
       healthQuestion: new FormControl('', [Validators.required]),
-      specifyAilment: new FormControl('', this.showSpecifyAiment ? [Validators.required] : null),
+      specifyAilment: new FormControl('', null),
       HMOQuestion: new FormControl('', [Validators.required]),
-      specifyHMO: new FormControl('', this.showSpecifyHMO ? [Validators.required] : null),
+      specifyHMO: new FormControl('', null),
       receivingTreatmentQuestion: new FormControl('', [Validators.required]),
       access_to_healthcare: new FormControl('', [Validators.required]),
       distance_to_healthcare: new FormControl('', [Validators.required]),
       household_health_issues: new FormControl('', [Validators.required]),
-      publicHospitalQuestion: new FormControl('', this.showSpecifyHospital ? [Validators.required] : null)
+      publicHospitalQuestion: new FormControl('', null)
     });
 
     this.healthForm.get('healthQuestion')?.valueChanges.subscribe({
       next: (value:any) => {
         if(value === 'Others'){
           this.showSpecifyAiment = true;
+          this.healthForm
+            .get('specifyAilment')
+            ?.setValidators(Validators.required);
         }else{
           this.showSpecifyAiment = false;
         }
@@ -85,6 +88,9 @@ export class HealthComponent implements OnInit {
       next: (value:any) => {
         if(value === 'yes'){
           this.showSpecifyHospital = true;
+          this.healthForm
+            .get('publicHospitalQuestion')
+            ?.setValidators(Validators.required);
         }else{
           this.showSpecifyHospital = false;
         }
