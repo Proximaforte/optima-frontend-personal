@@ -8,7 +8,7 @@
           height="96"
           width="96"
           alt=""
-          class="rounded-full"
+          class="rounded-full object-cover w-28 h-28"
         />
       </div>
       <div class="ml-3 mt-8 font-sora">
@@ -141,7 +141,7 @@
         </div>
   
         <!-- 6th line -->
-        <div class="flex justify-between mt-10">
+        <!-- <div class="flex justify-between mt-10">
           <div
             class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
           >
@@ -150,43 +150,9 @@
             >
             <p class="text-sm font-medium pt-2">{{beneficiary.state || "N/A"}}</p>
           </div>
-        </div>
+        </div> -->
   
-        <!-- 7th line -->
-        <div class="flex justify-between mt-10">
-          <div
-            class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
-          >
-            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-              >LGA of Origin
-            </label>
-            <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga || "N/A"}}</p>
-          </div>
-  
-          <div
-            class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
-          >
-            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-              >Hometown</label
-            >
-            <p class="text-center text-sm font-medium pt-2">
-              {{beneficiary.lga + ',' + beneficiary.state || "N/A"}}
-            </p>
-          </div>
-        </div>
-        <!-- 8th Line -->
-        <div class="flex justify-between mt-10">
-          <div
-            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
-          >
-            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-              >House Address</label
-            >
-            <p class="text-sm font-medium pt-2">
-              {{beneficiary.address  || "N/A"}}
-            </p>
-          </div>
-        </div>
+       
         <!-- 9th Line-->
         <div class="flex justify-between mt-10">
           <div
@@ -210,37 +176,48 @@
       </div>
   
       <div>
-        <!-- first line -->
+        <!-- 7th line -->
         <div class="flex justify-between mt-10">
           <div
             class="relative bg-grey h-[50px] w-5/12 rounded flex px-3 items-center"
           >
             <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-              >State</label
-            >
-            <p class="text-center text-sm font-medium pt-2">{{beneficiary.state  || "N/A"}}</p>
+              >LGA of Residence
+            </label>
+            <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga || "N/A"}}</p>
           </div>
   
           <div
             class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
           >
             <label class="absolute -top-2 left-4 bg-white text-xs text-label"
-              >LGA</label
+              >Ward</label
             >
-            <p class="text-center text-sm font-medium pt-2">{{beneficiary.lga  || "N/A"}}</p>
+            <p class="text-center text-sm font-medium pt-2">
+              {{beneficiary.ward || "N/A"}}
+            </p>
           </div>
         </div>
-  
-        <!-- 2nd Line -->
+        <!-- 8th Line -->
         <div class="flex justify-between mt-10">
           <div
-            class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
+          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
           >
             <label class="absolute -top-2 left-4 bg-white text-xs text-label"
               >House Address</label
             >
             <p class="text-sm font-medium pt-2">
               {{beneficiary.address  || "N/A"}}
+            </p>
+          </div>
+          <div
+          class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
+          >
+            <label class="absolute -top-2 left-4 bg-white text-xs text-label"
+              >Community</label
+            >
+            <p class="text-sm font-medium pt-2">
+              {{beneficiary.community  || "N/A"}}
             </p>
           </div>
         </div>
