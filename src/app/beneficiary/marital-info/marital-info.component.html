@@ -95,7 +95,7 @@
                 (value)="
                   (nameOfSpouses[i] === undefined ? '' : nameOfSpouses[i])
                 "
-                (input)="pushNameOfSpouses($event, i)"
+                (blur)="pushNameOfSpouses($event, i)"
                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Name of Spouse"
               />
@@ -110,7 +110,7 @@
                     ? ''
                     : phoneNumberOfSpouses[i])
                 "
-                (input)="pushPhoneNumberOfSpouses($event, i)"
+                (blur)="pushPhoneNumberOfSpouses($event, i)"
                 class="w-[295px] mt-2 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Phone number of spouse"
               />
@@ -193,7 +193,7 @@
                 <input
                   matInput
                   [matDatepicker]="picker"
-                  [(ngModel)]="dateOfBirth"
+                  (ngModel)="(dateOfBirth[i])"
                   class="w-full"
                   [name]="dateOfBirth"
                   (ngModelChange)="datePipe($event, i)"
@@ -229,7 +229,7 @@
                   </option>
                 </select>
                 <input
-                  *ngIf="showNameOfChildSch === true"
+                  *ngIf="showNameOfChildSch[i]"
                   type="text"
                   id="child"
                   aria-describedby="helper-text-explanation"

@@ -27,6 +27,9 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BeneficiaryService {
+  saveMaritalStatus(body: { maritalStatus: any; numberOfSpouse: any; spouseList: any; }, id: any) {
+    throw new Error('Method not implemented.');
+  }
 
   imageUrl: string = "";
   showOriginal: boolean = false;

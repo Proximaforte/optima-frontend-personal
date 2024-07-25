@@ -6,6 +6,9 @@ import { Observable, BehaviorSubject, filter } from 'rxjs';
   providedIn: 'root',
 })
 export class ToastsService {
+  showToast(success: any, message: any, arg2: null, topRight: any, arg4: number, arg5: () => void) {
+    throw new Error('Method not implemented.');
+  }
   errorMessage: ErrorMessage = {
     message: '',
   };

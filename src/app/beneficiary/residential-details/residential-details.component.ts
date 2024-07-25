@@ -177,7 +177,7 @@ export class ResidentialDetailsComponent implements OnInit {
       phoneNumber: getBeneficiaryPhoneNumber,
       community: this.residentialInfo.value.community,
       ward: this.residentialInfo.value.selectWard,
-      numberOfRoomInHouse: this.residentialInfo.value.noRooms,
+      numberOfRoomInHouse: this.residentialInfo.value.noOfRooms,
       houseCondition: this.residentialInfo.value.houseCondition,
       houseOwner:
         this.residentialInfo.value.placeOfResidence === 'Yes, a house owner',
