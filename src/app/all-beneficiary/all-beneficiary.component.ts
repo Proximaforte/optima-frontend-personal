@@ -348,6 +348,15 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
+    localStorage.removeItem("NINDetails")
+    localStorage.removeItem("beneficiaryPhoneNumber")
+    localStorage.removeItem("biometrics")
+    localStorage.removeItem("incomplete")
+    localStorage.removeItem("verification")
+    localStorage.removeItem("nin")
+    localStorage.removeItem("faceCapture_skipThumPrints")
+    localStorage.removeItem("isFingerprintOk")
+    localStorage.removeItem('userAddress');
     // this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
     // this.snackbar.openFromComponent(ToastsComponent, {
     //   duration: 4000,
