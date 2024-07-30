@@ -106,6 +106,15 @@ export class AllBeneficiaryComponent implements OnInit {
 
   openConsentModal() {
     this.dialog.open(ConsentModalComponent, );
+    localStorage.removeItem("NINDetails")
+    localStorage.removeItem("beneficiaryPhoneNumber")
+    localStorage.removeItem("biometrics")
+    localStorage.removeItem("incomplete")
+    localStorage.removeItem("verification")
+    localStorage.removeItem("nin")
+    localStorage.removeItem("faceCapture_skipThumPrints")
+    localStorage.removeItem("isFingerprintOk")
+    localStorage.removeItem('userAddress');
   }
 
   showInCompleteBeneficiaries() {
@@ -162,6 +171,15 @@ export class AllBeneficiaryComponent implements OnInit {
 
   routeToOnboarding() {
     this.router.navigateByUrl('/home/beneficiary');
+    localStorage.removeItem("NINDetails")
+    localStorage.removeItem("beneficiaryPhoneNumber")
+    localStorage.removeItem("biometrics")
+    localStorage.removeItem("incomplete")
+    localStorage.removeItem("verification")
+    localStorage.removeItem("nin")
+    localStorage.removeItem("faceCapture_skipThumPrints")
+    localStorage.removeItem("isFingerprintOk")
+    localStorage.removeItem('userAddress');
   }
 
   listenToSearch(event: any){
@@ -273,7 +291,15 @@ export class AllBeneficiaryComponent implements OnInit {
 //1
   addBeneficiary() {
     const dialogRef = this.dialog.open(this.consentModal);
-
+    localStorage.removeItem("NINDetails")
+    localStorage.removeItem("beneficiaryPhoneNumber")
+    localStorage.removeItem("biometrics")
+    localStorage.removeItem("incomplete")
+    localStorage.removeItem("verification")
+    localStorage.removeItem("nin")
+    localStorage.removeItem("faceCapture_skipThumPrints")
+    localStorage.removeItem("isFingerprintOk")
+    localStorage.removeItem('userAddress');
     dialogRef.afterClosed().subscribe(result => {
       this.showConsent = true; // Reset to consent view when modal is closed
       if (result === 'accept') {
@@ -322,6 +348,15 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
+    localStorage.removeItem("NINDetails")
+    localStorage.removeItem("beneficiaryPhoneNumber")
+    localStorage.removeItem("biometrics")
+    localStorage.removeItem("incomplete")
+    localStorage.removeItem("verification")
+    localStorage.removeItem("nin")
+    localStorage.removeItem("faceCapture_skipThumPrints")
+    localStorage.removeItem("isFingerprintOk")
+    localStorage.removeItem('userAddress');
     // this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
     // this.snackbar.openFromComponent(ToastsComponent, {
     //   duration: 4000,

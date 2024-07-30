@@ -99,8 +99,6 @@ export class AuthComponent implements OnInit {
     localStorage.removeItem('userDetails')
   }
 
-  //email: judeomosehin@gmail.com,  passwords: Password123@
-
   async onLogin() {
     this.showSpinner = true;
     if (this.loginForm.valid) {

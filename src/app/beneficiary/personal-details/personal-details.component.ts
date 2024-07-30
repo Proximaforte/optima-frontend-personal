@@ -140,7 +140,7 @@ export class PersonalDetailsComponent implements OnInit {
       // middleName: this.personalDetailsForm.value?.middleName,
       phoneNumber: this.personalDetailsForm.get('phoneNumber')?.value,
       bvn: this.personalDetailsForm.value?.bvn ? this.personalDetailsForm.value?.bvn : null,
-      email: this.personalDetailsForm.value?.email ? this.personalDetailsForm.value?.email : null,
+      email: this.personalDetailsForm.value?.email ? this.personalDetailsForm.value?.email?.toLowerCase() : null,
       // gender: this.personalDetailsForm.value?.gender,
       // dateOfBirth: this.formattedDate,
       placeOfBirth: this.personalDetailsForm.value?.placeOfBirth,
