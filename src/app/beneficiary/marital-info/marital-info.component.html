@@ -123,7 +123,7 @@
           <!-- sdfgsfdgsdfgsdd i+1 === nArray?.length-->
           <br /><br />
           <form
-            *ngIf="showOthers === true"
+            *ngIf="showOthers || showChildren" 
             class="max-w-sm flex"
             [formGroup]="maritalInfoForm"
           >
@@ -149,7 +149,7 @@
             </div>
           </form>
           <br />
-          <form *ngIf="showOthers === true">
+          <form *ngIf="showOthers || showChildren">
             <div *ngFor="let i of numbersArrayNext(children)">
               <input
                 type="text"
