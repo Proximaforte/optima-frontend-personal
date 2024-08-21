@@ -8,13 +8,13 @@ import { SwUpdate } from '@angular/service-worker';
 })
 export class AppComponent {
   title = 'Optima';
-  constructor(private swUpdate: SwUpdate) {
-    if (this.swUpdate.isEnabled) {
-      this.swUpdate.available.subscribe(() => {
-        if (confirm("New version available. Load New Version?")) {
-          window.location.reload();
-        }
-      });
-    }
-  }
+  // constructor(private swUpdate: SwUpdate) {
+  //   if (this.swUpdate.isEnabled) {
+  //     this.swUpdate.available.subscribe(() => {
+  //       if (confirm("New version available. Load New Version?")) {
+  //         window.location.reload();
+  //       }
+  //     });
+  //   }
+  // }
 }

@@ -20,7 +20,7 @@ import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 })
 export class MaritalInfoComponent implements OnInit {
   panelOpenState = false;
-  options: String[] = ['Is your child in school?*', 'yes', 'not yet'];
+  options: String[] = ['Is the child currently schooling?*', 'yes', 'no'];
   emailPlaceHolder: string = '';
   otherPlaceHolder: string = '';
   spouse: number = 0;
@@ -30,6 +30,7 @@ export class MaritalInfoComponent implements OnInit {
   maritalInfoForm!: FormGroup;
   spouseFormGroup!: FormGroup;
   childFormGroup!: FormGroup;
+  showChildren: boolean = false;
 
   nameOfSpouse: string = 'nameOfSpouse';
   phoneNumberOfSpouse: string = 'phoneNumberOfSpouse';
@@ -110,21 +111,24 @@ export class MaritalInfoComponent implements OnInit {
 
         if (value === 'SINGLE') {
           this.disableBtn = false;
+          this.showChildren = false;
           this.maritalInfoForm.patchValue({ numberOfSpouse: '' });
         }
         if (value === 'DIVORCED') {
           this.disableBtn = false;
+          this.showChildren = true;
           this.maritalInfoForm.patchValue({ numberOfSpouse: '' });
-        }
+        } 
         if (value === 'WIDOW') {
           this.disableBtn = false;
+          this.showChildren = true;
           this.maritalInfoForm.patchValue({ numberOfSpouse: '' });
         }
         if (value === 'WIDOWER') {
           this.disableBtn = false;
+          this.showChildren = true;
           this.maritalInfoForm.patchValue({ numberOfSpouse: '' });
         }
-
         if (
           value === 'MARRIED' ||
           (value === 'MARRIED' &&
@@ -137,7 +141,6 @@ export class MaritalInfoComponent implements OnInit {
 
     this.maritalInfoForm?.get('numberOfSpouse')?.valueChanges.subscribe({
       next: (values: any) => {
-        //  console.log('number of spouse>>>', values);
         this.spouse = Number(values);
       },
     });
@@ -161,6 +164,7 @@ export class MaritalInfoComponent implements OnInit {
         }
       }
     }
+    
 
     this.disableBtn = !this.maritalInfoForm.valid;
   }
@@ -231,9 +235,7 @@ export class MaritalInfoComponent implements OnInit {
   }
   //dobOfChild
   pushDOBofChild(event: any, index: any) {
-    // console.log('date>>>', event?.target?.value);
     this.dobOfChild.splice(index - 1, 0, event);
-    //  console.log('array>>>', this.dobOfChild);
   }
 
   numbersArray(spouse: number): number[] {
@@ -251,7 +253,6 @@ export class MaritalInfoComponent implements OnInit {
   }
 
   datePipe(event: any, index: any) {
-    // console.log('event>>', event);
     var dateObject = new Date(event);
     var day = dateObject.getDate();
     var month = dateObject.getMonth() + 1;
@@ -272,12 +273,6 @@ export class MaritalInfoComponent implements OnInit {
 
   submitForm() {
     this.showSpinner = true;
-    console.log('nameOfChildren:', this.nameOfChildren);
-    console.log('ageOfChildren:', this.ageOfChildren);
-    console.log('childrenEduStatus:', this.childrenEduStatus);
-    console.log('childPhoneNumber:', this.childPhoneNumber);
-    console.log('nameOfChildSchool:', this.nameOfChildSchool);
-    console.log('dobOfChild:', this.dobOfChild);
 
     const spousalArray: any[] = [];
     for (
