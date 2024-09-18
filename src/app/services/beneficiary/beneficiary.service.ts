@@ -322,6 +322,9 @@ export class BeneficiaryService {
   public getDiplomaTypesDropdown(): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.diplomaTypes}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
+  public getCivilServiceCategory(): Observable<any> {
+    return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.civilServiceCategory}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
+  }
 
   public getCadreTypesDropdown(): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.cadres}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
