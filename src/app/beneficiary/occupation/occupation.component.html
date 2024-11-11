@@ -149,7 +149,7 @@
           />
         </form>
       </div>
-    <div class="row-span-1" *ngIf="showExtraInput">
+    <div class="row-span-1" *ngIf="showExtraInput || showPublicServant">
         <form class="max-w-sm" [formGroup]="occupationForm">
           <input
             type="text"
@@ -544,7 +544,7 @@
         (click)="showPublicServant ? onProceed() : submitForm()"
         id="btn"
         type="submit"
-        [disabled]=" disableBtn"
+        [disabled]="showPublicServant ? disableFirstFormBtn : disableBtn"
         [ngStyle]="{ 'background-color':  disableBtn ? '#B8B7C8' : '#109856',
           
          }"
