@@ -310,6 +310,14 @@ export class OccupationComponent implements OnInit {
           this.showOtherzz = false;
              this.showPublicServant = false;
                 this.showAdditionalCivilServiceInfo = false;
+                                
+     this.showLGEA = false;
+     this.showLGA = false;
+     this.showMinitry = false;
+     this.showMinitry = false;
+     this.showLGEA = false;
+     this.showLGA = false;
+     this.showExtraInput = false;
         } else if (value === 'Civil servant') {
           this.showAdditionalCivilServiceInfo = true;
           this.showStudentsInfo = false;
@@ -326,6 +334,14 @@ export class OccupationComponent implements OnInit {
           this.showStudentsInfo = false;
           this.showOtherzz = true;
           this.showOthers = false;
+                
+     this.showLGEA = false;
+     this.showLGA = false;
+     this.showMinitry = false;
+     this.showMinitry = false;
+     this.showLGEA = false;
+     this.showLGA = false;
+     this.showExtraInput = false;
        
         }
       },
@@ -367,7 +383,9 @@ export class OccupationComponent implements OnInit {
           console.log(this.disableFirstFormBtn);
           ;
           
-           this.disableBtn = false;
+     this.showLGEA = false;
+     this.showLGA = false;
+      this.showMinitry = false;
           this.showMinitry = false;
           this.showLGEA = false;
           this.showLGA = false;
