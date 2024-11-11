@@ -544,7 +544,7 @@
         (click)="showPublicServant ? onProceed() : submitForm()"
         id="btn"
         type="submit"
-        [disabled]="showPublicServant ? disableFirstFormBtn : disableBtn"
+        [disabled]=" disableBtn"
         [ngStyle]="{ 'background-color':  disableBtn ? '#B8B7C8' : '#109856',
           
          }"
