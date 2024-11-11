@@ -285,6 +285,24 @@ export class BeneficiaryService {
   public getEducationSponsorDropdown(): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.educationSponsor}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
   }
+  public getOccupationTypes(): Observable<any> {
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.occupationTypes}`,
+      { headers: this.interceptor?.customNoAuthHttpHeaders },
+    );
+  }
+  public getPublicServantCategory(): Observable<any> {
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.publicServiceCategory}`,
+      { headers: this.interceptor?.customNoAuthHttpHeaders },
+    );
+  }
+  public getInstitutions(state:string): Observable<any> {
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.institutionNames}/${state}`,
+      { headers: this.interceptor?.customNoAuthHttpHeaders },
+    );
+  }
 
   public getHealthCondtionsDropdown(): Observable<any> {
     return this.http.get<any>(`${environment?.baseUrl}/${endpoints?.healthConditions}`, { headers: this.interceptor?.customNoAuthHttpHeaders });
