@@ -16,13 +16,11 @@ import { combineLatest, startWith } from 'rxjs';
   styleUrls: ['./occupation.component.scss'],
 })
 export class OccupationComponent implements OnInit {
-  options: string[] = [
-    'What is your occupation*',
-    'Student',
-    'Civil servant',
-    'Other',
-  ];
+
   civilServiceCategoryOptions: string[] = [];
+  nameOfInstitutions :string []= []
+  state:string = 'kwara'
+  publicServiceCategoryOptions: string[] = [];
   option2: string[] = ['Other Sources of Income e.g farming business etc*'];
   option3: string[] | any = [
     'Sponsorship type*',
@@ -82,6 +80,7 @@ export class OccupationComponent implements OnInit {
   showStudentsInfo: boolean = false;
   showCivilServerntsInfo: boolean = false;
   showAdditionalCivilServiceInfo: boolean = false;
+  showPublicServant: boolean = false;
   isFirstForm: boolean = false;
   showLGA: boolean = false;
   showLGEA: boolean = false;
@@ -94,6 +93,7 @@ export class OccupationComponent implements OnInit {
   showOthers: boolean = false;
   showOtherzz: boolean = false;
   disableBtn: boolean = true;
+  occupationTypes:any [] =[]
   occupationEnums: Occupation = {
     phoneNumber: '',
     type: '',
@@ -204,6 +204,25 @@ export class OccupationComponent implements OnInit {
       },
     });
 
+    this.beneficiaryService.getPublicServantCategory().subscribe({
+      next: (item: any) => {
+        this.publicServiceCategoryOptions = item.data
+   
+     
+        
+        
+      },
+    });
+    this.beneficiaryService.getInstitutions(this.state).subscribe({
+      next: (item: any) => {
+        this.nameOfInstitutions = item.data
+   
+ 
+     
+        
+        
+      },
+    });
     this.beneficiaryService.getCivilServiceCategory().subscribe({
       next: (item: any) => {
         this.civilServiceCategoryOptions = [
@@ -234,6 +253,14 @@ export class OccupationComponent implements OnInit {
         );
       },
     });
+
+    this.beneficiaryService.getOccupationTypes().subscribe({
+      next: (item: any) => {
+  this.occupationTypes = item.data
+      
+      
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -260,6 +287,7 @@ export class OccupationComponent implements OnInit {
       presentStation: new FormControl('', [Validators.required]),
       jobFunction: new FormControl('', [Validators.required]),
       civilServiceCategory: new FormControl('', [Validators.required]),
+      publicServiceCategory: new FormControl('', [Validators.required]),
       onTransfer: new FormControl('', [Validators.required]),
       cadre: new FormControl('', [Validators.required]),
       highestQualification: new FormControl('', [Validators.required]),
@@ -272,20 +300,49 @@ export class OccupationComponent implements OnInit {
     });
 
     this.occupationForm.get('occupation')?.valueChanges.subscribe({
+
       next: (value: any) => {
+       
+        
         if (value === 'Student') {
           this.showStudentsInfo = true;
           this.showCivilServerntsInfo = false;
           this.showOtherzz = false;
+             this.showPublicServant = false;
+                this.showAdditionalCivilServiceInfo = false;
+                                
+     this.showLGEA = false;
+     this.showLGA = false;
+     this.showMinitry = false;
+     this.showMinitry = false;
+     this.showLGEA = false;
+     this.showLGA = false;
+     this.showExtraInput = false;
         } else if (value === 'Civil servant') {
           this.showAdditionalCivilServiceInfo = true;
           this.showStudentsInfo = false;
+          this.showPublicServant = false;
+          this.showOtherzz = false;
+        }  else if (value === 'Public servant') {
+          this.showPublicServant = true
+          this.showAdditionalCivilServiceInfo = false;
+          this.showStudentsInfo = false;
           this.showOtherzz = false;
         } else if (value === 'Other') {
+                this.showPublicServant = false;
           this.showCivilServerntsInfo = false;
           this.showStudentsInfo = false;
           this.showOtherzz = true;
           this.showOthers = false;
+                
+     this.showLGEA = false;
+     this.showLGA = false;
+     this.showMinitry = false;
+     this.showMinitry = false;
+     this.showLGEA = false;
+     this.showLGA = false;
+     this.showExtraInput = false;
+       
         }
       },
     });
@@ -317,6 +374,41 @@ export class OccupationComponent implements OnInit {
           this.showLGA = false;
           this.showExtraInput = true;
           this.disableFirstFormBtn = true
+        } else if (
+          value === 'LEGISLATIVE' ||
+          value === 'JUDICIARY' ||
+          value === 'EXECUTIVE'
+        ) {
+          console.log(this.disableBtn)
+          console.log(this.disableFirstFormBtn);
+          ;
+          
+     this.showLGEA = false;
+     this.showLGA = false;
+      this.showMinitry = false;
+          this.showMinitry = false;
+          this.showLGEA = false;
+          this.showLGA = false;
+          this.showExtraInput = false;
+          this.disableFirstFormBtn = true;
+        }
+      },
+    });
+    this.occupationForm.get('publicServiceCategory')?.valueChanges.subscribe({
+      next: (value: string) => {
+        if (
+          value === 'LEGISLATIVE' ||
+          value === 'JUDICIARY' ||
+          value === 'EXECUTIVE'
+        ) {
+          console.log(this.disableBtn);
+          console.log(this.disableFirstFormBtn);
+          this.disableBtn = false;
+          this.showMinitry = false;
+          this.showLGEA = false;
+          this.showLGA = false;
+          this.showExtraInput = false;
+          this.disableFirstFormBtn = true;
         }
       },
     });
@@ -341,27 +433,7 @@ export class OccupationComponent implements OnInit {
       }
     })
 
-    // combineLatest([
-    //   this.occupationForm
-    //     .get('lga')
-    //     ?.valueChanges.pipe(startWith(this.occupationForm.get('lga')?.value)),
-    //   this.occupationForm
-    //     .get('presentStation')
-    //     ?.valueChanges.pipe(
-    //       startWith(this.occupationForm.get('presentStation')?.value),
-    //     ),
-    //   this.occupationForm
-    //     .get('jobFunction')
-    //     ?.valueChanges.pipe(
-    //       startWith(this.occupationForm.get('jobFunction')?.value),
-    //     ),
-    // ]).subscribe(([lgaValue, stationValue, jobFunctionValue]: any) => {
-    //   if (lgaValue !== '' && stationValue !== '' && jobFunctionValue !== '') {
-    //     this.disableFirstFormBtn = false;
-    //   } else {
-    //     this.disableFirstFormBtn = true;
-    //   }
-    // });
+  
 
     combineLatest([
       this.occupationForm
@@ -483,8 +555,15 @@ export class OccupationComponent implements OnInit {
   }
 
   onProceed() {
-    this.showNextStep = true;
-    this.showCivilServerntsInfo = true;
+    if(this.showPublicServant){
+ this.showNextStep = false;
+ this.showCivilServerntsInfo = true;
+ this.showPublicServant = false
+    }else{
+ this.showNextStep = true;
+ this.showCivilServerntsInfo = true;
+    }
+   
     this.showAdditionalCivilServiceInfo = false;
     this.showLGA = false;
     this.showLGEA = false;
@@ -568,6 +647,7 @@ export class OccupationComponent implements OnInit {
       lga: this.occupationForm.value.lga,
       lgea: this.occupationForm.value.lgea,
       civilServantCategory: this.occupationForm.value.civilServiceCategory,
+      publicServiceCategory: this.occupationForm.value.publicServiceCategory,
       presentStation: this.occupationForm.value.presentStation,
       cadre: this.occupationForm.value.cadre,
       highestQualification: this.occupationForm.value.highestQualification,
@@ -594,7 +674,7 @@ export class OccupationComponent implements OnInit {
       psn: this.occupationForm.value.psn ?? '',
       tin: this.occupationForm.value.tin ?? '',
     };
-    // console.log("totals>>>", totalPayload);
+    console.log("totals>>>", totalPayload);
     this.beneficiaryService.occupationDetails(totalPayload).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
