@@ -66,6 +66,7 @@ export const endpoints = {
   palliativeStatus: 'api/v1/enums/palliativeStatus',
   occupationTypes: 'api/v1/enums/occupationTypes',
   publicServiceCategory: 'api/v1/enums/publicServiceCategory',
+  pensionTypes :'api/v1/enums/pensionerType',
   institutionNames: 'api/v1/residency/institutionList',
   maritalStatus: 'api/v1/enums/maritalStatus',
   gender: 'api/v1/enums/gender',
