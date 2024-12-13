@@ -78,16 +78,16 @@
       </form>
     </div>
 
-      <div class="row-span-1" *ngIf="showPensioner">
+         <div class="row-span-1" *ngIf="showPensioner">
       <form class="max-w-sm " [formGroup]="occupationForm">
         <select
 
-          formControlName="pensionerType"
+          formControlName="pensionType"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option value="">Select category</option>
+          <option value="">Select Pension Type</option>
           <option
-            *ngFor="let option of pensionerCategoryOptions; let id = index"
+            *ngFor="let option of pensionTypesOptions; let id = index"
           >
             <span>{{ option }}</span>
           </option>
@@ -106,7 +106,7 @@
           formControlName="ministries"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option value="">Select category</option>
+          <option value="">Which ministry did you work for last?</option>
           <option
             *ngFor="let option of stateMinistries; let id = index"
           >
@@ -159,27 +159,7 @@
       </div>
 
       
-       <div class="row-span-1" *ngIf="showPensioner">
-      <form class="max-w-sm " [formGroup]="occupationForm">
-        <select
-
-          formControlName="pensionType"
-          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
-        >
-          <option value="">Select Pension Type</option>
-          <option
-            *ngFor="let option of pensionTypesOptions; let id = index"
-          >
-            <span>{{ option }}</span>
-          </option>
-        </select>
-     
-     
-          
-      </form>
-
-    
-    </div>
+   
 
       
     <div class="row-span-1" *ngIf="showLGA ">

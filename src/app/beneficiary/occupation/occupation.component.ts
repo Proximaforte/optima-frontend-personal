@@ -21,12 +21,7 @@ export class OccupationComponent implements OnInit {
   state: string = 'kwara';
   publicServiceCategoryOptions: string[] = [];
   pensionTypesOptions: any;
-  pensionerCategoryOptions: string[] = [
-    ' ⁠State Pensioner',
-    ' ⁠Local Govt. Pensioner',
 
-    ' ⁠Federal Pensioner',
-  ];
   indigeneCategoryOptions: boolean[] = [true, false];
 
   option2: string[] = ['Other Sources of Income e.g farming business etc*'];
@@ -76,7 +71,7 @@ export class OccupationComponent implements OnInit {
   ];
   lgas: string[] = ['Which local government are you posted? (LGA)'];
   lgeas: string[] = ['Which local government are you posted? (LGEA)'];
-  stateMinistries: string[] = ['Which ministry are you currently working?'];
+  stateMinistries: string[] = [''];
   agencyList: string[] = ['Select agency'];
   showRetired: boolean = false;
   showSelfEmployed: boolean = false;
@@ -565,7 +560,7 @@ export class OccupationComponent implements OnInit {
   }
 
   get pensionerType() {
-    return this.occupationForm.get('pensionerType');
+    return this.occupationForm.get('pensionType');
   }
 
   get gradeLevelOfRetirement() {
