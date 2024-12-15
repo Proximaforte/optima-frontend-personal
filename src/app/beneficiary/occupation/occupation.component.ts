@@ -775,7 +775,7 @@ export class OccupationComponent implements OnInit {
     );
     const totalPayload: any = {
       phoneNumber: getBeneficiaryPhoneNumber,
-      psn: this.occupationForm.value.psn ?? '',
+      pensionVerificationNumber: this.occupationForm.value.psn ?? '',
       type: this.occupationForm.value.occupation,
       pensionerType: this.occupationForm.value.pensionType,
       gradeLevelOfRetirement: this.occupationForm.value.gradeLevelOfRetirement,

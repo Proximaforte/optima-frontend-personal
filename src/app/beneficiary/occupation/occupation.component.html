@@ -99,26 +99,26 @@
 
     
     </div>
-       <div class="row-span-1" *ngIf="showPensioner">
-      <form class="max-w-sm " [formGroup]="occupationForm">
-        <select
-
-          formControlName="ministries"
-          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
-        >
-          <option value="">Which ministry did you work for last?</option>
-          <option
-            *ngFor="let option of stateMinistries; let id = index"
-          >
-            <span>{{ option }}</span>
-          </option>
-        </select>
-     
-     
-          
-      </form>
-
-    
+     <div class="row-span-1" *ngIf="showCivilServerntsInfo || showPensioner">
+      <mat-form-field style="width: 385px">
+        <mat-label class="text-sm">{{
+          occupationEnums.dateOfFistAppointment.length === 0
+            ? "Date of First Appointment*"
+            : occupationEnums.dateOfFistAppointment
+        }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="occupationEnums.dateOfFistAppointment"
+          [name]="occupationEnums.dateOfFistAppointment"
+          (ngModelChange)="datePipe($event, 'dateOfFistAppointment')"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
     </div>
 
       <div class="row-span-1" *ngIf="showPensioner">
@@ -349,27 +349,7 @@
       </form>
     </div>
 
-    <div class="row-span-1" *ngIf="showCivilServerntsInfo || showPensioner">
-      <mat-form-field style="width: 385px">
-        <mat-label class="text-sm">{{
-          occupationEnums.dateOfFistAppointment.length === 0
-            ? "Date of First Appointment*"
-            : occupationEnums.dateOfFistAppointment
-        }}</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          [(ngModel)]="occupationEnums.dateOfFistAppointment"
-          [name]="occupationEnums.dateOfFistAppointment"
-          (ngModelChange)="datePipe($event, 'dateOfFistAppointment')"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
+   
 
     <div class="row-span-1" *ngIf="showCivilServerntsInfo">
       <mat-form-field style="width: 385px">
@@ -427,6 +407,27 @@
         ></mat-datepicker-toggle>
         <mat-datepicker #pickerz></mat-datepicker>
       </mat-form-field>
+    </div>
+       <div class="row-span-1" *ngIf="showPensioner">
+      <form class="max-w-sm " [formGroup]="occupationForm">
+        <select
+
+          formControlName="ministries"
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+        >
+          <option value="">Which ministry did you work for last?</option>
+          <option
+            *ngFor="let option of stateMinistries; let id = index"
+          >
+            <span>{{ option }}</span>
+          </option>
+        </select>
+     
+     
+          
+      </form>
+
+    
     </div>
 
     <div class="row-span-1" *ngIf="showCivilServerntsInfo">
@@ -607,7 +608,7 @@
           id="text-input"
           aria-describedby="helper-text-explanation"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Enter your PSN(Personal Sub-Head Number)*"
+          placeholder="Enter your verification Number"
         />
       </form>
     </div>
