@@ -85,7 +85,7 @@
           formControlName="pensionType"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option value="">Select Pension Type</option>
+          <option value="">What Type of Pensioner are you?</option>
           <option
             *ngFor="let option of pensionTypesOptions; let id = index"
           >
@@ -129,7 +129,7 @@
           id="text-input"
           aria-describedby="helper-text-explanation"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Specify Grade of Retirement*"
+          placeholder=" Grade Level of Retirement*"
         />
         </form>
       </div>
@@ -139,7 +139,7 @@
         <mat-label class="text-sm">{{
         
            occupationEnums.dateOfRetirement.length === 0
-            ?  "Date of retirement"
+            ?  "Effective date of retirement"
             : occupationEnums.dateOfRetirement
          
         }}</mat-label>
@@ -415,7 +415,7 @@
           formControlName="ministries"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option value="">Which ministry did you work for last?</option>
+          <option value="">Last MDA of retirement</option>
           <option
             *ngFor="let option of stateMinistries; let id = index"
           >
