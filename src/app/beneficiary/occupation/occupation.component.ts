@@ -301,6 +301,7 @@ export class OccupationComponent implements OnInit {
       dateOfRetirement: new FormControl('', [Validators.required]),
       lastMDAsOfRetirement: new FormControl('', [Validators.required]),
       ministries: new FormControl('', [Validators.required]),
+      pensionVerificationNumber: new FormControl('', [Validators.required]),
     });
 
     this.occupationForm.get('occupation')?.valueChanges.subscribe({
@@ -556,7 +557,7 @@ export class OccupationComponent implements OnInit {
   }
 
   get psn() {
-    return this.occupationForm.get('psn');
+    return this.occupationForm.get('pensionVerificationNumber');
   }
 
   get pensionerType() {
@@ -775,7 +776,8 @@ export class OccupationComponent implements OnInit {
     );
     const totalPayload: any = {
       phoneNumber: getBeneficiaryPhoneNumber,
-      pensionVerificationNumber: this.occupationForm.value.psn ?? '',
+      pensionVerificationNumber:
+        this.occupationForm.value.pensionVerificationNumber ?? '',
       type: this.occupationForm.value.occupation,
       pensionerType: this.occupationForm.value.pensionType,
       gradeLevelOfRetirement: this.occupationForm.value.gradeLevelOfRetirement,
