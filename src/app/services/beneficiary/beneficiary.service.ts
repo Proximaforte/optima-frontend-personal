@@ -297,6 +297,12 @@ export class BeneficiaryService {
       { headers: this.interceptor?.customNoAuthHttpHeaders },
     );
   }
+  public getPensionTypes(): Observable<any> {
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.pensionTypes}`,
+      { headers: this.interceptor?.customNoAuthHttpHeaders },
+    );
+  }
   public getInstitutions(state:string): Observable<any> {
     return this.http.get<any>(
       `${environment?.baseUrl}/${endpoints?.institutionNames}/${state}`,

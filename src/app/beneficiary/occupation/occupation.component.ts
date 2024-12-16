@@ -16,11 +16,14 @@ import { combineLatest, startWith } from 'rxjs';
   styleUrls: ['./occupation.component.scss'],
 })
 export class OccupationComponent implements OnInit {
-
   civilServiceCategoryOptions: string[] = [];
-  nameOfInstitutions :string []= []
-  state:string = 'kwara'
+  nameOfInstitutions: string[] = [];
+  state: string = 'kwara';
   publicServiceCategoryOptions: string[] = [];
+  pensionTypesOptions: any;
+
+  indigeneCategoryOptions: boolean[] = [true, false];
+
   option2: string[] = ['Other Sources of Income e.g farming business etc*'];
   option3: string[] | any = [
     'Sponsorship type*',
@@ -68,7 +71,7 @@ export class OccupationComponent implements OnInit {
   ];
   lgas: string[] = ['Which local government are you posted? (LGA)'];
   lgeas: string[] = ['Which local government are you posted? (LGEA)'];
-  stateMinistries: string[] = ['Which ministry are you currently working?'];
+  stateMinistries: string[] = [''];
   agencyList: string[] = ['Select agency'];
   showRetired: boolean = false;
   showSelfEmployed: boolean = false;
@@ -81,6 +84,7 @@ export class OccupationComponent implements OnInit {
   showCivilServerntsInfo: boolean = false;
   showAdditionalCivilServiceInfo: boolean = false;
   showPublicServant: boolean = false;
+  showPensioner: boolean = false;
   isFirstForm: boolean = false;
   showLGA: boolean = false;
   showLGEA: boolean = false;
@@ -93,7 +97,7 @@ export class OccupationComponent implements OnInit {
   showOthers: boolean = false;
   showOtherzz: boolean = false;
   disableBtn: boolean = true;
-  occupationTypes:any [] =[]
+  occupationTypes: any[] = [];
   occupationEnums: Occupation = {
     phoneNumber: '',
     type: '',
@@ -115,6 +119,7 @@ export class OccupationComponent implements OnInit {
     leavePaid: null, //
     trained: null,
     trainingType: '',
+    dateOfRetirement: '',
     professionalQualifications: [
       //
       '',
@@ -145,7 +150,7 @@ export class OccupationComponent implements OnInit {
     }
   }
 
-  currentWord: string = ''; // Input text
+  currentWord: string = '';
   words: string[] = []; // Array to hold the words
   currentWordz: string = ''; // Input text
   wordz: string[] = []; // Array to hold the words
@@ -206,21 +211,17 @@ export class OccupationComponent implements OnInit {
 
     this.beneficiaryService.getPublicServantCategory().subscribe({
       next: (item: any) => {
-        this.publicServiceCategoryOptions = item.data
-   
-     
-        
-        
+        this.publicServiceCategoryOptions = item.data;
       },
     });
+      this.beneficiaryService.getPensionTypes().subscribe({
+        next: (item: any) => {
+          this.pensionTypesOptions = item.data;
+        },
+      });
     this.beneficiaryService.getInstitutions(this.state).subscribe({
       next: (item: any) => {
-        this.nameOfInstitutions = item.data
-   
- 
-     
-        
-        
+        this.nameOfInstitutions = item.data;
       },
     });
     this.beneficiaryService.getCivilServiceCategory().subscribe({
@@ -256,9 +257,7 @@ export class OccupationComponent implements OnInit {
 
     this.beneficiaryService.getOccupationTypes().subscribe({
       next: (item: any) => {
-  this.occupationTypes = item.data
-      
-      
+        this.occupationTypes = item.data;
       },
     });
   }
@@ -297,65 +296,75 @@ export class OccupationComponent implements OnInit {
       trainingType: new FormControl('', [Validators.required]),
       psn: new FormControl('', [Validators.required]),
       tin: new FormControl('', [Validators.required]),
+      pensionType: new FormControl('', [Validators.required]),
+      gradeLevelOfRetirement: new FormControl('', [Validators.required]),
+      dateOfRetirement: new FormControl('', [Validators.required]),
+      lastMDAsOfRetirement: new FormControl('', [Validators.required]),
+      ministries: new FormControl('', [Validators.required]),
     });
 
     this.occupationForm.get('occupation')?.valueChanges.subscribe({
-
       next: (value: any) => {
-       
-        
         if (value === 'Student') {
           this.showStudentsInfo = true;
           this.showCivilServerntsInfo = false;
           this.showOtherzz = false;
-             this.showPublicServant = false;
-                this.showAdditionalCivilServiceInfo = false;
-                                
-     this.showLGEA = false;
-     this.showLGA = false;
-     this.showMinitry = false;
-     this.showMinitry = false;
-     this.showLGEA = false;
-     this.showLGA = false;
-     this.showExtraInput = false;
+          this.showPublicServant = false;
+          this.showAdditionalCivilServiceInfo = false;
+
+          this.showLGEA = false;
+          this.showLGA = false;
+          this.showMinitry = false;
+          this.showMinitry = false;
+          this.showLGEA = false;
+          this.showLGA = false;
+          this.showExtraInput = false;
+          this.showPensioner = false;
         } else if (value === 'Civil servant') {
           this.showAdditionalCivilServiceInfo = true;
           this.showStudentsInfo = false;
           this.showPublicServant = false;
           this.showOtherzz = false;
-        }  else if (value === 'Public servant') {
-          this.showPublicServant = true
+          this.showPensioner = false;
+        } else if (value === 'Public servant') {
+          this.showPublicServant = true;
+          this.showAdditionalCivilServiceInfo = false;
+          this.showStudentsInfo = false;
+          this.showOtherzz = false;
+          this.showPensioner = false;
+        } else if (value === 'Pensioner') {
+          this.showPublicServant = false;
+          this.showPensioner = true;
           this.showAdditionalCivilServiceInfo = false;
           this.showStudentsInfo = false;
           this.showOtherzz = false;
         } else if (value === 'Other') {
-                this.showPublicServant = false;
+          this.showPublicServant = false;
           this.showCivilServerntsInfo = false;
           this.showStudentsInfo = false;
           this.showOtherzz = true;
           this.showOthers = false;
-                
-     this.showLGEA = false;
-     this.showLGA = false;
-     this.showMinitry = false;
-     this.showMinitry = false;
-     this.showLGEA = false;
-     this.showLGA = false;
-     this.showExtraInput = false;
-       
+          this.showPensioner = false;
+
+          this.showLGEA = false;
+          this.showLGA = false;
+          this.showMinitry = false;
+          this.showMinitry = false;
+          this.showLGEA = false;
+          this.showLGA = false;
+          this.showExtraInput = false;
         }
       },
     });
 
     this.occupationForm.get('civilServiceCategory')?.valueChanges.subscribe({
       next: (value: string) => {
-
         if (
           value.toUpperCase() === 'TESCOM' ||
           value.toUpperCase() === 'LOCAL GOVERNMENT'
         ) {
-          this.occupationForm.get("presentStation")?.reset()
-          this.occupationForm.get("jobFunction")?.reset()
+          this.occupationForm.get('presentStation')?.reset();
+          this.occupationForm.get('jobFunction')?.reset();
           this.showLGA = true;
           this.showLGEA = false;
           this.showMinitry = false;
@@ -367,25 +376,21 @@ export class OccupationComponent implements OnInit {
           this.showLGA = false;
           this.showMinitry = false;
           this.showExtraInput = true;
-          this.disableFirstFormBtn = true
+          this.disableFirstFormBtn = true;
         } else if (value.toUpperCase() === 'STATE MINISTRY') {
           this.showMinitry = true;
           this.showLGEA = false;
           this.showLGA = false;
           this.showExtraInput = true;
-          this.disableFirstFormBtn = true
+          this.disableFirstFormBtn = true;
         } else if (
           value === 'LEGISLATIVE' ||
           value === 'JUDICIARY' ||
           value === 'EXECUTIVE'
         ) {
-          console.log(this.disableBtn)
-          console.log(this.disableFirstFormBtn);
-          ;
-          
-     this.showLGEA = false;
-     this.showLGA = false;
-      this.showMinitry = false;
+          this.showLGEA = false;
+          this.showLGA = false;
+          this.showMinitry = false;
           this.showMinitry = false;
           this.showLGEA = false;
           this.showLGA = false;
@@ -401,8 +406,6 @@ export class OccupationComponent implements OnInit {
           value === 'JUDICIARY' ||
           value === 'EXECUTIVE'
         ) {
-          console.log(this.disableBtn);
-          console.log(this.disableFirstFormBtn);
           this.disableBtn = false;
           this.showMinitry = false;
           this.showLGEA = false;
@@ -413,27 +416,25 @@ export class OccupationComponent implements OnInit {
       },
     });
 
-    this.occupationForm.get("lga")?.valueChanges.subscribe({
+    this.occupationForm.get('lga')?.valueChanges.subscribe({
       next: (value: string) => {
-        if (value !== "") {
-          this.occupationForm.get("presentStation")?.valueChanges.subscribe({
+        if (value !== '') {
+          this.occupationForm.get('presentStation')?.valueChanges.subscribe({
             next: (value2: string) => {
-              if (value2 !== "") {
-                this.occupationForm.get("jobFunction")?.valueChanges.subscribe({
+              if (value2 !== '') {
+                this.occupationForm.get('jobFunction')?.valueChanges.subscribe({
                   next: (value3: string) => {
-                    if (value3 !== "") {
-                      this.disableFirstFormBtn = false
+                    if (value3 !== '') {
+                      this.disableFirstFormBtn = false;
                     }
-                  }
-                })
+                  },
+                });
               }
-            }
-          })
+            },
+          });
         }
-      }
-    })
-
-  
+      },
+    });
 
     combineLatest([
       this.occupationForm
@@ -554,16 +555,46 @@ export class OccupationComponent implements OnInit {
     });
   }
 
+  get psn() {
+    return this.occupationForm.get('psn');
+  }
+
+  get pensionerType() {
+    return this.occupationForm.get('pensionType');
+  }
+
+  get gradeLevelOfRetirement() {
+    return this.occupationForm.get('gradeLevelOfRetirement');
+  }
+
+  get dateOfRetirement() {
+    return this.occupationForm.get('dateOfRetirement');
+  }
+
+  get lastMDAsOfRetirement() {
+    return this.occupationForm.get('lastMDAsOfRetirement');
+  }
+  get type() {
+    return this.occupationForm.get('occupation');
+  }
+  get ministries() {
+    return this.occupationForm.get('ministries');
+  }
   onProceed() {
-    if(this.showPublicServant){
- this.showNextStep = false;
- this.showCivilServerntsInfo = true;
- this.showPublicServant = false
-    }else{
- this.showNextStep = true;
- this.showCivilServerntsInfo = true;
+    if (this.showPublicServant) {
+      this.showNextStep = false;
+      this.showCivilServerntsInfo = true;
+      this.showPublicServant = false;
+    } else if (this.showPensioner) {
+      this.showNextStep = false;
+      this.showCivilServerntsInfo = false;
+      this.disableBtn = true;
+      this.showPublicServant = false;
+    } else {
+      this.showNextStep = true;
+      this.showCivilServerntsInfo = true;
     }
-   
+
     this.showAdditionalCivilServiceInfo = false;
     this.showLGA = false;
     this.showLGEA = false;
@@ -572,7 +603,6 @@ export class OccupationComponent implements OnInit {
     this.showAgency = false;
   }
 
-  //`${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;
   datePipe(event: any, dateVariable: any) {
     var dateObject = new Date(event);
     var day = dateObject.getDate();
@@ -590,11 +620,17 @@ export class OccupationComponent implements OnInit {
     var formattedDates = `${parseInt(letDate[0], 10)}/${parseInt(letDate[1], 10)}/${letDate[2]}`;
     //console.log('formatted date>>', formattedDates); dd/mm/yyyy format
     if (dateVariable === 'dateOfFistAppointment') {
+      console.log('yes');
+
       this.occupationEnums.dateOfFistAppointment = formattedDates;
     } else if (dateVariable === 'dateOfConfirmation') {
       this.occupationEnums.dateOfConfirmation = formattedDates;
     } else if (dateVariable === 'dateOfTransfer') {
       this.occupationEnums.dateOfTransfer = formattedDates;
+    } else if (dateVariable === 'dateOfRetirement') {
+      console.log('yes');
+
+      this.occupationEnums.dateOfRetirement = formattedDates;
     }
   }
 
@@ -604,10 +640,10 @@ export class OccupationComponent implements OnInit {
     }
   }
 
-  updateDisabledBtn() {
-    this.disableBtn = !this.occupationForm.valid;
-    this.disableFirstFormBtn = !this.occupationForm.valid;
-  }
+  // updateDisabledBtn() {
+  //   this.disableBtn = !this.occupationForm.valid;
+  //   this.disableFirstFormBtn = !this.occupationForm.valid;
+  // }
 
   //otherOccupation
   submitForm() {
@@ -673,8 +709,81 @@ export class OccupationComponent implements OnInit {
         this.occupationEnums.professionalQualifications,
       psn: this.occupationForm.value.psn ?? '',
       tin: this.occupationForm.value.tin ?? '',
+      pensionerType: 'string',
+      gradeLevelOfRetirement: 'string',
+      dateOfRetirement: 'string',
+      lastMDAsOfRetirement: 'string',
+      indigene: true,
     };
-    console.log("totals>>>", totalPayload);
+
+    this.beneficiaryService.occupationDetails(totalPayload).subscribe({
+      next: (res: any) => {
+        this.showSpinner = false;
+        // console.log("res>>>>", res);
+        this.toast.setSuccessMessage(
+          'Beneficiary Occupation data is onboarded successfully!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        this.beneficiaryService.setRouteToDisplay('other details');
+        this.router.navigate(['/home/beneficiary'], {
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'other_details',
+          },
+        });
+      },
+      error: (err: any) => {
+        console.error('err>>>', err);
+        this.showSpinner = false;
+        // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(
+          err?.error?.responseMessage ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        if (err?.status === 401) {
+          this.auth.agentLogout();
+        }
+      },
+    });
+  }
+  isSubmitButtonEnabled(): boolean {
+    return (
+      this.psn?.valid ??
+      (false && this.pensionerType?.valid) ??
+      (false && this.gradeLevelOfRetirement?.valid) ??
+      (false && this.dateOfRetirement?.valid) ??
+      (false && this.lastMDAsOfRetirement?.valid) ??
+      (false && this.type?.valid) ??
+      (false && this.ministries?.valid) ??
+      false
+    );
+  }
+
+  submitPension() {
+    this.showSpinner = true;
+    const getBeneficiaryPhoneNumber: any = localStorage.getItem(
+      'beneficiaryPhoneNumber',
+    );
+    const totalPayload: any = {
+      phoneNumber: getBeneficiaryPhoneNumber,
+      pensionVerificationNumber: this.occupationForm.value.psn ?? '',
+      type: this.occupationForm.value.occupation,
+      pensionerType: this.occupationForm.value.pensionType,
+      gradeLevelOfRetirement: this.occupationForm.value.gradeLevelOfRetirement,
+      dateOfRetirement: this.occupationEnums.dateOfRetirement,
+      lastMDAsOfRetirement: this.occupationForm.value.ministries,
+
+      dateOfFistAppointment: this.occupationEnums.dateOfFistAppointment,
+    };
     this.beneficiaryService.occupationDetails(totalPayload).subscribe({
       next: (res: any) => {
         this.showSpinner = false;
