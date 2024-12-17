@@ -333,12 +333,14 @@ export class OccupationComponent implements OnInit {
           this.showStudentsInfo = false;
           this.showOtherzz = false;
           this.showPensioner = false;
+          
         } else if (value === 'Pensioner') {
           this.showPublicServant = false;
           this.showPensioner = true;
           this.showAdditionalCivilServiceInfo = false;
           this.showStudentsInfo = false;
           this.showOtherzz = false;
+                   this.showCivilServerntsInfo = false;
         } else if (value === 'Other') {
           this.showPublicServant = false;
           this.showCivilServerntsInfo = false;
