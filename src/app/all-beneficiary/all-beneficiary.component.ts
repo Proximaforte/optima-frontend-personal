@@ -43,8 +43,8 @@ export class AllBeneficiaryComponent implements OnInit {
   paginationNumber: any[] = [];
   filterString: any = "";
   filterIncomplete: any = "";
-  showIncompleteBeneficiaries: boolean = false;
-  showCompleteBeneficiaries: boolean = true;
+  showIncompleteBeneficiaries: boolean = true;
+  showCompleteBeneficiaries: boolean = false;
   beneficiaryFilterSubscription$!: Subscription;
   
   routeArray: any = [
@@ -328,8 +328,8 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAllBeneficiaries();
-    this.getAllCompletedData();
+    // this.getAllBeneficiaries();
+    // this.getAllCompletedData();
     // this.getAllIncompleteBeneficiaries();
 
   }

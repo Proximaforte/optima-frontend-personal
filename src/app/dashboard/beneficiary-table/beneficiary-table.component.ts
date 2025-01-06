@@ -124,8 +124,8 @@ export class BeneficiaryTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllBeneficiries();
-    this.getAllIncompletedBeneficiaries();
+    // this.getAllBeneficiries();
+    // this.getAllIncompletedBeneficiaries();
   }
 
   onCancel(): void {
