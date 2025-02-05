@@ -1,21 +1,25 @@
 
 import { Location } from '@angular/common';  // Import Location
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, TemplateRef, ViewChild,EventEmitter, Output, } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild,EventEmitter, Output, HostListener, } from '@angular/core';
 import {  Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { BeneficiaryService } from '../services/beneficiary/beneficiary.service';
+import { ToastsService } from '../services/alert/toasts.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
+import { WebcamImage } from 'ngx-webcam';
+import { Subject, Observable, Subscription } from 'rxjs';
+import { CaptureCompleteComponent } from '../beneficiary/verify-nin/capture-complete/capture-complete.component';
 
 @Component({
   selector: 'app-consent-modal',
   templateUrl: './consent-modal.component.html',
-  styleUrls: ['./consent-modal.component.scss']
+  styleUrls: ['./consent-modal.component.scss'],
 })
 export class ConsentModalComponent {
-
   @ViewChild('consentModal') consentModal!: TemplateRef<any>;
-
-
- 
 
   @Input() showConsent: boolean = true;
   @Input() warn: string = '';
@@ -23,62 +27,95 @@ export class ConsentModalComponent {
   @Input() privacy: string = '';
   @Output() cancel = new EventEmitter<void>();
   @Output() accept = new EventEmitter<void>();
-
-
+  ninForm!: FormGroup;
+  ninPlaceHolder: string = '';
+  showBtn: boolean = false;
   routeArray: any = [
     {
       routeToDiaplay: 'verify beneficiary nin',
-      queryParam: 'verify_NIN'
+      queryParam: 'verify_NIN',
     },
     {
       routeToDiaplay: 'personal details',
-      queryParam: 'personal_details'
+      queryParam: 'personal_details',
     },
     {
       routeToDiaplay: 'residential details',
-      queryParam: 'residential_details'
+      queryParam: 'residential_details',
     },
     {
       routeToDiaplay: 'marital info',
-      queryParam: 'marital_info'
+      queryParam: 'marital_info',
     },
     {
       routeToDiaplay: 'education',
-      queryParam: 'education'
+      queryParam: 'education',
     },
     {
       routeToDiaplay: 'health',
-      queryParam: 'health'
+      queryParam: 'health',
     },
     {
       routeToDiaplay: 'financial',
-      queryParam: 'financial'
+      queryParam: 'financial',
     },
     {
       routeToDiaplay: 'next of kin',
-      queryParam: 'next_of_kin'
+      queryParam: 'next_of_kin',
     },
     {
       routeToDiaplay: 'employment',
-      queryParam: 'employment'
+      queryParam: 'employment',
     },
     {
       routeToDiaplay: 'other details',
-      queryParam: 'other_details'
+      queryParam: 'other_details',
     },
-  ]
+  ];
+  beneficiaryData: any;
+
+  routeBack: string = '/assets/images/back.svg';
+ 
+  upload: string = '/assets/images/iconplus.svg';
+ 
+  photograph: string = '';
+  capture: string = '/assets/images/capture.svg';
+  disabledBtn: boolean = true;
+  acceptImage$!: Subscription;
+  webcam: WebcamImage | any = null;
+  showWebcam: boolean = false;
+  capturedImage: string | any = null;
+  trigger: Subject<void> = new Subject<void>();
+  triggerObservable: Observable<void> = this.trigger.asObservable();
+  showLatest: boolean = false;
+  nin: any = {};
+  userDetails: any = {};
+  isDesktop: boolean = window.innerWidth >= 1024;
+  showCapture: boolean = false;
+  showPolicy: boolean = false;
+  showLoader: boolean = false;
 
   constructor(
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private location: Location  // Inject Location
-  ) {}
+    private location: Location,
+    private beneficiaryService: BeneficiaryService,
+    private snackbar: MatSnackBar,
+    private toast: ToastsService, // Inject Location
+  ) {
+    this.getFormValues();
+    // this.webcamHeight = window?.innerHeight;
+    // this.webcamWidth = window?.innerWidth;
 
+    const getUserData: any = localStorage.getItem('userDetails');
+    this.userDetails = JSON.parse(getUserData);
 
-
-
-
+    if (localStorage.getItem('NINDetails') !== null) {
+      const getNin: any = localStorage.getItem('NINDetails');
+      this.nin = JSON.parse(getNin);
+    }
+  }
 
   onCancel(): void {
     this.dialog.closeAll();
@@ -86,22 +123,195 @@ export class ConsentModalComponent {
   }
 
   onAccept(): void {
-    this.dialog.closeAll();
-    this.router.navigate(['/home/beneficiary'], {
-      relativeTo: this.route,
-      queryParams: {
-        progress: 'verify_NIN'
-      }
-    });
+    this.showCapture = true;
+    // this.dialog.closeAll();
+    // this.router.navigate(['/home/beneficiary'], {
+    //   relativeTo: this.route,
+    //   queryParams: {
+    //     progress: 'verify_NIN',
+    //   },
+    // });
   }
 
-  toggleModalContent(): void {
-    this.showConsent = !this.showConsent;
+  toggleModalContent(content: string): void {
+    // Default hide all contents
+    this.showPolicy = false;
+    this.showConsent = false;
+    this.showCapture = false;
+
+    // Show content based on the passed argument
+    if (content === 'policy') {
+      this.showPolicy = true;
+    } else if (content === 'consent') {
+      this.showConsent = true;
+    } else if (content === 'capture') {
+      this.showCapture = true;
+    }
   }
 
   closePrivacyPolicy(): void {
     this.showConsent = true;
     this.dialog.closeAll();
   }
+
+  detectClicked() {
+    this.ninPlaceHolder = 'Input National Identity Number';
+  }
+  onInputBlur() {
+    this.ninPlaceHolder = '';
+  }
+
+  getFormValues() {
+    this.ninForm = new FormGroup({
+      nin: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[0-9]*'),
+        Validators.minLength(10),
+        Validators.maxLength(11),
+      ]),
+    });
+
+    this.ninForm.get('nin')?.valueChanges.subscribe({
+      next: (value: string) => {
+        if (value.length === 11) {
+          this.showLoader = true
+          this.beneficiaryService.verifyNIN(value).subscribe({
+            next: (response: any) => {
+                    this.showLoader = false;
+              if (response?.responseCode === 200) {
+                this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
+
+                this.beneficiaryData = response.data;
+           
+                
+                this.showBtn = true;
+
+                this.snackbar.openFromComponent(ToastsComponent, {
+                  duration: 4000,
+                  verticalPosition: 'bottom',
+                });
+              }
+            },
+            error: (err: any) => {
+              //  console.error('err>>>', err);
+              this.showBtn = false;
+              this.toast.setErrorMessage(
+                err?.error?.failureReason ||
+                  err?.error?.responseMessage ||
+                  err?.statusText,
+              );
+              this.snackbar.openFromComponent(ToastsComponent, {
+                duration: 4000,
+                verticalPosition: 'bottom',
+              });
+              setTimeout(() => location.reload(), 3000);
+            },
+          });
+        }
+      },
+    });
+  }
+
+  submit() {
+     const acceptImage$ = this.beneficiaryService.acceptImageUrl().subscribe({
+       next: (item: any) => {
+         this.photograph = item?.image;
+         this.showLatest = item?.showLatest;
+         if (this.showLatest === true) {
+           this.disabledBtn = false;
+         }
+       },
+     });
+
+    const value = {
+      firstName: this.beneficiaryData.firstName,
+      lastName: this.beneficiaryData.lastName,
+      image: this.photograph?.split(',')[1],
+      nin: this.beneficiaryData.nin,
+    };
+   
+  
+    
+        this.beneficiaryService.consentForm(value).subscribe({
+          next: (response: any) => {
+            if (response?.responseCode === 200) {
+              this.toast.setSuccessMessage("Beneficiary's Consent Submitted!");
+this.dialog.closeAll()
+              this.router.navigate(['/home/beneficiary'], {
+                relativeTo: this.route,
+                queryParams: {
+                  progress: 'verify_NIN',
+                },
+              });
+
+              this.snackbar.openFromComponent(ToastsComponent, {
+                duration: 4000,
+                verticalPosition: 'bottom',
+              });
+            }
+          },
+          error: (err: any) => {
+            
+   
+            this.toast.setErrorMessage(
+              err?.error?.failureReason ||
+                err?.error?.responseMessage ||
+                err?.statusText,
+            );
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
+            
+          },
+        });
+ 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isDesktop = event.target.innerWidth >= 1024;
+  }
+
+  routeToPrevious() {
+    window.history.go(-1);
+  }
+
+  handleImageCapture(webcamImage: WebcamImage) {
+    this.webcam = webcamImage;
+  }
+
+  captureImage() {
+    this.trigger.next();
+    this.beneficiaryService.setImageUrl(this.webcam.imageAsDataUrl);
+
+    this.dialog.open(CaptureCompleteComponent, {
+      width: `${window.innerWidth}px`,
+    });
+    this.showWebcam = false;
+  }
+
+  public toggleWebcam(): void {
+    this.showWebcam = !this.showWebcam;
+  }
+
+  ngOnInit(): void {
+    this.showLatest = this.beneficiaryService.getShowOriginal();
+    const acceptImage$ = this.beneficiaryService.acceptImageUrl().subscribe({
+      next: (item: any) => {
+        this.photograph = item?.image;
+        this.showLatest = item?.showLatest;
+        if (this.showLatest === true) {
+          this.disabledBtn = false;
+        }
+      },
+    });
+  }
+
+  retake() {
+    this.showLatest = false;
+    this.disabledBtn = true;
+  }
+
 
 }

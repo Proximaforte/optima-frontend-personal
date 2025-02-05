@@ -11,6 +11,7 @@ export const endpoints = {
 
   // Onboarding
   verifyNIN: 'api/v1/onboarding/verifyNIN',
+  giveConsent: 'api/v1/consents',
   verificationDetails: 'api/v1/onboarding/verification',
   personalDetails: 'api/v1/onboarding/personalDetails',
   verifyOTP: 'api/v1/otp/agent/generate',
@@ -66,7 +67,7 @@ export const endpoints = {
   palliativeStatus: 'api/v1/enums/palliativeStatus',
   occupationTypes: 'api/v1/enums/occupationTypes',
   publicServiceCategory: 'api/v1/enums/publicServiceCategory',
-  pensionTypes :'api/v1/enums/pensionerType',
+  pensionTypes: 'api/v1/enums/pensionerType',
   institutionNames: 'api/v1/residency/institutionList',
   maritalStatus: 'api/v1/enums/maritalStatus',
   gender: 'api/v1/enums/gender',
