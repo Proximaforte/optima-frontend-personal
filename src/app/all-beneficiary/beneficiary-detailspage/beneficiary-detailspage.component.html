@@ -341,7 +341,11 @@
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
           >Bread Winner</label
         >
-        <p class="text-center text-sm font-medium pt-2">{{beneficiary.financial?.breadwinner === true ? "Yes" : "No"  || "N/A"}}</p>
+<p class="text-center text-sm font-medium pt-2">
+  {{ beneficiary.financial?.breadwinner === true ? "Yes" : 
+     beneficiary.financial?.breadwinner === false ? "No" : "N/A" }}
+</p>
+
       </div>
 
       <div
@@ -517,9 +521,10 @@
         <label class="absolute -top-2 left-4 bg-white text-xs text-label"
           >Has the beneficiary been arrested before</label
         >
-        <p class="text-center text-sm font-medium pt-2">
-          {{beneficiary.other=== true ? 'YES' : 'NO'  || "N/A"}}
-        </p>
+     <p class="text-center text-sm font-medium pt-2">
+  {{ beneficiary.other === true ? 'YES' : beneficiary.other === false ? 'NO' : 'N/A' }}
+</p>
+
       </div>
 
       <div

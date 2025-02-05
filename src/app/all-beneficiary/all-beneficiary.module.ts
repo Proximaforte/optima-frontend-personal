@@ -11,6 +11,8 @@ import { IncompletePipe } from './pipes/incomplete.pipe';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {ConsentModalComponent} from '../consent-modal/consent-modal.component';
+import { WebcamModule } from 'ngx-webcam';
+import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
 
 @NgModule({
@@ -19,18 +21,19 @@ const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
     BeneficiaryDetailspageComponent,
     BeneficiaryFilterPipe,
     IncompletePipe,
-    ConsentModalComponent
+    ConsentModalComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     CommonModule,
     AllBeneficiaryRoutingModule,
     UtilitiesModule,
     materialModules,
-   
+    WebcamModule,
   ],
 
   exports: [
-    ConsentModalComponent  // Export the component
-  ]
+    ConsentModalComponent, // Export the component
+  ],
 })
-export class AllBeneficiaryModule { }
+export class AllBeneficiaryModule {}

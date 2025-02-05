@@ -75,6 +75,22 @@
     opacity: 0.9;
   }
   
+    .loading-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.4rem;
+    border-radius: 50%;
+    animation: rotate 1s linear infinite;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
   /* Responsive styling */
   @media (max-width: 768px) {
     .mat-card-content {
