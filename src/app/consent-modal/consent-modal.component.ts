@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { WebcamImage } from 'ngx-webcam';
 import { Subject, Observable, Subscription } from 'rxjs';
-import { CaptureCompleteComponent } from '../beneficiary/verify-nin/capture-complete/capture-complete.component';
+import { ConsentCaptureComponent } from '../consent-capture/consent-capture.component';
 
 @Component({
   selector: 'app-consent-modal',
@@ -213,7 +213,7 @@ export class ConsentModalComponent {
   }
 
   submit() {
-     const acceptImage$ = this.beneficiaryService.acceptImageUrl().subscribe({
+     this.beneficiaryService.acceptImageUrl().subscribe({
        next: (item: any) => {
          this.photograph = item?.image;
          this.showLatest = item?.showLatest;
@@ -285,8 +285,9 @@ this.dialog.closeAll()
     this.trigger.next();
     this.beneficiaryService.setImageUrl(this.webcam.imageAsDataUrl);
 
-    this.dialog.open(CaptureCompleteComponent, {
-      width: `${window.innerWidth}px`,
+    this.dialog.open(ConsentCaptureComponent, {
+      width: `60%`,
+
     });
     this.showWebcam = false;
   }

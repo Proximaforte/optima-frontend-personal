@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { ConsentCaptureComponent } from './consent-capture/consent-capture.component';
 
 
 
@@ -21,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
     AppComponent,
     AddStyleToOtpInputDirective,
     BeneficiaryFilterPipe,
+    ConsentCaptureComponent,
 
   ],
   imports: [
