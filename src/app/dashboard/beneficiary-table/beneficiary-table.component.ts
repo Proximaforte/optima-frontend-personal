@@ -63,7 +63,9 @@ export class BeneficiaryTableComponent implements OnInit {
     private toast: ToastsService,
     private dialog: MatDialog, // Inject MatDialog
     private location: Location  // Inject Location
-  ) {}
+  ) {
+   
+  }
 
   openConsentModal() {
     this.dialog.open(ConsentModalComponent, );

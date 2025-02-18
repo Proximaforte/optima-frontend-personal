@@ -13,28 +13,28 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { ConsentCaptureComponent } from './consent-capture/consent-capture.component';
+
+
 
 @NgModule({
   declarations: [
-    
     AppComponent,
     AddStyleToOtpInputDirective,
     BeneficiaryFilterPipe,
+    ConsentCaptureComponent,
+
   ],
   imports: [
-
     MatDialogModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-
-
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
