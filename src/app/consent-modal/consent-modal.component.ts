@@ -234,9 +234,11 @@ export class ConsentModalComponent {
     
         this.beneficiaryService.consentForm(value).subscribe({
           next: (response: any) => {
-            if (response?.responseCode === 200) {
+            if (
+              response?.responseCode === 200 
+            ) {
               this.toast.setSuccessMessage("Beneficiary's Consent Submitted!");
-this.dialog.closeAll()
+              this.dialog.closeAll();
               this.router.navigate(['/home/beneficiary'], {
                 relativeTo: this.route,
                 queryParams: {
@@ -262,7 +264,18 @@ this.dialog.closeAll()
               duration: 4000,
               verticalPosition: 'bottom',
             });
-            
+            if (
+              err?.error?.responseCode === 400
+            ) {
+                this.dialog.closeAll();
+                localStorage.removeItem('NINDetails');
+ this.router.navigate(['/home/beneficiary'], {
+   relativeTo: this.route,
+   queryParams: {
+     progress: 'verify_NIN',
+   },
+ });
+            }
           },
         });
  
