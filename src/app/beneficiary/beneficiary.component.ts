@@ -10,43 +10,50 @@ import { ViewportScroller } from '@angular/common';
 @Component({
   selector: 'app-beneficiary',
   templateUrl: './beneficiary.component.html',
-  styleUrls: ['./beneficiary.component.scss']
+  styleUrls: ['./beneficiary.component.scss'],
 })
 export class BeneficiaryComponent implements OnInit, AfterViewInit {
-
   @ViewChild('personal-details') sectionToScrollTo!: ElementRef;
   @ViewChild('stepper') stepper!: MatStepper;
   routeSubscription$!: Subscription;
 
   beneficiaryItems: String[] | any = [
-    "verify beneficiary nin",
-    "personal details",
-    "verification procedure",
-    "residential details",
-    "marital info",
-    "education",
-    "education-second",
-    "health",
-    "financial",
-    "next of kin",
-    "employment",
-    "occupation",
-    "other details"
+    'verify beneficiary nin',
+    'personal details',
+    'verification procedure',
+    'residential details',
+    'marital info',
+    'education',
+    'education-second',
+    'health',
+    'financial',
+    'next of kin',
+    'employment',
+    'occupation',
+    'other details',
   ];
   selectedItemIndex: number | null = null;
   selectedItemName: string | null = null;
   isLinear = false;
   isDesktop: boolean = window.innerWidth >= 1024;
-  
+  activePage: any;
+
   constructor(
     private router: Router,
     private viewportScroller: ViewportScroller,
     private route: ActivatedRoute,
-    private routeService: BeneficiaryService
+    private routeService: BeneficiaryService,
   ) {
-    if (this.selectedItemName === null) {
-      this.selectedItemName = 'verify beneficiary nin';
-    }
+  this.route.queryParams.subscribe((params:any) => {
+    this.activePage = params.progress; 
+  });
+
+ 
+  if (this.selectedItemName === null) {
+    this.selectedItemName = this.activePage; // Won't be null anymore
+  }
+
+   
   }
 
   @HostListener('window:resize', ['$event'])
@@ -65,20 +72,17 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     if (this.stepper) {
       this.getRouteToDiplay();
     }
-
   }
-  
 
   ngOnInit(): void {
-
     this.isDesktop = window.innerWidth >= 1024;
     this.route.queryParams.subscribe({
       next: (params: Params) => {
         const sectionToScrollTo = params['progress'];
         // if (sectionToScrollTo === 'personal_details') {
-          this.scrollToSection(sectionToScrollTo);
+        this.scrollToSection(sectionToScrollTo);
         // }
-      }
+      },
     });
   }
 
@@ -91,7 +95,7 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
             this.goToStep(index - 1);
           }
         });
-      }
+      },
     });
   }
 
@@ -99,8 +103,8 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      element.scrollTop = 0
-      element.scrollTo(0, 0)
+      element.scrollTop = 0;
+      element.scrollTo(0, 0);
     }
   }
 
@@ -111,5 +115,4 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
   itemClicked(index: number, selectedItemName: string) {
     this.selectedItemIndex = index;
   }
-
 }

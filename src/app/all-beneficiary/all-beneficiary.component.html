@@ -308,24 +308,24 @@
       <!-- visible only on large screens -->
       <div class="flex items-center justify-between gap-5 p-4 overflow-auto">
         <div class="col-span-2 flex justify-start items-center">
-          <button
+          <!-- <button
             (click)="showcompleteBeneficiaries()"
             class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded"
           >
             Completed
-          </button>
+          </button> -->
           <button
             (click)="showInCompleteBeneficiaries()"
             class="bg-green-700 hover:bg-green-700 border-gray-700 text-white hover:text-white font-bold py-2 px-4 rounded ml-2"
           >
             Incomplete
           </button>
-          <button
+          <!-- <button
             (click)="refreshPage()"
             class="bg-gray-200 hover:bg-green-700 border-gray-700 text-gray-900 hover:text-white font-bold py-2 px-4 rounded ml-2"
           >
             Refresh
-          </button>
+          </button> -->
         </div>
 
         <div class="flex gap-2 justify-end items-center">
@@ -352,7 +352,7 @@
             </svg>
           </div>
           <button
-            (click)="routeToOnboarding()"
+            (click)="openConsentModal()"
             class="flex items-center w-fit bg-optimaGreen hover:bg-optimaGreen text-white font-bold py-2 px-4 rounded-md"
           >
             <div class="flex items-center">

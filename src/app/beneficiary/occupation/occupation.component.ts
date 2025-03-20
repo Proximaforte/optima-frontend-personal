@@ -98,6 +98,25 @@ export class OccupationComponent implements OnInit {
   showOtherzz: boolean = false;
   disableBtn: boolean = true;
   occupationTypes: any[] = [];
+  scaleOfTrade: any;
+  BusinessDuration: any;
+  interventionNature: any;
+  interventionLevel: any;
+  institutionOwnership: any;
+  numberOfPublications: any;
+  academicsYearOfExperience: any;
+  academicsHighestLevelOfEducation: any;
+  clergyFaith: any;
+  clergyMembershipCount: any;
+  securityOutfitType: any;
+  securityDutyPost: any;
+  showTraders: boolean = false;
+  showArtisan: boolean = false;
+  showAcademics: boolean = false;
+  showClergy: boolean = false;
+  showSecurityAgencies: boolean = false;
+  alternateText: string = '';
+
   occupationEnums: Occupation = {
     phoneNumber: '',
     type: '',
@@ -214,11 +233,11 @@ export class OccupationComponent implements OnInit {
         this.publicServiceCategoryOptions = item.data;
       },
     });
-      this.beneficiaryService.getPensionTypes().subscribe({
-        next: (item: any) => {
-          this.pensionTypesOptions = item.data;
-        },
-      });
+    this.beneficiaryService.getPensionTypes().subscribe({
+      next: (item: any) => {
+        this.pensionTypesOptions = item.data;
+      },
+    });
     this.beneficiaryService.getInstitutions(this.state).subscribe({
       next: (item: any) => {
         this.nameOfInstitutions = item.data;
@@ -242,6 +261,75 @@ export class OccupationComponent implements OnInit {
     this.beneficiaryService.getEnum(endpoints.stateMinistries).subscribe({
       next: (item: any) => {
         this.stateMinistries = [...this.stateMinistries, ...item.data];
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.scaleOfTrade).subscribe({
+      next: (item: any) => {
+        this.scaleOfTrade = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.timeInBusiness).subscribe({
+      next: (item: any) => {
+        this.BusinessDuration = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.InterventionTypes).subscribe({
+      next: (item: any) => {
+        this.interventionNature = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.InterventionLevel).subscribe({
+      next: (item: any) => {
+        this.interventionLevel = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.education).subscribe({
+      next: (item: any) => {
+        this.option10 = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.institutionOwnership).subscribe({
+      next: (item: any) => {
+        this.institutionOwnership = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.numberOfPublications).subscribe({
+      next: (item: any) => {
+        this.numberOfPublications = item.data;
+      },
+    });
+    this.beneficiaryService
+      .getEnum(endpoints.academicsYearOfExperience)
+      .subscribe({
+        next: (item: any) => {
+          this.academicsYearOfExperience = item.data;
+        },
+      });
+    this.beneficiaryService
+      .getEnum(endpoints.academicsHighestLevelOfEducation)
+      .subscribe({
+        next: (item: any) => {
+          this.academicsHighestLevelOfEducation = item.data;
+        },
+      });
+    this.beneficiaryService.getEnum(endpoints.clergyFaith).subscribe({
+      next: (item: any) => {
+        this.clergyFaith = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.clergyMembershipCount).subscribe({
+      next: (item: any) => {
+        this.clergyMembershipCount = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.securityOutfitType).subscribe({
+      next: (item: any) => {
+        this.securityOutfitType = item.data;
+      },
+    });
+    this.beneficiaryService.getEnum(endpoints.securityDutyPost).subscribe({
+      next: (item: any) => {
+        this.securityDutyPost = item.data;
       },
     });
 
@@ -302,58 +390,106 @@ export class OccupationComponent implements OnInit {
       lastMDAsOfRetirement: new FormControl('', [Validators.required]),
       ministries: new FormControl('', [Validators.required]),
       pensionVerificationNumber: new FormControl('', [Validators.required]),
+      scaleOfTrade: new FormControl('', [Validators.required]),
+      natureOfBusiness: new FormControl('', [Validators.required]),
+      durationInBusiness: new FormControl('', [Validators.required]),
+      enjoyedIntervention: new FormControl('', [Validators.required]),
+      InterventionTypes: new FormControl('', [Validators.required]),
+      InterventionLevel: new FormControl('', [Validators.required]),
+      artisanEducation: new FormControl('', [Validators.required]),
+      institutionOwnership: new FormControl('', [Validators.required]),
+      numberOfPublications: new FormControl('', [Validators.required]),
+      areaofSpecialization: new FormControl('', [Validators.required]),
+      academicsYearOfExperience: new FormControl('', [Validators.required]),
+      academicsHighestLevelOfEducation: new FormControl('', [
+        Validators.required,
+      ]),
+      clergyFaith: new FormControl('', [Validators.required]),
+      founder: new FormControl('', [Validators.required]),
+      clergyMembershipCount: new FormControl(''),
+      securityOutfitType: new FormControl('', [Validators.required]),
+      otherSecurityOutfitType: new FormControl('', [Validators.required]),
+      securityDutyPost: new FormControl('', [Validators.required]),
+      serviceNumber: new FormControl('', [Validators.required]),
+      rank: new FormControl('', [Validators.required]),
+      otherQualification: new FormControl(''),
     });
 
     this.occupationForm.get('occupation')?.valueChanges.subscribe({
       next: (value: any) => {
-        if (value === 'Student') {
-          this.showStudentsInfo = true;
-          this.showCivilServerntsInfo = false;
-          this.showOtherzz = false;
-          this.showPublicServant = false;
-          this.showAdditionalCivilServiceInfo = false;
+        // Reset all visibility flags to false
+        this.showStudentsInfo = false;
+        this.showCivilServerntsInfo = false;
+        this.showOtherzz = false;
+        this.showPublicServant = false;
+        this.showAdditionalCivilServiceInfo = false;
+        this.showLGEA = false;
+        this.showLGA = false;
+        this.showMinitry = false;
+        this.showExtraInput = false;
+        this.showPensioner = false;
+        this.showTraders = false;
+        this.showArtisan = false;
+        this.showAcademics = false;
+        this.showClergy = false;
+        this.showSecurityAgencies = false;
+        if (this.occupationForm.get('artisanEducation')?.value === 'yes') {
+          this.occupationForm.get('highestQualification')?.reset();
+          this.occupationForm.get('highestQualification')?.setErrors(null);
+        }
+        if (this.occupationForm.get('founder')?.value === 'yes') {
+          this.occupationForm.get('clergyMembershipCount')?.reset();
+          this.occupationForm.get('clergyMembershipCount')?.setErrors(null);
+        }
+        if (this.occupationForm.get('securityOutfitType')?.value === 'Others') {
+          this.occupationForm.get('otherSecurityOutfitType')?.reset();
+          this.occupationForm.get('otherSecurityOutfitType')?.setErrors(null);
+        }
+        if (
+          this.occupationForm.get('highestQualification')?.value ===
+          'None of the above, others'
+        ) {
+          this.occupationForm.get('otherQualification')?.reset();
+          this.occupationForm.get('otherQualification')?.setErrors(null);
+        }
 
-          this.showLGEA = false;
-          this.showLGA = false;
-          this.showMinitry = false;
-          this.showMinitry = false;
-          this.showLGEA = false;
-          this.showLGA = false;
-          this.showExtraInput = false;
-          this.showPensioner = false;
-        } else if (value === 'Civil servant') {
-          this.showAdditionalCivilServiceInfo = true;
-          this.showStudentsInfo = false;
-          this.showPublicServant = false;
-          this.showOtherzz = false;
-          this.showPensioner = false;
-        } else if (value === 'Public servant') {
-          this.showPublicServant = true;
-          this.showAdditionalCivilServiceInfo = false;
-          this.showStudentsInfo = false;
-          this.showOtherzz = false;
-          this.showPensioner = false;
-        } else if (value === 'Pensioner') {
-          this.showPublicServant = false;
-          this.showPensioner = true;
-          this.showAdditionalCivilServiceInfo = false;
-          this.showStudentsInfo = false;
-          this.showOtherzz = false;
-        } else if (value === 'Other') {
-          this.showPublicServant = false;
-          this.showCivilServerntsInfo = false;
-          this.showStudentsInfo = false;
-          this.showOtherzz = true;
-          this.showOthers = false;
-          this.showPensioner = false;
+        // Set specific flags based on the selected occupation
+        switch (value) {
+          case 'Student':
+            this.showStudentsInfo = true;
 
-          this.showLGEA = false;
-          this.showLGA = false;
-          this.showMinitry = false;
-          this.showMinitry = false;
-          this.showLGEA = false;
-          this.showLGA = false;
-          this.showExtraInput = false;
+            break;
+          case 'Civil servant':
+            this.showAdditionalCivilServiceInfo = true;
+            break;
+          case 'Public servant':
+            this.showPublicServant = true;
+            break;
+          case 'Pensioner':
+            this.showPensioner = true;
+            break;
+          case 'Trader':
+            this.showTraders = true;
+            this.alternateText = 'Business';
+            break;
+          case 'Artisan':
+            this.showArtisan = true;
+            this.alternateText = 'Trade/ Service';
+            break;
+          case 'Academics':
+            this.showAcademics = true;
+            break;
+          case 'Clergy':
+            this.showClergy = true;
+            this.alternateText = 'Denomination/ Society';
+            break;
+          case 'Security Agencies':
+            this.showSecurityAgencies = true;
+
+            break;
+          case 'Other':
+            this.showOtherzz = true;
+            break;
         }
       },
     });
@@ -786,6 +922,177 @@ export class OccupationComponent implements OnInit {
 
       dateOfFistAppointment: this.occupationEnums.dateOfFistAppointment,
     };
+    this.beneficiaryService.occupationDetails(totalPayload).subscribe({
+      next: (res: any) => {
+        this.showSpinner = false;
+        // console.log("res>>>>", res);
+        this.toast.setSuccessMessage(
+          'Beneficiary Occupation data is onboarded successfully!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        this.beneficiaryService.setRouteToDisplay('other details');
+        this.router.navigate(['/home/beneficiary'], {
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'other_details',
+          },
+        });
+      },
+      error: (err: any) => {
+        console.error('err>>>', err);
+        this.showSpinner = false;
+        // this.toast.setSuccessMessage(err?.error?.responseMessage || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+        this.toast.setErrorMessage(
+          err?.error?.responseMessage ||
+            err?.error?.responseMessage ||
+            err?.statusText ||
+            'Oops an error occured!',
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
+        });
+        if (err?.status === 401) {
+          this.auth.agentLogout();
+        }
+      },
+    });
+  }
+
+  traderValid(): boolean {
+    return (
+      (this.occupationForm.get('scaleOfTrade')?.valid ?? false) &&
+      (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
+      (this.occupationForm.get('durationInBusiness')?.valid ?? false) &&
+      (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
+      (this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
+      (this.occupationForm.get('InterventionLevel')?.valid ?? false)
+    );
+  }
+  artisanValid(): boolean {
+    return (
+      (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
+      (this.occupationForm.get('durationInBusiness')?.valid ?? false) &&
+      (this.occupationForm.get('artisanEducation')?.valid ?? false)
+    );
+  }
+  academicValid(): boolean {
+    return (
+      (this.occupationForm.get('academicsHighestLevelOfEducation')?.valid ??
+        false) &&
+      (this.occupationForm.get('nameOfInstitution')?.valid ?? false) &&
+      (this.occupationForm.get('institutionOwnership')?.valid ?? false) &&
+      (this.occupationForm.get('numberOfPublications')?.valid ?? false) &&
+      (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
+      (this.occupationForm.get('InterventionLevel')?.valid ?? false) &&
+      (this.occupationForm.get('areaofSpecialization')?.valid ?? false) &&
+      (this.occupationForm.get('academicsYearOfExperience')?.valid ?? false)
+    );
+  }
+
+  clergyValid(): boolean {
+    return (
+      (this.occupationForm.get('clergyFaith')?.valid ?? false) &&
+      (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
+      (this.occupationForm.get('founder')?.valid ?? false) &&
+      (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
+      (this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
+      (this.occupationForm.get('InterventionLevel')?.valid ?? false)
+    );
+  }
+
+  securityValid(): boolean {
+    return (
+      (this.occupationForm.get('securityOutfitType')?.valid ?? false) &&
+      (this.occupationForm.get('securityDutyPost')?.valid ?? false) &&
+      (this.occupationForm.get('otherSecurityOutfitType')?.valid ?? false) &&
+      (this.occupationForm.get('serviceNumber')?.valid ?? false) &&
+      (this.occupationForm.get('rank')?.valid ?? false) &&
+      (this.occupationForm.get('highestQualification')?.valid ?? false)
+    );
+  }
+
+  submitTrade() {
+    this.showSpinner = true;
+
+    const getBeneficiaryPhoneNumber: any = localStorage.getItem(
+      'beneficiaryPhoneNumber',
+    );
+    let totalPayload: any;
+
+    if (this.occupationForm.value.occupation === 'Trader') {
+      totalPayload = {
+        phoneNumber: getBeneficiaryPhoneNumber,
+        type: this.occupationForm.value.occupation,
+        scaleOfTrade: this.occupationForm.value.scaleOfTrade,
+        natureOfBusiness: this.occupationForm.value.natureOfBusiness,
+        timeInBusiness: this.occupationForm.value.durationInBusiness,
+        hasEnjoyedGovtIntervention:
+          this.occupationForm.value.enjoyedIntervention === 'yes'
+            ? true
+            : false,
+        natureOfIntervention: this.occupationForm.value.InterventionTypes,
+        interventionImpactLevel: this.occupationForm.value.InterventionLevel,
+      };
+    } else if (this.occupationForm.value.occupation === 'Artisan') {
+      totalPayload = {
+        phoneNumber: getBeneficiaryPhoneNumber,
+        type: this.occupationForm.value.occupation,
+        natureOfBusiness: this.occupationForm.value.natureOfBusiness,
+        timeInBusiness: this.occupationForm.value.durationInBusiness,
+        formalEducation:
+          this.occupationForm.value.artisanEducation === 'yes' ? true : false,
+        highestQualification: this.occupationForm.value.highestQualification,
+        otherQualification: this.occupationForm.value.otherQualification,
+      };
+    } else if (this.occupationForm.value.occupation === 'Academics') {
+      totalPayload = {
+        phoneNumber: getBeneficiaryPhoneNumber,
+        type: this.occupationForm.value.occupation,
+        highestQualification: this.occupationForm.value.academicsHighestLevelOfEducation,
+        presentInstitution: this.occupationForm.value.nameOfInstitution,
+        institutionOwnership: this.occupationForm.value.institutionOwnership,
+        totalNumberOfPublications:
+          this.occupationForm.value.numberOfPublications,
+        hasEnjoyedGovtIntervention:
+          this.occupationForm.value.enjoyedIntervention === 'yes'
+            ? true
+            : false,
+        interventionImpactLevel: this.occupationForm.value.InterventionLevel,
+        areaOfSpecialization: this.occupationForm.value.areaofSpecialization,
+        yearsOfExperience: this.occupationForm.value.academicsYearOfExperience,
+      };
+    } else if (this.occupationForm.value.occupation === 'Clergy') {
+      totalPayload = {
+        phoneNumber: getBeneficiaryPhoneNumber,
+        type: this.occupationForm.value.occupation,
+        denomination: this.occupationForm.value.clergyFaith,
+        natureOfBusiness: this.occupationForm.value.natureOfBusiness,
+        founder: this.occupationForm.value.founder === 'yes' ? true : false,
+        hasEnjoyedGovtIntervention:
+          this.occupationForm.value.enjoyedIntervention === 'yes'
+            ? true
+            : false,
+        natureOfIntervention: this.occupationForm.value.InterventionTypes,
+        interventionImpactLevel: this.occupationForm.value.InterventionLevel,
+      };
+    } else if (this.occupationForm.value.occupation === 'Security Agencies') {
+      totalPayload = {
+        phoneNumber: getBeneficiaryPhoneNumber,
+        type: this.occupationForm.value.occupation,
+        outfitType: this.occupationForm.value.securityOutfitType,
+        dutyPost: this.occupationForm.value.securityDutyPost,
+        serviceNo: this.occupationForm.value.serviceNumber,
+        rank: this.occupationForm.value.rank,
+        otherSecurityOutfitType:
+          this.occupationForm.value.otherSecurityOutfitType,
+        highestQualification: this.occupationForm.value.highestQualification,
+        otherQualification: this.occupationForm.value.otherQualification,
+      };
+    }
     this.beneficiaryService.occupationDetails(totalPayload).subscribe({
       next: (res: any) => {
         this.showSpinner = false;

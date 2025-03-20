@@ -63,7 +63,9 @@ export class BeneficiaryTableComponent implements OnInit {
     private toast: ToastsService,
     private dialog: MatDialog, // Inject MatDialog
     private location: Location  // Inject Location
-  ) {}
+  ) {
+   
+  }
 
   openConsentModal() {
     this.dialog.open(ConsentModalComponent, );
@@ -124,8 +126,8 @@ export class BeneficiaryTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllBeneficiries();
-    this.getAllIncompletedBeneficiaries();
+    // this.getAllBeneficiries();
+    // this.getAllIncompletedBeneficiaries();
   }
 
   onCancel(): void {

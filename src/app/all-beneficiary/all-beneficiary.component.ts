@@ -43,8 +43,8 @@ export class AllBeneficiaryComponent implements OnInit {
   paginationNumber: any[] = [];
   filterString: any = "";
   filterIncomplete: any = "";
-  showIncompleteBeneficiaries: boolean = false;
-  showCompleteBeneficiaries: boolean = true;
+  showIncompleteBeneficiaries: boolean = true;
+  showCompleteBeneficiaries: boolean = false;
   beneficiaryFilterSubscription$!: Subscription;
   
   routeArray: any = [
@@ -101,11 +101,14 @@ export class AllBeneficiaryComponent implements OnInit {
     private snackbar: MatSnackBar,
     private toast: ToastsService,
     private location: Location  // Inject Location
-  ) {}
+  ) {
+this.getAllIncompleteBeneficiaries();
+  }
 
 
   openConsentModal() {
-    this.dialog.open(ConsentModalComponent, );
+    
+    this.dialog.open(ConsentModalComponent );
     localStorage.removeItem("NINDetails")
     localStorage.removeItem("beneficiaryPhoneNumber")
     localStorage.removeItem("biometrics")
@@ -290,32 +293,32 @@ export class AllBeneficiaryComponent implements OnInit {
   }
 //1
   addBeneficiary() {
-    const dialogRef = this.dialog.open(this.consentModal);
-    localStorage.removeItem("NINDetails")
-    localStorage.removeItem("beneficiaryPhoneNumber")
-    localStorage.removeItem("biometrics")
-    localStorage.removeItem("incomplete")
-    localStorage.removeItem("verification")
-    localStorage.removeItem("nin")
-    localStorage.removeItem("faceCapture_skipThumPrints")
-    localStorage.removeItem("isFingerprintOk")
-    localStorage.removeItem('userAddress');
-    dialogRef.afterClosed().subscribe(result => {
-      this.showConsent = true; // Reset to consent view when modal is closed
-      if (result === 'accept') {
-        this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
-        this.router.navigate(['/home/beneficiary'], {
-          relativeTo: this.route,
-          queryParams: {
-            progress: 'verify_NIN'
-          }
-        });
-      }
-    });
+   this.dialog.open(this.consentModal);
+    // localStorage.removeItem("NINDetails")
+    // localStorage.removeItem("beneficiaryPhoneNumber")
+    // localStorage.removeItem("biometrics")
+    // localStorage.removeItem("incomplete")
+    // localStorage.removeItem("verification")
+    // localStorage.removeItem("nin")
+    // localStorage.removeItem("faceCapture_skipThumPrints")
+    // localStorage.removeItem("isFingerprintOk")
+    // localStorage.removeItem('userAddress');
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.showConsent = true; // Reset to consent view when modal is closed
+    //   if (result === 'accept') {
+    //     this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
+    //     this.router.navigate(['/home/beneficiary'], {
+    //       relativeTo: this.route,
+    //       queryParams: {
+    //         progress: 'verify_NIN'
+    //       }
+    //     });
+    //   }
+    // });
   }
 
   getAllIncompletedData(){
-    let pageSize:number = 500000000;
+    let pageSize:number = 20;
     this.beneficiaryService.getAllIncompleteBeneficiaries({}, {size: pageSize, page: 1}).subscribe({
       next: (res:any) => {
         let totalCount:number = res?.data?.totalCount;
@@ -328,8 +331,8 @@ export class AllBeneficiaryComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAllBeneficiaries();
-    this.getAllCompletedData();
+    // this.getAllBeneficiaries();
+    // this.getAllCompletedData();
     // this.getAllIncompleteBeneficiaries();
 
   }
