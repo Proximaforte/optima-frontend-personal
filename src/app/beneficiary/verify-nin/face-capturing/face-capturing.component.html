@@ -4,7 +4,7 @@
       <app-sidebar-helper></app-sidebar-helper>
     </div> -->
 
-    <div class=" flex flex-col h-full gap-8  max-w-lg mt-10  mx-auto overflow-hidden col-span-4">
+    <div class=" flex flex-col gap-8  max-w-lg mt-10  mx-auto  col-span-3">
       <!-- Increased gap to 8 -->
       <div style="display: flex; align-items: center; margin-top: 2px;">
         <img (click)="routeToPrevious()" [src]="routeBack" alt="routeBack" height="25" width="25" style="margin-right: 10px; cursor: pointer;">
@@ -26,7 +26,7 @@
         <img [src]="icon4" alt="routeBack" class="h-5 w-5 mr-2 mt-1">
         <p class="inline">Ensure that your face is not obscured by light glare or reflections. Click circle to start.</p>
       </div>
-      <br>
+  
       <div class="flex items-start mb-4 ml-3">
         <img *ngIf="!showLatest" [src]="passport" alt="routeBack" class="mr-4">
         <img *ngIf="!showLatest" (click)="toggleWebcam()" [src]="upload" alt="routeBack" class="mr-8 cursor-pointer">

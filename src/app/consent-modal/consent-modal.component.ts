@@ -180,7 +180,10 @@ export class ConsentModalComponent {
                     this.showLoader = false;
               if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
-
+             
+                
+localStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
+localStorage.setItem('NINDetails', JSON.stringify(response?.data));
                 this.beneficiaryData = response.data;
            
                 
@@ -230,15 +233,17 @@ export class ConsentModalComponent {
       nin: this.beneficiaryData.nin,
     };
    
-  
+    localStorage.setItem('nin', JSON.stringify(this.beneficiaryData.nin));
     
         this.beneficiaryService.consentForm(value).subscribe({
           next: (response: any) => {
+
             if (
               response?.responseCode === 200 
             ) {
               this.toast.setSuccessMessage("Beneficiary's Consent Submitted!");
               this.dialog.closeAll();
+
               this.router.navigate(['/home/beneficiary'], {
                 relativeTo: this.route,
                 queryParams: {
@@ -267,8 +272,12 @@ export class ConsentModalComponent {
             if (
               err?.error?.responseCode === 400
             ) {
+
+            
+              
+             
                 this.dialog.closeAll();
-                localStorage.removeItem('NINDetails');
+                
  this.router.navigate(['/home/beneficiary'], {
    relativeTo: this.route,
    queryParams: {

@@ -102,7 +102,7 @@ export class AllBeneficiaryComponent implements OnInit {
     private toast: ToastsService,
     private location: Location  // Inject Location
   ) {
-// this.getAllIncompleteBeneficiaries();
+this.getAllIncompleteBeneficiaries();
   }
 
 
