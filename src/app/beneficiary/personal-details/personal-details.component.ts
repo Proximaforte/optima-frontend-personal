@@ -58,6 +58,8 @@ export class PersonalDetailsComponent implements OnInit {
    if(localStorage.getItem('NINDetails') !== null){
     const getBeneficiaryNin: any = localStorage.getItem('NINDetails');
     this.ninDetails = JSON.parse(getBeneficiaryNin)
+   
+    
    // var newDate:any = this.ninDetails.birthDate?.split('-');
    // console.log("newDate>>", newDate);
     this.formattedDate = this.ninDetails.birthDate; //`${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;

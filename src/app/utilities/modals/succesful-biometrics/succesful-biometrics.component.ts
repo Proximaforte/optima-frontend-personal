@@ -25,6 +25,8 @@ export class SuccesfulBiometricsComponent {
         progress: 'residential_details'
       }
     })
+    console.log('yes');
+    
     // this.routeService.setRouteToDisplay("personal details");
     // this.router.navigate(['/home/beneficiary'],{
     //   relativeTo: this.route,

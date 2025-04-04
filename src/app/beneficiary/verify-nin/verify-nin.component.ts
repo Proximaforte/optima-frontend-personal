@@ -55,7 +55,7 @@ export class VerifyNINComponent implements OnInit {
     this.ninForm = new FormGroup({
       nin: new FormControl('', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10), Validators.maxLength(11)])
     })
-
+        this.submit();
     this.ninForm.get('nin')?.valueChanges.subscribe({
       next: (value: string) => {
        if (value.length === 11) {
@@ -93,7 +93,8 @@ export class VerifyNINComponent implements OnInit {
   }
 
   submit() {
-    this.beneficiaryService.setRouteToDisplay("personal details");
+      this.beneficiaryService.setRouteToDisplay('personal details');
+    // this.beneficiaryService.setRouteToDisplay("occupation");
     this.router.navigate(["/home/beneficiary"], {
       relativeTo: this.route,
       queryParams: {
