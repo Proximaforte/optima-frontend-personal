@@ -234,8 +234,7 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
     };
    
     localStorage.setItem('nin', JSON.stringify(this.beneficiaryData.nin));
-    
-        this.beneficiaryService.consentForm(value).subscribe({
+            this.beneficiaryService.consentForm(value).subscribe({
           next: (response: any) => {
 
             if (
@@ -276,38 +275,6 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
             
               
              
-                this.dialog.closeAll();
-
-              this.router.navigate(['/home/beneficiary'], {
-                relativeTo: this.route,
-                queryParams: {
-                  progress: 'verify_NIN',
-                },
-              });
-
-              this.snackbar.openFromComponent(ToastsComponent, {
-                duration: 4000,
-                verticalPosition: 'bottom',
-              });
-            }
-          },
-          error: (err: any) => {
-            
-   
-            this.toast.setErrorMessage(
-              err?.error?.failureReason ||
-                err?.error?.responseMessage ||
-                err?.statusText,
-            );
-            this.snackbar.openFromComponent(ToastsComponent, {
-              duration: 4000,
-              verticalPosition: 'bottom',
-            });
-
-            if (
-              err?.error?.responseCode === 400
-            ) {
-
                 this.dialog.closeAll();
                 
  this.router.navigate(['/home/beneficiary'], {
