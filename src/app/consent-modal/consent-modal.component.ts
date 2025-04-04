@@ -180,8 +180,8 @@ export class ConsentModalComponent {
                     this.showLoader = false;
               if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
+
              
-                
 localStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
 localStorage.setItem('NINDetails', JSON.stringify(response?.data));
                 this.beneficiaryData = response.data;
@@ -276,6 +276,38 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
             
               
              
+                this.dialog.closeAll();
+
+              this.router.navigate(['/home/beneficiary'], {
+                relativeTo: this.route,
+                queryParams: {
+                  progress: 'verify_NIN',
+                },
+              });
+
+              this.snackbar.openFromComponent(ToastsComponent, {
+                duration: 4000,
+                verticalPosition: 'bottom',
+              });
+            }
+          },
+          error: (err: any) => {
+            
+   
+            this.toast.setErrorMessage(
+              err?.error?.failureReason ||
+                err?.error?.responseMessage ||
+                err?.statusText,
+            );
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
+
+            if (
+              err?.error?.responseCode === 400
+            ) {
+
                 this.dialog.closeAll();
                 
  this.router.navigate(['/home/beneficiary'], {
