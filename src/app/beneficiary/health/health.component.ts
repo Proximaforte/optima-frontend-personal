@@ -71,44 +71,57 @@ export class HealthComponent implements OnInit {
       publicHospitalQuestion: new FormControl('', null)
     });
 
-    this.healthForm.get('healthQuestion')?.valueChanges.subscribe({
-      next: (value:any) => {
-        if(value === 'Others'){
-          this.showSpecifyAiment = true;
-          this.healthForm
-            .get('specifyAilment')
-            ?.setValidators(Validators.required);
-        }else{
-          this.showSpecifyAiment = false;
-        }
-      }
-    });
+   this.healthForm.get('healthQuestion')?.valueChanges.subscribe({
+     next: (value: any) => {
+       const specifyAilmentControl = this.healthForm.get('specifyAilment');
 
-    this.healthForm.get('receivingTreatmentQuestion')?.valueChanges.subscribe({
-      next: (value:any) => {
-        if(value === 'yes'){
-          this.showSpecifyHospital = true;
-          this.healthForm
-            .get('publicHospitalQuestion')
-            ?.setValidators(Validators.required);
-        }else{
-          this.showSpecifyHospital = false;
-        }
-      }
-    });
+       if (value === 'Others') {
+         this.showSpecifyAiment = true;
+         specifyAilmentControl?.setValidators(Validators.required);
+       } else {
+         this.showSpecifyAiment = false;
+         specifyAilmentControl?.clearValidators();
+       }
 
-    this.healthForm.get('HMOQuestion')?.valueChanges.subscribe({
-      next: (value:any) => {
-        if(value.toLowerCase() === 'yes'){
-          this.showSpecifyHMO = true;
-          this.healthForm
-            .get('specifyHMO')
-            ?.setValidators(Validators.required);
-        }else{
-          this.showSpecifyHMO = false;
-        }
+       specifyAilmentControl?.updateValueAndValidity();
+     },
+   });
+
+
+   this.healthForm.get('receivingTreatmentQuestion')?.valueChanges.subscribe({
+     next: (value: any) => {
+       const publicHospitalControl = this.healthForm.get(
+         'publicHospitalQuestion',
+       );
+
+       if (value === 'yes') {
+         this.showSpecifyHospital = true;
+         publicHospitalControl?.setValidators(Validators.required);
+       } else {
+         this.showSpecifyHospital = false;
+         publicHospitalControl?.clearValidators();
+       }
+
+       publicHospitalControl?.updateValueAndValidity();
+     },
+   });
+
+
+  this.healthForm.get('HMOQuestion')?.valueChanges.subscribe({
+    next: (value: any) => {
+      const specifyHMOControl = this.healthForm.get('specifyHMO');
+
+      if (value?.toLowerCase() === 'yes') {
+        this.showSpecifyHMO = true;
+        specifyHMOControl?.setValidators(Validators.required);
+      } else {
+        this.showSpecifyHMO = false;
+        specifyHMOControl?.clearValidators();
       }
-    });
+
+      specifyHMOControl?.updateValueAndValidity();
+    },
+  });
 
 
   }
