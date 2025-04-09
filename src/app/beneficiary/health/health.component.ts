@@ -129,7 +129,7 @@ export class HealthComponent implements OnInit {
   updateDisabledBtn() {
     this.disableBtn = !this.healthForm.valid;
   }
-
+// kk
   getDistanceRanges() {
     this.beneficiaryService.getDistanceRanges().subscribe({
       next: (data: any) => {
