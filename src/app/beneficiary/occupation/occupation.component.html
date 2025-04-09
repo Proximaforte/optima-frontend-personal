@@ -892,7 +892,7 @@
 
       </form>
     </div>
-      <div class="row-span-1" *ngIf="showTraders || showClergy" >
+      <div class="row-span-1" *ngIf="(showTraders || showClergy ) && occupationForm.get('enjoyedIntervention')?.value === 'yes'" >
        <form class="max-w-sm row-span-1" [formGroup]="occupationForm">
            <select
           id="funding_options"
@@ -907,7 +907,7 @@
       </form>
     </div>
 
-      <div class="row-span-1" *ngIf="showTraders || showAcademics || showClergy" >
+      <div class="row-span-1" *ngIf="(showTraders || showAcademics || showClergy) && occupationForm.get('enjoyedIntervention')?.value === 'yes'" >
        <form class="max-w-sm row-span-1" [formGroup]="occupationForm">
            <select
           id="funding_options"

@@ -244,12 +244,34 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
               this.toast.setSuccessMessage("Beneficiary's Consent Submitted!");
               this.dialog.closeAll();
 
-              this.router.navigate(['/home/beneficiary'], {
-                relativeTo: this.route,
-                queryParams: {
-                  progress: 'verify_NIN',
-                },
-              });
+              localStorage.removeItem("NINDetails")
+              localStorage.removeItem("beneficiaryPhoneNumber")
+              localStorage.removeItem("biometrics")
+              localStorage.removeItem("incomplete")
+              localStorage.removeItem("verification")
+              localStorage.removeItem("nin")
+              localStorage.removeItem("faceCapture_skipThumPrints")
+              localStorage.removeItem("isFingerprintOk")
+              localStorage.removeItem('userAddress');
+             
+                  this.beneficiaryService.setRouteToDisplay(
+                    'verify beneficiary nin',
+                  );
+                  this.router.navigate(['/home/beneficiary'], {
+                    relativeTo: this.route,
+                    queryParams: {
+                      progress: 'verify_NIN',
+                    },
+                  });
+                
+            
+
+              // this.router.navigate(['/home/beneficiary'], {
+              //   relativeTo: this.route,
+              //   queryParams: {
+              //     progress: 'verify_NIN',
+              //   },
+              // });
 
               this.snackbar.openFromComponent(ToastsComponent, {
                 duration: 4000,

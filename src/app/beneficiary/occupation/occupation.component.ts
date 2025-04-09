@@ -406,7 +406,7 @@ export class OccupationComponent implements OnInit {
       ]),
       clergyFaith: new FormControl('', [Validators.required]),
       founder: new FormControl('', [Validators.required]),
-      clergyMembershipCount: new FormControl(''),
+      clergyMembershipCount: new FormControl('', [Validators.required]),
       securityOutfitType: new FormControl('', [Validators.required]),
       otherSecurityOutfitType: new FormControl('', [Validators.required]),
       securityDutyPost: new FormControl('', [Validators.required]),
@@ -963,15 +963,20 @@ export class OccupationComponent implements OnInit {
   }
 
   traderValid(): boolean {
+    const enjoyedIntervention =
+      this.occupationForm.get('enjoyedIntervention')?.value === 'yes';
+
     return (
       (this.occupationForm.get('scaleOfTrade')?.valid ?? false) &&
       (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
       (this.occupationForm.get('durationInBusiness')?.valid ?? false) &&
       (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionLevel')?.valid ?? false)
+      (!enjoyedIntervention ||
+        ((this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
+          (this.occupationForm.get('InterventionLevel')?.valid ?? false)))
     );
   }
+
   artisanValid(): boolean {
     return (
       (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
@@ -980,6 +985,8 @@ export class OccupationComponent implements OnInit {
     );
   }
   academicValid(): boolean {
+    const enjoyedIntervention =
+      this.occupationForm.get('enjoyedIntervention')?.value === 'yes';
     return (
       (this.occupationForm.get('academicsHighestLevelOfEducation')?.valid ??
         false) &&
@@ -987,20 +994,28 @@ export class OccupationComponent implements OnInit {
       (this.occupationForm.get('institutionOwnership')?.valid ?? false) &&
       (this.occupationForm.get('numberOfPublications')?.valid ?? false) &&
       (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionLevel')?.valid ?? false) &&
+      (!enjoyedIntervention ||
+        (this.occupationForm.get('InterventionLevel')?.valid ?? false)) &&
       (this.occupationForm.get('areaofSpecialization')?.valid ?? false) &&
       (this.occupationForm.get('academicsYearOfExperience')?.valid ?? false)
     );
   }
 
   clergyValid(): boolean {
+    const enjoyedIntervention =
+      this.occupationForm.get('enjoyedIntervention')?.value === 'yes';
+    const founder = this.occupationForm.get('founder')?.value === 'yes';
+
     return (
       (this.occupationForm.get('clergyFaith')?.valid ?? false) &&
       (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
       (this.occupationForm.get('founder')?.valid ?? false) &&
+      (!founder ||
+        (this.occupationForm.get('clergyMembershipCount')?.valid ?? false)) &&
       (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionLevel')?.valid ?? false)
+      (!enjoyedIntervention ||
+        ((this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
+          (this.occupationForm.get('InterventionLevel')?.valid ?? false)))
     );
   }
 
@@ -1052,7 +1067,8 @@ export class OccupationComponent implements OnInit {
       totalPayload = {
         phoneNumber: getBeneficiaryPhoneNumber,
         type: this.occupationForm.value.occupation,
-        highestQualification: this.occupationForm.value.academicsHighestLevelOfEducation,
+        highestQualification:
+          this.occupationForm.value.academicsHighestLevelOfEducation,
         presentInstitution: this.occupationForm.value.nameOfInstitution,
         institutionOwnership: this.occupationForm.value.institutionOwnership,
         totalNumberOfPublications:
