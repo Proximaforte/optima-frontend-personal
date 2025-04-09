@@ -185,6 +185,7 @@ export class ConsentModalComponent {
 localStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
 localStorage.setItem('NINDetails', JSON.stringify(response?.data));
                 this.beneficiaryData = response.data;
+           console.log(this.beneficiaryData);
            
                 
                 this.showBtn = true;
@@ -234,6 +235,7 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
     };
    
     localStorage.setItem('nin', JSON.stringify(this.beneficiaryData.nin));
+
     
         this.beneficiaryService.consentForm(value).subscribe({
           next: (response: any) => {
@@ -244,27 +246,25 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
               this.toast.setSuccessMessage("Beneficiary's Consent Submitted!");
               this.dialog.closeAll();
 
-              localStorage.removeItem("NINDetails")
-              localStorage.removeItem("beneficiaryPhoneNumber")
-              localStorage.removeItem("biometrics")
-              localStorage.removeItem("incomplete")
-              localStorage.removeItem("verification")
-              localStorage.removeItem("nin")
-              localStorage.removeItem("faceCapture_skipThumPrints")
-              localStorage.removeItem("isFingerprintOk")
+              // localStorage.removeItem("NINDetails")
+              // localStorage.removeItem("beneficiaryPhoneNumber")
+              // localStorage.removeItem("nin")
+              localStorage.removeItem('biometrics');
+              localStorage.removeItem('incomplete');
+              localStorage.removeItem('verification');
+              localStorage.removeItem('faceCapture_skipThumPrints');
+              localStorage.removeItem('isFingerprintOk');
               localStorage.removeItem('userAddress');
-             
-                  this.beneficiaryService.setRouteToDisplay(
-                    'verify beneficiary nin',
-                  );
-                  this.router.navigate(['/home/beneficiary'], {
-                    relativeTo: this.route,
-                    queryParams: {
-                      progress: 'verify_NIN',
-                    },
-                  });
-                
-            
+
+              this.beneficiaryService.setRouteToDisplay(
+                'verify beneficiary nin',
+              );
+              this.router.navigate(['/home/beneficiary'], {
+                relativeTo: this.route,
+                queryParams: {
+                  progress: 'verify_NIN',
+                },
+              });
 
               // this.router.navigate(['/home/beneficiary'], {
               //   relativeTo: this.route,
