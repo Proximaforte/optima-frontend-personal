@@ -180,8 +180,8 @@ export class ConsentModalComponent {
                     this.showLoader = false;
               if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
+
              
-                
 localStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
 localStorage.setItem('NINDetails', JSON.stringify(response?.data));
                 this.beneficiaryData = response.data;
@@ -236,8 +236,9 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
    
     localStorage.setItem('nin', JSON.stringify(this.beneficiaryData.nin));
 
-    
+
         this.beneficiaryService.consentForm(value).subscribe({
+
           next: (response: any) => {
 
             if (
