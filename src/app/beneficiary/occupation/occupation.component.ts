@@ -432,6 +432,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
       lastMDAsOfRetirement: new FormControl('', [Validators.required]),
       ministries: new FormControl('', [Validators.required]),
       pensionVerificationNumber: new FormControl('', [Validators.required]),
+
       scaleOfTrade: new FormControl('', [Validators.required]),
       natureOfBusiness: new FormControl('', [Validators.required]),
       durationInBusiness: new FormControl('', [Validators.required]),
@@ -455,6 +456,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
       serviceNumber: new FormControl('', [Validators.required]),
       rank: new FormControl('', [Validators.required]),
       otherQualification: new FormControl(''),
+
     });
 
     this.occupationForm.get('occupation')?.valueChanges.subscribe({

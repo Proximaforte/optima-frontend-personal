@@ -194,6 +194,7 @@ export class ConsentModalComponent {
                   'NINDetails',
                   JSON.stringify(response?.data),
                 );
+
                 this.beneficiaryData = response.data;
 
                 if (response?.data?.formStage) {
@@ -250,29 +251,36 @@ export class ConsentModalComponent {
 
     localStorage.setItem('nin', JSON.stringify(this.beneficiaryData.nin));
 
-    this.beneficiaryService.consentForm(value).subscribe({
-      next: (response: any) => {
-        if (response?.responseCode === 200) {
-          this.toast.setSuccessMessage("Beneficiary's Consent Submitted!");
-          this.dialog.closeAll();
+        this.beneficiaryService.consentForm(value).subscribe({
 
-          // localStorage.removeItem("NINDetails")
-          // localStorage.removeItem("beneficiaryPhoneNumber")
-          // localStorage.removeItem("nin")
-          localStorage.removeItem('biometrics');
-          localStorage.removeItem('incomplete');
-          localStorage.removeItem('verification');
-          localStorage.removeItem('faceCapture_skipThumPrints');
-          localStorage.removeItem('isFingerprintOk');
-          localStorage.removeItem('userAddress');
+          next: (response: any) => {
 
-          this.beneficiaryService.setRouteToDisplay('verify beneficiary nin');
-          this.router.navigate(['/home/beneficiary'], {
-            relativeTo: this.route,
-            queryParams: {
-              progress: 'verify_NIN',
-            },
-          });
+            if (
+              response?.responseCode === 200 
+            ) {
+              this.toast.setSuccessMessage("Beneficiary's Consent Submitted!");
+              this.dialog.closeAll();
+
+              // localStorage.removeItem("NINDetails")
+              // localStorage.removeItem("beneficiaryPhoneNumber")
+              // localStorage.removeItem("nin")
+              localStorage.removeItem('biometrics');
+              localStorage.removeItem('incomplete');
+              localStorage.removeItem('verification');
+              localStorage.removeItem('faceCapture_skipThumPrints');
+              localStorage.removeItem('isFingerprintOk');
+              localStorage.removeItem('userAddress');
+
+              this.beneficiaryService.setRouteToDisplay(
+                'verify beneficiary nin',
+              );
+              this.router.navigate(['/home/beneficiary'], {
+                relativeTo: this.route,
+                queryParams: {
+                  progress: 'verify_NIN',
+                },
+              });
+
 
           // this.router.navigate(['/home/beneficiary'], {
           //   relativeTo: this.route,
