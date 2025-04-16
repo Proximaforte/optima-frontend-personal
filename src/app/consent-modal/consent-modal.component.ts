@@ -12,7 +12,11 @@ import { ToastsComponent } from 'src/app/utilities/toasts/toasts.component';
 import { WebcamImage } from 'ngx-webcam';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { ConsentCaptureComponent } from '../consent-capture/consent-capture.component';
-
+import {
+ 
+  BeneficiaryProfile,
+} from '../models/beneficiary/beneficiary';
+import { AuthService } from '../services/authentication/auth.service';
 @Component({
   selector: 'app-consent-modal',
   templateUrl: './consent-modal.component.html',
@@ -75,9 +79,9 @@ export class ConsentModalComponent {
   beneficiaryData: any;
 
   routeBack: string = '/assets/images/back.svg';
- 
+
   upload: string = '/assets/images/iconplus.svg';
- 
+
   photograph: string = '';
   capture: string = '/assets/images/capture.svg';
   disabledBtn: boolean = true;
@@ -102,7 +106,8 @@ export class ConsentModalComponent {
     private location: Location,
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
-    private toast: ToastsService, // Inject Location
+    private toast: ToastsService,
+    private authService: AuthService, // Inject Location
   ) {
     this.getFormValues();
     // this.webcamHeight = window?.innerHeight;
@@ -174,21 +179,31 @@ export class ConsentModalComponent {
     this.ninForm.get('nin')?.valueChanges.subscribe({
       next: (value: string) => {
         if (value.length === 11) {
-          this.showLoader = true
+          this.showLoader = true;
           this.beneficiaryService.verifyNIN(value).subscribe({
             next: (response: any) => {
-                    this.showLoader = false;
+              this.showLoader = false;
               if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
 
-             
-localStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
-localStorage.setItem('NINDetails', JSON.stringify(response?.data));
+                localStorage.setItem(
+                  'beneficiaryPhoneNumber',
+                  response?.data?.phone,
+                );
+                localStorage.setItem(
+                  'NINDetails',
+                  JSON.stringify(response?.data),
+                );
+
                 this.beneficiaryData = response.data;
-           console.log(this.beneficiaryData);
-           
-                
-                this.showBtn = true;
+
+                if (response?.data?.formStage) {
+              this.continueOnboarding(response?.data)
+
+                          this.dialog.closeAll();
+                } else {
+                  this.showBtn = true;
+                }
 
                 this.snackbar.openFromComponent(ToastsComponent, {
                   duration: 4000,
@@ -217,15 +232,15 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
   }
 
   submit() {
-     this.beneficiaryService.acceptImageUrl().subscribe({
-       next: (item: any) => {
-         this.photograph = item?.image;
-         this.showLatest = item?.showLatest;
-         if (this.showLatest === true) {
-           this.disabledBtn = false;
-         }
-       },
-     });
+    this.beneficiaryService.acceptImageUrl().subscribe({
+      next: (item: any) => {
+        this.photograph = item?.image;
+        this.showLatest = item?.showLatest;
+        if (this.showLatest === true) {
+          this.disabledBtn = false;
+        }
+      },
+    });
 
     const value = {
       firstName: this.beneficiaryData.firstName,
@@ -233,9 +248,8 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
       image: this.photograph?.split(',')[1],
       nin: this.beneficiaryData.nin,
     };
-   
-    localStorage.setItem('nin', JSON.stringify(this.beneficiaryData.nin));
 
+    localStorage.setItem('nin', JSON.stringify(this.beneficiaryData.nin));
 
         this.beneficiaryService.consentForm(value).subscribe({
 
@@ -267,50 +281,42 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
                 },
               });
 
-              // this.router.navigate(['/home/beneficiary'], {
-              //   relativeTo: this.route,
-              //   queryParams: {
-              //     progress: 'verify_NIN',
-              //   },
-              // });
 
-              this.snackbar.openFromComponent(ToastsComponent, {
-                duration: 4000,
-                verticalPosition: 'bottom',
-              });
-            }
-          },
-          error: (err: any) => {
-            
-   
-            this.toast.setErrorMessage(
-              err?.error?.failureReason ||
-                err?.error?.responseMessage ||
-                err?.statusText,
-            );
-            this.snackbar.openFromComponent(ToastsComponent, {
-              duration: 4000,
-              verticalPosition: 'bottom',
-            });
-            if (
-              err?.error?.responseCode === 400
-            ) {
+          // this.router.navigate(['/home/beneficiary'], {
+          //   relativeTo: this.route,
+          //   queryParams: {
+          //     progress: 'verify_NIN',
+          //   },
+          // });
 
-            
-              
-             
-                this.dialog.closeAll();
-                
- this.router.navigate(['/home/beneficiary'], {
-   relativeTo: this.route,
-   queryParams: {
-     progress: 'verify_NIN',
-   },
- });
-            }
-          },
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+        }
+      },
+      error: (err: any) => {
+        this.toast.setErrorMessage(
+          err?.error?.failureReason ||
+            err?.error?.responseMessage ||
+            err?.statusText,
+        );
+        this.snackbar.openFromComponent(ToastsComponent, {
+          duration: 4000,
+          verticalPosition: 'bottom',
         });
- 
+        if (err?.error?.responseCode === 400) {
+          this.dialog.closeAll();
+
+          this.router.navigate(['/home/beneficiary'], {
+            relativeTo: this.route,
+            queryParams: {
+              progress: 'verify_NIN',
+            },
+          });
+        }
+      },
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -332,7 +338,6 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
 
     this.dialog.open(ConsentCaptureComponent, {
       width: `60%`,
-
     });
     this.showWebcam = false;
   }
@@ -359,5 +364,187 @@ localStorage.setItem('NINDetails', JSON.stringify(response?.data));
     this.disabledBtn = true;
   }
 
+  continueOnboarding(beneficiary: BeneficiaryProfile | any) {
+    localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
+    localStorage.removeItem('userAddress');
+    // this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
+    // this.snackbar.openFromComponent(ToastsComponent, {
+    //   duration: 4000,
+    //   verticalPosition: 'bottom',
+    // });
 
+    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    localStorage.setItem('userAddress', beneficiary?.address);
+    localStorage.setItem(
+      'incomplete',
+      "Let's continue from where you've stopped!",
+    );
+    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
+      next: (details: any) => {
+        const stringedData = JSON.stringify(details?.data);
+        localStorage.setItem('NINDetails', stringedData);
+        // localStorage.setItem('NINDetails', stringedData);
+      },
+    });
+
+    if (beneficiary?.formStage === 'VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('verify beneficiary nin');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'verify_NIN',
+        },
+      });
+    } else if (beneficiary?.formStage === 'NIN_VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('personal details');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'personal_details',
+        },
+      });
+    } else if (beneficiary?.formStage === 'OTP_VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('biometrics');
+      localStorage.setItem('biometrics', 'biometrics');
+      this.router.navigate(['/home/setup-biometrics'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'setup_biometrics',
+        },
+      });
+      // this.router.navigate(['/home/setup-biometrics'], {
+      //   relativeTo: this.route,
+      //   queryParams: {
+      //     progress: 'finger_capture_done'
+      //   }
+      // })
+    } else if (beneficiary?.formStage === 'PERSONAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('verification procedure');
+      localStorage.setItem('verification', 'verification');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'verification_procedure',
+        },
+      });
+    } else if (
+      beneficiary?.formStage === 'BIO_VERIFICATION' ||
+      beneficiary?.formStage === 'VERIFIED'
+    ) {
+      this.beneficiaryService.setRouteToDisplay('residential details');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'residential_details',
+        },
+      });
+    } else if (beneficiary?.formStage === 'ADDRESS_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('marital info');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'marital_info',
+        },
+      });
+    } else if (beneficiary?.formStage === 'MARITAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('education');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'education',
+        },
+      });
+    } else if (beneficiary?.formStage === 'EDUCATION_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('health');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'health',
+        },
+      });
+    } else if (beneficiary?.formStage === 'HEALTH_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('financial');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'financial',
+        },
+      });
+    } else if (beneficiary?.formStage === 'FINANCIAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('next of kin');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'next_of_kin',
+        },
+      });
+    } else if (beneficiary?.formStage === 'NEXT_OF_KIN') {
+      this.beneficiaryService.setRouteToDisplay('employment');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'employment',
+        },
+      });
+    } else if (beneficiary?.formStage === 'EMPLOYMENT_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('occupation');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'occupation',
+        },
+      });
+    } else if (beneficiary?.formStage === 'OCCUPATION_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('other details');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'other_details',
+        },
+      });
+    } else if (beneficiary?.formStage === 'OTHER_DETAILS') {
+      //|| beneficiary?.formStage === "COMPLETED"
+      this.beneficiaryService
+        .onboardingSubmitted(beneficiary?.phoneNumber)
+        ?.subscribe({
+          next: (elem: any) => {
+            // console.log('res>>', elem);
+            this.router.navigate(['/home/all-beneficiary'], {
+              relativeTo: this.route,
+            });
+            this.toast.setSuccessMessage(
+              "Beneficiary's onboarding has been completed successfully!",
+            );
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
+          },
+          error: (err: any) => {
+            console.error('err>>>', err);
+            this.toast.setErrorMessage(
+              err?.error?.failureReason ||
+                err?.error?.responseMessage ||
+                err?.statusText ||
+                'Oops an error occured!',
+            );
+            this.snackbar.openFromComponent(ToastsComponent, {
+              duration: 4000,
+              verticalPosition: 'bottom',
+            });
+            if (err?.status === 401) {
+              // this.showSpinner = false;
+              this.authService.agentLogout();
+            }
+          },
+        });
+    }
+  }
 }

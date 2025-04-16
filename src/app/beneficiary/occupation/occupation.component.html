@@ -273,6 +273,40 @@
         />
       </form>
     </div>
+
+       <div class="row-span-1" *ngIf="showStudentsInfo === true">
+      <form class="max-w-sm" [formGroup]="occupationForm">
+        <label for=""> Admission Year</label>
+        <input
+          type="date"
+          formControlName="admissionYear"
+          id="text-input"
+          placeholder="Admission Year"
+          aria-describedby="helper-text-explanation"
+           [max]="occupationForm.get('graduationYear')?.value"
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+         
+        />
+      </form>
+    </div>
+
+    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+      <form class="max-w-sm" [formGroup]="occupationForm">
+         <label for=""> Graduation Year</label>
+        <input
+          type="date"
+          formControlName="graduationYear"
+          id="text-input"
+          placeholder="Graduation Year"
+          aria-describedby="helper-text-explanation"
+           [min]="occupationForm.get('admissionYear')?.value"
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+         
+        />
+      </form>
+    </div>
+ 
+
     <div class="row-span-1" *ngIf="showStudentsInfo === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <input
@@ -282,6 +316,18 @@
           aria-describedby="helper-text-explanation"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Name of Faculty*"
+        />
+      </form>
+    </div>
+     <div class="row-span-1" *ngIf="showStudentsInfo === true">
+      <form class="max-w-sm" [formGroup]="occupationForm">
+        <input
+          type="text"
+          formControlName="courseOfStudy"
+          id="text-input"
+          aria-describedby="helper-text-explanation"
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Course Of Study"
         />
       </form>
     </div>
@@ -314,6 +360,20 @@
       <form class="max-w-sm" [formGroup]="occupationForm">
         <select
           id="funding_options"
+          formControlName="indigene"
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+        >
+         <option value="" disabled> Are You an Indidgene</option>
+          <option *ngFor="let option of indigeneCategoryOptions; let id = index">
+            <span>{{ option }}</span>
+          </option>
+        </select>
+      </form>
+    </div>
+    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+      <form class="max-w-sm" [formGroup]="occupationForm">
+        <select
+          id="funding_options"
           formControlName="diplomaType"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
@@ -323,7 +383,8 @@
         </select>
       </form>
     </div>
-    <div class="row-span-1" *ngIf="showOthers === true">
+    <div class="row-span-1" *ngIf="occupationForm.get('diplomaType')?.value === 'Other'"
+>
       <form class="max-w-sm" [formGroup]="occupationForm">
         <input
           type="text"
@@ -438,7 +499,7 @@
           formControlName="securityOutfitType"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-          <option value="">What Security Agency do you belong to?</option>
+          <option value="" disabled>What Security Agency do you belong to?</option>
           <option
             *ngFor="let option of securityOutfitType; let id = index"
           >
