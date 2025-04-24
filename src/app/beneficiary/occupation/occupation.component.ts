@@ -221,6 +221,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
       return null;
     }
   };
+  
   removeWord(word: string) {
     // Remove the selected word from the array
     this.words = this.words.filter((w) => w !== word);
@@ -748,6 +749,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
       },
     });
   }
+
   ngOnDestroy(): void {
     this.specifyDiplomaTypeSubscription?.unsubscribe();
   }
