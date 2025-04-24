@@ -147,7 +147,7 @@ export class SetupBiometricsComponent {
       },
     });
     dialogRef.afterClosed().subscribe((selectedReason: string) => {
-      console.log(selectedReason)
+     
       if (selectedReason) {
         this.selectedReason = selectedReason;
         this.disabledBtn = false;
@@ -160,7 +160,7 @@ export class SetupBiometricsComponent {
     this.showSpinner = true;
     this.beneficiaryService.Verification(this.imageCapturePayload).subscribe({
       next: (res: any) => {
-        // console.log('res>>>', res);
+        console.log('res>>>', res);
         this.showSpinner = false;
         if (res?.responseCode === 200) {
           this.dialog.open(SuccesfulBiometricsComponent);

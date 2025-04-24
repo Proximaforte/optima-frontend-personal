@@ -80,7 +80,7 @@ export class PersonalDetailsComponent implements OnInit {
       firstName: new FormControl(this.ninDetails.firstName as string, null),
       lastName: new FormControl(this.ninDetails.lastName as string, null),
       middleName: new FormControl(this.ninDetails.middleName as string, null),
-      phoneNumber: new FormControl(this.ninDetails.phone as string, [Validators.required]),
+      phoneNumber: new FormControl(this.ninDetails.phoneNumber as string, [Validators.required]),
       bvn: new FormControl('', null),
       email: new FormControl('', null),
       gender: new FormControl(this.ninDetails?.gender as string, null),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,

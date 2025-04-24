@@ -1456,6 +1456,7 @@ export interface Occupation {
   onTransfer: boolean | any;
   dateOfTransfer: string;
   cadre: string;
+  
   highestQualification: string;
   gradeLevel: string;
   onStudyLeave: boolean | any;

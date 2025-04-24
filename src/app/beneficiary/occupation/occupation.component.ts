@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
@@ -8,21 +8,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { Occupation } from 'src/app/models/beneficiary/beneficiary';
 import { endpoints } from 'src/app/models/APIs/endpoints';
-import { combineLatest, startWith } from 'rxjs';
+import { combineLatest, startWith, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-occupation',
   templateUrl: './occupation.component.html',
   styleUrls: ['./occupation.component.scss'],
 })
-export class OccupationComponent implements OnInit {
+export class OccupationComponent implements OnInit, OnDestroy {
   civilServiceCategoryOptions: string[] = [];
   nameOfInstitutions: string[] = [];
   state: string = 'kwara';
   publicServiceCategoryOptions: string[] = [];
   pensionTypesOptions: any;
 
-  indigeneCategoryOptions: boolean[] = [true, false];
+  indigeneCategoryOptions: string[] = ['Yes', 'No'];
 
   option2: string[] = ['Other Sources of Income e.g farming business etc*'];
   option3: string[] | any = [
@@ -145,7 +145,7 @@ export class OccupationComponent implements OnInit {
     ],
     psn: '',
   };
-
+  private specifyDiplomaTypeSubscription?: Subscription;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -182,7 +182,46 @@ export class OccupationComponent implements OnInit {
     // console.log('words array>>>', this.words);
     this.occupationEnums.professionalQualifications = this.words;
   }
+  yearRangeValidator: ValidatorFn = (
+    group: AbstractControl,
+  ): ValidationErrors | null => {
+    const admission = group.get('admissionYear');
+    const graduation = group.get('graduationYear');
 
+    if (!admission?.value || !graduation?.value) return null;
+
+    const admissionYear = +admission.value;
+    const graduationYear = +graduation.value;
+
+    if (admissionYear > graduationYear) {
+      graduation.setErrors({ graduationBeforeAdmission: true });
+      return { graduationBeforeAdmission: true };
+    } else {
+      graduation.setErrors(null);
+      return null;
+    }
+  };
+
+  dateRangeValidator: ValidatorFn = (
+    control: AbstractControl,
+  ): ValidationErrors | null => {
+    const start = control.get('startDate');
+    const end = control.get('endDate');
+
+    if (!start?.value || !end?.value) return null;
+
+    const startDate = new Date(start.value);
+    const endDate = new Date(end.value);
+
+    if (startDate > endDate) {
+      end?.setErrors({ endBeforeStart: true });
+      return { endBeforeStart: true };
+    } else {
+      end?.setErrors(null);
+      return null;
+    }
+  };
+  
   removeWord(word: string) {
     // Remove the selected word from the array
     this.words = this.words.filter((w) => w !== word);
@@ -360,6 +399,10 @@ export class OccupationComponent implements OnInit {
       occupation: new FormControl('', [Validators.required]),
       nameOfInstitution: new FormControl('', [Validators.required]),
       matriculationNumber: new FormControl('', [Validators.required]),
+      admissionYear: new FormControl('', [Validators.required]),
+      graduationYear: new FormControl('', [Validators.required]),
+      courseOfStudy: new FormControl('', [Validators.required]),
+      indigene: new FormControl('', [Validators.required]),
       faculty: new FormControl('', [Validators.required]),
       department: new FormControl('', [Validators.required]),
       funding: new FormControl('', [Validators.required]),
@@ -407,7 +450,7 @@ export class OccupationComponent implements OnInit {
       ]),
       clergyFaith: new FormControl('', [Validators.required]),
       founder: new FormControl('', [Validators.required]),
-      clergyMembershipCount: new FormControl(''),
+      clergyMembershipCount: new FormControl('', [Validators.required]),
       securityOutfitType: new FormControl('', [Validators.required]),
       otherSecurityOutfitType: new FormControl('', [Validators.required]),
       securityDutyPost: new FormControl('', [Validators.required]),
@@ -663,16 +706,6 @@ export class OccupationComponent implements OnInit {
       },
     });
 
-    this.occupationForm.get('specifyDiplomaType')?.valueChanges.subscribe({
-      next: (value: any) => {
-        if (value?.length > 1) {
-          this.disableBtn = false;
-        } else {
-          this.disableBtn = true;
-        }
-      },
-    });
-
     this.occupationForm.get('psn')?.valueChanges.subscribe({
       next: (value: any) => {
         if (value?.length > 1) {
@@ -683,15 +716,44 @@ export class OccupationComponent implements OnInit {
       },
     });
 
+    // Class-level subscription to clean up later
+
     this.occupationForm.get('diplomaType')?.valueChanges.subscribe({
       next: (value: any) => {
+        const diplomaTypeControl = this.occupationForm.get('diplomaType');
+        const specifyDiplomaControl =
+          this.occupationForm.get('specifyDiplomaType');
+
         if (value === 'Other') {
           this.showOthers = true;
+          diplomaTypeControl?.setValidators(Validators.required);
+
+          // Unsubscribe from previous subscription if exists
+          this.specifyDiplomaTypeSubscription?.unsubscribe();
+
+          // Subscribe to specifyDiplomaType value changes
+          this.specifyDiplomaTypeSubscription =
+            specifyDiplomaControl?.valueChanges.subscribe({
+              next: (specifyValue: any) => {
+                this.disableBtn = !(specifyValue?.length > 1);
+              },
+            });
         } else {
-          this.showOthers = true;
+          this.showOthers = false;
+          diplomaTypeControl?.clearValidators();
+          this.disableBtn = false;
+
+          // Cleanup the previous subscription
+          this.specifyDiplomaTypeSubscription?.unsubscribe();
         }
+
+        diplomaTypeControl?.updateValueAndValidity();
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.specifyDiplomaTypeSubscription?.unsubscribe();
   }
 
   get psn() {
@@ -852,7 +914,11 @@ export class OccupationComponent implements OnInit {
       gradeLevelOfRetirement: 'string',
       dateOfRetirement: 'string',
       lastMDAsOfRetirement: 'string',
-      indigene: true,
+      isIndigene: this.occupationForm.value.indigene === 'Yes' ? true : false,
+      courseOfStudy: this.occupationForm.value.courseOfStudy,
+      yearOfAdmission: this.occupationForm.value.admissionYear.split('-')[0],
+      expectedYearOfGraduation:
+        this.occupationForm.value.graduationYear.split('-')[0],
     };
 
     this.beneficiaryService.occupationDetails(totalPayload).subscribe({
@@ -965,15 +1031,20 @@ export class OccupationComponent implements OnInit {
   }
 
   traderValid(): boolean {
+    const enjoyedIntervention =
+      this.occupationForm.get('enjoyedIntervention')?.value === 'yes';
+
     return (
       (this.occupationForm.get('scaleOfTrade')?.valid ?? false) &&
       (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
       (this.occupationForm.get('durationInBusiness')?.valid ?? false) &&
       (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionLevel')?.valid ?? false)
+      (!enjoyedIntervention ||
+        ((this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
+          (this.occupationForm.get('InterventionLevel')?.valid ?? false)))
     );
   }
+
   artisanValid(): boolean {
     return (
       (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
@@ -982,6 +1053,8 @@ export class OccupationComponent implements OnInit {
     );
   }
   academicValid(): boolean {
+    const enjoyedIntervention =
+      this.occupationForm.get('enjoyedIntervention')?.value === 'yes';
     return (
       (this.occupationForm.get('academicsHighestLevelOfEducation')?.valid ??
         false) &&
@@ -989,31 +1062,51 @@ export class OccupationComponent implements OnInit {
       (this.occupationForm.get('institutionOwnership')?.valid ?? false) &&
       (this.occupationForm.get('numberOfPublications')?.valid ?? false) &&
       (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionLevel')?.valid ?? false) &&
+      (!enjoyedIntervention ||
+        (this.occupationForm.get('InterventionLevel')?.valid ?? false)) &&
       (this.occupationForm.get('areaofSpecialization')?.valid ?? false) &&
       (this.occupationForm.get('academicsYearOfExperience')?.valid ?? false)
     );
   }
 
   clergyValid(): boolean {
+    const enjoyedIntervention =
+      this.occupationForm.get('enjoyedIntervention')?.value === 'yes';
+    const founder = this.occupationForm.get('founder')?.value === 'yes';
+
     return (
       (this.occupationForm.get('clergyFaith')?.valid ?? false) &&
       (this.occupationForm.get('natureOfBusiness')?.valid ?? false) &&
       (this.occupationForm.get('founder')?.valid ?? false) &&
+      (!founder ||
+        (this.occupationForm.get('clergyMembershipCount')?.valid ?? false)) &&
       (this.occupationForm.get('enjoyedIntervention')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
-      (this.occupationForm.get('InterventionLevel')?.valid ?? false)
+      (!enjoyedIntervention ||
+        ((this.occupationForm.get('InterventionTypes')?.valid ?? false) &&
+          (this.occupationForm.get('InterventionLevel')?.valid ?? false)))
     );
   }
 
   securityValid(): boolean {
+    const form = this.occupationForm;
+    const isOthersSelected = form.get('securityDutyPost')?.value === 'Others';
+
+    const outfitTypeValid = form.get('securityOutfitType')?.valid ?? false;
+    const dutyPostValid = form.get('securityDutyPost')?.valid ?? false;
+    const otherOutfitTypeValid = isOthersSelected
+      ? form.get('otherSecurityOutfitType')?.valid ?? false
+      : true;
+    const serviceNumberValid = form.get('serviceNumber')?.valid ?? false;
+    const rankValid = form.get('rank')?.valid ?? false;
+    const qualificationValid = form.get('highestQualification')?.valid ?? false;
+
     return (
-      (this.occupationForm.get('securityOutfitType')?.valid ?? false) &&
-      (this.occupationForm.get('securityDutyPost')?.valid ?? false) &&
-      (this.occupationForm.get('otherSecurityOutfitType')?.valid ?? false) &&
-      (this.occupationForm.get('serviceNumber')?.valid ?? false) &&
-      (this.occupationForm.get('rank')?.valid ?? false) &&
-      (this.occupationForm.get('highestQualification')?.valid ?? false)
+      outfitTypeValid &&
+      dutyPostValid &&
+      otherOutfitTypeValid &&
+      serviceNumberValid &&
+      rankValid &&
+      qualificationValid
     );
   }
 
@@ -1054,7 +1147,8 @@ export class OccupationComponent implements OnInit {
       totalPayload = {
         phoneNumber: getBeneficiaryPhoneNumber,
         type: this.occupationForm.value.occupation,
-        highestQualification: this.occupationForm.value.academicsHighestLevelOfEducation,
+        highestQualification:
+          this.occupationForm.value.academicsHighestLevelOfEducation,
         presentInstitution: this.occupationForm.value.nameOfInstitution,
         institutionOwnership: this.occupationForm.value.institutionOwnership,
         totalNumberOfPublications:
