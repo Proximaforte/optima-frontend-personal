@@ -1165,8 +1165,8 @@ export class OccupationComponent implements OnInit, OnDestroy {
       totalPayload = {
         phoneNumber: getBeneficiaryPhoneNumber,
         type: this.occupationForm.value.occupation,
-        denomination: this.occupationForm.value.clergyFaith,
-        natureOfBusiness: this.occupationForm.value.natureOfBusiness,
+        faith: this.occupationForm.value.clergyFaith,
+        denomination: this.occupationForm.value.natureOfBusiness,
         founder: this.occupationForm.value.founder === 'yes' ? true : false,
         hasEnjoyedGovtIntervention:
           this.occupationForm.value.enjoyedIntervention === 'yes'
@@ -1174,6 +1174,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
             : false,
         natureOfIntervention: this.occupationForm.value.InterventionTypes,
         interventionImpactLevel: this.occupationForm.value.InterventionLevel,
+        membershipSize: this.occupationForm.value.clergyMembershipCount,
       };
     } else if (this.occupationForm.value.occupation === 'Security Agencies') {
       totalPayload = {
