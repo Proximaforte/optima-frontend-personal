@@ -50,8 +50,10 @@ export class BeneficiaryComponent implements OnInit, AfterViewInit {
 
  
   if (this.selectedItemName === null) {
-    this.selectedItemName = this.activePage; // Won't be null anymore
+    this.selectedItemName = this.activePage; 
   }
+ 
+
 
    
   }

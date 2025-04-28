@@ -101,7 +101,7 @@
               *ngIf="showResendOTP === true"
               type="submit"
               (click)="resendOTP()"
-              [ngStyle]="{ 'background-color': null ? '#B8B7C8' : '#109856' }"
+              [ngStyle]="{ 'background-color': showResendOTP ? '#B8B7C8' : '#109856' }"
               class="w-full h-12 px-4 py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-500 focus:outline-none focus:bg-green-600"
             >
               <div class="flex items-center justify-center">

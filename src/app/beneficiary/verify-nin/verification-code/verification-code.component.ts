@@ -35,6 +35,8 @@ export class VerificationCodeComponent implements OnInit, OnDestroy {
     private toast: ToastsService,
     private auth: AuthService
   ) {
+   
+    
     const getMessage: any = localStorage.getItem('incomplete');
     if (getMessage !== null) {
       this.showWelcomeMsg = true;

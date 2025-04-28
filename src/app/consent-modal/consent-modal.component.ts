@@ -113,13 +113,13 @@ export class ConsentModalComponent {
     // this.webcamHeight = window?.innerHeight;
     // this.webcamWidth = window?.innerWidth;
 
-    const getUserData: any = localStorage.getItem('userDetails');
-    this.userDetails = JSON.parse(getUserData);
+    // const getUserData: any = localStorage.getItem('userDetails');
+    // this.userDetails = JSON.parse(getUserData);
 
-    if (localStorage.getItem('NINDetails') !== null) {
-      const getNin: any = localStorage.getItem('NINDetails');
-      this.nin = JSON.parse(getNin);
-    }
+    // if (localStorage.getItem('NINDetails') !== null) {
+    //   const getNin: any = localStorage.getItem('NINDetails');
+    //   this.nin = JSON.parse(getNin);
+    // }
   }
 
   onCancel(): void {
@@ -185,7 +185,7 @@ export class ConsentModalComponent {
               this.showLoader = false;
               if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
-
+      this.beneficiaryData = response.data;
                 localStorage.setItem(
                   'beneficiaryPhoneNumber',
                   response?.data?.phone,
@@ -194,7 +194,7 @@ export class ConsentModalComponent {
                   'NINDetails',
                   JSON.stringify(response?.data),
                 );
-                this.beneficiaryData = response.data;
+          
 
               //   if (response?.data?.formStage) {
               // this.continueOnboarding(response?.data)
@@ -266,6 +266,13 @@ export class ConsentModalComponent {
           localStorage.removeItem('isFingerprintOk');
           localStorage.removeItem('userAddress');
 
+          // this.router.navigate(['/home/beneficiary'], {
+          //   relativeTo: this.route,
+          //   queryParams: {
+          //     progress: 'verify_NIN',
+          //   },
+          // });
+
           this.beneficiaryService.setRouteToDisplay('verify beneficiary nin');
           this.router.navigate(['/home/beneficiary'], {
             relativeTo: this.route,
@@ -274,12 +281,7 @@ export class ConsentModalComponent {
             },
           });
 
-          // this.router.navigate(['/home/beneficiary'], {
-          //   relativeTo: this.route,
-          //   queryParams: {
-          //     progress: 'verify_NIN',
-          //   },
-          // });
+          
 
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
@@ -297,16 +299,16 @@ export class ConsentModalComponent {
           duration: 4000,
           verticalPosition: 'bottom',
         });
-        if (err?.error?.responseCode === 400) {
-          this.dialog.closeAll();
+        // if (err?.error?.responseCode === 400) {
+        //   this.dialog.closeAll();
 
-          this.router.navigate(['/home/beneficiary'], {
-            relativeTo: this.route,
-            queryParams: {
-              progress: 'verify_NIN',
-            },
-          });
-        }
+        //   this.router.navigate(['/home/beneficiary'], {
+        //     relativeTo: this.route,
+        //     queryParams: {
+        //       progress: 'verify_NIN',
+        //     },
+        //   });
+        // }
       },
     });
   }
