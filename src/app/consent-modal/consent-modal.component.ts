@@ -196,14 +196,14 @@ export class ConsentModalComponent {
                 );
                 this.beneficiaryData = response.data;
 
-                if (response?.data?.formStage) {
-              this.continueOnboarding(response?.data)
+              //   if (response?.data?.formStage) {
+              // this.continueOnboarding(response?.data)
 
-                          this.dialog.closeAll();
-                } else {
-                  this.showBtn = true;
-                }
-
+              //             this.dialog.closeAll();
+              //   } else {
+              //     this.showBtn = true;
+              //   }
+       this.showBtn = true;
                 this.snackbar.openFromComponent(ToastsComponent, {
                   duration: 4000,
                   verticalPosition: 'bottom',
@@ -411,12 +411,7 @@ export class ConsentModalComponent {
           progress: 'setup_biometrics',
         },
       });
-      // this.router.navigate(['/home/setup-biometrics'], {
-      //   relativeTo: this.route,
-      //   queryParams: {
-      //     progress: 'finger_capture_done'
-      //   }
-      // })
+      
     } else if (beneficiary?.formStage === 'PERSONAL_DETAILS') {
       this.beneficiaryService.setRouteToDisplay('verification procedure');
       localStorage.setItem('verification', 'verification');
