@@ -246,7 +246,168 @@
           />
         </form>
       </div>
-    <div class="row-span-1" *ngIf="showStudentsInfo === true || showAcademics">
+
+
+ <!-- Student Flow Here-->
+
+ <!-- School Type -->
+
+ <div class="row-span-1" *ngIf="showStudentsInfo === true">
+
+
+  <form class="max-w-sm" [formGroup]="occupationForm">
+   <select
+     formControlName="schoolCategory"
+     id="funding_options"
+     class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+   >
+        <option value="">Type of School</option>
+     <option *ngFor="let option of schoolCategories; let id = index">
+       <span>{{ option }}</span>
+     </option>
+   </select>
+ </form>
+</div>
+<!-- School Type -->
+
+<!-- Start of Student Non-Tertiary Flow starts -->
+
+
+<ng-container *ngIf="shouldShowNonTertiaryInputs && showStudentsInfo === true">
+  <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <form class="max-w-sm" [formGroup]="occupationForm">
+      <input
+        type="text"
+        formControlName="schoolName"
+        id="text-input"
+        aria-describedby="helper-text-explanation"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Name of School*"
+      />
+      <div *ngIf="occupationForm.get('schoolName')?.invalid && occupationForm.get('schoolName')?.touched" class="text-red-500 text-sm">
+        School name is required.
+      </div>
+
+    </form>
+  </div>
+
+
+  <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <form class="max-w-sm" [formGroup]="occupationForm">
+      <label for=""> Admission Year</label>
+      <input
+        type="date"
+        formControlName="admissionYear"
+        id="text-input"
+        placeholder="Admission Year"
+        aria-describedby="helper-text-explanation"
+        [max]="getMaxAdmissionDate()"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+       
+      />
+    </form>
+  </div>
+
+
+  <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <form class="max-w-sm" [formGroup]="occupationForm">
+       <label for=""> Expected year of Graduation</label>
+      <input
+        type="date"
+        formControlName="graduationYear"
+        id="text-input"
+        placeholder="Expected year of Graduation"
+        aria-describedby="helper-text-explanation"
+        [min]="getMinGraduationDate()"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+       
+      />
+    </form>
+  </div>
+
+  <div class="row-span-1" *ngIf="showStudentsInfo === true && showSecondarySchoolDepartment === true">
+
+
+    <form class="max-w-sm" [formGroup]="occupationForm">
+     <select
+       formControlName="secondarySchoolDepartment"
+       id="funding_options"
+       class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+     >
+     <option value="" disabled> Department*</option>
+       <option *ngFor="let option of secondarySchoolDepartmentType; let id = index">
+         <span>{{ option }}</span>
+       </option>
+     </select>
+   </form>
+  </div>
+
+  <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <form class="max-w-sm" [formGroup]="occupationForm">
+      <select
+        id="funding_options"
+        formControlName="funding"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+      >
+      <option value="" disabled> Sponsorship Type*</option>
+        <option *ngFor="let option of option3; let id = index">
+          <span>{{ option }}</span>
+        </option>
+      </select>
+    </form>
+  </div>
+
+
+  <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <form class="max-w-sm" [formGroup]="occupationForm">
+      <select
+        id="funding_options"
+        formControlName="indigene"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+      >
+       <option value="" disabled> Are You an Indigene</option>
+        <option *ngFor="let option of indigeneCategoryOptions; let id = index">
+          <span>{{ option }}</span>
+        </option>
+      </select>
+    </form>
+  </div>
+
+
+  <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <form class="max-w-sm" [formGroup]="occupationForm">
+      <select
+        id="funding_options"
+        formControlName="hasEnjoyedGovtAssistance"
+        class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+      >
+       <option value="" disabled> Have you ever enjoyed Government assistance as regards your education</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </form>
+  </div>
+
+
+</ng-container>
+
+
+<!-- Start of Student Non-Tertiary Flow ends -->
+
+
+
+ 
+
+
+
+
+<!-- Tertiary Institution flow starts -->
+<ng-container *ngIf="showTertiary">
+    <div class="row-span-1" *ngIf="showStudentsInfo === true  && showTertiary === true">
+
+     
+
+
     
        <form class="max-w-sm" [formGroup]="occupationForm">
         <select
@@ -261,7 +422,7 @@
         </select>
       </form>
     </div>
-    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <input
           type="text"
@@ -274,7 +435,7 @@
       </form>
     </div>
 
-       <div class="row-span-1" *ngIf="showStudentsInfo === true">
+       <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <label for=""> Admission Year</label>
         <input
@@ -283,23 +444,23 @@
           id="text-input"
           placeholder="Admission Year"
           aria-describedby="helper-text-explanation"
-           [max]="occupationForm.get('graduationYear')?.value"
+          [max]="getMaxAdmissionDate()"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
          
         />
       </form>
     </div>
 
-    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
-         <label for=""> Graduation Year</label>
+         <label for=""> Expected year of Graduation</label>
         <input
           type="date"
           formControlName="graduationYear"
           id="text-input"
-          placeholder="Graduation Year"
+          placeholder="Expected year of Graduation"
           aria-describedby="helper-text-explanation"
-           [min]="occupationForm.get('admissionYear')?.value"
+          [min]="getMinGraduationDate()"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
          
         />
@@ -307,7 +468,7 @@
     </div>
  
 
-    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <input
           type="text"
@@ -319,7 +480,7 @@
         />
       </form>
     </div>
-     <div class="row-span-1" *ngIf="showStudentsInfo === true">
+     <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <input
           type="text"
@@ -331,7 +492,7 @@
         />
       </form>
     </div>
-    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <input
           type="text"
@@ -343,47 +504,66 @@
         />
       </form>
     </div>
-    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <select
           id="funding_options"
           formControlName="funding"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
+        <option value="" disabled> Sponsorship Type*</option>
           <option *ngFor="let option of option3; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
       </form>
     </div>
-    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+    <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <select
           id="funding_options"
           formControlName="indigene"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
-         <option value="" disabled> Are You an Indidgene</option>
+         <option value="" disabled> Are You an Indigene</option>
           <option *ngFor="let option of indigeneCategoryOptions; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
       </form>
     </div>
-    <div class="row-span-1" *ngIf="showStudentsInfo === true">
+
+    <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
+      <form class="max-w-sm" [formGroup]="occupationForm">
+        <select
+          id="funding_options"
+          formControlName="hasEnjoyedGovtAssistance"
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
+        >
+         <option value="" disabled> Have you ever enjoyed Government assistance as regards your education</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </form>
+    </div>
+
+
+    <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <select
           id="funding_options"
           formControlName="diplomaType"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
         >
+        
+        <option value="" disabled> (For diploma students) Diploma type*</option>
           <option *ngFor="let option of option4; let id = index">
             <span>{{ option }}</span>
           </option>
         </select>
       </form>
     </div>
-    <div class="row-span-1" *ngIf="occupationForm.get('diplomaType')?.value === 'Other'"
+    <div class="row-span-1" *ngIf="occupationForm.get('diplomaType')?.value === 'Other' && showTertiary === true"
 >
       <form class="max-w-sm" [formGroup]="occupationForm">
         <input
@@ -396,6 +576,10 @@
         />
       </form>
     </div>
+  </ng-container>
+    <!-- Tertiary Institution flow ends -->
+
+    <!-- End of Student flow -->
 
     <div class="row-span-1" *ngIf="showOtherzz === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
@@ -1103,7 +1287,7 @@
       </button>
     </div>
 
-      <div class="row-span-1 w-full mt-2" *ngIf="showAcademics ">
+      <div class="row-span-1 w-full mt-2" *ngIf="showAcademics">
     <button
         (click)=" submitTrade()"
         id="btn"
@@ -1351,6 +1535,8 @@
         </div>
       </button>
     </div>
+
+    
   </div>
 </body>
 

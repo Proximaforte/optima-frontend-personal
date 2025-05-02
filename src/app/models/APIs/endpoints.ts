@@ -100,6 +100,13 @@ export const endpoints = {
 
   // fingerprint
   fingerPrintSkip: 'api/v1/fingerprints/',
+
+  //newly addded for students
+
+  schoolCategory: 'api/v1/enums/schoolCategory',
+  secondarySchoolDepartment: 'api/v1/enums/secondarySchoolDepartment',
+
+
 };
 
 export interface ErrorMessage {

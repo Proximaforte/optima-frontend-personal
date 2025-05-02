@@ -24,16 +24,29 @@ export class OccupationComponent implements OnInit, OnDestroy {
 
   indigeneCategoryOptions: string[] = ['Yes', 'No'];
 
+  // newly added for students
+
+  schoolCategories: string[] = [];
+  showTertiary: boolean = false;
+  showSecondarySchoolDepartment: boolean = false;
+  secondarySchoolDepartmentType: string[] = [];
+
+
+ 
+ 
+
+  //end of newly added for student
+ 
   option2: string[] = ['Other Sources of Income e.g farming business etc*'];
   option3: string[] | any = [
-    'Sponsorship type*',
+  
     'Parents',
     'Self-Funded',
     'Scholarship',
     'Free Government Support / Subsidized Education',
   ];
   option4: string[] | any = [
-    '(For diploma students) Diploma type*',
+  
     'National Diploma',
     'School Diploma',
     'Others',
@@ -169,6 +182,12 @@ export class OccupationComponent implements OnInit, OnDestroy {
     }
   }
 
+  get shouldShowNonTertiaryInputs(): boolean {
+    const category = this.occupationForm.get('schoolCategory')?.value;
+    return category && category !== 'Tertiary Institution';
+  }
+
+
   currentWord: string = '';
   words: string[] = []; // Array to hold the words
   currentWordz: string = ''; // Input text
@@ -201,6 +220,25 @@ export class OccupationComponent implements OnInit, OnDestroy {
       return null;
     }
   };
+
+  getMinGraduationDate(): string | null {
+    const admission = this.occupationForm.get('admissionYear')?.value;
+    if (!admission) return null;
+  
+    const minDate = new Date(admission);
+    minDate.setFullYear(minDate.getFullYear() + 1);
+    return minDate.toISOString().split('T')[0]; // formats as "YYYY-MM-DD"
+  }
+
+  getMaxAdmissionDate(): string | null {
+    const graduation = this.occupationForm.get('graduationYear')?.value;
+    if (!graduation) return null;
+  
+    const maxDate = new Date(graduation);
+    maxDate.setFullYear(maxDate.getFullYear() - 1);
+    return maxDate.toISOString().split('T')[0]; // "YYYY-MM-DD"
+  }
+  
 
   dateRangeValidator: ValidatorFn = (
     control: AbstractControl,
@@ -245,7 +283,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
       next: (item: any) => {
         this.option3 = new Set(
           [
-            'Sponsorship type*',
+            
             'Parents',
             'Self-Funded',
             'Scholarship',
@@ -259,7 +297,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
       next: (item: any) => {
         this.option4 = new Set(
           [
-            '(For diploma students) Diploma type*',
+           
             'National Diploma',
             'School Diploma',
           ].concat(item.data),
@@ -282,6 +320,25 @@ export class OccupationComponent implements OnInit, OnDestroy {
         this.nameOfInstitutions = item.data;
       },
     });
+
+
+    //newly added for students
+    this.beneficiaryService.getSchoolCategories().subscribe({
+      next: (item: any) => {
+        this.schoolCategories = item.data;
+      },
+    });
+
+    this.beneficiaryService.getSecondarySchoolDepartmentType().subscribe({
+      next: (item: any) => {
+        this.secondarySchoolDepartmentType = item.data;
+      },
+    });
+
+
+    //end of newly added for students
+
+
     this.beneficiaryService.getCivilServiceCategory().subscribe({
       next: (item: any) => {
         this.civilServiceCategoryOptions = [
@@ -392,12 +449,22 @@ export class OccupationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getEmploymentForm();
     this.getDropdownItems();
+   
+    this.occupationForm.statusChanges.subscribe(status => {
+      console.log('Form status:', status); // VALID or INVALID
+      console.log('Form validity:', this.occupationForm.valid); // true or false
+    });
+    
+
+    
   }
+
+
 
   getEmploymentForm() {
     this.occupationForm = new FormGroup({
       occupation: new FormControl('', [Validators.required]),
-      nameOfInstitution: new FormControl('', [Validators.required]),
+     nameOfInstitution: new FormControl('', [Validators.required]),
       matriculationNumber: new FormControl('', [Validators.required]),
       admissionYear: new FormControl('', [Validators.required]),
       graduationYear: new FormControl('', [Validators.required]),
@@ -458,7 +525,21 @@ export class OccupationComponent implements OnInit, OnDestroy {
       rank: new FormControl('', [Validators.required]),
       otherQualification: new FormControl(''),
 
+
+      //newly added for students
+
+      schoolName: new FormControl('', [Validators.required]),
+      schoolCategory: new FormControl('', [Validators.required]),
+      secondarySchoolDepartment: new FormControl('', [Validators.required]),
+      hasEnjoyedGovtAssistance: new FormControl('', [Validators.required]),
+
+
+
+      //end of newly added for students
+
     });
+
+    
 
     this.occupationForm.get('occupation')?.valueChanges.subscribe({
       next: (value: any) => {
@@ -478,6 +559,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
         this.showAcademics = false;
         this.showClergy = false;
         this.showSecurityAgencies = false;
+        this.showTertiary = false;
         if (this.occupationForm.get('artisanEducation')?.value === 'yes') {
           this.occupationForm.get('highestQualification')?.reset();
           this.occupationForm.get('highestQualification')?.setErrors(null);
@@ -538,6 +620,105 @@ export class OccupationComponent implements OnInit, OnDestroy {
         }
       },
     });
+
+    //newly added for student
+
+    
+
+    this.occupationForm.get('schoolCategory')?.valueChanges.subscribe(value => {
+      // console.log('Selected school category:', value);
+
+      
+      
+      if(value === "Tertiary Institution"){
+        this.showTertiary = true;
+        this.showSecondarySchoolDepartment = false;
+
+        combineLatest([
+          this.occupationForm.get('nameOfInstitution')!.valueChanges,
+         
+          this.occupationForm.get('matriculationNumber')!.valueChanges,
+          this.occupationForm.get('admissionYear')!.valueChanges,
+          this.occupationForm.get('graduationYear')!.valueChanges,
+          this.occupationForm.get('faculty')!.valueChanges,
+          this.occupationForm.get('courseOfStudy')!.valueChanges,
+          this.occupationForm.get('department')!.valueChanges,
+          this.occupationForm.get('funding')!.valueChanges,
+          this.occupationForm.get('indigene')!.valueChanges,
+          this.occupationForm.get('hasEnjoyedGovtAssistance')!.valueChanges,
+          this.occupationForm.get('diplomaType')!.valueChanges,
+        ]).subscribe(([nameOfInstitution, matriculationNumber, admissionYear, graduationYear, faculty, courseOfStudy, department, funding, indigene, hasEnjoyedGovtAssistance, diplomaType]) => {
+          this.disableBtn = !(
+            nameOfInstitution &&
+            matriculationNumber &&
+            admissionYear &&
+            graduationYear &&
+            faculty &&
+            courseOfStudy &&
+            department &&
+            funding &&
+            indigene &&
+            hasEnjoyedGovtAssistance &&
+            diplomaType
+          );
+        });
+      }
+
+      else if(value === "Senior Secondary"){
+        this.showSecondarySchoolDepartment = true;
+        combineLatest([
+          this.occupationForm.get('schoolName')!.valueChanges,
+          this.occupationForm.get('admissionYear')!.valueChanges,
+          this.occupationForm.get('graduationYear')!.valueChanges,
+          this.occupationForm.get('funding')!.valueChanges,
+          this.occupationForm.get('indigene')!.valueChanges,
+          this.occupationForm.get('secondarySchoolDepartment')!.valueChanges,
+          this.occupationForm.get('hasEnjoyedGovtAssistance')!.valueChanges,
+        ]).subscribe(([schoolName, admission, graduation, funding, indigene, secondarySchoolDepartment, hasEnjoyedGovtAssistance]) => {
+          this.disableBtn = !(
+            schoolName &&
+            admission &&
+            graduation &&
+            funding &&
+            indigene &&
+            secondarySchoolDepartment &&
+            hasEnjoyedGovtAssistance
+          );
+        });
+      }
+      else{
+        this.showTertiary = false;
+       this.showSecondarySchoolDepartment = false;
+
+        combineLatest([
+          this.occupationForm.get('schoolName')!.valueChanges,
+          this.occupationForm.get('admissionYear')!.valueChanges,
+          this.occupationForm.get('graduationYear')!.valueChanges,
+          this.occupationForm.get('funding')!.valueChanges,
+          this.occupationForm.get('indigene')!.valueChanges,
+          this.occupationForm.get('hasEnjoyedGovtAssistance')!.valueChanges,
+        ]).subscribe(([schoolName, admission, graduation, funding, indigene, hasEnjoyedGovtAssistance]) => {
+
+          
+          this.disableBtn = !(
+            schoolName &&
+            admission &&
+            graduation &&
+            funding &&
+            indigene &&
+            hasEnjoyedGovtAssistance
+          );
+        });
+       
+      }
+
+      
+    });
+
+
+    //end of newly added for student
+    
+
 
     this.occupationForm.get('civilServiceCategory')?.valueChanges.subscribe({
       next: (value: string) => {
@@ -741,7 +922,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
         } else {
           this.showOthers = false;
           diplomaTypeControl?.clearValidators();
-          this.disableBtn = false;
+          // this.disableBtn = false;
 
           // Cleanup the previous subscription
           this.specifyDiplomaTypeSubscription?.unsubscribe();
@@ -848,6 +1029,16 @@ export class OccupationComponent implements OnInit, OnDestroy {
 
   //otherOccupation
   submitForm() {
+
+
+  // Check if form is valid
+  // if (this.occupationForm.invalid) {
+  //   console.log('Form is invalid', this.occupationForm.errors);
+  //   return;
+  // }
+
+
+
     this.showSpinner = true;
     const getBeneficiaryPhoneNumber: any = localStorage.getItem(
       'beneficiaryPhoneNumber',
@@ -862,7 +1053,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
       nameOfInstitution: this.occupationForm.value.nameOfInstitution,
       matriculationNumber: this.occupationForm.value.matriculationNumber,
       faculty: this.occupationForm.value.faculty,
-      department: this.occupationForm.value.department,
+      department: this.occupationForm.value.schoolCategory === 'Tertiary Institution' ? this.occupationForm.value.department + " department" : this.occupationForm.value.department,
       funding: this.occupationForm.value.funding,
       diplomaType: this.occupationForm.value.diplomaType,
       otherDiplomaType:
@@ -919,6 +1110,16 @@ export class OccupationComponent implements OnInit, OnDestroy {
       yearOfAdmission: this.occupationForm.value.admissionYear.split('-')[0],
       expectedYearOfGraduation:
         this.occupationForm.value.graduationYear.split('-')[0],
+
+        //newly added for students
+
+        schoolCategory: this.occupationForm.value.schoolCategory,
+        schoolName: this.occupationForm.value.schoolName,
+        secondarySchoolDepartment: this.occupationForm.value.secondarySchoolDepartment,
+        hasEnjoyedGovtAssistance: this.occupationForm.value.hasEnjoyedGovtAssistance === 'Yes' ? true : false,
+
+
+        //end of newly added for students
     };
 
     this.beneficiaryService.occupationDetails(totalPayload).subscribe({

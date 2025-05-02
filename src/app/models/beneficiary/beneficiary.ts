@@ -1466,4 +1466,8 @@ export interface Occupation {
   dateOfRetirement:string
   professionalQualifications: string[];
   psn: string;
+
+//   newly added
+schoolCategory?:string;
+schoolName?:string;
 }
