@@ -583,4 +583,25 @@ export class BeneficiaryService {
       { headers: this.interceptor?.customNoAuthHttpHeaders },
     );
   }
+
+
+  // newly added for student
+  public getSchoolCategories(): Observable<any> {
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.schoolCategory}`,
+      { headers: this.interceptor?.customNoAuthHttpHeaders },
+    );
+  }
+
+
+  public getSecondarySchoolDepartmentType(): Observable<any> {
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.secondarySchoolDepartment}`,
+      { headers: this.interceptor?.customNoAuthHttpHeaders },
+    );
+  }
+
+
+
+
 }
