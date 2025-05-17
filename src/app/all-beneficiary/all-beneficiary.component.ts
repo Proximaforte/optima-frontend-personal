@@ -349,6 +349,18 @@ this.getAllIncompleteBeneficiaries();
   }
 
 
+  validateRequest(Beneficiary: BeneficiaryProfile | any) {
+    // this.beneficiaryService.setBeneficiaryProfile(Beneficiary);
+    
+    console.log('beneficiary>>>', Beneficiary);
+    this.router.navigate(['/home/biometric-validation-request'], {
+      
+      queryParams: {
+        data: Beneficiary?.nin
+      }
+    })
+  }
+
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {
     localStorage.removeItem("NINDetails")

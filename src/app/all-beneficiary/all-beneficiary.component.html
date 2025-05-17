@@ -493,11 +493,22 @@
                   <mat-menu #menu="matMenu">
                     <button
                       mat-menu-item
-                      (click)="continueOnboarding(beneficiary)"
+                     
                     >
-                      <mat-icon>person_add</mat-icon>
-                      <span class="text-sm" *ngIf="beneficiary?.formStage !== 'OTHER_DETAILS'">Continue Onboarding</span>
-                      <span class="text-sm" *ngIf="beneficiary?.formStage === 'OTHER_DETAILS'">Submit Onboarding</span>
+                    <div class="flex items-center hover:cursor-pointer hover:text-optimaGreen" (click)="continueOnboarding(beneficiary)">
+                       <mat-icon>person_add</mat-icon>
+                      <span class="text-sm" *ngIf="beneficiary?.formStage !== 'OTHER_DETAILS'">Continue Onboarding</span> <br>
+                      <span class="text-sm" *ngIf="beneficiary?.formStage === 'OTHER_DETAILS'">Submit Onboarding</span> <br>
+                    </div>
+                     
+
+                    <div class="flex hover:text-optimaGreen py-3 items-center" *ngIf="beneficiary?.formStage === 'OTHER_DETAILS' && beneficiary?.biometricMatch === false">
+                      <mat-icon>how_to_reg</mat-icon>
+
+                      <span class="text-sm hover:cursor-pointer" (click)="validateRequest(beneficiary)">Validation Request</span>
+                      
+                    </div>
+                     
                     </button>
                   </mat-menu>
                 </td>
