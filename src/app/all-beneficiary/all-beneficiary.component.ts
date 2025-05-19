@@ -190,7 +190,7 @@ this.getAllIncompleteBeneficiaries();
     // console.log('filterString>>>', this.filterIncomplete);
     this.showSpinner = true;
     this.getAllIncompleteBeneficiaries();
-    this.getAllBeneficiaries();
+    // this.getAllBeneficiaries();
   }
 
   getAllIncompleteBeneficiaries() {
