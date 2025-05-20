@@ -1,6 +1,6 @@
 export const environment = {
    //baseUrl: 'https://api.optima.com.ng',
-   baseUrl: 'https://staging-api.optima.com.ng',
+   baseUrl: 'https://staging-api.optima.com.ng', 
    production: true
     //bashlaw007@gmail.com Password123@
     //email: judeomosehin@gmail.com   password:Password123#
