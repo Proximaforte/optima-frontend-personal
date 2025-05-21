@@ -190,7 +190,7 @@ this.getAllIncompleteBeneficiaries();
     // console.log('filterString>>>', this.filterIncomplete);
     this.showSpinner = true;
     this.getAllIncompleteBeneficiaries();
-    this.getAllBeneficiaries();
+    // this.getAllBeneficiaries();
   }
 
   getAllIncompleteBeneficiaries() {
@@ -348,6 +348,18 @@ this.getAllIncompleteBeneficiaries();
     })
   }
 
+
+  validateRequest(Beneficiary: BeneficiaryProfile | any) {
+    // this.beneficiaryService.setBeneficiaryProfile(Beneficiary);
+    
+    console.log('beneficiary>>>', Beneficiary);
+    this.router.navigate(['/home/biometric-validation-request'], {
+      
+      queryParams: {
+        data: Beneficiary?.nin
+      }
+    })
+  }
 
 
   continueOnboarding(beneficiary: BeneficiaryProfile | any) {

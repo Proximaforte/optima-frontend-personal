@@ -13,6 +13,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {ConsentModalComponent} from '../consent-modal/consent-modal.component';
 import { WebcamModule } from 'ngx-webcam';
 import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
+import { BiometricValidationRequestComponent } from './biometric-validation-request/biometric-validation-request.component';
+
 const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
 
 @NgModule({
@@ -22,7 +24,8 @@ const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
     BeneficiaryFilterPipe,
     IncompletePipe,
     ConsentModalComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    BiometricValidationRequestComponent
   ],
   imports: [
     CommonModule,
