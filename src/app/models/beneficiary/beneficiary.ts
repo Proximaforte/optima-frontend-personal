@@ -56,7 +56,9 @@ export class IncompleteBeneficiary {
         public religion: any,
         public spouseList: any[],
         public ssid: any,
-        public state: any
+        public state: any,
+        public biometricMatch: boolean,
+
     ) { }
 }
 

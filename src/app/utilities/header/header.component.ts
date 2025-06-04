@@ -91,6 +91,12 @@ export class HeaderComponent implements OnInit {
           this.name = '';
           this.subPath = 'onboarded beneficiaries';
         }
+        else if (routePath === 'biometric-validation-request'){
+          this.title = 'Biometric Validation Request';
+          this.name = '';
+          this.subPath = '';
+          this.userName = '';
+        }
       });
   }
 

@@ -602,6 +602,16 @@ export class BeneficiaryService {
   }
 
 
+   public submitBiometricRequest(nin: string): Observable<any> {
+    
+    return this.http.post<any>(
+      `${environment?.baseUrl}/${endpoints?.submitBiometricRequest}/${nin}`,
+      {},
+      { headers: this.interceptor?.customHttpHeaders },
+    );
+  }
+
+
 
 
 }

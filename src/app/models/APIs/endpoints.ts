@@ -106,6 +106,9 @@ export const endpoints = {
   schoolCategory: 'api/v1/enums/schoolCategory',
   secondarySchoolDepartment: 'api/v1/enums/secondarySchoolDepartment',
 
+  //biometric validation request
+  submitBiometricRequest : 'validation-request/submitBiometricRequest',
+
 
 };
 
