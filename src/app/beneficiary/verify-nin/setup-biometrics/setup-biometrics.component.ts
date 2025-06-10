@@ -163,7 +163,23 @@ export class SetupBiometricsComponent {
         console.log('res>>>', res);
         this.showSpinner = false;
         if (res?.responseCode === 200) {
-          this.dialog.open(SuccesfulBiometricsComponent);
+
+
+          if(res?.data.formStage === "OTHER_DETAILS"){
+            //route to all beneficiary
+             this.router.navigate(['/home/all-beneficiary'], {
+            relativeTo: this.route,
+          });
+
+          }
+
+          else {
+             this.dialog.open(SuccesfulBiometricsComponent);
+          }
+
+
+
+         
         }
       },
       error: (err: any) => {
