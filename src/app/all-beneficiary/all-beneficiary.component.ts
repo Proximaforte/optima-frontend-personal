@@ -1,19 +1,29 @@
-import { Component, OnInit, TemplateRef, ViewChild,EventEmitter, Output, } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterBoxComponent } from '../utilities/filter-box/filter-box.component';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { BeneficiaryService } from '../services/beneficiary/beneficiary.service';
-import { Beneficiary, IncompleteBeneficiary, mocks, PaginationParams, BeneficiaryProfile } from '../models/beneficiary/beneficiary';
+import {
+  Beneficiary,
+  IncompleteBeneficiary,
+  mocks,
+  PaginationParams,
+  BeneficiaryProfile,
+} from '../models/beneficiary/beneficiary';
 import { AuthService } from '../services/authentication/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from '../services/alert/toasts.service';
 import { ToastsComponent } from '../utilities/toasts/toasts.component';
 import { Subscription } from 'rxjs';
-import { Location } from '@angular/common';  // Import Location
-import {ConsentModalComponent} from '../consent-modal/consent-modal.component';
-
-
-
+import { Location } from '@angular/common'; // Import Location
+import { ConsentModalComponent } from '../consent-modal/consent-modal.component';
 
 @Component({
   selector: 'app-all-beneficiary',
@@ -21,76 +31,71 @@ import {ConsentModalComponent} from '../consent-modal/consent-modal.component';
   styleUrls: ['./all-beneficiary.component.scss'],
 })
 export class AllBeneficiaryComponent implements OnInit {
-
   @ViewChild('consentModal') consentModal!: TemplateRef<any>;
   showConsent: boolean = true;
-
-
-
 
   lastpage!: number;
   currentPage: number = 1;
   beneficiaries: Beneficiary[] = [];
   inCompleteBeneficiaries: IncompleteBeneficiary[] = [];
   showSpinner: boolean = false;
-  showNoData: boolean = false
-  emptyTable: string = "/assets/images/noDataFound.png";
+  showNoData: boolean = false;
+  emptyTable: string = '/assets/images/noDataFound.png';
   paginationParams: PaginationParams = {
     size: 10,
-    page: 1
-  }
-  paginationArrayToShow: any = []
+    page: 1,
+  };
+  paginationArrayToShow: any = [];
   paginationNumber: any[] = [];
-  filterString: any = "";
-  filterIncomplete: any = "";
+  filterString: any = '';
+  filterIncomplete: any = '';
   showIncompleteBeneficiaries: boolean = true;
   showCompleteBeneficiaries: boolean = false;
   beneficiaryFilterSubscription$!: Subscription;
-  
+
   routeArray: any = [
     {
       routeToDiaplay: 'verify beneficiary nin',
-      queryParam: 'verify_NIN'
+      queryParam: 'verify_NIN',
     },
     {
       routeToDiaplay: 'personal details',
-      queryParam: 'personal_details'
+      queryParam: 'personal_details',
     },
     {
       routeToDiaplay: 'residential details',
-      queryParam: 'residential_details'
+      queryParam: 'residential_details',
     },
     {
       routeToDiaplay: 'marital info',
-      queryParam: 'marital_info'
+      queryParam: 'marital_info',
     },
     {
       routeToDiaplay: 'education',
-      queryParam: 'education'
+      queryParam: 'education',
     },
     {
       routeToDiaplay: 'health',
-      queryParam: 'health'
+      queryParam: 'health',
     },
     {
       routeToDiaplay: 'financial',
-      queryParam: 'financial'
+      queryParam: 'financial',
     },
     {
       routeToDiaplay: 'next of kin',
-      queryParam: 'next_of_kin'
+      queryParam: 'next_of_kin',
     },
     {
       routeToDiaplay: 'employment',
-      queryParam: 'employment'
+      queryParam: 'employment',
     },
     {
       routeToDiaplay: 'other details',
-      queryParam: 'other_details'
+      queryParam: 'other_details',
     },
-  ]
+  ];
   // | beneficiaryFilter: filterString;
-
 
   constructor(
     public dialog: MatDialog,
@@ -100,23 +105,21 @@ export class AllBeneficiaryComponent implements OnInit {
     private authService: AuthService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private location: Location  // Inject Location
+    private location: Location, // Inject Location
   ) {
-this.getAllIncompleteBeneficiaries();
+    this.getAllIncompleteBeneficiaries();
   }
 
-
   openConsentModal() {
-    
-    this.dialog.open(ConsentModalComponent );
-    localStorage.removeItem("NINDetails")
-    localStorage.removeItem("beneficiaryPhoneNumber")
-    localStorage.removeItem("biometrics")
-    localStorage.removeItem("incomplete")
-    localStorage.removeItem("verification")
-    localStorage.removeItem("nin")
-    localStorage.removeItem("faceCapture_skipThumPrints")
-    localStorage.removeItem("isFingerprintOk")
+    this.dialog.open(ConsentModalComponent);
+    localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
     localStorage.removeItem('userAddress');
   }
 
@@ -128,7 +131,6 @@ this.getAllIncompleteBeneficiaries();
     this.getAllIncompletedData();
   }
 
-
   showcompleteBeneficiaries() {
     this.showCompleteBeneficiaries = true;
     this.showIncompleteBeneficiaries = false;
@@ -137,7 +139,7 @@ this.getAllIncompleteBeneficiaries();
   }
 
   openModal(): void {
-   // console.log("Filter completed beneficiaries");
+    // console.log("Filter completed beneficiaries");
     const dialogRef = this.dialog.open(FilterBoxComponent, {
       width: '30%',
       height: '100%',
@@ -151,7 +153,7 @@ this.getAllIncompleteBeneficiaries();
     });
   }
 
-  openSecondModal():void{
+  openSecondModal(): void {
     //console.log("Filter incompleted beneficiaries");
     const dialogRef = this.dialog.open(FilterBoxComponent, {
       width: '30%',
@@ -174,18 +176,18 @@ this.getAllIncompleteBeneficiaries();
 
   routeToOnboarding() {
     this.router.navigateByUrl('/home/beneficiary');
-    localStorage.removeItem("NINDetails")
-    localStorage.removeItem("beneficiaryPhoneNumber")
-    localStorage.removeItem("biometrics")
-    localStorage.removeItem("incomplete")
-    localStorage.removeItem("verification")
-    localStorage.removeItem("nin")
-    localStorage.removeItem("faceCapture_skipThumPrints")
-    localStorage.removeItem("isFingerprintOk")
+    localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
     localStorage.removeItem('userAddress');
   }
 
-  listenToSearch(event: any){
+  listenToSearch(event: any) {
     // console.log("event>>>", event);
     // console.log('filterString>>>', this.filterIncomplete);
     this.showSpinner = true;
@@ -195,105 +197,138 @@ this.getAllIncompleteBeneficiaries();
 
   getAllIncompleteBeneficiaries() {
     this.showSpinner = true;
-    this.beneficiaryFilterSubscription$ = this.beneficiaryService.getBeneficiaryParams().subscribe({
-      next: (dataToFilter: any) => {
-        this.beneficiaryService.getAllIncompleteBeneficiaries(
-          Object.entries({})?.length === 0 ? {filterString: this.filterIncomplete}   : dataToFilter, 
-          this.paginationParams
-        ).subscribe({
-          next: (res: any) => {
-            this.showSpinner = false;
-            this.inCompleteBeneficiaries = res?.data?.beneficiaries;
-            //  console.log('incomplete beneficiaries>>', this.inCompleteBeneficiaries);
-            // this.beneficiaries = mocks;
-            // this.paginationParams.size = res?.size;
-            // this.paginationParams.page = res?.page;
-           // this.paginationNumber = Array.from({ length: this.inCompleteBeneficiaries.length }, (_, index) => index + 1);
-           this.paginationArrayToShow = Array(this.paginationParams.page).fill(this.paginationParams.page).map((_, index) => index + 1);
-            if (this.inCompleteBeneficiaries?.length === 0) {  //res?.data?.beneficiaries?.length
-              this.showNoData = true;
-              this.showSpinner = false;
-            } else {
-              this.showNoData = false;
-            }
-          },
-          error: (err: any) => {
-            console.error('err>>>', err);
-            this.showSpinner = false;
-            this.showNoData = true;
-            this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText === 'Unknown Error' ? 'Network Error' : err?.statusText || "Oops an error occured!");
-            this.snackbar.openFromComponent(ToastsComponent, {
-              duration: 4000,
-              verticalPosition: 'bottom',
+    this.beneficiaryFilterSubscription$ = this.beneficiaryService
+      .getBeneficiaryParams()
+      .subscribe({
+        next: (dataToFilter: any) => {
+          this.beneficiaryService
+            .getAllIncompleteBeneficiaries(
+              Object.entries({})?.length === 0
+                ? { filterString: this.filterIncomplete }
+                : dataToFilter,
+              this.paginationParams,
+            )
+            .subscribe({
+              next: (res: any) => {
+                this.showSpinner = false;
+                this.inCompleteBeneficiaries = res?.data?.beneficiaries;
+                //  console.log('incomplete beneficiaries>>', this.inCompleteBeneficiaries);
+                // this.beneficiaries = mocks;
+                // this.paginationParams.size = res?.size;
+                // this.paginationParams.page = res?.page;
+                // this.paginationNumber = Array.from({ length: this.inCompleteBeneficiaries.length }, (_, index) => index + 1);
+                this.paginationArrayToShow = Array(this.paginationParams.page)
+                  .fill(this.paginationParams.page)
+                  .map((_, index) => index + 1);
+                if (this.inCompleteBeneficiaries?.length === 0) {
+                  //res?.data?.beneficiaries?.length
+                  this.showNoData = true;
+                  this.showSpinner = false;
+                } else {
+                  this.showNoData = false;
+                }
+              },
+              error: (err: any) => {
+                console.error('err>>>', err);
+                this.showSpinner = false;
+                this.showNoData = true;
+                this.toast.setErrorMessage(
+                  err?.error?.failureReason ||
+                    err?.error?.responseMessage ||
+                    err?.statusText === 'Unknown Error'
+                    ? 'Network Error'
+                    : err?.statusText || 'Oops an error occured!',
+                );
+                this.snackbar.openFromComponent(ToastsComponent, {
+                  duration: 4000,
+                  verticalPosition: 'bottom',
+                });
+                if (err?.status === 401 || err?.error?.responseCode === 401) {
+                  this.showSpinner = false;
+                  this.authService.agentLogout();
+                }
+              },
             });
-            if(err?.status === 401  || err?.error?.responseCode === 401){
-              this.showSpinner = false;
-             this.authService.agentLogout();
-              }
-          }
-        })
-      }
-    })
+        },
+      });
   }
 
   getAllBeneficiaries() {
     this.showSpinner = true;
-    this.beneficiaryFilterSubscription$ = this.beneficiaryService.getBeneficiaryParams().subscribe({
-      next: (dataToFilter:any) => {
-        this.beneficiaryService.getFilteredBeneficiaries(
-          Object.entries({})?.length === 0 ? { filterString: this.filterString}  : dataToFilter, 
-          this.paginationParams
-        ).subscribe({
-          next: (res: any) => {
-            this.showSpinner = false;
-            // console.log('res>>', res?.data);
-            this.beneficiaries = res?.data?.beneficiaries;
-           // this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
-             this.paginationArrayToShow = Array(this.paginationParams.page).fill(this.paginationParams.page).map((_, index) => index + 1);
-            if (this.beneficiaries?.length === 0) {  
-              this.showNoData = true;
-              this.showSpinner = false;
-            } else {
-              this.showNoData = false;
-            }
-          },
-          error: (err: any) => {
-            console.error('err>>>', err);
-            this.showSpinner = false;
-            this.showNoData = true;
-            this.toast.setErrorMessage(err?.error?.failureReason || err?.error?.responseMessage || err?.statusText === 'Unknown Error' ? 'Network Error' : err?.statusText || "Oops an error occured!");
-            this.snackbar.openFromComponent(ToastsComponent, {
-              duration: 4000,
-              verticalPosition: 'bottom',
+    this.beneficiaryFilterSubscription$ = this.beneficiaryService
+      .getBeneficiaryParams()
+      .subscribe({
+        next: (dataToFilter: any) => {
+          this.beneficiaryService
+            .getFilteredBeneficiaries(
+              Object.entries({})?.length === 0
+                ? { filterString: this.filterString }
+                : dataToFilter,
+              this.paginationParams,
+            )
+            .subscribe({
+              next: (res: any) => {
+                this.showSpinner = false;
+                // console.log('res>>', res?.data);
+                this.beneficiaries = res?.data?.beneficiaries;
+                // this.paginationNumber = Array.from({ length: this.beneficiaries.length }, (_, index) => index + 1);
+                this.paginationArrayToShow = Array(this.paginationParams.page)
+                  .fill(this.paginationParams.page)
+                  .map((_, index) => index + 1);
+                if (this.beneficiaries?.length === 0) {
+                  this.showNoData = true;
+                  this.showSpinner = false;
+                } else {
+                  this.showNoData = false;
+                }
+              },
+              error: (err: any) => {
+                console.error('err>>>', err);
+                this.showSpinner = false;
+                this.showNoData = true;
+                this.toast.setErrorMessage(
+                  err?.error?.failureReason ||
+                    err?.error?.responseMessage ||
+                    err?.statusText === 'Unknown Error'
+                    ? 'Network Error'
+                    : err?.statusText || 'Oops an error occured!',
+                );
+                this.snackbar.openFromComponent(ToastsComponent, {
+                  duration: 4000,
+                  verticalPosition: 'bottom',
+                });
+                if (err?.status === 401 || err?.error?.responseCode === 401) {
+                  this.showSpinner = false;
+                  this.authService.agentLogout();
+                }
+              },
             });
-            if(err?.status === 401 || err?.error?.responseCode === 401){
-              this.showSpinner = false;
-             this.authService.agentLogout();
-              }
-          }
-        })
-
-
-      }
-    })
-  
+        },
+      });
   }
 
-  getAllCompletedData(){
-    let pageSize:number = 500000000;
-    this.beneficiaryService.getFilteredBeneficiaries({}, {size: pageSize, page: 1}).subscribe({
-      next: (res:any) => {
-        let totalCount:number = res?.data?.totalCount;
-        let totalRecordArray = Array(Math.floor(totalCount / 10)).fill(totalCount / 10)?.length + 1;
-        let paginationToshow = Array.from({ length: totalRecordArray }, (_, index) => index + 1);
-        //console.log('totalRecordArray>>', paginationToshow);
-        this.paginationArrayToShow = paginationToshow;
-      }
-    });
+  getAllCompletedData() {
+    let pageSize: number = 500000000;
+    this.beneficiaryService
+      .getFilteredBeneficiaries({}, { size: pageSize, page: 1 })
+      .subscribe({
+        next: (res: any) => {
+          let totalCount: number = res?.data?.totalCount;
+          let totalRecordArray =
+            Array(Math.floor(totalCount / 10)).fill(totalCount / 10)?.length +
+            1;
+          let paginationToshow = Array.from(
+            { length: totalRecordArray },
+            (_, index) => index + 1,
+          );
+          //console.log('totalRecordArray>>', paginationToshow);
+          this.paginationArrayToShow = paginationToshow;
+        },
+      });
   }
-//1
+  //1
   addBeneficiary() {
-   this.dialog.open(this.consentModal);
+    this.dialog.open(this.consentModal);
     // localStorage.removeItem("NINDetails")
     // localStorage.removeItem("beneficiaryPhoneNumber")
     // localStorage.removeItem("biometrics")
@@ -317,24 +352,29 @@ this.getAllIncompleteBeneficiaries();
     // });
   }
 
-  getAllIncompletedData(){
-    let pageSize:number = 20;
-    this.beneficiaryService.getAllIncompleteBeneficiaries({}, {size: pageSize, page: 1}).subscribe({
-      next: (res:any) => {
-        let totalCount:number = res?.data?.totalCount;
-        let totalRecordArray = Array(Math.floor(totalCount / 10)).fill(totalCount / 10)?.length + 1;
-        let paginationToshow = Array.from({ length: totalRecordArray }, (_, index) => index + 1);
-        this.paginationArrayToShow = paginationToshow;
-      }
-    })
+  getAllIncompletedData() {
+    let pageSize: number = 20;
+    this.beneficiaryService
+      .getAllIncompleteBeneficiaries({}, { size: pageSize, page: 1 })
+      .subscribe({
+        next: (res: any) => {
+          let totalCount: number = res?.data?.totalCount;
+          let totalRecordArray =
+            Array(Math.floor(totalCount / 10)).fill(totalCount / 10)?.length +
+            1;
+          let paginationToshow = Array.from(
+            { length: totalRecordArray },
+            (_, index) => index + 1,
+          );
+          this.paginationArrayToShow = paginationToshow;
+        },
+      });
   }
-
 
   ngOnInit(): void {
     // this.getAllBeneficiaries();
     // this.getAllCompletedData();
     // this.getAllIncompleteBeneficiaries();
-
   }
 
   viewBeneficiaryProfile(beneficiary: BeneficiaryProfile | any): any {
@@ -343,34 +383,79 @@ this.getAllIncompleteBeneficiaries();
     this.router.navigate(['/home/beneficiary-details'], {
       relativeTo: this.route,
       queryParams: {
-        data: beneficiary?.ssid
-      }
-    })
+        data: beneficiary?.ssid,
+      },
+    });
   }
-
 
   validateRequest(Beneficiary: BeneficiaryProfile | any) {
     // this.beneficiaryService.setBeneficiaryProfile(Beneficiary);
-    
+
     console.log('beneficiary>>>', Beneficiary);
     this.router.navigate(['/home/biometric-validation-request'], {
-      
       queryParams: {
-        data: Beneficiary?.nin
-      }
-    })
+        data: Beneficiary?.nin,
+      },
+    });
   }
 
+  showContinueOnboarding(beneficiary: BeneficiaryProfile | any): boolean {
+    return (
+      beneficiary?.formStage !== 'OTHER_DETAILS' &&
+      beneficiary?.registrationType === 'AGENT'
+    );
+  }
 
-  continueOnboarding(beneficiary: BeneficiaryProfile | any) {
-    localStorage.removeItem("NINDetails")
-    localStorage.removeItem("beneficiaryPhoneNumber")
-    localStorage.removeItem("biometrics")
-    localStorage.removeItem("incomplete")
-    localStorage.removeItem("verification")
-    localStorage.removeItem("nin")
-    localStorage.removeItem("faceCapture_skipThumPrints")
-    localStorage.removeItem("isFingerprintOk")
+  showManualValidationRequest(beneficiary: BeneficiaryProfile | any): boolean {
+
+    
+    return (
+      beneficiary?.formStage === 'OTHER_DETAILS' &&
+      beneficiary?.biometricMatch === false &&
+      beneficiary?.imageUrl != null
+    );
+  }
+
+  showCaptureBiometric(beneficiary: BeneficiaryProfile | any): boolean {
+    if (beneficiary?.registrationType === 'AGENT') {
+      return (
+        beneficiary?.formStage === 'OTHER_DETAILS' &&
+        beneficiary?.fingerprintCaptured === false &&
+        beneficiary?.biometricMatch === false
+      );
+    } else {
+      return (
+        beneficiary?.formStage === 'OTHER_DETAILS' &&
+        beneficiary?.imageUrl == null
+      );
+    }
+  }
+
+  showSubmitOnboarding(beneficiary: BeneficiaryProfile | any): boolean {
+    if (beneficiary?.registrationType === 'AGENT') {
+      return (
+        beneficiary?.formStage === 'OTHER_DETAILS' &&
+        beneficiary?.fingerprintCaptured === true &&
+        beneficiary?.biometricMatch === true
+      );
+    } else {
+      return (
+        beneficiary?.formStage === 'OTHER_DETAILS' &&
+        beneficiary?.biometricMatch === true
+      );
+    }
+  }
+
+  navigateToBiometricRoute(beneficiary: BeneficiaryProfile | any) {
+
+     localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
     localStorage.removeItem('userAddress');
     // this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
     // this.snackbar.openFromComponent(ToastsComponent, {
@@ -379,160 +464,242 @@ this.getAllIncompleteBeneficiaries();
     // });
 
     localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
-    localStorage.setItem("userAddress", beneficiary?.address)
-    localStorage.setItem('incomplete', "Let's continue from where you've stopped!");
+    localStorage.setItem('userAddress', beneficiary?.address);
+    localStorage.setItem(
+      'incomplete',
+      "Let's continue from where you've stopped!",
+    );
     this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
-      next: (details:any) => {
+      next: (details: any) => {
         const stringedData = JSON.stringify(details?.data);
         localStorage.setItem('NINDetails', stringedData);
         // localStorage.setItem('NINDetails', stringedData);
-      }
-    })
- 
-    if (beneficiary?.formStage === "VERIFICATION") {
-      this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
+      },
+    });
+
+
+    this.beneficiaryService.setRouteToDisplay('biometrics');
+    localStorage.setItem('biometrics', 'biometrics');
+    this.router.navigate(['/home/setup-biometrics'], {
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'setup_biometrics',
+      },
+    });
+  }
+
+  continueOnboarding(beneficiary: BeneficiaryProfile | any) {
+    localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
+    localStorage.removeItem('userAddress');
+    // this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
+    // this.snackbar.openFromComponent(ToastsComponent, {
+    //   duration: 4000,
+    //   verticalPosition: 'bottom',
+    // });
+
+    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    localStorage.setItem('userAddress', beneficiary?.address);
+    localStorage.setItem(
+      'incomplete',
+      "Let's continue from where you've stopped!",
+    );
+    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
+      next: (details: any) => {
+        const stringedData = JSON.stringify(details?.data);
+        localStorage.setItem('NINDetails', stringedData);
+        // localStorage.setItem('NINDetails', stringedData);
+      },
+    });
+
+    if (beneficiary?.formStage === 'VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('verify beneficiary nin');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'verify_NIN'
-        }
-      })
-    } else if (beneficiary?.formStage === "NIN_VERIFICATION") {
-      this.beneficiaryService.setRouteToDisplay("personal details");
+          progress: 'verify_NIN',
+        },
+      });
+    } else if (beneficiary?.formStage === 'NIN_VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('personal details');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'personal_details'
-        }
-      })
-    } else if (beneficiary?.formStage === "OTP_VERIFICATION") {
-      this.beneficiaryService.setRouteToDisplay("biometrics");
+          progress: 'personal_details',
+        },
+      });
+    } else if (beneficiary?.formStage === 'OTP_VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('biometrics');
       localStorage.setItem('biometrics', 'biometrics');
       this.router.navigate(['/home/setup-biometrics'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'setup_biometrics'
-        }
-      })
+          progress: 'setup_biometrics',
+        },
+      });
       // this.router.navigate(['/home/setup-biometrics'], {
       //   relativeTo: this.route,
       //   queryParams: {
       //     progress: 'finger_capture_done'
       //   }
       // })
-    } else if (beneficiary?.formStage === "PERSONAL_DETAILS") {
-      this.beneficiaryService.setRouteToDisplay("verification procedure");
+    } else if (beneficiary?.formStage === 'PERSONAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('verification procedure');
       localStorage.setItem('verification', 'verification');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'verification_procedure'
-        }
-      })
-    } else if (beneficiary?.formStage === "BIO_VERIFICATION" || beneficiary?.formStage === "VERIFIED") {
-      this.beneficiaryService.setRouteToDisplay("residential details");
+          progress: 'verification_procedure',
+        },
+      });
+    } else if (
+      beneficiary?.formStage === 'BIO_VERIFICATION' ||
+      beneficiary?.formStage === 'VERIFIED'
+    ) {
+      this.beneficiaryService.setRouteToDisplay('residential details');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'residential_details'
-        }
-      })
-    } else if (beneficiary?.formStage === "ADDRESS_DETAILS") {
-      this.beneficiaryService.setRouteToDisplay("marital info");
+          progress: 'residential_details',
+        },
+      });
+    } else if (beneficiary?.formStage === 'ADDRESS_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('marital info');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'marital_info'
-        }
-      })
-    } else if (beneficiary?.formStage === "MARITAL_DETAILS") {
-      this.beneficiaryService.setRouteToDisplay("education");
+          progress: 'marital_info',
+        },
+      });
+    } else if (beneficiary?.formStage === 'MARITAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('education');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'education'
-        }
-      })
-    } else if (beneficiary?.formStage === "EDUCATION_DETAILS") {
-      this.beneficiaryService.setRouteToDisplay("health");
+          progress: 'education',
+        },
+      });
+    } else if (beneficiary?.formStage === 'EDUCATION_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('health');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'health'
-        }
-      })
-    } else if (beneficiary?.formStage === "HEALTH_DETAILS") {
-      this.beneficiaryService.setRouteToDisplay("financial");
+          progress: 'health',
+        },
+      });
+    } else if (beneficiary?.formStage === 'HEALTH_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('financial');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'financial'
-        }
-      })
-    } else if (beneficiary?.formStage === "FINANCIAL_DETAILS") {
-      this.beneficiaryService.setRouteToDisplay("next of kin");
+          progress: 'financial',
+        },
+      });
+    } else if (beneficiary?.formStage === 'FINANCIAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('next of kin');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'next_of_kin'
-        }
-      })
-    } else if (beneficiary?.formStage === "NEXT_OF_KIN") {
-      this.beneficiaryService.setRouteToDisplay("employment");
+          progress: 'next_of_kin',
+        },
+      });
+    } else if (beneficiary?.formStage === 'NEXT_OF_KIN') {
+      this.beneficiaryService.setRouteToDisplay('employment');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'employment'
-        }
-      })
-    } else if (beneficiary?.formStage === "EMPLOYMENT_DETAILS") {
-      this.beneficiaryService.setRouteToDisplay("occupation");
+          progress: 'employment',
+        },
+      });
+    } else if (beneficiary?.formStage === 'EMPLOYMENT_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('occupation');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'occupation'
-        }
-      })
-    } else if (beneficiary?.formStage === "OCCUPATION_DETAILS") {
-      this.beneficiaryService.setRouteToDisplay("other details");
+          progress: 'occupation',
+        },
+      });
+    } else if (beneficiary?.formStage === 'OCCUPATION_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('other details');
       this.router.navigate(['/home/beneficiary'], {
         relativeTo: this.route,
         queryParams: {
-          progress: 'other_details'
-        }
-      })
-    } else if (beneficiary?.formStage === "OTHER_DETAILS") {
-      //|| beneficiary?.formStage === "COMPLETED"
-      this.beneficiaryService.onboardingSubmitted(beneficiary?.phoneNumber)?.subscribe({
+          progress: 'other_details',
+        },
+      });
+    } 
+  }
+
+  //submitonboarding
+
+  submitOnboarding(beneficiary: BeneficiaryProfile | any) {
+    localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
+    localStorage.removeItem('userAddress');
+
+    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    localStorage.setItem('userAddress', beneficiary?.address);
+    localStorage.setItem(
+      'incomplete',
+      "Let's continue from where you've stopped!",
+    );
+    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
+      next: (details: any) => {
+        const stringedData = JSON.stringify(details?.data);
+        localStorage.setItem('NINDetails', stringedData);
+        // localStorage.setItem('NINDetails', stringedData);
+      },
+    });
+
+    this.beneficiaryService
+      .onboardingSubmitted(beneficiary?.phoneNumber)
+      ?.subscribe({
         next: (elem: any) => {
-         // console.log('res>>', elem);
+          // console.log('res>>', elem);
           this.router.navigate(['/home/all-beneficiary'], {
             relativeTo: this.route,
           });
-          this.toast.setSuccessMessage("Beneficiary's onboarding has been completed successfully!");
+          this.toast.setSuccessMessage(
+            "Beneficiary's onboarding has been completed successfully!",
+          );
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
             verticalPosition: 'bottom',
           });
         },
-        error: (err:any) => {
+        error: (err: any) => {
           console.error('err>>>', err);
-          this.toast.setErrorMessage( err?.error?.failureReason || err?.error?.responseMessage || err?.statusText || "Oops an error occured!");
+          this.toast.setErrorMessage(
+            err?.error?.failureReason ||
+              err?.error?.responseMessage ||
+              err?.statusText ||
+              'Oops an error occured!',
+          );
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
             verticalPosition: 'bottom',
           });
-          if(err?.status === 401){
+          if (err?.status === 401) {
             this.showSpinner = false;
-           this.authService.agentLogout();
-            }
-        }
-      })
-     
-    }
+            this.authService.agentLogout();
+          }
+        },
+      });
   }
 
-  refreshPage(){
+  refreshPage() {
     location.reload();
   }
 
@@ -544,7 +711,7 @@ this.getAllIncompleteBeneficiaries();
 
   prevPage() {
     if (this.paginationParams.page > 0) {
-      this.paginationParams.page--
+      this.paginationParams.page--;
       this.getAllBeneficiaries();
       this.getAllCompletedData();
     }
@@ -557,7 +724,6 @@ this.getAllIncompleteBeneficiaries();
     this.getAllCompletedData();
   }
 
-
   nextPage_() {
     this.paginationParams.page++;
     this.getAllIncompleteBeneficiaries();
@@ -566,7 +732,7 @@ this.getAllIncompleteBeneficiaries();
 
   prevPage_() {
     if (this.paginationParams.page > 0) {
-      this.paginationParams.page--
+      this.paginationParams.page--;
       this.getAllIncompleteBeneficiaries();
       this.getAllIncompletedData();
     }
@@ -578,15 +744,13 @@ this.getAllIncompleteBeneficiaries();
     this.getAllIncompleteBeneficiaries();
     this.getAllIncompletedData();
   }
-//2
- 
-onCancel() {
-  // Handle cancel action
-}
+  //2
 
-onAccept() {
-  // Handle accept action
-}
- 
+  onCancel() {
+    // Handle cancel action
+  }
 
+  onAccept() {
+    // Handle accept action
+  }
 }

@@ -422,6 +422,22 @@
         </select>
       </form>
     </div>
+
+
+    <div class="row-span-1" *ngIf="occupationForm.get('nameOfInstitution')?.value === 'Others' && showTertiary === true">
+      <form class="max-w-sm" [formGroup]="occupationForm">
+        <input
+          type="text"
+          formControlName="specifiedNameOfInstitution"
+          id="text-input"
+          aria-describedby="helper-text-explanation"
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Specify Name of Institution*"
+        />
+      </form>
+    </div>
+
+
     <div class="row-span-1" *ngIf="showStudentsInfo === true && showTertiary === true">
       <form class="max-w-sm" [formGroup]="occupationForm">
         <input
@@ -1000,13 +1016,36 @@
        
       </form>
     </div>
+    
+
+    
+     <div class="row-span-1" *ngIf="showAcademics" >
+       <form class="max-w-sm row-span-1" [formGroup]="occupationForm">
+         <input
+          type="text"
+          formControlName="nameOfInstitution"
+          id="text-input"
+          aria-describedby="helper-text-explanation"
+          class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Name of Institution"
+        />
+
+      
+
+       
+      </form>
+    </div>
+
+
+
+
       <div class="row-span-1" *ngIf="showAcademics" >
        <form class="max-w-sm row-span-1" [formGroup]="occupationForm">
         <select
           id="funding_options"
           formControlName="numberOfPublications"
           class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer"
-        ><option value="" disabled> Select scale Of Trade </option>
+        ><option value="" disabled> Number of Publications </option>
           <option *ngFor="let option of numberOfPublications; let id = index">
             <span>{{ option }}</span>
           </option>
@@ -1292,7 +1331,7 @@
         (click)=" submitTrade()"
         id="btn"
         type="submit"
-        [disabled]=" !academicValid()  "
+        [disabled]=" !academicValid()"
         [ngStyle]="{ 'background-color':  !academicValid()   ? '#B8B7C8' : '#109856',
           
          }"
@@ -1393,7 +1432,7 @@
       </button>
     </div>
 
-    <div class="row-span-1 w-full mt-2" *ngIf=" showArtisan">
+    <div class="row-span-1 w-full mt-2" *ngIf="showArtisan">
     <button
         (click)=" submitTrade()"
         id="btn"

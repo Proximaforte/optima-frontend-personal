@@ -450,10 +450,10 @@ export class OccupationComponent implements OnInit, OnDestroy {
     this.getEmploymentForm();
     this.getDropdownItems();
    
-    this.occupationForm.statusChanges.subscribe(status => {
-      console.log('Form status:', status); // VALID or INVALID
-      console.log('Form validity:', this.occupationForm.valid); // true or false
-    });
+    // this.occupationForm.statusChanges.subscribe(status => {
+    //   // console.log('Form status:', status); // VALID or INVALID
+    //   // console.log('Form validity:', this.occupationForm.valid); // true or false
+    // });
     
 
     
@@ -532,6 +532,7 @@ export class OccupationComponent implements OnInit, OnDestroy {
       schoolCategory: new FormControl('', [Validators.required]),
       secondarySchoolDepartment: new FormControl('', [Validators.required]),
       hasEnjoyedGovtAssistance: new FormControl('', [Validators.required]),
+      specifiedNameOfInstitution: new FormControl('', [Validators.required]),
 
 
 
@@ -568,6 +569,13 @@ export class OccupationComponent implements OnInit, OnDestroy {
           this.occupationForm.get('clergyMembershipCount')?.reset();
           this.occupationForm.get('clergyMembershipCount')?.setErrors(null);
         }
+
+        //checkback
+
+        //   if (this.occupationForm.get('founder')?.value === 'yes') {
+        //   this.occupationForm.get('clergyMembershipCount')?.reset();
+        //   this.occupationForm.get('clergyMembershipCount')?.setErrors(null);
+        // }
         if (this.occupationForm.get('securityOutfitType')?.value === 'Others') {
           this.occupationForm.get('otherSecurityOutfitType')?.reset();
           this.occupationForm.get('otherSecurityOutfitType')?.setErrors(null);
@@ -648,7 +656,9 @@ export class OccupationComponent implements OnInit, OnDestroy {
           this.occupationForm.get('hasEnjoyedGovtAssistance')!.valueChanges,
           this.occupationForm.get('diplomaType')!.valueChanges,
         ]).subscribe(([nameOfInstitution, matriculationNumber, admissionYear, graduationYear, faculty, courseOfStudy, department, funding, indigene, hasEnjoyedGovtAssistance, diplomaType]) => {
-          this.disableBtn = !(
+          
+          if(nameOfInstitution !== 'Others'){
+               this.disableBtn = !(
             nameOfInstitution &&
             matriculationNumber &&
             admissionYear &&
@@ -661,6 +671,30 @@ export class OccupationComponent implements OnInit, OnDestroy {
             hasEnjoyedGovtAssistance &&
             diplomaType
           );
+          }
+
+          else {
+            const specifiedNameOfInstitution = this.occupationForm.get('specifiedNameOfInstitution')!.value;
+
+              this.disableBtn = !(
+            nameOfInstitution &&
+            specifiedNameOfInstitution &&
+            matriculationNumber &&
+            admissionYear &&
+            graduationYear &&
+            faculty &&
+            courseOfStudy &&
+            department &&
+            funding &&
+            indigene &&
+            hasEnjoyedGovtAssistance &&
+            diplomaType
+          );
+
+
+          }
+          
+       
         });
       }
 
@@ -1060,6 +1094,13 @@ export class OccupationComponent implements OnInit, OnDestroy {
         this.occupationForm.value.diplomaType === 'Other'
           ? this.occupationForm.value.specifyDiplomaType
           : null,
+
+      specifiedNameOfInstitution:
+        this.occupationForm.value.nameOfInstitution === 'Others'
+          ? this.occupationForm.value.specifiedNameOfInstitution
+          : null,
+
+
       dateOfFistAppointment: this.occupationEnums.dateOfFistAppointment,
       dateOfConfirmation: this.occupationEnums.dateOfConfirmation,
       onTransfer:
@@ -1121,6 +1162,8 @@ export class OccupationComponent implements OnInit, OnDestroy {
 
         //end of newly added for students
     };
+
+    // console.log('totalPayload>>', totalPayload);
 
     this.beneficiaryService.occupationDetails(totalPayload).subscribe({
       next: (res: any) => {
