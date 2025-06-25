@@ -49,6 +49,13 @@ export class JwtInterceptorService implements HttpInterceptor{
     'Authorization': `Bearer ${this.getAgentData() ? this.getAgentData() : this.auth.token}`
   })
 
+   public customDecryptHttpHeaders:any = new HttpHeaders({
+    'Content-Type': 'text/plain; charset=utf-8',
+    'accept': 'text/plain; charset=utf-8',
+    'Authorization': `Bearer ${this.getAgentData() ? this.getAgentData() : this.auth.token}`
+  })
+
+
   public customHttpHeadersNoBearer:any = new HttpHeaders({
     'Content-Type': 'application/json',
     'accept': '*/*',
