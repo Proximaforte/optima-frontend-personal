@@ -70,6 +70,6 @@ jobs:
       - name: Build the Angular app
         run: ng build --configuration=production
 
-      - name: Deploy to server
+      - name: Deploy to server 
         run: |
           rsync -e "ssh -i private_key -o StrictHostKeyChecking=no" -rltgoDzvO --delete dist/ ubuntu@192.168.10.15:/var/www/optima-agent-frontend
