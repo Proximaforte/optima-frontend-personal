@@ -123,24 +123,24 @@ export class BeneficiaryService {
   }
 
   public verifyNIN(nin: string): Observable<any> {
- const encryptedNIN = this.encryptData(nin);
+//  const encryptedNIN = this.encryptData(nin);
 
     return this.http.get<any>(
-      `${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${encryptedNIN}`,
-      { headers: this.interceptor?.customDecryptHttpHeaders, responseType: 'text' as 'json'  },
+      `${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${nin}`,
+      { headers: this.interceptor?.customHttpHeaders },
     )
   }
 
 
  public consentForm(data: any): Observable<any> {
   const body = JSON.stringify(data);
-  const encryptedBody = this.encryptData(body);
+  // const encryptedBody = this.encryptData(body);
 
-  console.log(body);
+  
 
   return this.http.post<any>(
     `${environment?.baseUrl}/${endpoints?.giveConsent}`,
-    encryptedBody,
+   body,
     { headers: this.interceptor?.customHttpHeaders }
   )
 }
@@ -168,10 +168,10 @@ export class BeneficiaryService {
   public personalDetails(data: PersonalDetails): Observable<any> {
     const body = JSON.stringify(data);
 
-    const encryptedBody = this.encryptData(body);
+    // const encryptedBody = this.encryptData(body);
     return this.http.post<any>(
       `${environment?.baseUrl}/${endpoints?.personalDetails}`,
-      encryptedBody,
+      body,
       { headers: this.interceptor?.customHttpHeaders },
     );
   }
@@ -184,8 +184,8 @@ export class BeneficiaryService {
 
     return this.http.post<any>(
       `${environment?.baseUrl}/${endpoints?.residentialDetails}`,
-      encryptedBody,
-      { headers: this.interceptor?.customDecryptHttpHeaders, responseType: 'text' as 'json' },
+      body,
+      { headers: this.interceptor?.customHttpHeaders },
     );
   }
 

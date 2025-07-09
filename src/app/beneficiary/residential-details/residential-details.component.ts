@@ -191,9 +191,9 @@ export class ResidentialDetailsComponent implements OnInit {
       next: (res: any) => {
 
 
-        const decryptedResponse = JSON.parse(this.beneficiaryService.decryptData(res));
+        // const decryptedResponse = JSON.parse(this.beneficiaryService.decryptData(res));
 
-        localStorage.setItem("userAddress", decryptedResponse.data.address)
+        localStorage.setItem("userAddress", res.data.address)
         
         this.showSpinner = false;
         this.beneficiaryService.setRouteToDisplay('marital info');
