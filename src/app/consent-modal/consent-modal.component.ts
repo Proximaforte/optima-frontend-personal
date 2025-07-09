@@ -187,22 +187,22 @@ export class ConsentModalComponent {
               
               
               
-             const decryptedResponse =  JSON.parse(this.beneficiaryService.decryptData(response));
+            //  const response =  JSON.parse(this.beneficiaryService.decryptData(response));
               this.showLoader = false;
-              if (decryptedResponse?.responseCode === 200) {
+              if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
             
 
                 localStorage.setItem(
                   'beneficiaryPhoneNumber',
-                  decryptedResponse?.data?.phone,
+                  response?.data?.phone,
                 );
                 localStorage.setItem(
                   'NINDetails',
-                  JSON.stringify(decryptedResponse?.data),
+                  JSON.stringify(response?.data),
                 );
 
-                this.beneficiaryData = decryptedResponse.data;
+                this.beneficiaryData = response.data;
 
               //   if (response?.data?.formStage) {
               // this.continueOnboarding(response?.data)
