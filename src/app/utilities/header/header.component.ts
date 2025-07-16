@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   subPath: string = '';
   pathName: string = '';
   showBeneficiary: boolean = false;
+  backIcon: string = "assets/icons/back.svg";
 
   constructor(
     private router: Router,
@@ -23,11 +24,21 @@ export class HeaderComponent implements OnInit {
   ) {
     // console.log('window>>>', window?.location?.pathname);
     let path: any = window.location.pathname;
-    path = '/home/beneficiary' ? this.showBeneficiary === true :
+    path === '/home/beneficiary' ? this.showBeneficiary === true :
       path === '/home/all-beneficiary' ? this.showBeneficiary === false :
         path === '/home/dashboard' ? this.showBeneficiary === false :
           path === '/home/profile' ? this.showBeneficiary === false : null
   }
+
+  
+  isProfilePage(): boolean {
+    return this.router.url === '/home/profile';
+  }
+
+  goBack(): void {
+    this.router.navigate([this.router.url.split('/').slice(0, -1).join('/') || '/']);
+  }
+
 
   getUserDetails() {
     this.authService.getUserDetails().subscribe({

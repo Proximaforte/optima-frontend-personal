@@ -67,27 +67,46 @@
       </div>
     </div>
 
-    <div class="border rounded-xl p-3 mt-7">
-        <p class="text-optimaGray text-lg px-3 font-medium">Center Information</p>
-        <div class="flex px-1 justify-between overflow-x-auto">
-          <div class="flex px-1 flex-col justify-between" *ngFor="let agent of agents" style="flex-shrink: 0;">
-            <div class="border-none">
-              <div class="flex flex-row gap-5 w-full">
-                <img [src]="agent.icon" alt="image" class="w-7 h-7 md:w-10 md:h-10" />
-                <div class="flex flex-col ml-1 -mt-1">
-                  <p class="text-[10px] text-optimaGray m-0" style="white-space: nowrap;">{{ agent.text }}</p>
-                  <p class="text-sm md:text-lg -mt-3" style="white-space: nowrap;">{{ agent.data }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+
+    <div class="flex justify-between items-center mx-auto min-h-[327px] w-full bg-white border border-[#EAECF0] py-[44px] px-[62px] rounded-[16px] shadow">
+
+
+
+      <div class="text-center hover:cursor-pointer" (click)="openConsentModal()">
+        <div class="w-[144px] h-[144px] flex items-center justify-center bg-[#EDFDF5] border-[4px] border-[#DAFBEB] rounded-[35px] padding-[28px]">
+        <img [src]="plusIcon" class="w-16 h-16" alt="">
+        
+      </div>
+      <p class="text-[18px] text-center text-[#344054] font-medium font-euclid py-4">New <br> Registration</p>
       </div>
 
-    <div id="empty-data" class="container mx-auto">
+      <div class="text-center hover:cursor-pointer">
+         <div class="w-[144px] h-[144px] flex items-center justify-center bg-[#EDFDF5] border-[4px] border-[#DAFBEB] rounded-[35px] padding-[28px]">
+          <img [src]="continueIcon" class="w-16 h-16" alt="">
+      </div>
+      <p class="text-[18px] text-center text-[#344054] font-medium font-euclid py-4">Continue <br> Registration</p>
+      </div>
+       
+        <div class="text-center hover:cursor-pointer" [routerLink]="['/home/profile']">
+          <div class="w-[144px] h-[144px] flex items-center justify-center bg-[#EDFDF5] border-[4px] border-[#DAFBEB] rounded-[35px] padding-[28px]">
+          <img [src]="agentIcon" class="w-16 h-16" alt="">
+      </div>
+      <p class="text-[18px] text-center text-[#344054] font-medium font-euclid py-4">Agent <br> Profile</p>
+        </div>
+
+
+
+    </div>
+   
+
+    <!-- <div id="empty-data" class="container mx-auto">
       <app-beneficiary-table
         (emitTotals$)="acceptTableTotals($event)"
       ></app-beneficiary-table>
-    </div>
+    </div> -->
+
+
+  
   </div>
 </body>

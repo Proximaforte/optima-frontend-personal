@@ -1,6 +1,15 @@
 <header
   class="flex items-center justify-between mr-10 mt-8 mb-8 text-white font-sora"
 >
+
+   <button
+    *ngIf="isProfilePage()"
+        class=""
+        (click)="goBack()"
+        matTooltip="Go Back"
+      >
+        <img [src]="backIcon" alt="Back Icon" class="w-6 h-6" />
+      </button>
   <div class="flex items-center text-lg">
     <!-- <h1 class="text-optimaBlack font-bold">{{title}}</h1>
     <p class="px-2 text-optimaGray">{{ name }}</p> -->
@@ -10,7 +19,13 @@
         <span class="text-optimaBlack font-bold">{{ subPath }}</span>
       </div>
       <div>
-        <span class="text-optimaBlack text-2xl font-bold">{{ title }}</span>
+      
+
+
+        <span class="text-optimaBlack text-2xl font-bold">{{ title }}
+       
+
+        </span>
         <span class="text-optimaGray"  *ngIf="showBeneficiary === false"> {{ userName }}</span>
         <!-- <span class="text-optimaGray" *ngIf="showBeneficiary === true"> {{ "(State Palliative Disbursement)" }}</span> -->
         <!-- <span class="text-optimaGray"> {{ name }}</span> -->
