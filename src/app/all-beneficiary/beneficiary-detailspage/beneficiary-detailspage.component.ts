@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, Renderer2, AfterViewInit } from '@angula
 import { BeneficiaryService } from 'src/app/services/beneficiary/beneficiary.service';
 import { BeneficiaryProfile } from 'src/app/models/beneficiary/beneficiary';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from 'src/app/services/alert/toasts.service';
@@ -40,6 +40,7 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
   ssid: string = '';
   showSpinner: boolean = true;
   capturedFingerprint: boolean = false;
+  beneficiaryData: any = {};
 
   constructor(
     private beneficiaryService: BeneficiaryService,
@@ -49,7 +50,8 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
     private toast: ToastsService,
     private renderer: Renderer2,
     private el: ElementRef,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+      private router: Router,
   ) {
     const params = this.route.queryParams.subscribe({
       next: (param: any) => {
@@ -129,10 +131,306 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    if (this.ssid === undefined) {
-      this.getDummyData();
+    this.beneficiaryData = this.beneficiaryService.getBeneficiary();
+  
+  }
+
+  
+  showContinueOnboarding(beneficiary:  any): boolean {
+    return (
+      beneficiary?.formStage !== 'OTHER_DETAILS' &&
+      beneficiary?.registrationType === 'AGENT'
+    );
+  }
+
+  showManualValidationRequest(beneficiary:  any): boolean {
+    return (
+      beneficiary?.formStage === 'OTHER_DETAILS' &&
+      beneficiary?.biometricMatch === false &&
+      beneficiary?.imageUrl != null
+    );
+  }
+
+  showCaptureBiometric(beneficiary:  any): boolean {
+    if (beneficiary?.registrationType === 'AGENT') {
+      return (
+        beneficiary?.formStage === 'OTHER_DETAILS' &&
+        beneficiary?.fingerprintCaptured === false &&
+        beneficiary?.biometricMatch === false
+      );
     } else {
-      this.getBeneficiaryProfileData();
+      return (
+        beneficiary?.formStage === 'OTHER_DETAILS' &&
+        beneficiary?.imageUrl == null
+      );
     }
   }
+
+  showSubmitOnboarding(beneficiary: any): boolean {
+    if (beneficiary?.registrationType === 'AGENT') {
+      return (
+        beneficiary?.formStage === 'OTHER_DETAILS' &&
+        beneficiary?.fingerprintCaptured === true &&
+        beneficiary?.biometricMatch === true
+      );
+    } else {
+      return (
+        beneficiary?.formStage === 'OTHER_DETAILS' &&
+        beneficiary?.biometricMatch === true
+      );
+    }
+  }
+
+
+    validateRequest(Beneficiary: any) {
+    // this.beneficiaryService.setBeneficiaryProfile(Beneficiary);
+
+ 
+    this.router.navigate(['/home/biometric-validation-request'], {
+      queryParams: {
+        data: Beneficiary?.nin,
+      },
+    });
+  }
+
+  
+  navigateToBiometricRoute(beneficiary:  any) {
+    localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
+    localStorage.removeItem('userAddress');
+
+
+    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    localStorage.setItem('userAddress', beneficiary?.address);
+    localStorage.setItem(
+      'incomplete',
+      "Let's continue from where you've stopped!",
+    );
+    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
+      next: (details: any) => {
+        const stringedData = JSON.stringify(details?.data);
+        localStorage.setItem('NINDetails', stringedData);
+        // localStorage.setItem('NINDetails', stringedData);
+      },
+    });
+
+    this.beneficiaryService.setRouteToDisplay('biometrics');
+    localStorage.setItem('biometrics', 'biometrics');
+    this.router.navigate(['/home/setup-biometrics'], {
+      relativeTo: this.route,
+      queryParams: {
+        progress: 'setup_biometrics',
+      },
+    });
+  }
+
+
+    continueOnboarding(beneficiary:  any) {
+    localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
+    localStorage.removeItem('userAddress');
+    
+
+    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    localStorage.setItem('userAddress', beneficiary?.address);
+    localStorage.setItem(
+      'incomplete',
+      "Let's continue from where you've stopped!",
+    );
+    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
+      next: (details: any) => {
+        const stringedData = JSON.stringify(details?.data);
+        localStorage.setItem('NINDetails', stringedData);
+        // localStorage.setItem('NINDetails', stringedData);
+      },
+    });
+
+    if (beneficiary?.formStage === 'VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('verify beneficiary nin');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'verify_NIN',
+        },
+      });
+    } else if (beneficiary?.formStage === 'NIN_VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('personal details');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'personal_details',
+        },
+      });
+    } else if (beneficiary?.formStage === 'OTP_VERIFICATION') {
+      this.beneficiaryService.setRouteToDisplay('biometrics');
+      localStorage.setItem('biometrics', 'biometrics');
+      this.router.navigate(['/home/setup-biometrics'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'setup_biometrics',
+        },
+      });
+     
+    } else if (beneficiary?.formStage === 'PERSONAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('verification procedure');
+      localStorage.setItem('verification', 'verification');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'verification_procedure',
+        },
+      });
+    } else if (
+      beneficiary?.formStage === 'BIO_VERIFICATION' ||
+      beneficiary?.formStage === 'VERIFIED'
+    ) {
+      this.beneficiaryService.setRouteToDisplay('residential details');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'residential_details',
+        },
+      });
+    } else if (beneficiary?.formStage === 'ADDRESS_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('marital info');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'marital_info',
+        },
+      });
+    } else if (beneficiary?.formStage === 'MARITAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('education');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'education',
+        },
+      });
+    } else if (beneficiary?.formStage === 'EDUCATION_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('health');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'health',
+        },
+      });
+    } else if (beneficiary?.formStage === 'HEALTH_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('financial');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'financial',
+        },
+      });
+    } else if (beneficiary?.formStage === 'FINANCIAL_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('next of kin');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'next_of_kin',
+        },
+      });
+    } else if (beneficiary?.formStage === 'NEXT_OF_KIN') {
+      this.beneficiaryService.setRouteToDisplay('employment');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'employment',
+        },
+      });
+    } else if (beneficiary?.formStage === 'EMPLOYMENT_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('occupation');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'occupation',
+        },
+      });
+    } else if (beneficiary?.formStage === 'OCCUPATION_DETAILS') {
+      this.beneficiaryService.setRouteToDisplay('other details');
+      this.router.navigate(['/home/beneficiary'], {
+        relativeTo: this.route,
+        queryParams: {
+          progress: 'other_details',
+        },
+      });
+    }
+  }
+
+
+   submitOnboarding(beneficiary:  any) {
+    localStorage.removeItem('NINDetails');
+    localStorage.removeItem('beneficiaryPhoneNumber');
+    localStorage.removeItem('biometrics');
+    localStorage.removeItem('incomplete');
+    localStorage.removeItem('verification');
+    localStorage.removeItem('nin');
+    localStorage.removeItem('faceCapture_skipThumPrints');
+    localStorage.removeItem('isFingerprintOk');
+    localStorage.removeItem('userAddress');
+
+    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    localStorage.setItem('userAddress', beneficiary?.address);
+    localStorage.setItem(
+      'incomplete',
+      "Let's continue from where you've stopped!",
+    );
+    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
+      next: (details: any) => {
+        const stringedData = JSON.stringify(details?.data);
+        localStorage.setItem('NINDetails', stringedData);
+        // localStorage.setItem('NINDetails', stringedData);
+      },
+    });
+
+    this.beneficiaryService
+      .onboardingSubmitted(beneficiary?.phoneNumber)
+      ?.subscribe({
+        next: (elem: any) => {
+          // console.log('res>>', elem);
+          this.router.navigate(['/home/dashboard'], {
+            relativeTo: this.route,
+          });
+          this.toast.setSuccessMessage(
+            "Beneficiary's onboarding has been completed successfully!",
+          );
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+        },
+        error: (err: any) => {
+          console.error('err>>>', err);
+          this.toast.setErrorMessage(
+            err?.error?.failureReason ||
+              err?.error?.responseMessage ||
+              err?.statusText ||
+              'Oops an error occured!',
+          );
+          this.snackbar.openFromComponent(ToastsComponent, {
+            duration: 4000,
+            verticalPosition: 'bottom',
+          });
+          if (err?.status === 401) {
+            this.showSpinner = false;
+            this.authService.agentLogout();
+          }
+        },
+      });
+  }
+
+
 }

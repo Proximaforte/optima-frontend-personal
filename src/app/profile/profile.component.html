@@ -1,14 +1,13 @@
-<body>
+<body class="min-w-full">
   <div class="ml-4">
-    <div class="bg-[#ff816246] h-12 rounded-t-2xl w-11/12"></div>
+    <div class="bg-[#EDFDF5] h-12 rounded-t-2xl"></div>
     <div class="flex flex-row items-center ml-6 -mt-6">
       <div>
         <img
-          src="assets/images/profilepic.svg"
-          height="96"
-          width="96"
-          alt=""
-        />
+        src="assets/images/avatar.png"
+        alt="Your Image"
+        class="h-16 w-16 rounded-full"
+      />
       </div>
       <div class="ml-3 mt-8">
         <div class="text-2xl font-bold">{{userDetails?.firstname || "N/A"}}  {{userDetails?.middleName}}</div>
@@ -16,28 +15,39 @@
       </div>
     </div>
   
-    <div class="w-[70%] mt-12 border-2 rounded-2xl px-6 py-4">
-      <p class="text-optimaGray text-lg font-medium">Center Information</p>
+
+
+
   
-      <div class="flex justify-between">
-        <div class="flex flex-col justify-between" *ngFor="let agent of agents">
-          <div class="border-none">
-            <div class="flex flex-row">
-              <div>
-                <img [src]="agent.icon" alt="image" class="w-10 h-10" />
-              </div>
-              <div class="flex flex-col ml-4 -mt-1">
-                <span class="text-[10px] text-optimaGray m-0">{{
-                  agent.text
-                }}</span>
-                <span class="text-lg -mt-1">{{ agent.data }}</span>
-              </div>
-            </div>
+
+      <div class="border rounded-xl p-3 mt-7 w-full">
+  <p class="text-optimaGray text-lg px-3 font-medium">Center Information</p>
+
+  <div class="flex px-1 gap-4 overflow-x-auto">
+    <div
+      class="flex flex-col min-w-[160px] flex-shrink-0"
+      *ngFor="let agent of agents"
+    >
+      <div class="border-none">
+        <div class="flex flex-row gap-5 w-full">
+          <img [src]="agent.icon" alt="image" class="w-7 h-7 md:w-10 md:h-10" />
+          <div class="flex flex-col ml-1 -mt-1">
+            <p class="text-[10px] text-optimaGray m-0 whitespace-nowrap">
+              {{ agent.text }}
+            </p>
+            <p class="text-sm md:text-lg -mt-3 break-words">
+              {{ agent.data }}
+            </p>
           </div>
         </div>
       </div>
     </div>
-  
+  </div>
+</div>
+
+
+
+
     <div class="w-[702px] mt-12 ml-8">
       <div class="border-b">
         <p class="font-semibold text-2xl pl-6 text-optimaGray">

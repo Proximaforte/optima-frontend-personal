@@ -167,7 +167,7 @@ export class SetupBiometricsComponent {
 
           if(res?.data.formStage === "OTHER_DETAILS"){
             //route to all beneficiary
-             this.router.navigate(['/home/all-beneficiary'], {
+             this.router.navigate(['/home/dashboard'], {
             relativeTo: this.route,
           });
 

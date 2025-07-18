@@ -1,4 +1,4 @@
-<section class="my-5 py-2 bg-[#1e1e2d] transform rounded-full flex items-center justify-around px-4 md:px-8 lg:px-16 fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[50rem] w-full">
+<!-- <section class="my-5 py-2 bg-[#1e1e2d] transform rounded-full flex items-center justify-around px-4 md:px-8 lg:px-16 fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[50rem] w-full">
   <div class="flex justify-center items-center">
     <img [src]="bankLogo" class="" alt="Logo" />
   </div>
@@ -11,7 +11,37 @@
       </div>
     </div>
   </div>
+</section> -->
+
+
+
+<section class="my-5 py-2 bg-white transform rounded-full  px-4 md:px-8 lg:px-16 fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[50rem] w-full">
+ 
+
+  <div class="flex justify-end mb-2 ">
+    <div  (click)="onLogout()"  class="flex py-[12px] px-[30px] items-center gap-2 ml-auto bg-[#FFFBFA] rounded-[16px] border border-[#FEE4E2] hover:bg-[#FFFBFA] hover:cursor-pointer ">
+
+      <img src="assets/icons/logout.svg" class="w-[30px]">
+      <span class="text-[#F04438] font-medium text-[18px]">Logout</span>
+     
+    </div>
+  </div>
+
+
+<div class="flex items-center justify-between">
+  
+  <div class="first">
+    <img src="assets/images/logone.svg"class="w-[180px]" alt="">
+
+  </div>
+
+  <div class="second">
+    <img src="assets/images/poweredone.svg"class="w-[200px]" alt="">
+  </div>
+</div>
+ 
 </section>
+
 
 
 

@@ -520,7 +520,7 @@ export class ConsentModalComponent {
         ?.subscribe({
           next: (elem: any) => {
             // console.log('res>>', elem);
-            this.router.navigate(['/home/all-beneficiary'], {
+            this.router.navigate(['/home/dashboard'], {
               relativeTo: this.route,
             });
             this.toast.setSuccessMessage(

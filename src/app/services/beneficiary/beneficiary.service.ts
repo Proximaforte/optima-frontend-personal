@@ -49,12 +49,41 @@ export class BeneficiaryService {
   };
   params: any;
   personalDetailsObj: any = {};
+  beneficiaryData: any = {};
+
+
+  private _key = 'beneficiaryData';
+
+
+
 
   constructor(
     private http: HttpClient,
     private interceptor: JwtInterceptorService,
   ) {
     this.setBeneficiaryFilter({});
+  }
+
+  //   public setBeneficiary(data: any) {
+  //   this.beneficiaryData = data;
+  // }
+
+  // public getBeneficiary() {
+  //   return this.beneficiaryData;
+  // }
+
+    setBeneficiary(data: any) {
+    sessionStorage.setItem(this._key, JSON.stringify(data));
+  }
+
+  getBeneficiary(): any {
+    const stored = sessionStorage.getItem(this._key);
+    return stored ? JSON.parse(stored) : null;
+  }
+
+  
+  clearBeneficiary() {
+    sessionStorage.removeItem(this._key);
   }
 
   public setImageUrl(image: string) {
@@ -130,6 +159,17 @@ export class BeneficiaryService {
       { headers: this.interceptor?.customHttpHeaders },
     )
   }
+
+
+   public verifyNinOrPhone(identifier: string): Observable<any> {
+//  const encryptedNIN = this.encryptData(nin);
+
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.verifyNinOrPhone}/${identifier}`,
+      { headers: this.interceptor?.customHttpHeaders },
+    )
+  }
+
 
 
  public consentForm(data: any): Observable<any> {

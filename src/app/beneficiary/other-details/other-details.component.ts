@@ -572,7 +572,7 @@ meansOfTransportationEndpoint: string = endpoints.transportTypes
               duration: 4000,
               verticalPosition: 'bottom',
             });
-            this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
+            this.router.navigate(['/home/dashboard'],{relativeTo: this.route});
             if(err?.status === 401){
             this.auth.agentLogout();
             }
