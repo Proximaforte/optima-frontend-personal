@@ -10,6 +10,7 @@ import { Location } from '@angular/common';  // Import Location
 import {ConsentModalComponent} from 'src/app/consent-modal/consent-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -20,8 +21,8 @@ export class DashboardComponent implements OnInit {
 
   calendar: string = "/assets/images/calendar.svg";
     plusIcon: string = "assets/icons/PlusCircle.svg";
-    continueIcon: string = "assets/icons/UserFocus.svg";
-    agentIcon: string = "assets/icons/UserCircle.svg";
+    continueIcon: string = "assets/icons/support.svg";
+    agentIcon: string = "assets/icons/chat.svg";
   total: number = 945;
   options: string[] = ['Today', 'Last 7days', 'This Month', 'Last 6 Months'];
   selectedValue: string = '';
@@ -140,9 +141,6 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    // if(this.dashBoardDropdown.get('dateType')?.value?.length === 0){
-    //   this.getDefaultDashboardStats();
-    // }
   }
 
 
@@ -198,7 +196,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     // this.getReportRanges();
     this.getDashboardForm();
-    // this.getDefaultDashboardStats();
+    this.getDefaultDashboardStats();
   }
 
 

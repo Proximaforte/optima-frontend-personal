@@ -21,9 +21,15 @@ import { AuthService } from '../services/authentication/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastsService } from '../services/alert/toasts.service';
 import { ToastsComponent } from '../utilities/toasts/toasts.component';
-import { Subscription } from 'rxjs';
+import { identity, Subscription } from 'rxjs';
 import { Location } from '@angular/common'; // Import Location
 import { ConsentModalComponent } from '../consent-modal/consent-modal.component';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-all-beneficiary',
@@ -52,6 +58,7 @@ export class AllBeneficiaryComponent implements OnInit {
   showIncompleteBeneficiaries: boolean = true;
   showCompleteBeneficiaries: boolean = false;
   beneficiaryFilterSubscription$!: Subscription;
+
 
   routeArray: any = [
     {
@@ -97,6 +104,16 @@ export class AllBeneficiaryComponent implements OnInit {
   ];
   // | beneficiaryFilter: filterString;
 
+  authForm!: FormGroup;
+  beneficiaryData: any = null;
+  showContinue: boolean = false;
+
+  onSubmit() {
+    if (this.authForm.valid) {
+      console.log('Form Submitted:', this.authForm.value);
+    }
+  }
+
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -106,9 +123,100 @@ export class AllBeneficiaryComponent implements OnInit {
     private snackbar: MatSnackBar,
     private toast: ToastsService,
     private location: Location, // Inject Location
+    private fb: FormBuilder,
   ) {
     this.getAllIncompleteBeneficiaries();
+    //  this.authForm = this.fb.group({
+    //   // identifier: ['', Validators.required],
+    // });
   }
+
+  // new here
+
+
+  onContinue(){
+    alert("working");
+  }
+
+  goToDetails() {
+  this.beneficiaryService.setBeneficiary(this.beneficiaryData);
+  this.router.navigate(['/home/beneficiary-details']);
+}
+
+  getFormValues() {
+    this.authForm = new FormGroup({
+      nin: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[0-9]*'),
+        Validators.minLength(11),
+        Validators.maxLength(11),
+      ]),
+    });
+
+    this.authForm.get('nin')?.valueChanges.subscribe({
+      next: (value: string) => {
+        if (value.length === 11) {
+          // this.showLoader = true;
+          this.beneficiaryService.verifyNinOrPhone(value).subscribe({
+            next: (response: any) => {
+              //  const response =  JSON.parse(this.beneficiaryService.decryptData(response));
+              // this.showLoader = false;
+              if (response?.responseCode === 200) {
+                this.toast.setSuccessMessage("Beneficiary is Found!")
+
+                localStorage.setItem(
+                  'beneficiaryPhoneNumber',
+                  response?.data?.phone,
+                );
+                localStorage.setItem(
+                  'NINDetails',
+                  JSON.stringify(response?.data),
+                );
+
+                this.beneficiaryData = response.data;
+                this.showContinue = true;
+
+                //   if (response?.data?.formStage) {
+                // this.continueOnboarding(response?.data)
+
+                //             this.dialog.closeAll();
+                //   } else {
+                //     this.showBtn = true;
+                //   }
+                //  this.showBtn = true;
+                this.snackbar.openFromComponent(ToastsComponent, {
+                  duration: 4000,
+                  verticalPosition: 'bottom',
+                });
+              }
+            },
+            error: (err: any) => {
+              //  console.error('err>>>', err);
+              // this.showBtn = false;
+              this.showContinue = false;
+
+              this.toast.setErrorMessage(
+                err?.error?.failureReason ||
+                  err?.error?.responseMessage ||
+                  err?.statusText,
+              );
+              this.snackbar.openFromComponent(ToastsComponent, {
+                duration: 4000,
+                verticalPosition: 'bottom',
+              });
+              // setTimeout(() => location.reload(), 3000);
+            },
+          });
+        }
+
+        else if(value.length !== 11){
+            this.showContinue = false;
+        }
+      },
+    });
+  }
+
+  // ///
 
   openConsentModal() {
     this.dialog.open(ConsentModalComponent);
@@ -375,6 +483,8 @@ export class AllBeneficiaryComponent implements OnInit {
     // this.getAllBeneficiaries();
     // this.getAllCompletedData();
     // this.getAllIncompleteBeneficiaries();
+
+    this.getFormValues();
   }
 
   viewBeneficiaryProfile(beneficiary: BeneficiaryProfile | any): any {
@@ -407,8 +517,6 @@ export class AllBeneficiaryComponent implements OnInit {
   }
 
   showManualValidationRequest(beneficiary: BeneficiaryProfile | any): boolean {
-
-    
     return (
       beneficiary?.formStage === 'OTHER_DETAILS' &&
       beneficiary?.biometricMatch === false &&
@@ -447,8 +555,7 @@ export class AllBeneficiaryComponent implements OnInit {
   }
 
   navigateToBiometricRoute(beneficiary: BeneficiaryProfile | any) {
-
-     localStorage.removeItem('NINDetails');
+    localStorage.removeItem('NINDetails');
     localStorage.removeItem('beneficiaryPhoneNumber');
     localStorage.removeItem('biometrics');
     localStorage.removeItem('incomplete');
@@ -476,7 +583,6 @@ export class AllBeneficiaryComponent implements OnInit {
         // localStorage.setItem('NINDetails', stringedData);
       },
     });
-
 
     this.beneficiaryService.setRouteToDisplay('biometrics');
     localStorage.setItem('biometrics', 'biometrics');
@@ -633,7 +739,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'other_details',
         },
       });
-    } 
+    }
   }
 
   //submitonboarding
@@ -668,7 +774,7 @@ export class AllBeneficiaryComponent implements OnInit {
       ?.subscribe({
         next: (elem: any) => {
           // console.log('res>>', elem);
-          this.router.navigate(['/home/all-beneficiary'], {
+          this.router.navigate(['/home/dashboard'], {
             relativeTo: this.route,
           });
           this.toast.setSuccessMessage(
