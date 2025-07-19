@@ -41,6 +41,7 @@ export class BeneficiaryDetailspageComponent implements OnInit, AfterViewInit {
   showSpinner: boolean = true;
   capturedFingerprint: boolean = false;
   beneficiaryData: any = {};
+  timestamp = Date.now();
 
   constructor(
     private beneficiaryService: BeneficiaryService,

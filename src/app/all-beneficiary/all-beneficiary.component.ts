@@ -59,6 +59,8 @@ export class AllBeneficiaryComponent implements OnInit {
   showCompleteBeneficiaries: boolean = false;
   beneficiaryFilterSubscription$!: Subscription;
 
+  timestamp = Date.now();
+
 
   routeArray: any = [
     {
@@ -554,7 +556,7 @@ export class AllBeneficiaryComponent implements OnInit {
     }
   }
 
-  navigateToBiometricRoute(beneficiary: BeneficiaryProfile | any) {
+  navigateToBiometricRoute(beneficiary:  any) {
     localStorage.removeItem('NINDetails');
     localStorage.removeItem('beneficiaryPhoneNumber');
     localStorage.removeItem('biometrics');
@@ -564,11 +566,7 @@ export class AllBeneficiaryComponent implements OnInit {
     localStorage.removeItem('faceCapture_skipThumPrints');
     localStorage.removeItem('isFingerprintOk');
     localStorage.removeItem('userAddress');
-    // this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
-    // this.snackbar.openFromComponent(ToastsComponent, {
-    //   duration: 4000,
-    //   verticalPosition: 'bottom',
-    // });
+
 
     localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
     localStorage.setItem('userAddress', beneficiary?.address);
@@ -604,11 +602,7 @@ export class AllBeneficiaryComponent implements OnInit {
     localStorage.removeItem('faceCapture_skipThumPrints');
     localStorage.removeItem('isFingerprintOk');
     localStorage.removeItem('userAddress');
-    // this.toast.setSuccessMessage(`Most recent saved stage: ${beneficiary?.formStage}`);
-    // this.snackbar.openFromComponent(ToastsComponent, {
-    //   duration: 4000,
-    //   verticalPosition: 'bottom',
-    // });
+    
 
     localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
     localStorage.setItem('userAddress', beneficiary?.address);
@@ -649,12 +643,7 @@ export class AllBeneficiaryComponent implements OnInit {
           progress: 'setup_biometrics',
         },
       });
-      // this.router.navigate(['/home/setup-biometrics'], {
-      //   relativeTo: this.route,
-      //   queryParams: {
-      //     progress: 'finger_capture_done'
-      //   }
-      // })
+     
     } else if (beneficiary?.formStage === 'PERSONAL_DETAILS') {
       this.beneficiaryService.setRouteToDisplay('verification procedure');
       localStorage.setItem('verification', 'verification');

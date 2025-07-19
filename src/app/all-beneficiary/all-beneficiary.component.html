@@ -22,7 +22,7 @@
       class="w-full gap-3 flex justify-start items-center min-h-[120px] border border-[#EAECF0] p-4 rounded-lg shadow-sm"
     >
       <img
-        [src]="beneficiaryData?.imageUrl"
+       [src]="beneficiaryData?.imageUrl + '?t=' + timestamp"
         alt="User Avatar"
         class="w-16 h-16 rounded-full object-cover"
       />

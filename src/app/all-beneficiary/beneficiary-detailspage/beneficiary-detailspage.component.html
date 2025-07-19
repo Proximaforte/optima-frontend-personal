@@ -7,7 +7,7 @@
       <div class="flex flex-row items-center gap-3">
       <div>
          <img
-        [src]="beneficiaryData?.imageUrl || profileImage"
+         [src]="beneficiaryData?.imageUrl + '?t=' + timestamp"
         alt="User Avatar"
         class="w-16 h-16 rounded-full object-cover"
       />
