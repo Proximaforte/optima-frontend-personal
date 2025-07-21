@@ -4,49 +4,47 @@
     <div class="flex flex-row items-center ml-6 -mt-6">
       <div>
         <img
-        src="assets/images/avatar.png"
-        alt="Your Image"
-        class="h-16 w-16 rounded-full"
-      />
+          src="assets/images/avatar.png"
+          alt="Your Image"
+          class="h-16 w-16 rounded-full"
+        />
       </div>
       <div class="ml-3 mt-8">
-        <div class="text-2xl font-bold">{{userDetails?.firstname || "N/A"}}  {{userDetails?.middleName}}</div>
+        <div class="text-2xl font-bold">
+          {{ userDetails?.firstname || "N/A" }} {{ userDetails?.middleName }}
+        </div>
         <div class="text-optimaGray">Agent Profile</div>
       </div>
     </div>
-  
 
+    <div class="border rounded-xl p-3 mt-7 w-full">
+      <p class="text-optimaGray text-lg px-3 font-medium">Center Information</p>
 
-
-  
-
-      <div class="border rounded-xl p-3 mt-7 w-full">
-  <p class="text-optimaGray text-lg px-3 font-medium">Center Information</p>
-
-  <div class="flex px-1 gap-4 overflow-x-auto">
-    <div
-      class="flex flex-col min-w-[160px] flex-shrink-0"
-      *ngFor="let agent of agents"
-    >
-      <div class="border-none">
-        <div class="flex flex-row gap-5 w-full">
-          <img [src]="agent.icon" alt="image" class="w-7 h-7 md:w-10 md:h-10" />
-          <div class="flex flex-col ml-1 -mt-1">
-            <p class="text-[10px] text-optimaGray m-0 whitespace-nowrap">
-              {{ agent.text }}
-            </p>
-            <p class="text-sm md:text-lg -mt-3 break-words">
-              {{ agent.data }}
-            </p>
+      <div class="flex px-1 gap-4 overflow-x-auto">
+        <div
+          class="flex flex-col min-w-[160px] flex-shrink-0"
+          *ngFor="let agent of agents"
+        >
+          <div class="border-none">
+            <div class="flex flex-row gap-5 w-full">
+              <img
+                [src]="agent.icon"
+                alt="image"
+                class="w-7 h-7 md:w-10 md:h-10"
+              />
+              <div class="flex flex-col ml-1 -mt-1">
+                <p class="text-[10px] text-optimaGray m-0 whitespace-nowrap">
+                  {{ agent.text }}
+                </p>
+                <p class="text-sm md:text-lg -mt-3 break-words">
+                  {{ agent.data }}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-
-
 
     <div class="w-[702px] mt-12 ml-8">
       <div class="border-b">
@@ -54,7 +52,7 @@
           Agent Personal Information
         </p>
       </div>
-  
+
       <div>
         <!-- first line -->
         <div class="flex justify-between mt-10">
@@ -64,7 +62,9 @@
             <label class="absolute -top-2 left-4 bg-white text-xs"
               >First name</label
             >
-            <p class="text-center text-sm font-medium pt-2">{{userDetails?.firstname || "N/A"}}</p>
+            <p class="text-center text-sm font-medium pt-2">
+              {{ userDetails?.firstname || "N/A" }}
+            </p>
           </div>
           <div
             class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
@@ -72,7 +72,9 @@
             <label class="absolute -top-2 left-4 bg-white text-xs"
               >Last name</label
             >
-            <p class="text-center text-sm font-medium pt-2">{{userDetails?.lastname || "N/A"}}</p>
+            <p class="text-center text-sm font-medium pt-2">
+              {{ userDetails?.lastname || "N/A" }}
+            </p>
           </div>
           <div
             class="form-group relative bg-grey h-[50px] w-52 rounded flex justify-center items-center"
@@ -80,17 +82,21 @@
             <label class="absolute -top-2 left-4 bg-white text-xs"
               >Middle name</label
             >
-            <p class="text-center text-sm font-medium pt-2">{{userDetails?.middleName || "N/A"}}</p>
+            <p class="text-center text-sm font-medium pt-2">
+              {{ userDetails?.middleName || "N/A" }}
+            </p>
           </div>
         </div>
-  
+
         <!-- Second line -->
         <div class="flex justify-between mt-10">
           <div
             class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
           >
             <label class="absolute -top-2 left-4 bg-white text-xs">NIN</label>
-            <p class="text-sm font-medium pt-2">{{userDetails?.nin || "N/A"}}</p>
+            <p class="text-sm font-medium pt-2">
+              {{ userDetails?.nin || "N/A" }}
+            </p>
           </div>
         </div>
         <!-- Third Line -->
@@ -101,15 +107,17 @@
             <label class="absolute -top-2 left-4 bg-white text-xs"
               >Phone Number</label
             >
-            <p class="text-center text-sm font-medium pt-2">{{userDetails?.phoneNumber || "N/A"}}</p>
+            <p class="text-center text-sm font-medium pt-2">
+              {{ userDetails?.phoneNumber || "N/A" }}
+            </p>
           </div>
-  
+
           <div
             class="form-group relative bg-grey h-[50px] w-5/12 rounded px-3 flex items-center"
           >
             <label class="absolute -top-2 left-4 bg-white text-xs">Email</label>
             <p class="text-center text-sm font-medium pt-2">
-              {{userDetails?.email || "N/A"}}
+              {{ userDetails?.email || "N/A" }}
             </p>
           </div>
         </div>
@@ -118,8 +126,12 @@
           <div
             class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
           >
-            <label class="absolute -top-2 left-4 bg-white text-xs">Gender</label>
-            <p class="text-sm font-medium pt-2">{{userDetails?.gender || "N/A"}}</p>
+            <label class="absolute -top-2 left-4 bg-white text-xs"
+              >Gender</label
+            >
+            <p class="text-sm font-medium pt-2">
+              {{ userDetails?.gender || "N/A" }}
+            </p>
           </div>
         </div>
         <!-- Fift Line -->
@@ -127,14 +139,15 @@
           <div
             class="form-group relative bg-grey h-[50px] w-full rounded flex px-3 items-center"
           >
-            <label class="absolute -top-2 left-4 bg-white text-xs">Address</label>
+            <label class="absolute -top-2 left-4 bg-white text-xs"
+              >Address</label
+            >
             <p class="text-sm font-medium pt-2">
-              {{userDetails?.address || "N/A"}}
+              {{ userDetails?.address || "N/A" }}
             </p>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
 </body>
