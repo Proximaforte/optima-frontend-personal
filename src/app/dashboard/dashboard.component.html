@@ -38,7 +38,7 @@
                 ? "0" + "0" + totalOnboarding.completed
                 : totalOnboarding.completed?.length === 2
                   ? "0" + totalOnboarding.completed
-                  : totalOnboarding.completed?.length === 3
+                  : totalOnboarding.completed?.length >= 3
                     ? totalOnboarding.completed
                     : null
           }}
@@ -62,7 +62,7 @@
                 ? "0" + "0" + totalOnboarding.incompleted
                 : totalOnboarding.incompleted?.length === 2
                   ? "0" + totalOnboarding.incompleted
-                  : totalOnboarding.incompleted?.length === 3
+                  : totalOnboarding.incompleted?.length >= 3
                     ? totalOnboarding.incompleted
                     : null
           }}
