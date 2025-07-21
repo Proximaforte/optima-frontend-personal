@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TotalOnboarding } from '../models/beneficiary/beneficiary';
 import { BeneficiaryService } from '../services/beneficiary/beneficiary.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastsComponent } from '../utilities/toasts/toasts.component';
 import { ToastsService } from '../services/alert/toasts.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Location } from '@angular/common';  // Import Location
+import {ConsentModalComponent} from 'src/app/consent-modal/consent-modal.component';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +20,9 @@ export class DashboardComponent implements OnInit {
 
 
   calendar: string = "/assets/images/calendar.svg";
+    plusIcon: string = "assets/icons/PlusCircle.svg";
+    continueIcon: string = "assets/icons/support.svg";
+    agentIcon: string = "assets/icons/chat.svg";
   total: number = 945;
   options: string[] = ['Today', 'Last 7days', 'This Month', 'Last 6 Months'];
   selectedValue: string = '';
@@ -28,28 +36,46 @@ export class DashboardComponent implements OnInit {
 
 
   agents: any = [
-    { text: 'Agent code', data: 'AG1023', icon: 'assets/images/agentcode.svg' },
-    {
-      text: 'center',
-      data: 'Illar Plaza',
-      icon: 'assets/images/center.svg',
-    },
-    {
-      text: 'center code',
-      data: 'KW/IL/02',
-      icon: 'assets/images/centercode.svg',
-    },
-    { text: 'LGA', data: 'ILLorin South', icon: 'assets/images/lga.svg' },
+   
   ];
 
   dashBoardDropdown!: FormGroup;
   statsApiHasError: boolean = false;
+   @ViewChild('consentModal') consentModal!: TemplateRef<any>;
+  
+    showConsent: boolean = true;
 
   constructor(
+    private router: Router,
+     private route: ActivatedRoute,
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
+    private dialog: MatDialog, 
   ) {
+  }
+
+
+  
+  openConsentModal() {
+    this.dialog.open(ConsentModalComponent, );
+  }
+  
+  addBeneficiary() {
+    const dialogRef = this.dialog.open(this.consentModal);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.showConsent = true; // Reset to consent view when modal is closed
+      if (result === 'accept') {
+        this.beneficiaryService.setRouteToDisplay("verify beneficiary nin");
+        this.router.navigate(['/home/beneficiary'], {
+          relativeTo: this.route,
+          queryParams: {
+            progress: 'verify_NIN'
+          }
+        });
+      }
+    });
   }
 
   acceptTableTotals(event: any) {
@@ -115,9 +141,6 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    // if(this.dashBoardDropdown.get('dateType')?.value?.length === 0){
-    //   this.getDefaultDashboardStats();
-    // }
   }
 
 
@@ -171,9 +194,9 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getReportRanges();
+    this.getReportRanges();
     this.getDashboardForm();
-    // this.getDefaultDashboardStats();
+    this.getDefaultDashboardStats();
   }
 
 

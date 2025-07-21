@@ -85,42 +85,14 @@ export class NavigationComponent {
     return !!route && this.router.isActive(route, false);
   }
 
-  onLogout(item: any) {
-    if (item?.name === 'logout') {
+  onLogout() {
+
       this.dialog.open(LogoutComponent, {
         height: '200px',
         width: '500px',
       });
-    } else if (item?.name === 'beneficiary') {
-      this.routeService.setRouteToDisplay('verify beneficiary nin');
-      this.dialog.open(ConsentModalComponent);
-      localStorage.removeItem('NINDetails');
-      localStorage.removeItem('beneficiaryPhoneNumber');
-      localStorage.removeItem('biometrics');
-      localStorage.removeItem('incomplete');
-      localStorage.removeItem('verification');
-      localStorage.removeItem('userAddress');
-      localStorage.removeItem('nin');
-      localStorage.removeItem('faceCapture_skipThumPrints');
-      localStorage.removeItem('isFingerprintOk');
-    } else if (item?.name === 'dashboard') {
-      this.router.navigate(['/home/dashboard'], { relativeTo: this.route });
-      setTimeout(() => location?.reload(), 300);
-    } else if (item?.name === 'all-beneficiary') {
-      this.router.navigate(['/home/all-beneficiary'], {
-        relativeTo: this.route,
-      });
-    }
+    
   }
 
-  //  // Define a boolean array to track active states of items
-  //  isActive: boolean[] = new Array(this.menuItems.length).fill(false);
-
-  //  // Method to toggle the active state of an item
-  //  toggleActive(index: number): void {
-  //   this.isActive[index] = !this.isActive[index];
-  //   console.log('isActive:', this.isActive);
-  // }
-
-  // https://chat.openai.com/c/140447e6-5ce5-416a-a70f-675c8380df52
+ 
 }

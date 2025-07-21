@@ -109,6 +109,9 @@ export const endpoints = {
   //biometric validation request
   submitBiometricRequest : 'validation-request/submitBiometricRequest',
 
+  //verify by nin or phone
+  verifyNinOrPhone : 'api/v1/onboarding/verifyBeneficiary',
+
 
 };
 
