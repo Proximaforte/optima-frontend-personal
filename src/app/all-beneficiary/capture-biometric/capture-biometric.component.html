@@ -1,0 +1,61 @@
+<body class="max-w-full">
+  <form [formGroup]="authForm" class="w-full max-w-md mx-auto mt-20 space-y-6">
+    <!-- Custom Floating Label Input -->
+    <div class="relative">
+      <input
+        type="text"
+        formControlName="nin"
+        id="nin"
+        placeholder=" "
+        class="peer w-full px-4 pt-5 pb-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+      <label
+        for="nin"
+        class="absolute left-3 -top-2.5 text-xs px-1 bg-white text-gray-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 transition-all duration-200"
+      >
+        Enter NIN
+      </label>
+    </div>
+
+    <div
+      *ngIf="showContinue === true"
+      class="w-full gap-3 flex justify-start items-center min-h-[120px] border border-[#EAECF0] p-4 rounded-lg shadow-sm"
+    >
+      <img
+       [src]="beneficiaryData?.imageUrl + '?t=' + timestamp"
+        alt="User Avatar"
+        class="w-16 h-16 rounded-full object-cover"
+      />
+
+      <div class="flex flex-col space-y-0 justify-center">
+        <p class="font-semibold text-[#101828] text-[22px]">
+          {{ beneficiaryData?.firstname }} {{ beneficiaryData?.lastname }}
+        </p>
+        <p class="text-sm font-normal text-[#667085]">
+          Gender: {{ beneficiaryData?.gender }}
+        </p>
+        <p class="text-sm font-normal text-[#667085]">Progress: {{beneficiaryData?.formStage}}</p>
+      </div>
+    </div>
+
+   
+
+    <button
+      *ngIf="showContinue"
+    
+      (click)="goToDetails()"
+      class="w-full py-3 rounded-md text-white text-base font-semibold transition-all duration-200 bg-[#109856] hover:bg-[#109856] cursor-pointer"
+    >
+      Continue
+    </button>
+
+    <!-- Disabled state -->
+    <button
+      *ngIf="!showContinue"
+      class="w-full py-3 rounded-md text-white text-base font-semibold transition-all duration-200 bg-[#BDBBCC] cursor-not-allowed"
+      disabled
+    >
+      Continue
+    </button>
+  </form>
+</body>

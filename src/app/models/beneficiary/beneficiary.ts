@@ -1328,6 +1328,7 @@ export interface VerificationDetails {
     type: string;
     phoneNumber: string;
     image: string;
+    performFaceVerification?:boolean;
 }
 
 export interface MaritalDetails {

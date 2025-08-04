@@ -14,6 +14,7 @@ import {ConsentModalComponent} from '../consent-modal/consent-modal.component';
 import { WebcamModule } from 'ngx-webcam';
 import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 import { BiometricValidationRequestComponent } from './biometric-validation-request/biometric-validation-request.component';
+import { CaptureBiometricComponent } from './capture-biometric/capture-biometric.component';
 
 const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
 
@@ -25,7 +26,8 @@ const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
     IncompletePipe,
     ConsentModalComponent,
     PrivacyPolicyComponent,
-    BiometricValidationRequestComponent
+    BiometricValidationRequestComponent,
+    CaptureBiometricComponent
   ],
   imports: [
     CommonModule,

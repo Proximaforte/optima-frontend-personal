@@ -17,12 +17,14 @@ import { ConsentCaptureComponent } from './consent-capture/consent-capture.compo
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     AddStyleToOtpInputDirective,
     BeneficiaryFilterPipe,
     ConsentCaptureComponent,
+
 
   ],
   imports: [
