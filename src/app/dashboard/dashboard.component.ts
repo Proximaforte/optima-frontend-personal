@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
     plusIcon: string = "assets/icons/PlusCircle.svg";
     continueIcon: string = "assets/icons/support.svg";
     agentIcon: string = "assets/icons/chat.svg";
+    captureIcon: string = "assets/icons/Fingerprint.svg";
   total: number = 945;
   options: string[] = ['Today', 'Last 7days', 'This Month', 'Last 6 Months'];
   selectedValue: string = '';
