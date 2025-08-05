@@ -91,7 +91,6 @@ export class HeaderComponent implements OnInit {
         else if (
           routePath === 'beneficiary' ||
           routePath === 'verification-code' ||
-          routePath === 'setup-biometrics' ||
           routePath === 'face-capturing' ||
           routePath === 'finger-capturing' ||
           routePath === 'finger-capturing-procedure' ||
@@ -106,7 +105,16 @@ export class HeaderComponent implements OnInit {
           this.title = "Continue Registration";
           this.name = '';
           this.subPath = 'onboarded beneficiaries';
-        } else if (routePath === 'beneficiary-details') {
+        } 
+
+        else if (routePath === 'capture-biometrics' || routePath === 'setup-biometrics') {
+          this.title = "Capture Biometrics";
+          this.name = '';
+          this.subPath = 'capture biometrics';
+        } 
+        
+        
+        else if (routePath === 'beneficiary-details') {
           this.title = 'Beneficiary Information';
 
           this.name = '';

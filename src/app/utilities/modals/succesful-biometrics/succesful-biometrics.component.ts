@@ -18,7 +18,17 @@ export class SuccesfulBiometricsComponent {
 
 
   submit(){
-    this.routeService.setRouteToDisplay("residential details");
+
+    const biometrics = sessionStorage.getItem("biometrics");
+
+    if(biometrics === 'biometrics'){
+      sessionStorage.removeItem('biometrics');
+      this.router.navigate(['/home/dashboard']);
+    }
+
+    else{
+
+          this.routeService.setRouteToDisplay("residential details");
     this.router.navigate(['/home/beneficiary'],{
       relativeTo: this.route,
       queryParams: {
@@ -26,13 +36,11 @@ export class SuccesfulBiometricsComponent {
       }
     })
     console.log('yes');
+
+    }
+
+
     
-    // this.routeService.setRouteToDisplay("personal details");
-    // this.router.navigate(['/home/beneficiary'],{
-    //   relativeTo: this.route,
-    //   queryParams: {
-    //     progress: 'personal_details'
-    //   }
-    // })
+  
   }
 }
