@@ -89,17 +89,18 @@
 
       <div class="text-center hover:cursor-pointer" (click)="openConsentModal()">
         <div class="w-[100px] h-[100px] flex items-center justify-center bg-[#EDFDF5] border-[4px] border-[#DAFBEB] rounded-[35px] padding-[28px]">
-        <img [src]="plusIcon" class="w-14 h-14" alt="">
+       <img [src]="continueIcon" class="w-14 h-14" alt="">
         
       </div>
-      <p class="text-[16px] text-center text-[#344054] font-medium font-euclid pt-4">New <br> Registration</p>
+      <p class="text-[16px] text-center text-[#344054] font-medium font-euclid pt-4">Capture <br> Consent</p>
       </div>
 
       <div class="text-center hover:cursor-pointer" [routerLink]="['/home/all-beneficiary']">
          <div class="w-[100px] h-[100px] flex items-center justify-center bg-[#EDFDF5] border-[4px] border-[#DAFBEB] rounded-[35px] padding-[28px]">
-          <img [src]="continueIcon" class="w-14 h-14" alt="">
+          
+           <img [src]="plusIcon" class="w-14 h-14" alt="">
       </div>
-      <p class="text-[16px] text-center text-[#344054] font-medium font-euclid pt-4">Continue <br> Registration</p>
+      <p class="text-[16px] text-center text-[#344054] font-medium font-euclid pt-4">Onboard<br> Beneficiary</p>
       </div>
 
       <div class="text-center hover:cursor-pointer" [routerLink]="['/home/capture-biometrics']">
