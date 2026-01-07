@@ -33,13 +33,15 @@ export class PersonalDetailsComponent implements OnInit {
   disableBtn: boolean = true;
   ninDetails: any = {};
   formattedDate: string = "";
+  beneficiaryData: any = {};
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private beneficiaryService: BeneficiaryService,
     private snackbar: MatSnackBar,
     private toast: ToastsService,
-    private auth: AuthService
+    private auth: AuthService,
+    
   ) {
     const getUserData: any = localStorage.getItem('userDetails');
     this.userDetails = JSON.parse(getUserData);
@@ -77,14 +79,14 @@ export class PersonalDetailsComponent implements OnInit {
   
   getPersonalForm() {
     this.personalDetailsForm = new FormGroup({
-      firstName: new FormControl(this.ninDetails.firstName as string, null),
-      lastName: new FormControl(this.ninDetails.lastName as string, null),
-      middleName: new FormControl(this.ninDetails.middleName as string, null),
-      phoneNumber: new FormControl(this.ninDetails.phoneNumber as string, [Validators.required]),
+      firstName: new FormControl(this.ninDetails.firstName || this.beneficiaryData?.firstName as string, null),
+      lastName: new FormControl(this.ninDetails.lastName || this.beneficiaryData?.lastName as string, null),
+      middleName: new FormControl(this.ninDetails.middleName || this.beneficiaryData?.middleName as string, null),
+      phoneNumber: new FormControl(this.ninDetails.phoneNumber || this.beneficiaryData?.phoneNumber as string, [Validators.required]),
       bvn: new FormControl('', null),
       email: new FormControl('', null),
-      gender: new FormControl(this.ninDetails?.gender as string, null),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,
-      dateOfBirth: new FormControl(this.formattedDate as string, null),
+      gender: new FormControl(this.ninDetails?.gender || this.beneficiaryData?.gender as string, null),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,
+      dateOfBirth: new FormControl(this.formattedDate || this.beneficiaryData?.dateOfBirth as string, null),
       placeOfBirth: new FormControl('', [Validators.required]),
       religion: new FormControl('', [Validators.required]),
       others: new FormControl('', this.showOthers ? [Validators.required] : null),
@@ -122,8 +124,12 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
+     this.beneficiaryData = this.beneficiaryService.getBeneficiary();
     this.getPersonalForm();
     this.getDropDowns();
+   
+
+   
   }
 
   submitForm() {
