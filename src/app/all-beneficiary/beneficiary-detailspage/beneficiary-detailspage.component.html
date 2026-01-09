@@ -31,21 +31,26 @@
 
 
     <div class="buttondiv flex gap-4">
-      <button *ngIf="showContinueOnboarding(beneficiaryData)" (click)="continueOnboarding(beneficiaryData)" class="bg-[#109856] border border-[#109856] text-white px-6 py-2 rounded mr-4">
+      <button *ngIf="showContinueOnboarding(beneficiaryData)" (click)="continueOnboarding(beneficiaryData)" class="bg-[#109856] border border-[#109856] text-white px-2 py-2 rounded mr-4">
         
         Continue Onboarding
       </button>
 
-      <button *ngIf="showManualValidationRequest(beneficiaryData)" (click)="validateRequest(beneficiaryData)"class="bg-[#109856] border border-[#109856] text-white px-6 py-2 rounded">
+      <button *ngIf="showManualValidationRequest(beneficiaryData)" (click)="validateRequest(beneficiaryData)"class="bg-[#109856] border border-[#109856] text-white px-2 py-2 rounded">
        Validation Request
       </button>
 
-       <button *ngIf="showCaptureBiometric(beneficiaryData)" (click)="navigateToBiometricRoute(beneficiaryData)" class="bg-[#109856] border border-[#109856] text-white px-6 py-2 rounded">
+       <button *ngIf="showCaptureBiometric(beneficiaryData)" (click)="navigateToBiometricRoute(beneficiaryData)" class="bg-[#109856] border border-[#109856] text-white px-2 py-2 rounded">
        Capture Biometric
       </button>
 
-      <button *ngIf="showSubmitOnboarding(beneficiaryData)" (click)="submitOnboarding(beneficiaryData)" class="bg-[#109856] border border-[#109856] text-white px-6 py-2 rounded">
+      <button *ngIf="showSubmitOnboarding(beneficiaryData)" (click)="submitOnboarding(beneficiaryData)" class="bg-[#109856] border border-[#109856] text-white px-2 py-2 rounded">
        Submit Onboarding
+      </button>
+
+
+       <button  class="bg-[#109856] border border-[#109856] text-white px-2 py-2 rounded" [routerLink]="['/home/capture-biometrics']">
+       Capture Biometrics
       </button>
 
        <!-- <button class="bg-gray-200 text-blue-600 px-6 py-2 rounded">
