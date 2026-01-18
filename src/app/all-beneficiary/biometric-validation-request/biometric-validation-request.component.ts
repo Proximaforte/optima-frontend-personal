@@ -44,7 +44,7 @@ export class BiometricValidationRequestComponent {
           verticalPosition: 'top',
         });
 
-        this.router.navigate(['/home/all-beneficiary']);
+        this.router.navigate(['/home/dashboard']);
       },
       error: (error) => {
         this.showSpinner = false;

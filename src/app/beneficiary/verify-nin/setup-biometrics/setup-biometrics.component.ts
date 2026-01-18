@@ -157,8 +157,19 @@ export class SetupBiometricsComponent {
 
   proceed() {
     // this.selectedReason = this.stateService.getSelectedReason();
+
+     const biometrics = sessionStorage.getItem("biometrics");
+
+    const CapturePayload = {
+  ...this.imageCapturePayload,
+  performFaceVerification: biometrics === 'biometrics' ? false : true
+};
+
+
+
+
     this.showSpinner = true;
-    this.beneficiaryService.Verification(this.imageCapturePayload).subscribe({
+    this.beneficiaryService.Verification(CapturePayload).subscribe({
       next: (res: any) => {
         console.log('res>>>', res);
         this.showSpinner = false;
@@ -167,7 +178,7 @@ export class SetupBiometricsComponent {
 
           if(res?.data.formStage === "OTHER_DETAILS"){
             //route to all beneficiary
-             this.router.navigate(['/home/all-beneficiary'], {
+             this.router.navigate(['/home/dashboard'], {
             relativeTo: this.route,
           });
 

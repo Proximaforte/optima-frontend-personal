@@ -1,23 +1,31 @@
-<section class="my-5 py-2 bg-[#1e1e2d] transform rounded-full flex items-center justify-around px-4 md:px-8 lg:px-16 fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[50rem] w-full">
-  <div class="flex justify-center items-center">
-    <img [src]="bankLogo" class="" alt="Logo" />
-  </div>
-  <div class="w-full flex justify-around items-center">
-    <div class="flex flex-row items-center justify-around w-full ">
-      <div *ngFor="let item of menuItems" class="list-item items-center" [routerLinkActive]="['list-item-active']" [routerLinkActiveOptions]="{ exact: false }">
-        <button mat-button (click)="onLogout(item)" [matTooltip]="item?.name === 'profile' ? 'select beneficiary to view profile' : item?.name">
-          <mat-icon class="custom-icon " mat-list-icon [svgIcon]="item.name" [ngClass]="{ 'stroke-green-500': isActive(item.route) }"> </mat-icon>
-        </button>
+<div class="flex justify-end max-w-[50rem] pr-10">
+  <div class="fixed bottom-20 z-10">
+    <div class="flex justify-end hover:cursor-pointer">
+      <div
+        (click)="onLogout()"
+        class="flex py-3 px-6 items-center gap-2 bg-[#FFFBFA] rounded-[16px] border border-[#FEE4E2] hover:bg-[#FFFBFA] hover:cursor-pointer"
+      >
+        <img src="assets/icons/logout.svg" class="w-[30px]" />
+        <span class="text-[#F04438] font-medium text-[18px]">Logout</span>
       </div>
+    </div>
+  </div>
+</div>
+
+<section
+  class="my-5 py-2 bg-white bg-opacity-80 backdrop-blur-md transform rounded-full px-4 md:px-8 lg:px-16 fixed bottom-0 left-1/2 -translate-x-1/2 max-w-[50rem] w-full -z-10 pointer-events-none"
+>
+  <div class="flex items-center justify-between bg-white">
+    <div class="first">
+      <img src="assets/images/logone.svg" class="w-[150px]" alt="" />
+    </div>
+    <div class="second">
+      <img src="assets/images/poweredone.svg" class="w-[200px]" alt="" />
     </div>
   </div>
 </section>
 
-
-
-
-
- <!-- <div class="w- flex justify-around items-center">
+<!-- <div class="w- flex justify-around items-center">
     <mat-nav-list class="flex flex-row items-center justify-around w-full">
       <mat-list-item *ngFor="let item of menuItems" routerLinkActive="list-item-active" [routerLinkActiveOptions]="{ exact: false }">
         <button mat-button (click)="onLogout(item)" [matTooltip]="item?.name === 'profile' ? 'select beneficiary to view profile' : item?.name">

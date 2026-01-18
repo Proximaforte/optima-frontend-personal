@@ -21,6 +21,7 @@ import {
   Occupation
 } from 'src/app/models/beneficiary/beneficiary';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import * as CryptoJS from 'crypto-js';
 
 
 @Injectable({
@@ -48,12 +49,41 @@ export class BeneficiaryService {
   };
   params: any;
   personalDetailsObj: any = {};
+  beneficiaryData: any = {};
+
+
+  private _key = 'beneficiaryData';
+
+
+
 
   constructor(
     private http: HttpClient,
     private interceptor: JwtInterceptorService,
   ) {
     this.setBeneficiaryFilter({});
+  }
+
+  //   public setBeneficiary(data: any) {
+  //   this.beneficiaryData = data;
+  // }
+
+  // public getBeneficiary() {
+  //   return this.beneficiaryData;
+  // }
+
+    setBeneficiary(data: any) {
+    sessionStorage.setItem(this._key, JSON.stringify(data));
+  }
+
+  getBeneficiary(): any {
+    const stored = sessionStorage.getItem(this._key);
+    return stored ? JSON.parse(stored) : null;
+  }
+
+  
+  clearBeneficiary() {
+    sessionStorage.removeItem(this._key);
   }
 
   public setImageUrl(image: string) {
@@ -122,21 +152,39 @@ export class BeneficiaryService {
   }
 
   public verifyNIN(nin: string): Observable<any> {
+//  const encryptedNIN = this.encryptData(nin);
+
     return this.http.get<any>(
       `${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${nin}`,
       { headers: this.interceptor?.customHttpHeaders },
-    );
+    )
   }
 
 
-  public consentForm(data: any): Observable<any> {
-    const body = JSON.stringify(data);
-    return this.http.post<any>(
-      `${environment?.baseUrl}/${endpoints?.giveConsent}`,
-      body,
+   public verifyNinOrPhone(identifier: string): Observable<any> {
+//  const encryptedNIN = this.encryptData(nin);
+
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.verifyNinOrPhone}/${identifier}`,
       { headers: this.interceptor?.customHttpHeaders },
-    );
+    )
   }
+
+
+
+ public consentForm(data: any): Observable<any> {
+  const body = JSON.stringify(data);
+  // const encryptedBody = this.encryptData(body);
+
+  
+
+  return this.http.post<any>(
+    `${environment?.baseUrl}/${endpoints?.giveConsent}`,
+   body,
+    { headers: this.interceptor?.customHttpHeaders }
+  )
+}
+
 
   //api/v1/otp/agent/generate/89989
 
@@ -159,6 +207,8 @@ export class BeneficiaryService {
 
   public personalDetails(data: PersonalDetails): Observable<any> {
     const body = JSON.stringify(data);
+
+    // const encryptedBody = this.encryptData(body);
     return this.http.post<any>(
       `${environment?.baseUrl}/${endpoints?.personalDetails}`,
       body,
@@ -168,6 +218,10 @@ export class BeneficiaryService {
 
   public residentialDetails(data: ResidentialDetails): Observable<any> {
     const body = JSON.stringify(data);
+
+    const encryptedBody = this.encryptData(body);
+
+
     return this.http.post<any>(
       `${environment?.baseUrl}/${endpoints?.residentialDetails}`,
       body,
@@ -609,6 +663,59 @@ export class BeneficiaryService {
       {},
       { headers: this.interceptor?.customHttpHeaders },
     );
+  }
+
+
+  public encryptData(payload: any): string {
+  const key = CryptoJS.enc.Base64.parse(environment?.aesKey);
+  const iv = CryptoJS.enc.Base64.parse(environment?.aesIv);
+
+  // Convert the object to a JSON string
+  const plaintext = JSON.stringify(payload);
+
+  const encrypted = CryptoJS.AES.encrypt(plaintext, key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+
+  // Return ciphertext as hex string to match decrypt function
+  return encrypted.ciphertext.toString(CryptoJS.enc.Hex);
+}
+
+
+
+public decryptData(encryptedText: string): any {
+
+ 
+    const key = CryptoJS.enc.Base64.parse(environment?.aesKey);
+    const iv = CryptoJS.enc.Base64.parse(environment?.aesIv);
+
+ 
+
+    const encryptedWords = CryptoJS.enc.Hex.parse(encryptedText); // Parse hex to WordArray
+
+    const cipherParams = CryptoJS.lib.CipherParams.create({
+      ciphertext: encryptedWords,
+    });
+
+    const decrypted = CryptoJS.AES.decrypt(cipherParams, key, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    });
+
+    try {
+      // return decrypted.toString(CryptoJS.enc.Utf8);
+
+      // const originalText = decrypted.toString(CryptoJS.enc.Utf8);
+      const plaintext = decrypted.toString(CryptoJS.enc.Utf8);
+      console.log('Decrypted value:', plaintext); // 👈 Console log here
+      return plaintext;
+    } catch (error) {
+      console.error('Decryption failed:', error);
+      return '';
+    }
   }
 
 

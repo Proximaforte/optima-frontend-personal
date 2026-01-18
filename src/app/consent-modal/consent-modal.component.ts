@@ -182,9 +182,16 @@ export class ConsentModalComponent {
           this.showLoader = true;
           this.beneficiaryService.verifyNIN(value).subscribe({
             next: (response: any) => {
+
+
+              
+              
+              
+            //  const response =  JSON.parse(this.beneficiaryService.decryptData(response));
               this.showLoader = false;
               if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
+            
 
                 localStorage.setItem(
                   'beneficiaryPhoneNumber',
@@ -214,6 +221,8 @@ export class ConsentModalComponent {
             error: (err: any) => {
               //  console.error('err>>>', err);
               this.showBtn = false;
+
+              
               this.toast.setErrorMessage(
                 err?.error?.failureReason ||
                   err?.error?.responseMessage ||
@@ -223,7 +232,7 @@ export class ConsentModalComponent {
                 duration: 4000,
                 verticalPosition: 'bottom',
               });
-              setTimeout(() => location.reload(), 3000);
+              // setTimeout(() => location.reload(), 3000);
             },
           });
         }
@@ -258,7 +267,7 @@ export class ConsentModalComponent {
             if (
               response?.responseCode === 200 
             ) {
-              this.toast.setSuccessMessage("Beneficiary's Consent Submitted!");
+              this.toast.setSuccessMessage("Beneficiary's Consent Submitted! Now Onboard Beneficiary");
               this.dialog.closeAll();
 
               // localStorage.removeItem("NINDetails")
@@ -271,15 +280,15 @@ export class ConsentModalComponent {
               localStorage.removeItem('isFingerprintOk');
               localStorage.removeItem('userAddress');
 
-              this.beneficiaryService.setRouteToDisplay(
-                'verify beneficiary nin',
-              );
-              this.router.navigate(['/home/beneficiary'], {
-                relativeTo: this.route,
-                queryParams: {
-                  progress: 'verify_NIN',
-                },
-              });
+              // this.beneficiaryService.setRouteToDisplay(
+              //   'verify beneficiary nin',
+              // );
+              // this.router.navigate(['/home/beneficiary'], {
+              //   relativeTo: this.route,
+              //   queryParams: {
+              //     progress: 'verify_NIN',
+              //   },
+              // });
 
 
           // this.router.navigate(['/home/beneficiary'], {
@@ -511,7 +520,7 @@ export class ConsentModalComponent {
         ?.subscribe({
           next: (elem: any) => {
             // console.log('res>>', elem);
-            this.router.navigate(['/home/all-beneficiary'], {
+            this.router.navigate(['/home/dashboard'], {
               relativeTo: this.route,
             });
             this.toast.setSuccessMessage(

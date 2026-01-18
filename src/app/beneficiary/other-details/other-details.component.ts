@@ -410,10 +410,12 @@ meansOfTransportationEndpoint: string = endpoints.transportTypes
       ]),
       recentlyVote: new FormControl('', [Validators.required]),
       voteFrequency: new FormControl('', [Validators.required]),
-      preferredPoliticalParty: new FormControl('', [Validators.required]),
-      specifyPreferredPoliticalParty: new FormControl('', [Validators.required]),
-      memberOfPoliticalParty: new FormControl('', [Validators.required]),
-      specifyPoliticalParty: new FormControl('', [Validators.required]),
+
+      // preferredPoliticalParty: new FormControl('', [Validators.required]),
+      // specifyPreferredPoliticalParty: new FormControl('', [Validators.required]),
+      // memberOfPoliticalParty: new FormControl('', [Validators.required]),
+      // specifyPoliticalParty: new FormControl('', [Validators.required]),
+      
       politicalActivityEngagement: new FormControl('', [Validators.required]),
       areaCrimeRating: new FormControl('', [Validators.required]),
       beenVictimOfCrime: new FormControl('', [Validators.required]),
@@ -525,10 +527,10 @@ meansOfTransportationEndpoint: string = endpoints.transportTypes
       crimeDescription: this.othersForm.value?.crimeDescription,
       recentlyVote: this.checked1,
       voteFrequency: this.othersForm.value?.voteFrequency,
-      preferredPoliticalParty: this.othersForm.value?.preferredPoliticalParty,
-      specifyPreferredPoliticalParty: this.othersForm.value?.specifyPreferredPoliticalParty,
-      memberOfPoliticalParty: this.checked3,
-      specifyPoliticalParty: this.othersForm.value?.specifyPoliticalParty,
+      // preferredPoliticalParty: this.othersForm.value?.preferredPoliticalParty,
+      // specifyPreferredPoliticalParty: this.othersForm.value?.specifyPreferredPoliticalParty,
+      // memberOfPoliticalParty: this.checked3,
+      // specifyPoliticalParty: this.othersForm.value?.specifyPoliticalParty,
       politicalActivityEngagement: this.othersForm.value?.politicalActivityEngagement,
       participateInCommunityOrPolitics: this.othersForm.value?.participateInCommunityOrPolitics?.toLowerCase() === "yes",
       areaCrimeRating: this.othersForm.value?.areaCrimeRating,
@@ -570,7 +572,7 @@ meansOfTransportationEndpoint: string = endpoints.transportTypes
               duration: 4000,
               verticalPosition: 'bottom',
             });
-            this.router.navigate(['/home/all-beneficiary'],{relativeTo: this.route});
+            this.router.navigate(['/home/dashboard'],{relativeTo: this.route});
             if(err?.status === 401){
             this.auth.agentLogout();
             }

@@ -60,7 +60,12 @@ export class VerifyNINComponent implements OnInit {
       next: (value: string) => {
        if (value.length === 11) {
         this.showBtn = true;
+        // encrypt the nin value
+        const encryptedNIN = this.beneficiaryService.encryptData(value);
+
+
           this.beneficiaryService.verifyNIN(value).subscribe({
+            // this.beneficiaryService.verifyNIN(encryptedNIN).subscribe({
             next: (response: any) => {
               if (response?.responseCode === 200) {
                 localStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);

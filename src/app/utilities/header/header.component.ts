@@ -15,6 +15,9 @@ export class HeaderComponent implements OnInit {
   subPath: string = '';
   pathName: string = '';
   showBeneficiary: boolean = false;
+  backIcon: string = "assets/icons/back.svg";
+  clipIcon: string = "assets/icons/homelogo.svg";
+  showHeader: boolean = true;
 
   constructor(
     private router: Router,
@@ -23,17 +26,31 @@ export class HeaderComponent implements OnInit {
   ) {
     // console.log('window>>>', window?.location?.pathname);
     let path: any = window.location.pathname;
-    path = '/home/beneficiary' ? this.showBeneficiary === true :
+    path === '/home/beneficiary' ? this.showBeneficiary === true :
       path === '/home/all-beneficiary' ? this.showBeneficiary === false :
         path === '/home/dashboard' ? this.showBeneficiary === false :
           path === '/home/profile' ? this.showBeneficiary === false : null
   }
 
+  
+  isProfilePage(): boolean {
+    return this.router.url === '/home/profile';
+  }
+
+  isDashboardPage(): boolean {
+    return this.router.url === '/home/dashboard';
+  }
+
+  goBack(): void {
+    this.router.navigate([this.router.url.split('/').slice(0, -1).join('/') || '/']);
+  }
+
+
   getUserDetails() {
     this.authService.getUserDetails().subscribe({
       next: (res: any) => {
         // console.log("user details>>", `${res?.data.firstname} ${res?.data.middleName} ${res?.data.lastname}`);
-        this.userName = `${res?.data.firstname} ${res?.data.lastname}`; // ${res?.data.middleName}
+        this.userName = `${res?.data.firstname}`; // ${res?.data.middleName}
         // this.name = `${res?.data.firstname} ${res?.data.lastname}`; //${res?.data.middleName} 
       },
       error: (err: any) => {
@@ -67,10 +84,13 @@ export class HeaderComponent implements OnInit {
         if (routePath === 'profile' || routePath === 'dashboard') {
           this.title = 'Good ' + this.getTimeOfDay();
           //  this.userName; (State Palliative Disbursement)
-        } else if (
+        } 
+
+      
+        
+        else if (
           routePath === 'beneficiary' ||
           routePath === 'verification-code' ||
-          routePath === 'setup-biometrics' ||
           routePath === 'face-capturing' ||
           routePath === 'finger-capturing' ||
           routePath === 'finger-capturing-procedure' ||
@@ -82,10 +102,19 @@ export class HeaderComponent implements OnInit {
           this.subPath = 'Add beneficiaries';
           this.showBeneficiary = true;
         } else if (routePath === 'all-beneficiary') {
-          this.title = route.snapshot.data['title'];
+          this.title = "Continue Registration";
           this.name = '';
           this.subPath = 'onboarded beneficiaries';
-        } else if (routePath === 'beneficiary-details') {
+        } 
+
+        else if (routePath === 'capture-biometrics' || routePath === 'setup-biometrics') {
+          this.title = "Capture Biometrics";
+          this.name = '';
+          this.subPath = 'capture biometrics';
+        } 
+        
+        
+        else if (routePath === 'beneficiary-details') {
           this.title = 'Beneficiary Information';
 
           this.name = '';

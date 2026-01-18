@@ -22,6 +22,11 @@ export class LogoutComponent {
         next: (res: any) => {
           //  console.log("logout res>>>", res)
           this.toast.setSuccessMessage('User is logged Out Successfully');
+
+          localStorage.clear();
+
+
+
           this.snackbar.openFromComponent(ToastsComponent, {
             duration: 4000,
             verticalPosition: 'bottom',
