@@ -2,10 +2,18 @@
 .mat-card-content {
     width: 762px;
     min-height: 398px;
+    max-height: calc(100vh - 64px);
     max-width: 100%;
     margin: auto;
      padding: 32px;
      border-radius: 64px;
+     overflow: hidden;
+  }
+
+  .consent-modal-scroll {
+    max-height: calc(100vh - 128px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   
   .mat-card-content .consent-icon {
@@ -70,7 +78,7 @@
   opacity: 0px;
   
   }
-  
+
   .cancel-button:hover, .accept-button:hover {
     opacity: 0.9;
   }
@@ -95,6 +103,11 @@
   @media (max-width: 768px) {
     .mat-card-content {
       padding: 1rem;
+      max-height: calc(100vh - 32px);
+    }
+
+    .consent-modal-scroll {
+      max-height: calc(100vh - 64px);
     }
   
     .mat-card-content .consent-icon {
@@ -114,6 +127,7 @@
       padding: 0.5rem 1rem;
       font-size: 0.875rem;
     }
+
   }
   .scrollable-content {
     max-height: 732px;

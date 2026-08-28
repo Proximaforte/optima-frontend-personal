@@ -1,54 +1,133 @@
 
     <mat-card id="consent-card" class=" rounded-[24px] ">
       <mat-card-content class="mat-card-content rounded-[24px]  ">
-        <div class="flex flex-col items-start p-4 overflow-y-scroll">
+        <div class="consent-modal-scroll flex flex-col items-start p-4">
           <div
             *ngIf="showConsent"
-            class="text-start"
+            class="text-start w-full"
           >
+            <div class="flex w-full justify-center mb-8">
+              <img [src]="'/assets/images/Optima_.svg'" alt="OPTIMA" class="h-[48px] w-auto" />
+            </div>
+
             <div class="consent-icon mb-4">
               <img [src]="'/assets/images/warn.svg'" alt="check" />
             </div>
-            <h2 class="text-[24px] font-[600] leading-[28.8px] font-[Euclid Circular A]">Consent and Privacy policy</h2>
+            <h2
+              cdkFocusInitial
+              tabindex="-1"
+              class="text-[24px] font-[600] leading-[28.8px] font-[Euclid Circular A] outline-none"
+            >
+              Consent and Privacy Policy
+            </h2>
   
-            <p class="text-[14] font-[500] leading-[16.8px] font-[Euclid Circular A]">Kwara State Residents’ Registration Agency</p>
+            <p class="text-[14] font-[500] leading-[16.8px] font-[Euclid Circular A]">Kwara State Residents' Registration Agency</p>
             <p class=" text-gray-500 text-[14px] mt-2 leading-6">
-              To add you as a beneficiary, we require some personal information.
-              Rest assured, your data privacy is our top priority. All data will
-              be handled in accordance with our strict
-              <a class="text-[#4caf50]  underline" (click)="toggleModalContent('policy')"
-                >privacy policies</a
-              >
-              and applicable regulations to protect your information from
-              unauthorized access and ensure it remains confidential.
+              By accepting, you confirm that the data privacy policy in the link below (Click the link below for our Privacy Policy)
+               has been read by you or translated to you and you understand same and you hereby consent to the collection, processing
+                and use of your personal data as described in the 
+                <a class="cursor-pointer text-[#4caf50] !underline underline-offset-4" (click)="toggleModalContent('policy')">privacy policy</a>
+
+
+              <!-- <a class="text-[#4caf50] underline cursor-pointer" (click)="toggleModalContent('policy')">privacy policy</a> -->
             </p>
            
   
-            <p
-              class="text-[#4caf50] py-6 leading-[20px] w-fit cursor-pointer"
+            <!-- <p
+              class="text-[#4caf50] py-4 leading-[20px] w-fit cursor-pointer"
               (click)="toggleModalContent('policy')"
             >
               To view our Privacy Policy, click here
+            </p> -->
+
+            <p class="text-gray-500 text-sm py-4">
+              Please select all permissions to continue.
             </p>
 
-            
-  
-            <!-- <p class="text-gray-700 text-sm pt-5">
-              Please accept this permission to continue.
-            </p> -->
+            <div class="w-full overflow-hidden rounded-xl border border-[#313EF74D] bg-[#313EF708] px-3 md:px-4" role="group" aria-label="Consent permissions">
+              <label
+                class="flex w-full cursor-pointer items-start gap-3 border-b border-[#E4E7EC]  py-3 text-left font-[Euclid Circular A] text-xs font-medium leading-[18px] text-[#717680] last:border-b-0 hover:bg-[#F7F8FF] md:py-[14px] md:leading-5"
+                *ngFor="let item of consentItems; let i = index"
+                [ngClass]="{ 'text-[#344054]': item.checked }"
+              >
+                <input
+                  type="checkbox"
+                  class="peer sr-only"
+                  [checked]="item.checked"
+                  (change)="consentItems[i].checked = !consentItems[i].checked"
+                />
+                <span
+                  class="mt-[1px] flex h-[22px] w-[22px] min-w-[22px] items-center justify-center rounded-md border-2 border-[#D5D7DA] bg-white text-white peer-checked:border-[#109856] peer-checked:bg-[#109856] peer-focus-visible:ring-2 peer-focus-visible:ring-[#109856] peer-focus-visible:ring-offset-2"
+                  aria-hidden="true"
+                >
+                  <svg *ngIf="item.checked" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </span>
+                <span class="flex-1">{{ item.label }}</span>
+              </label>
+            </div>
+
+            <p *ngIf="isLivenessLoading" class="mt-4 text-sm font-medium text-[#087443]">
+              {{ livenessLoadingMessage }}
+            </p>
+
+            <div
+              *ngIf="allConsentsAccepted"
+              class="mt-4 w-full rounded-xl border border-[#D0D5DD] bg-white p-4"
+            >
+              <p class="mb-3 text-sm font-semibold text-[#344054]">
+                Enter beneficiary NIN to continue
+              </p>
+              <form [formGroup]="ninForm" (ngSubmit)="startLivenessCheck()">
+                <label for="liveness-nin" class="mb-2 block text-xs font-medium text-[#475467]">
+                  National Identity Number
+                </label>
+                <input
+                  id="liveness-nin"
+                  formControlName="nin"
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="11"
+                  autocomplete="off"
+                  placeholder="Input National Identity Number"
+                  class="h-12 w-full rounded-lg border border-[#D0D5DD] px-3 text-sm text-[#344054] outline-none focus:border-[#109856] focus:ring-2 focus:ring-[#10985633] disabled:bg-[#F2F4F7]"
+                  [readOnly]="isLivenessLoading"
+                />
+                <div
+                  *ngIf="ninForm.get('nin')?.invalid && (ninForm.get('nin')?.touched || ninForm.get('nin')?.dirty)"
+                  class="mt-2 text-xs font-medium text-red-600"
+                >
+                  <span *ngIf="ninForm.get('nin')?.errors?.['required']">
+                    NIN is required.
+                  </span>
+                  <span *ngIf="ninForm.get('nin')?.errors?.['pattern']">
+                    NIN cannot contain alphabets or symbols.
+                  </span>
+                  <span *ngIf="ninForm.get('nin')?.errors?.['minlength'] || ninForm.get('nin')?.errors?.['maxlength']">
+                    NIN must be 10 to 11 digits.
+                  </span>
+                </div>
+              </form>
+            </div>
      
 
-            <div class="flex justify-end gap-4 w-full mt-4">
-              <button mat-button class="cancel-button" (click)="onCancel()">
+            <div class="flex gap-4 w-full mt-4">
+              <button
+                type="button"
+                class="h-12 w-full  rounded-lg border border-[#D0D5DD] bg-white px-[18px] py-3 text-base font-semibold text-[#344054] shadow-sm hover:bg-[#F9FAFB]"
+                (click)="onCancel()"
+              >
                 Cancel
               </button>
               <button
-                mat-button
-                class="accept-button text-white"
-                (click)="toggleModalContent('capture')"
-                style="color: white;"
+                type="button"
+                class="h-12 w-full rounded-lg px-[18px] py-3 text-base font-semibold text-white shadow-sm disabled:cursor-not-allowed disabled:opacity-100"
+                [disabled]="!allConsentsAccepted || ninForm.invalid || isLivenessLoading"
+                [ngClass]="allConsentsAccepted && ninForm.valid && !isLivenessLoading ? 'bg-[#109856] hover:bg-[#0F8A4E]' : 'bg-[#B8B7C8]'"
+                (click)="startLivenessCheck()"
               >
-                Accept
+                {{ isLivenessLoading ? 'Please wait...' : 'Continue' }}
               </button>
             </div>
           </div>
