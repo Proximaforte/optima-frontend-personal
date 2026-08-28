@@ -55,7 +55,6 @@ export class VerifyNINComponent implements OnInit {
     this.ninForm = new FormGroup({
       nin: new FormControl('', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10), Validators.maxLength(11)])
     })
-        this.submit();
     this.ninForm.get('nin')?.valueChanges.subscribe({
       next: (value: string) => {
        if (value.length === 11) {
@@ -68,8 +67,7 @@ export class VerifyNINComponent implements OnInit {
             // this.beneficiaryService.verifyNIN(encryptedNIN).subscribe({
             next: (response: any) => {
               if (response?.responseCode === 200) {
-                localStorage.setItem('beneficiaryPhoneNumber', response?.data?.phone);
-                 localStorage.setItem('NINDetails',JSON.stringify(response?.data));
+                this.beneficiaryService.cacheBeneficiaryPrefill(response?.data);
                 this.toast.setSuccessMessage("Beneficiary's NIN is Valid!");
                 this.submit();
                 this.snackbar.openFromComponent(ToastsComponent, {

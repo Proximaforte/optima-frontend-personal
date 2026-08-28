@@ -15,6 +15,7 @@ import { WebcamModule } from 'ngx-webcam';
 import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 import { BiometricValidationRequestComponent } from './biometric-validation-request/biometric-validation-request.component';
 import { CaptureBiometricComponent } from './capture-biometric/capture-biometric.component';
+import { A11yModule } from '@angular/cdk/a11y';
 
 const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
 
@@ -35,6 +36,7 @@ const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
     UtilitiesModule,
     materialModules,
     WebcamModule,
+    A11yModule,
   ],
 
   exports: [
