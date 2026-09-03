@@ -697,12 +697,22 @@ export class ConsentModalComponent implements OnDestroy {
     this.ninPlaceHolder = '';
   }
 
+  onLivenessNinInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const nin = input.value.replace(/\D/g, '').slice(0, 11);
+
+    if (input.value !== nin) {
+      input.value = nin;
+      this.ninForm.get('nin')?.setValue(nin);
+    }
+  }
+
   getFormValues() {
     this.ninForm = new FormGroup({
       nin: new FormControl('', [
         Validators.required,
         Validators.pattern('[0-9]*'),
-        Validators.minLength(10),
+        Validators.minLength(11),
         Validators.maxLength(11),
       ]),
     });

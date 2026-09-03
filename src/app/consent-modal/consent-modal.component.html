@@ -88,11 +88,13 @@
                   formControlName="nin"
                   type="text"
                   inputmode="numeric"
+                  pattern="[0-9]*"
                   maxlength="11"
                   autocomplete="off"
                   placeholder="Input National Identity Number"
                   class="h-12 w-full rounded-lg border border-[#D0D5DD] px-3 text-sm text-[#344054] outline-none focus:border-[#109856] focus:ring-2 focus:ring-[#10985633] disabled:bg-[#F2F4F7]"
                   [readOnly]="isLivenessLoading"
+                  (input)="onLivenessNinInput($event)"
                 />
                 <div
                   *ngIf="ninForm.get('nin')?.invalid && (ninForm.get('nin')?.touched || ninForm.get('nin')?.dirty)"
@@ -105,24 +107,24 @@
                     NIN cannot contain alphabets or symbols.
                   </span>
                   <span *ngIf="ninForm.get('nin')?.errors?.['minlength'] || ninForm.get('nin')?.errors?.['maxlength']">
-                    NIN must be 10 to 11 digits.
+                    Input a valid NIN number.
                   </span>
                 </div>
               </form>
             </div>
      
 
-            <div class="flex gap-4 w-full mt-4">
+            <div class="sticky bottom-0 z-10 mt-4 flex w-full flex-col gap-4 bg-white pt-4 sm:flex-row">
               <button
                 type="button"
-                class="h-12 w-full  rounded-lg border border-[#D0D5DD] bg-white px-[18px] py-3 text-base font-semibold text-[#344054] shadow-sm hover:bg-[#F9FAFB]"
+                class="h-12 w-full min-w-0 rounded-lg border border-[#D0D5DD] bg-white px-[18px] py-3 text-base font-semibold text-[#344054] shadow-sm hover:bg-[#F9FAFB] sm:flex-1"
                 (click)="onCancel()"
               >
                 Cancel
               </button>
               <button
                 type="button"
-                class="h-12 w-full rounded-lg px-[18px] py-3 text-base font-semibold text-white shadow-sm disabled:cursor-not-allowed disabled:opacity-100"
+                class="h-12 w-full min-w-0 rounded-lg px-[18px] py-3 text-base font-semibold text-white shadow-sm disabled:cursor-not-allowed disabled:opacity-100 sm:flex-1"
                 [disabled]="!allConsentsAccepted || ninForm.invalid || isLivenessLoading"
                 [ngClass]="allConsentsAccepted && ninForm.valid && !isLivenessLoading ? 'bg-[#109856] hover:bg-[#0F8A4E]' : 'bg-[#B8B7C8]'"
                 (click)="startLivenessCheck()"
