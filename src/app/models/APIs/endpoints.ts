@@ -101,6 +101,10 @@ export const endpoints = {
   // fingerprint
   fingerPrintSkip: 'api/v1/fingerprints/',
 
+  // liveness
+  registerLiveness: 'api/v1/liveness/register',
+  getLiveness: 'api/v1/liveness',
+
   //newly addded for students
 
   schoolCategory: 'api/v1/enums/schoolCategory',
