@@ -1,7 +1,6 @@
 export const environment = {
-  //  baseUrl: 'https://api.optima.com.ng',
    baseUrl: 'https://api.optima.com.ng',
-   websocketUrl: "https://api.optima.com.ng/wss",
+   //baseUrl: 'https://staging-api.optima.com.ng',
    production: true,
     //bashlaw007@gmail.com Password123@
     //email: judeomosehin@gmail.com   password:Password123#

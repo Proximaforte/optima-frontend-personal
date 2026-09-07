@@ -57,11 +57,7 @@
                 }
               ],
               "outputHashing": "all",
-              "optimization": {
-                "scripts": true,
-                "styles": true,
-                "fonts": false
-              },
+              "optimization": true,
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
