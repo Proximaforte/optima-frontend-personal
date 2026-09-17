@@ -59,12 +59,12 @@ export class PersonalDetailsComponent implements OnInit {
 
    if(localStorage.getItem('NINDetails') !== null){
     const getBeneficiaryNin: any = localStorage.getItem('NINDetails');
-    this.ninDetails = JSON.parse(getBeneficiaryNin)
+    this.ninDetails = this.beneficiaryService.normalizeBeneficiaryData(JSON.parse(getBeneficiaryNin));
    
     
    // var newDate:any = this.ninDetails.birthDate?.split('-');
    // console.log("newDate>>", newDate);
-    this.formattedDate = this.ninDetails.birthDate; //`${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;
+    this.formattedDate = this.ninDetails.birthDate || this.ninDetails.dateOfBirth; //`${parseInt(newDate[0], 10)}/${parseInt(newDate[1], 10)}/${newDate[2]}`;
    // console.log("formattedDate>>", this.formattedDate);
    } 
   }
@@ -78,15 +78,18 @@ export class PersonalDetailsComponent implements OnInit {
   }
   
   getPersonalForm() {
+    const beneficiaryData = this.beneficiaryService.normalizeBeneficiaryData(this.beneficiaryData);
+    const ninDetails = this.beneficiaryService.normalizeBeneficiaryData(this.ninDetails);
+
     this.personalDetailsForm = new FormGroup({
-      firstName: new FormControl(this.ninDetails.firstName || this.beneficiaryData?.firstName as string, null),
-      lastName: new FormControl(this.ninDetails.lastName || this.beneficiaryData?.lastName as string, null),
-      middleName: new FormControl(this.ninDetails.middleName || this.beneficiaryData?.middleName as string, null),
-      phoneNumber: new FormControl(this.ninDetails.phoneNumber || this.beneficiaryData?.phoneNumber as string, [Validators.required]),
+      firstName: new FormControl(ninDetails.firstName || beneficiaryData.firstName, null),
+      lastName: new FormControl(ninDetails.lastName || beneficiaryData.lastName, null),
+      middleName: new FormControl(ninDetails.middleName || beneficiaryData.middleName, null),
+      phoneNumber: new FormControl(ninDetails.phoneNumber || beneficiaryData.phoneNumber, [Validators.required]),
       bvn: new FormControl('', null),
       email: new FormControl('', null),
-      gender: new FormControl(this.ninDetails?.gender || this.beneficiaryData?.gender as string, null),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,
-      dateOfBirth: new FormControl(this.formattedDate || this.beneficiaryData?.dateOfBirth as string, null),
+      gender: new FormControl(ninDetails.gender || beneficiaryData.gender, null),  //this.ninDetails?.gender === 'm' ? 'Male' : this.ninDetails?.gender === 'f' ? 'Female' : null,
+      dateOfBirth: new FormControl(this.formattedDate || beneficiaryData.dateOfBirth, null),
       placeOfBirth: new FormControl('', [Validators.required]),
       religion: new FormControl('', [Validators.required]),
       others: new FormControl('', this.showOthers ? [Validators.required] : null),
@@ -124,7 +127,7 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-     this.beneficiaryData = this.beneficiaryService.getBeneficiary();
+     this.beneficiaryData = this.beneficiaryService.normalizeBeneficiaryData(this.beneficiaryService.getBeneficiary());
     this.getPersonalForm();
     this.getDropDowns();
    

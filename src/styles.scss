@@ -107,3 +107,8 @@ $primary:   #007CBB !default;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+.liveness-verification-status-panel .mat-mdc-dialog-surface {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}

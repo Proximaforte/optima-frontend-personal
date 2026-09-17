@@ -1,0 +1,75 @@
+<section
+  class="box-border flex h-auto min-h-[282px] w-[min(420px,92vw)] flex-col rounded-2xl bg-white px-8 py-8 font-euclid"
+  role="status"
+  aria-live="polite"
+>
+  <div class="flex justify-center">
+    <img [src]="logo" alt="OPTIMA" class="h-auto w-[150px] max-w-[54vw]" />
+  </div>
+
+  <div class="mt-10 flex flex-col items-center gap-5 text-center">
+    <div
+      class="flex h-16 w-16 items-center justify-center rounded-full"
+      [ngClass]="{
+        'bg-[#EEFaf3]': status === 'success' || status === 'loading',
+        'bg-[#FEECEB]': status === 'error'
+      }"
+      aria-hidden="true"
+    >
+      <span
+        *ngIf="isLoading"
+        class="h-10 w-10 animate-spin rounded-full border-4 border-[#D7F4E3] border-t-[#109856]"
+      ></span>
+      <mat-icon
+        *ngIf="status === 'success'"
+        class="!h-10 !w-10 !text-[40px] !font-bold !leading-none text-[#2DBD5F]"
+      >
+        check
+      </mat-icon>
+      <mat-icon
+        *ngIf="status === 'error'"
+        class="!h-10 !w-10 !text-[40px] !font-bold !leading-none text-[#F04438]"
+      >
+        close
+      </mat-icon>
+    </div>
+
+    <h2 class="text-2xl font-bold leading-tight text-[#101828]">
+      {{ displayTitle }}
+    </h2>
+    <p
+      *ngIf="message || isLoading"
+      class="max-w-[320px] text-sm font-medium leading-6 text-[#667085]"
+    >
+      {{ displayMessage }}
+    </p>
+  </div>
+
+  <div
+    *ngIf="!isLoading"
+    class="mt-10 flex flex-col justify-center gap-3 sm:flex-row"
+  >
+    <button
+      *ngIf="status === 'error'"
+      type="button"
+      class="inline-flex h-12 w-full cursor-pointer items-center justify-center rounded-lg border border-[#D0D5DD] bg-white px-5 text-sm font-bold text-[#344054]"
+      (click)="cancel()"
+    >
+      Cancel Progress
+    </button>
+
+    <button
+      type="button"
+      class="inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-transparent bg-[#109856] px-5 text-sm font-bold text-white"
+      (click)="submitPrimaryAction()"
+    >
+      <span>{{ isSuccess ? 'Continue' : 'Retry' }}</span>
+      <mat-icon
+        *ngIf="isSuccess"
+        class="!h-6 !w-6 !text-2xl !leading-none"
+      >
+        arrow_forward
+      </mat-icon>
+    </button>
+  </div>
+</section>

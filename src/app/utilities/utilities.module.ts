@@ -32,6 +32,7 @@ import { ToastsComponent } from './toasts/toasts.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { LogoutComponent } from './modals/logout/logout.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { LivenessVerificationStatusComponent } from './modals/liveness-verification-status/liveness-verification-status.component';
 
 const materialModules = [
   MatDialogModule,MatButtonModule,MatTooltipModule,MatSnackBarModule,MatToolbarModule
@@ -52,6 +53,7 @@ const materialModules = [
     VerifyBvnOtpComponent,
     ToastsComponent,
     LogoutComponent,
+    LivenessVerificationStatusComponent,
   ],
   imports: [
     CommonModule,
@@ -93,7 +95,8 @@ const materialModules = [
     FilterBoxComponent,
     OtpInputComponent,
     VerifyBvnOtpComponent,
-    ToastsComponent
+    ToastsComponent,
+    LivenessVerificationStatusComponent
   ],
   providers: [
     MatSnackBarModule

@@ -166,16 +166,7 @@ export class AllBeneficiaryComponent implements OnInit {
               if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary is Found!")
 
-                localStorage.setItem(
-                  'beneficiaryPhoneNumber',
-                  response?.data?.phone,
-                );
-                localStorage.setItem(
-                  'NINDetails',
-                  JSON.stringify(response?.data),
-                );
-
-                this.beneficiaryData = response.data;
+                this.beneficiaryData = this.beneficiaryService.cacheBeneficiaryPrefill(response?.data);
                 this.showContinue = true;
 
                 //   if (response?.data?.formStage) {
@@ -568,20 +559,12 @@ export class AllBeneficiaryComponent implements OnInit {
     localStorage.removeItem('userAddress');
 
 
-    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    this.beneficiaryService.cacheBeneficiaryPrefill(beneficiary);
     localStorage.setItem('userAddress', beneficiary?.address);
     localStorage.setItem(
       'incomplete',
       "Let's continue from where you've stopped!",
     );
-    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
-      next: (details: any) => {
-        const stringedData = JSON.stringify(details?.data);
-        localStorage.setItem('NINDetails', stringedData);
-        // localStorage.setItem('NINDetails', stringedData);
-      },
-    });
-
     this.beneficiaryService.setRouteToDisplay('biometrics');
     localStorage.setItem('biometrics', 'biometrics');
     this.router.navigate(['/home/setup-biometrics'], {
@@ -604,20 +587,12 @@ export class AllBeneficiaryComponent implements OnInit {
     localStorage.removeItem('userAddress');
     
 
-    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    this.beneficiaryService.cacheBeneficiaryPrefill(beneficiary);
     localStorage.setItem('userAddress', beneficiary?.address);
     localStorage.setItem(
       'incomplete',
       "Let's continue from where you've stopped!",
     );
-    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
-      next: (details: any) => {
-        const stringedData = JSON.stringify(details?.data);
-        localStorage.setItem('NINDetails', stringedData);
-        // localStorage.setItem('NINDetails', stringedData);
-      },
-    });
-
     if (beneficiary?.formStage === 'VERIFICATION') {
       this.beneficiaryService.setRouteToDisplay('verify beneficiary nin');
       this.router.navigate(['/home/beneficiary'], {
@@ -744,20 +719,12 @@ export class AllBeneficiaryComponent implements OnInit {
     localStorage.removeItem('isFingerprintOk');
     localStorage.removeItem('userAddress');
 
-    localStorage.setItem('beneficiaryPhoneNumber', beneficiary?.phoneNumber);
+    this.beneficiaryService.cacheBeneficiaryPrefill(beneficiary);
     localStorage.setItem('userAddress', beneficiary?.address);
     localStorage.setItem(
       'incomplete',
       "Let's continue from where you've stopped!",
     );
-    this.beneficiaryService.verifyNIN(beneficiary?.nin).subscribe({
-      next: (details: any) => {
-        const stringedData = JSON.stringify(details?.data);
-        localStorage.setItem('NINDetails', stringedData);
-        // localStorage.setItem('NINDetails', stringedData);
-      },
-    });
-
     this.beneficiaryService
       .onboardingSubmitted(beneficiary?.phoneNumber)
       ?.subscribe({

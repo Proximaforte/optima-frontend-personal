@@ -81,6 +81,46 @@ export class BeneficiaryService {
     return stored ? JSON.parse(stored) : null;
   }
 
+  normalizeBeneficiaryData(data: any): any {
+    if (!data) {
+      return {};
+    }
+
+    const beneficiary = data.registrationDetails ?? data.data ?? data;
+    const firstName = beneficiary.firstName ?? beneficiary.firstname ?? '';
+    const lastName = beneficiary.lastName ?? beneficiary.lastname ?? '';
+    const middleName = beneficiary.middleName ?? beneficiary.middlename ?? '';
+    const phoneNumber = beneficiary.phoneNumber ?? beneficiary.phone ?? '';
+    const dateOfBirth = beneficiary.dateOfBirth ?? beneficiary.birthDate ?? '';
+
+    return {
+      ...beneficiary,
+      firstName,
+      firstname: beneficiary.firstname ?? firstName,
+      lastName,
+      lastname: beneficiary.lastname ?? lastName,
+      middleName,
+      middlename: beneficiary.middlename ?? middleName,
+      phoneNumber,
+      phone: beneficiary.phone ?? phoneNumber,
+      dateOfBirth,
+      birthDate: beneficiary.birthDate ?? dateOfBirth,
+    };
+  }
+
+  cacheBeneficiaryPrefill(data: any): any {
+    const normalizedData = this.normalizeBeneficiaryData(data);
+
+    this.setBeneficiary(normalizedData);
+    localStorage.setItem('NINDetails', JSON.stringify(normalizedData));
+
+    if (normalizedData.phoneNumber) {
+      localStorage.setItem('beneficiaryPhoneNumber', normalizedData.phoneNumber);
+    }
+
+    return normalizedData;
+  }
+
   
   clearBeneficiary() {
     sessionStorage.removeItem(this._key);
@@ -155,7 +195,7 @@ export class BeneficiaryService {
 //  const encryptedNIN = this.encryptData(nin);
 
     return this.http.get<any>(
-      `${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${nin}`,
+      `${environment?.baseUrl}/${endpoints?.verifyNIN}?nin=${encodeURIComponent(nin)}`,
       { headers: this.interceptor?.customHttpHeaders },
     )
   }
@@ -165,7 +205,7 @@ export class BeneficiaryService {
 //  const encryptedNIN = this.encryptData(nin);
 
     return this.http.get<any>(
-      `${environment?.baseUrl}/${endpoints?.verifyNinOrPhone}/${identifier}`,
+      `${environment?.baseUrl}/${endpoints?.verifyNinOrPhone}/${encodeURIComponent(identifier)}`,
       { headers: this.interceptor?.customHttpHeaders },
     )
   }

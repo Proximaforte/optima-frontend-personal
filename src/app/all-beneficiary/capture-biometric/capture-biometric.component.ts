@@ -67,9 +67,9 @@ export class CaptureBiometricComponent {
   }
 
   goToDetails() {
-  this.beneficiaryService.setBeneficiary(this.beneficiaryData);
+    this.beneficiaryData = this.beneficiaryService.normalizeBeneficiaryData(this.beneficiaryData);
 
-      localStorage.removeItem('NINDetails');
+    localStorage.removeItem('NINDetails');
     localStorage.removeItem('beneficiaryPhoneNumber');
     localStorage.removeItem('biometrics');
     sessionStorage.removeItem('biometrics');
@@ -81,21 +81,11 @@ export class CaptureBiometricComponent {
     localStorage.removeItem('userAddress');
     
 
-    localStorage.setItem('beneficiaryPhoneNumber', this.beneficiaryData?.phoneNumber);
+    this.beneficiaryService.cacheBeneficiaryPrefill(this.beneficiaryData);
  
 
 
   // this.router.navigate(['/home/beneficiary-details']);
-
-     this.beneficiaryService.verifyNIN(this.beneficiaryData?.nin).subscribe({
-      next: (details: any) => {
-        const stringedData = JSON.stringify(details?.data);
-        localStorage.setItem('NINDetails', stringedData);
-        // localStorage.setItem('NINDetails', stringedData);
-      },
-    });
-
-
     this.beneficiaryService.setRouteToDisplay('biometrics');
       sessionStorage.setItem('biometrics', 'biometrics');
       this.router.navigate(['/home/setup-biometrics'], {
@@ -128,16 +118,7 @@ getFormValues() {
               if (response?.responseCode === 200) {
                 this.toast.setSuccessMessage("Beneficiary is Found!")
 
-                localStorage.setItem(
-                  'beneficiaryPhoneNumber',
-                  response?.data?.phone,
-                );
-                localStorage.setItem(
-                  'NINDetails',
-                  JSON.stringify(response?.data),
-                );
-
-                this.beneficiaryData = response.data;
+                this.beneficiaryData = this.beneficiaryService.cacheBeneficiaryPrefill(response?.data);
                 this.showContinue = true;
 
                 //   if (response?.data?.formStage) {
