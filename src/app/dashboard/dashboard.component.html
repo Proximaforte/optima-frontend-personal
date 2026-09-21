@@ -21,69 +21,39 @@
 
     
 
-    <div class="flex justify-between items-center mt-5 min-h-fit w-full py-[24px] px-[12px] bg-white border border-[#EAECF0] shadow rounded-2xl mb-8">
-      <div class="flex flex-col justify-center items-start">
-        <div class="flex flex-row mb-8 items-center justify-center">
-          <img src="assets/images/check.svg" alt="" height="24" width="24" />
-          <small
-            class="text-lg md:text-lg font-euclid font-medium ml-2 text-[#667085]"
-            >Successfully Onboarded</small
-          >
+    <section class="mt-5 mb-8 w-full rounded-2xl border border-[#EAECF0] bg-white p-5  md:p-6" aria-labelledby="onboarding-status-heading">
+      <div class="mb-5 flex items-center justify-between gap-4">
+        <div id="onboarding-status-heading" class="font-euclid text-sm font-medium  text-[#667085]/80">Beneficiary Onboarding Status</div>
+        <img src="assets/icons/logo.svg" alt="" class="hidden h-10 w-auto object-contain sm:block" />
+      </div>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div class="rounded-xl border border-[#EAECF0] p-4">
+          <div class="flex items-center gap-2 text-[#667085]">
+            <img src="assets/images/check.svg" alt="" height="24" width="24" />
+            <span class="font-euclid text-sm font-medium">Successful</span>
+          </div>
+          <p class="mt-5 font-euclid text-[40px] font-semibold leading-none text-[#344054] md:text-[48px]">{{ formatCount(totalOnboarding.completed) }}</p>
         </div>
-        <p class="text-[40px] pt-2 md:text-[60px] font-semibold font-euclid text-[#344054]">
-          {{
-            totalOnboarding.completed === "0"
-              ? "0"
-              : totalOnboarding.completed?.length === 1
-                ? "0" + "0" + totalOnboarding.completed
-                : totalOnboarding.completed?.length === 2
-                  ? "0" + totalOnboarding.completed
-                  : totalOnboarding.completed?.length >= 3
-                    ? totalOnboarding.completed
-                    : null
-          }}
-        </p>
-      </div>
-     
-      <div class="flex flex-col justify-center items-start max-w-full">
-        <div class="flex flex-row mb-8 items-center justify-center">
-          <img src="assets/images/Pause.svg" alt="" height="24" width="24" />
-          <small
-            class="text-lg md:text-lg font-euclid font-medium ml-2 text-[#667085]"
-            >Incomplete Onboarding</small
-          >
+        <div class="rounded-xl border border-[#EAECF0] p-4">
+          <div class="flex items-center gap-2 text-[#667085]">
+            <img src="assets/images/Pause.svg" alt="" height="24" width="24" />
+            <span class="font-euclid text-sm font-medium">Incomplete</span>
+          </div>
+          <p class="mt-5 font-euclid text-[40px] font-semibold leading-none text-[#344054] md:text-[48px]">{{ formatCount(totalOnboarding.incompleted) }}</p>
         </div>
-       
-        <p class="text-[40px] pt-2 md:text-[60px] text-[#344054] font-euclid font-semibold max-w-full">
-          {{
-            totalOnboarding.incompleted === "0"
-              ? "0"
-              : totalOnboarding.incompleted?.length === 1
-                ? "0" + "0" + totalOnboarding.incompleted
-                : totalOnboarding.incompleted?.length === 2
-                  ? "0" + totalOnboarding.incompleted
-                  : totalOnboarding.incompleted?.length >= 3
-                    ? totalOnboarding.incompleted
-                    : null
-          }}
-        </p>
+        <a [routerLink]="['/home/pending-submission']" class="group rounded-xl border border-[#EAECF0] p-4 transition-colors hover:border-[#109856] focus:outline-none focus:ring-2 focus:ring-[#109856]" aria-label="View pending submissions">
+          <div class="flex items-center justify-between gap-2 text-[#667085]">
+            <span class="font-euclid text-sm font-medium">Processing Submission</span>
+            <span aria-hidden="true" class="text-2xl leading-none text-[#109856]">→</span>
+          </div>
+          <p class="mt-5 font-euclid text-[40px] font-semibold leading-none text-[#344054] md:text-[48px]">{{ processingSubmissionCount === null ? '—' : formatCount(processingSubmissionCount) }}</p>
+        </a>
       </div>
-
-
-      <div>
-        <img
-        src="assets/icons/logo.svg"
-        alt="Your Image"
-        class=""
-      />
-      </div>
-
-
-    </div>
+    </section>
 
 
 
-    <div class="flex justify-between items-center min-h-fit w-full bg-white border border-[#EAECF0] py-[30px] px-[62px] rounded-[16px] shadow">
+    <div class="flex justify-between items-center min-h-fit w-full bg-white border border-[#EAECF0] py-[30px] px-[62px] rounded-[16px]">
 
 
 

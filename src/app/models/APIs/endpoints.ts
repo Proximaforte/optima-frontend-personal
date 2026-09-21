@@ -25,7 +25,9 @@ export const endpoints = {
   otherDetails: 'api/v1/onboarding/otherDetails',
   maritalDetails: 'api/v1/onboarding/maritalDetails',
   occupataion: 'api/v1/onboarding/occupationDetails',
-  onboardingSuccesfull: 'api/v1/onboarding/submitBeneficiary',
+  // onboardingSuccesfull: 'api/v1/onboarding/submitBeneficiary',
+  onboardingSuccesfull: 'api/v1/onboarding/submitBeneficiary/async',
+  pendingSubmissions: 'api/v1/onboarding/submitBeneficiary/async/incomplete',
 
   //Get All Beneficiaries Onboarded
   getAllBeneficiaries: 'api/v1/beneficiary/getBeneficiariesByLoggedInAgent',

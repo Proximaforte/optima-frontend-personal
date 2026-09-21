@@ -1,0 +1,50 @@
+<section class="w-full py-6 font-euclid">
+  <a routerLink="/home/dashboard" class="text-sm font-medium text-[#109856]">Back to dashboard</a>
+
+  <div class="mt-5 rounded-2xl border border-[#EAECF0] bg-white shadow">
+    <div class="border-b border-[#EAECF0] p-5 md:p-6">
+      <h1 class="text-xl font-semibold text-[#344054]">Pending Submissions</h1>
+      <p class="mt-1 text-sm text-[#667085]">View beneficiaries waiting for async submission completion.</p>
+    </div>
+
+    <p *ngIf="loading" class="p-6 text-[#667085]">Loading pending submissions...</p>
+
+    <div *ngIf="error" class="p-6 text-[#667085]">
+      Unable to load pending submissions.
+      <button type="button" (click)="loadPage()" class="font-medium text-[#109856]">Try again</button>
+    </div>
+
+    <div *ngIf="!loading && !error" class="overflow-x-auto">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-[#F9FAFB] text-[#667085]">
+          <tr>
+            <th scope="col" class="px-5 py-3 font-medium">Beneficiary</th>
+            <th scope="col" class="px-5 py-3 font-medium">Phone number</th>
+            <th scope="col" class="px-5 py-3 font-medium">Reference</th>
+            <th scope="col" class="px-5 py-3 font-medium">Status</th>
+            <th scope="col" class="px-5 py-3 font-medium"><span class="sr-only">Action</span></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#EAECF0] text-[#344054]">
+          <tr *ngFor="let submission of pendingSubmissions">
+            <td class="px-5 py-4 font-medium">{{ submission.beneficiaryName || 'N/A' }}</td>
+            <td class="px-5 py-4">{{ submission.phoneNumber || 'N/A' }}</td>
+            <td class="max-w-[260px] truncate px-5 py-4 text-[#667085]" [title]="submission.reference">
+              {{ submission.reference || 'N/A' }}
+            </td>
+            <td class="px-5 py-4">
+              <span class="inline-flex rounded-full bg-[#FFFAEB] px-3 py-1 text-xs font-medium text-[#B54708]">
+                {{ statusLabel(submission.status) }}
+              </span>
+            </td>
+            <td class="px-5 py-4 text-right">
+              <button type="button" (click)="view(submission)" class="font-medium text-[#109856] hover:underline">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p *ngIf="pendingSubmissions.length === 0" class="p-6 text-center text-[#667085]">No pending submissions found.</p>
+    </div>
+  </div>
+</section>

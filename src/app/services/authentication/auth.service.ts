@@ -6,14 +6,14 @@ import {
   HttpClient,
   HttpResponse,
 } from '@angular/common/http';
-import { JwtInterceptorService } from './interceptor/jwt-interceptor.service';
+import { AuthHeaderService } from './auth-header.service';
 import {
   AgentCredentials,
   changePassword,
   forgotPasswords,
   resetAgentPassword,
 } from 'src/app/models/login/auth';
-import { environment } from 'src/app/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { endpoints } from 'src/app/models/APIs/endpoints';
 import { HealthDetails } from 'src/app/models/beneficiary/beneficiary';
 
@@ -27,7 +27,7 @@ export class AuthService {
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private interceptor: JwtInterceptorService,
+    private interceptor: AuthHeaderService,
   ) {
     if (this.getAgentData() !== null) {
       this.getRefreshToken();
