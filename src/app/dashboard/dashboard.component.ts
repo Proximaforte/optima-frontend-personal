@@ -32,6 +32,12 @@ export class DashboardComponent implements OnInit {
     completed: 0,
     incompleted: 0
   };
+  processingSubmissionCount: number | null = null;
+
+  formatCount(value: number | string | null | undefined): string {
+    const count = Number(value);
+    return Number.isFinite(count) ? (count === 0 ? '0' : String(count).padStart(3, '0')) : '—';
+  }
   agentData: {} = {};
   showSpinner: boolean = true;
 
@@ -105,6 +111,7 @@ export class DashboardComponent implements OnInit {
             this.showSpinner = false;
             this.totalOnboarding.completed = String(res?.data?.completedOnboarding);
             this.totalOnboarding.incompleted = String(res?.data?.incompleteOnboarding);
+            this.processingSubmissionCount = res?.data?.totalPendingSubmission ?? null;
             // this.agentData = res?.data;
             this.agents = [
               { text: 'Agent code', data: `${res?.data?.center?.agentCode}`, icon: 'assets/images/agentcode.svg' },
@@ -160,6 +167,7 @@ export class DashboardComponent implements OnInit {
         this.showSpinner = false;
         this.totalOnboarding.completed = String(res?.data?.completedOnboarding);
         this.totalOnboarding.incompleted = String(res?.data?.incompleteOnboarding);
+        this.processingSubmissionCount = res?.data?.totalPendingSubmission ?? null;
         // this.agentData = res?.data;
         this.agents = [
           { text: 'Agent code', data: `${res?.data?.center?.agentCode}`, icon: 'assets/images/agentcode.svg' },

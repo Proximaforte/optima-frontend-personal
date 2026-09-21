@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import QoreID from '@qore-id/web-sdk';
+import { environment } from 'src/environments/environment';
 
 export type LivenessProvider = 'dojah' | 'qoreid';
 export type BackendLivenessProvider = 'DOJAH' | 'VERIFYME' | 'QOREID' | string;
@@ -84,9 +85,7 @@ export class LivenessFlowService {
   private readonly qoreIdProductCode = 'liveness';
   private readonly dojahAppId = '6a2da69165dff57337628633';
   private readonly dojahPublicKey = 'test_sk_ffeY3nnwwOq5lJcY9XJOZb7r8';
-  // private readonly dojahWidgetId = '6a2eb613707a4cd23c17b8a6';
-  // private readonly dojahWidgetId = '6a4ed489f137c814ce93456c';
-  private readonly dojahWidgetId = '6a5101c560b6226d1777bef6';
+  private readonly dojahWidgetId = environment.dojahWidgetId;
   private readonly dojahWidgetType = 'custom';
   private readonly dojahWidgetUrl = 'https://widget.dojah.io/widget.js';
 

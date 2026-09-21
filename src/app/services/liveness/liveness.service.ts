@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/app/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { endpoints } from 'src/app/models/APIs/endpoints';
-import { JwtInterceptorService } from '../authentication/interceptor/jwt-interceptor.service';
+import { AuthHeaderService } from '../authentication/auth-header.service';
 
 export interface RegisterLivenessPayload {
   livenessReference: string;
@@ -61,7 +61,7 @@ export interface LivenessStatusResponse {
 export class LivenessService {
   constructor(
     private http: HttpClient,
-    private interceptor: JwtInterceptorService,
+    private interceptor: AuthHeaderService,
   ) {}
 
   public registerLiveness(
