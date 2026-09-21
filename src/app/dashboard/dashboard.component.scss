@@ -10,6 +10,22 @@ body {
   background: rgba(0, 255, 0, 0.5);
 }
 
+:host ::ng-deep .custom-select .mdc-notched-outline__leading,
+:host ::ng-deep .custom-select .mdc-notched-outline__notch,
+:host ::ng-deep .custom-select .mdc-notched-outline__trailing {
+  border-color: #EAECF0 !important;
+}
+
+// :host ::ng-deep .custom-select.mat-focused
+//   .mdc-notched-outline__leading,
+// :host ::ng-deep .custom-select.mat-focused
+//   .mdc-notched-outline__notch,
+// :host ::ng-deep .custom-select.mat-focused
+//   .mdc-notched-outline__trailing {
+//   border-color: #109856 !important;
+//   border-width: 2px;
+// }
+
 // #empty-data{
 //   margin-left: -100px;
 // }

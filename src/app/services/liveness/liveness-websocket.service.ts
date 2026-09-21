@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Client, IMessage, StompSubscription } from '@stomp/stompjs';
 import { Observable, Subject, filter, of, take, tap } from 'rxjs';
-import { environment } from 'src/app/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 export interface LivenessSocketResponse {
   status: string;

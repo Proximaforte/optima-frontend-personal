@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, catchError, map, tap, throwError } from 'rxjs';
 import { endpoints } from 'src/app/models/APIs/endpoints';
-import { environment } from 'src/app/environments/environment.prod';
-import { JwtInterceptorService } from '../authentication/interceptor/jwt-interceptor.service';
+import { environment } from 'src/environments/environment';
+import { AuthHeaderService } from '../authentication/auth-header.service';
 import {
   PersonalDetails,
   ResidentialDetails,
@@ -59,7 +59,7 @@ export class BeneficiaryService {
 
   constructor(
     private http: HttpClient,
-    private interceptor: JwtInterceptorService,
+    private interceptor: AuthHeaderService,
   ) {
     this.setBeneficiaryFilter({});
   }
@@ -532,6 +532,20 @@ export class BeneficiaryService {
     // console.log('reportRange>>', reportRange);
     return this.http.get<any>(
       `${environment?.baseUrl}/${endpoints?.dashboardStats}?reportRange=${reportRange}`,
+      { headers: this.interceptor?.customHttpHeaders },
+    );
+  }
+
+  public getPendingSubmissions(): Observable<any> {
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.pendingSubmissions}`,
+      { headers: this.interceptor?.customHttpHeaders },
+    );
+  }
+
+  public getPendingSubmissionDetails(reference: string): Observable<any> {
+    return this.http.get<any>(
+      `${environment?.baseUrl}/${endpoints?.pendingSubmissions}/${encodeURIComponent(reference)}`,
       { headers: this.interceptor?.customHttpHeaders },
     );
   }

@@ -1,0 +1,62 @@
+<section class="w-full py-6 font-euclid">
+  <a routerLink="/home/pending-submission" class="text-sm font-medium text-[#109856]">Back to pending submissions</a>
+
+  <div class="mt-5 rounded-2xl border border-[#EAECF0] bg-white shadow">
+    <div class="flex flex-col gap-5 border-b border-[#EAECF0] p-5 md:flex-row md:items-center md:justify-between md:p-6">
+      <div>
+        <p class="text-sm font-medium text-[#667085]">Pending Submission Details</p>
+        <h1 class="mt-1 text-2xl font-semibold text-[#344054]">{{ fullName() }}</h1>
+        <p class="mt-2 max-w-3xl break-all text-sm text-[#667085]">{{ submission?.reference || reference }}</p>
+      </div>
+
+      <span *ngIf="submission?.status" class="w-fit rounded-full bg-[#FFFAEB] px-3 py-1 text-sm font-medium text-[#B54708]">
+        {{ statusLabel(submission.status) }}
+      </span>
+    </div>
+
+    <p *ngIf="loading" class="p-6 text-[#667085]">Loading submission details...</p>
+
+    <div *ngIf="error" class="p-6 text-[#667085]">
+      Unable to load this pending submission.
+      <button type="button" (click)="loadDetails()" class="font-medium text-[#109856]">Try again</button>
+    </div>
+
+    <div *ngIf="!loading && !error && submission" class="p-5 md:p-6">
+      <div class="flex flex-col gap-6 md:flex-row">
+        <div class="h-28 w-28 shrink-0 overflow-hidden rounded-full border border-[#EAECF0] bg-[#F9FAFB]">
+          <img *ngIf="submission.imageUrl" [src]="submission.imageUrl" alt="" class="h-full w-full object-cover" />
+          <div *ngIf="!submission.imageUrl" class="flex h-full w-full items-center justify-center text-2xl font-semibold text-[#98A2B3]">
+            {{ (submission.firstName || 'B').charAt(0) }}{{ (submission.lastName || '').charAt(0) }}
+          </div>
+        </div>
+
+        <dl class="grid flex-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="rounded-xl border border-[#EAECF0] p-4">
+            <dt class="text-xs font-medium uppercase tracking-wide text-[#667085]">Phone number</dt>
+            <dd class="mt-2 text-sm font-medium text-[#344054]">{{ submission.phoneNumber || 'N/A' }}</dd>
+          </div>
+          <div class="rounded-xl border border-[#EAECF0] p-4">
+            <dt class="text-xs font-medium uppercase tracking-wide text-[#667085]">Email</dt>
+            <dd class="mt-2 break-all text-sm font-medium text-[#344054]">{{ submission.email || 'N/A' }}</dd>
+          </div>
+          <div class="rounded-xl border border-[#EAECF0] p-4">
+            <dt class="text-xs font-medium uppercase tracking-wide text-[#667085]">Date of birth</dt>
+            <dd class="mt-2 text-sm font-medium text-[#344054]">{{ submission.dob || 'N/A' }}</dd>
+          </div>
+          <div class="rounded-xl border border-[#EAECF0] p-4">
+            <dt class="text-xs font-medium uppercase tracking-wide text-[#667085]">Place of birth</dt>
+            <dd class="mt-2 text-sm font-medium text-[#344054]">{{ submission.placeOfBirth || 'N/A' }}</dd>
+          </div>
+          <div class="rounded-xl border border-[#EAECF0] p-4">
+            <dt class="text-xs font-medium uppercase tracking-wide text-[#667085]">Gender</dt>
+            <dd class="mt-2 text-sm font-medium text-[#344054]">{{ submission.gender || 'N/A' }}</dd>
+          </div>
+          <div class="rounded-xl border border-[#EAECF0] p-4">
+            <dt class="text-xs font-medium uppercase tracking-wide text-[#667085]">Submission status</dt>
+            <dd class="mt-2 text-sm font-medium text-[#344054]">{{ statusLabel(submission.status) }}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

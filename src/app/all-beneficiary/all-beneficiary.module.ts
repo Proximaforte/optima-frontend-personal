@@ -16,12 +16,16 @@ import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.compone
 import { BiometricValidationRequestComponent } from './biometric-validation-request/biometric-validation-request.component';
 import { CaptureBiometricComponent } from './capture-biometric/capture-biometric.component';
 import { A11yModule } from '@angular/cdk/a11y';
+import { PendingSubmissionComponent } from './pending-submission/pending-submission.component';
+import { PendingSubmissionDetailsComponent } from './pending-submission-details/pending-submission-details.component';
 
 const materialModules = [MatIconModule, MatMenuModule, MatButtonModule]
 
 @NgModule({
   declarations: [
     AllBeneficiaryComponent,
+    PendingSubmissionComponent,
+    PendingSubmissionDetailsComponent,
     BeneficiaryDetailspageComponent,
     BeneficiaryFilterPipe,
     IncompletePipe,

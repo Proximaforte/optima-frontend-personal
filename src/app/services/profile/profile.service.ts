@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
-import { cryptoSecretKey, biometricsUrl} from 'src/app/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -8,7 +8,7 @@ import { cryptoSecretKey, biometricsUrl} from 'src/app/environments/environment.
 })
 export class ProfileService {
 
-  key = CryptoJS.enc.Utf8.parse(cryptoSecretKey);
+  key = CryptoJS.enc.Utf8.parse(environment.cryptoSecretKey);
   initilizationVector:any = CryptoJS.lib.WordArray.random(16);
   encrypted = '';
   constructor() { }
@@ -26,7 +26,7 @@ export class ProfileService {
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=+$/, '');
-   let biometricsString:string = `${biometricsUrl}?data=${base64String}`;
+   let biometricsString:string = `${environment.biometricsUrl}?data=${base64String}`;
    window.open(biometricsString, '_blank');
    //window.location.href = biometricsString;
    console.log('url to open>>>',biometricsString);
